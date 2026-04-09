@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "infinityforge",
+	"version": "${version}",
+	"name": "Infinity Forge",
+	"description": "This is a mod that adds infinity stones and other cool mechanics to Minecraft 1.20.1",
+	"authors": [
+		"Alvin"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/infinityforge/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.alvin.infinityforge.InfinityForge"
+		],
+		"client": [
+			"net.alvin.infinityforge.InfinityForgeClient"
+		],
+		"fabric-datagen": [
+			"net.alvin.infinityforge.InfinityForgeDataGenerator"
+		]
+	},
+	"mixins": [
+		"infinityforge.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.6",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
