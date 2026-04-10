@@ -10,11 +10,15 @@ public class InfinityStoneType {
     private final UseAbility useAbility;
     private final HoldAbility holdAbility;
     private final List<GauntletAbility> gauntletAbilities;
+    private final int baseColor;
+    private final int glintColor;
 
-    public InfinityStoneType(UseAbility useAbility, HoldAbility holdAbility, List<GauntletAbility> gauntletAbilities) {
+    public InfinityStoneType(UseAbility useAbility, HoldAbility holdAbility, List<GauntletAbility> gauntletAbilities, int baseColor, int glintColor) {
         this.useAbility = useAbility;
         this.holdAbility = holdAbility;
         this.gauntletAbilities = gauntletAbilities;
+        this.baseColor = baseColor;
+        this.glintColor = glintColor;
     }
 
     public UseAbility getUseAbility() {
@@ -27,5 +31,13 @@ public class InfinityStoneType {
 
     public List<GauntletAbility> getGauntletAbilities() {
         return gauntletAbilities;
+    }
+
+    public int getBaseColor() {
+        return baseColor;
+    }
+
+    public int getGlintColor() {
+        return glintColor;
     }
 }

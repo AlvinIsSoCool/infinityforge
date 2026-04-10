@@ -27,4 +27,13 @@ public class InfinityStoneItem extends Item {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         this.stoneType.getHoldAbility().onHold(stack, world, entity, slot, selected);
     }
+
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return true;
+    }
+
+    public InfinityStoneType getStoneType() {
+        return stoneType;
+    }
 }

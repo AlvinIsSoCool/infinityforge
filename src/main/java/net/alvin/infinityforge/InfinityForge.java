@@ -6,6 +6,7 @@ import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.registries.InfinityStoneTypeRegistry;
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.client.render.item.ItemRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
