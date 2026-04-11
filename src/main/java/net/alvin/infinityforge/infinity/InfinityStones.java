@@ -19,8 +19,8 @@ public class InfinityStones {
                     },
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
-                    0x7F00FF,
-                    0x0
+                    0x8700D3,
+                    0x9605FF
             )
     );
 
@@ -30,8 +30,8 @@ public class InfinityStones {
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
-                    0x023E8A,
-                    0x023E8A
+                    0x0255FF,
+                    0x6AC5FF
             )
     );
 
@@ -41,7 +41,7 @@ public class InfinityStones {
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
-                    0x0,
+                    0x6E0000,
                     0xFF0000
             )
     );
@@ -52,8 +52,8 @@ public class InfinityStones {
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
-                    0x0,
-                    0x0
+                    0xFF3C05,
+                    0xFF5B0F
             )
     );
 
@@ -63,8 +63,8 @@ public class InfinityStones {
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
-                    0x0,
-                    0x0
+                    0xFFDE00,
+                    0xFFFF00
             )
     );
 
@@ -74,8 +74,8 @@ public class InfinityStones {
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
-                    0x0,
-                    0x39FF14
+                    0x05A005,
+                    0x00FF00
             )
     );
 

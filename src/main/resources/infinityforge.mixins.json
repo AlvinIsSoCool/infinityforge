@@ -3,7 +3,7 @@
 	"package": "net.alvin.infinityforge.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ItemRendererMixin"
+		"ItemEntityRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

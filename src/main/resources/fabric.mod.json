@@ -2,6 +2,7 @@
 	"schemaVersion": 1,
 	"id": "infinityforge",
 	"version": "${version}",
+	"accessWidener": "infinityforge.accesswidener",
 	"name": "Infinity Forge",
 	"description": "This is a mod that adds infinity stones and other cool mechanics to Minecraft 1.20.1",
 	"authors": [

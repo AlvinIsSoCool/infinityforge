@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.item;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.infinity.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityStones;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
@@ -16,6 +17,8 @@ public class ModItems {
     public static final Item MIND_STONE = registerItem("mind_stone", new InfinityStoneItem(InfinityStones.MIND));
     public static final Item TIME_STONE = registerItem("time_stone", new InfinityStoneItem(InfinityStones.TIME));
     public static final Item INFINITY_GAUNTLET = registerItem("infinity_gauntlet", new Item(new FabricItemSettings()));
+
+    // ITEMS HERE //
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(InfinityForge.MOD_ID, name), item);
