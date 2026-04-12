@@ -14,6 +14,7 @@ public class InfinityForgeEvents {
 
     public static void registerEventsCommon() {
         System.out.println("Registering common events for: " + InfinityForge.MOD_ID);
+        InfinityStoneEvents.registerAllEvents();
     }
 
     public static void registerEventsClient() {

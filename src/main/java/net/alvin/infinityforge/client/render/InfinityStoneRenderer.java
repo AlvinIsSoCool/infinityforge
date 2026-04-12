@@ -2,6 +2,7 @@ package net.alvin.infinityforge.client.render;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -51,13 +52,10 @@ public class InfinityStoneRenderer {
             Matrix3f norm = matrices.peek().getNormalMatrix();
 
             VertexConsumer baseVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(TEXTURE));
-            renderCube(baseVc, pos, norm, S, baseColor, 100, light, overlay);
+            renderCube(baseVc, pos, norm, S, baseColor, 255, light, overlay);
 
-            //VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(TEXTURE));
-            //renderCube(glowVc, pos, norm, S * 1.05f, glowColor, glowAlpha, 0xF000F0, overlay);
-
-            VertexConsumer glintVc = vertexConsumers.getBuffer(RenderLayer.getEntityGlint());
-            renderCube(glintVc, pos, norm, S * 1.06f, glowColor, 255, 0xF000F0, overlay);
+            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(TEXTURE));
+            renderCube(glowVc, pos, norm, S * 1.05f, glowColor, glowAlpha, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay);
         matrices.pop();
     }
 
