@@ -27,7 +27,8 @@
 		]
 	},
 	"mixins": [
-		"infinityforge.mixins.json"
+		"infinityforge.mixins.json",
+		"infinityforge.client.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.18.6",

@@ -21,8 +21,8 @@ public class InfinityStoneRenderer {
                        MatrixStack matrices, VertexConsumerProvider vertexConsumers,
                        int light, int overlay,
                        InfinityStoneType stoneType) {
-        int base = stoneType.baseColor();
-        int glow = stoneType.glintColor();
+        int baseColor = stoneType.baseColor();
+        int glowColor = stoneType.glintColor();
 
         float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
         /*long t = System.currentTimeMillis();
@@ -51,10 +51,13 @@ public class InfinityStoneRenderer {
             Matrix3f norm = matrices.peek().getNormalMatrix();
 
             VertexConsumer baseVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(TEXTURE));
-            renderCube(baseVc, pos, norm, S, base, 100, light, overlay);
+            renderCube(baseVc, pos, norm, S, baseColor, 100, light, overlay);
 
-            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getDirectGlint());
-            renderCube(glowVc, pos, norm, S * 1.05f, glow, glowAlpha, 0xF000F0, overlay);
+            //VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(TEXTURE));
+            //renderCube(glowVc, pos, norm, S * 1.05f, glowColor, glowAlpha, 0xF000F0, overlay);
+
+            VertexConsumer glintVc = vertexConsumers.getBuffer(RenderLayer.getEntityGlint());
+            renderCube(glintVc, pos, norm, S * 1.06f, glowColor, 255, 0xF000F0, overlay);
         matrices.pop();
     }
 

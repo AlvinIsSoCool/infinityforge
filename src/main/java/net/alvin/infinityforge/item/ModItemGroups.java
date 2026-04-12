@@ -25,6 +25,6 @@ public class ModItemGroups {
                     })).build());
 
     public static void registerItemGroups() {
-        InfinityForge.LOGGER.info("Registering Item Groups for " + InfinityForge.MOD_ID);
+        InfinityForge.LOGGER.info("Registering Item Groups for: " + InfinityForge.MOD_ID);
     }
 }

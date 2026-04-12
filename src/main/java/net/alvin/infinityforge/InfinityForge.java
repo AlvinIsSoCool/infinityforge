@@ -1,12 +1,12 @@
 package net.alvin.infinityforge;
 
+import net.alvin.infinityforge.events.InfinityForgeEvents;
 import net.alvin.infinityforge.infinity.InfinityStones;
 import net.alvin.infinityforge.item.ModItemGroups;
 import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.registries.InfinityStoneTypeRegistry;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.client.render.item.ItemRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,5 +21,7 @@ public class InfinityForge implements ModInitializer {
 
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
+
+		InfinityForgeEvents.registerEventsCommon();
 	}
 }

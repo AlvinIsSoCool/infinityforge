@@ -25,6 +25,6 @@ public class ModItems {
     }
 
     public static void registerModItems() {
-        InfinityForge.LOGGER.info("Registering Mod Items for " + InfinityForge.MOD_ID);
+        InfinityForge.LOGGER.info("Registering Mod Items for: " + InfinityForge.MOD_ID);
     }
 }
