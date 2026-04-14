@@ -7,8 +7,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -19,12 +23,9 @@ import java.util.Random;
 
 public class InfinityStones {
     public static final InfinityStoneType POWER = register(
-            "power_stone",
+            "power",
             new InfinityStoneType(
-                    (world, user, hand) -> {
-                        user.playSound(Blocks.AMETHYST_BLOCK.getSoundGroup(Blocks.AMETHYST_BLOCK.getDefaultState()).getBreakSound(), 1.0F, 1.0F);
-                        return TypedActionResult.success(user.getStackInHand(hand));
-                    },
+                    (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {
                         if (world.isClient) return;
                         if (!(entity instanceof PlayerEntity player)) return;
@@ -32,17 +33,24 @@ public class InfinityStones {
                         boolean inMainHand = player.getMainHandStack() == stack;
                         boolean inOffHand = player.getOffHandStack() == stack;
 
-                        if (inMainHand || inOffHand && world.getTime() % 20 == 0) {
-                            player.setInvulnerable(true);
+                        if (inMainHand || inOffHand) {
                             ServerWorld serverWorld = (ServerWorld) world;
                             Random random = new Random();
                             float radius = 5.0f;
-                            int count = 6;
 
-                            for (int i = 0; i < count; i++) {
+                            serverWorld.spawnParticles(ParticleTypes.PORTAL,
+                                    player.getX(), player.getY(), player.getZ(), 20,
+                                    0.5, 0.5, 0.5, 1.0);
+                            serverWorld.spawnParticles(ParticleTypes.EXPLOSION,
+                                    player.getX(), player.getY(), player.getZ(), 10,
+                                    0.5, 0.5, 0.5, 1.0);
+                            serverWorld.playSound(null, player.getBlockPos(),
+                                    SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS,
+                                    0.5f, 1.0f);
+
+                            if (world.getTime() % 20 == 0) {
                                 double angle = random.nextDouble() * Math.PI * 2;
                                 double r = random.nextDouble() * radius;
-
                                 double x = entity.getX() + Math.cos(angle) * r;
                                 double z = entity.getZ() + Math.sin(angle) * r;
                                 double y = entity.getY() + (random.nextDouble() * 2 - 1);
@@ -56,9 +64,6 @@ public class InfinityStones {
                                 );
                             }
                         }
-                        else {
-                            player.setInvulnerable(false);
-                        }
                     },
                     List.of(),
                     0x8700D3,
@@ -67,7 +72,7 @@ public class InfinityStones {
     );
 
     public static final InfinityStoneType SPACE = register(
-            "space_stone",
+            "space",
             new InfinityStoneType(
                     (world, user, hand) -> TeleportationHelper.onSpaceStoneUse(world, user, user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
@@ -78,7 +83,7 @@ public class InfinityStones {
     );
 
     public static final InfinityStoneType REALITY = register(
-            "reality_stone",
+            "reality",
             new InfinityStoneType(
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
@@ -89,7 +94,7 @@ public class InfinityStones {
     );
 
     public static final InfinityStoneType SOUL = register(
-            "soul_stone",
+            "soul",
             new InfinityStoneType(
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
@@ -100,7 +105,7 @@ public class InfinityStones {
     );
 
     public static final InfinityStoneType MIND = register(
-            "mind_stone",
+            "mind",
             new InfinityStoneType(
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
@@ -111,7 +116,7 @@ public class InfinityStones {
     );
 
     public static final InfinityStoneType TIME = register(
-            "time_stone",
+            "time",
             new InfinityStoneType(
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},

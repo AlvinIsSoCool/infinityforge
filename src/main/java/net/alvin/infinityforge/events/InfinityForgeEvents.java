@@ -20,9 +20,10 @@ public class InfinityForgeEvents {
     public static void registerEventsClient() {
         System.out.println("Registering client events for: " + InfinityForge.MOD_ID);
         for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY) {
-            Identifier id = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stoneType);
-            Item item = Registries.ITEM.get(id);
-            System.out.println("Registering renderer for: " + id + " item: " + item);
+            Identifier typeId = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stoneType);
+            Identifier stoneId = typeId.withPath(typeId.getPath() + "_stone");
+            Item item = Registries.ITEM.get(stoneId);
+            System.out.println("Registering renderer for: " + stoneId + " item: " + item);
             BuiltinItemRendererRegistry.INSTANCE.register(item,
                     (stack, mode,
                      matrices, vertexConsumers,

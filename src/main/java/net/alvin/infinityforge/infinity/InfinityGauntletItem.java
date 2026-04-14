@@ -1,4 +1,9 @@
 package net.alvin.infinityforge.infinity;
 
-public class InfinityGauntletItem {
+import net.minecraft.item.Item;
+
+public class InfinityGauntletItem extends Item {
+    public InfinityGauntletItem(Settings settings) {
+        super(settings);
+    }
 }

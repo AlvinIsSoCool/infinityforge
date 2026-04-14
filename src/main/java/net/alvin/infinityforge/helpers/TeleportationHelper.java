@@ -23,8 +23,8 @@ import java.util.Random;
 
 public class TeleportationHelper {
     private static final Random RANDOM = new Random();
-    private static final int RANDOM_RADIUS = 250;
-    private static final int MAX_ATTEMPTS = 5;
+    private static final int RANDOM_RADIUS = 200;
+    private static final int MAX_ATTEMPTS = 4;
 
     public static TypedActionResult<ItemStack> onSpaceStoneUse(World world, PlayerEntity user, ItemStack stack) {
         if (world.isClient) {
@@ -32,7 +32,7 @@ public class TeleportationHelper {
         }
 
         if (user.isSneaking()) {
-            BlockPos safeSpawn = getSafeTeleportPos((ServerWorld) world);
+            BlockPos safeSpawn = getSafeTeleportPos2((ServerWorld) world, user);
             if (safeSpawn == null) safeSpawn = new BlockPos(0, 64, 0);
 
             System.out.println("Space Stone: spawnPos: " + safeSpawn.getX() + ", " + safeSpawn.getY() + ", " + safeSpawn.getZ());
@@ -106,6 +106,27 @@ public class TeleportationHelper {
         return null;
     }
 
+    private static BlockPos getSafeTeleportPos2(ServerWorld world, PlayerEntity user) {
+        boolean hasCeiling = world.getDimension().hasCeiling();
+        int bottomY = world.getBottomY();
+        int topY = world.getTopY();
+
+        for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+            int x = (RANDOM.nextInt(RANDOM_RADIUS * 2) - RANDOM_RADIUS) + user.getBlockX();
+            int z = (RANDOM.nextInt(RANDOM_RADIUS * 2) - RANDOM_RADIUS) + user.getBlockZ();
+
+            // Force chunk load before any block queries
+            world.getChunk(x >> 4, z >> 4);
+            BlockPos candidate = hasCeiling
+                    ? scanBottomUp(world, x, z, bottomY + 5, topY - 5)
+                    : scanTopDown(world, x, z, bottomY, topY);
+
+            if (candidate != null) return candidate;
+        }
+
+        return null;
+    }
+
     // For ceiling dimensions (Nether, custom)
     private static BlockPos scanBottomUp(ServerWorld world, int x, int z, int minY, int maxY) {
         for (int y = minY; y < maxY; y++) {
@@ -127,7 +148,6 @@ public class TeleportationHelper {
         );
 
         if (top.getY() <= bottomY) return null;
-
         return top;
     }
 }

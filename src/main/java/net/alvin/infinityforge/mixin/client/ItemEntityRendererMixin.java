@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.mixin.client;
 
+import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
 import net.minecraft.client.render.entity.ItemEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -20,7 +21,8 @@ public class ItemEntityRendererMixin {
             )
     )
     private void noBob(MatrixStack matrices, float x, float y, float z, ItemEntity entity, float f, float g) {
-        if (entity.getStack().getItem() instanceof InfinityStoneItem) {
+        if (entity.getStack().getItem() instanceof InfinityStoneItem
+                || entity.getStack().getItem() instanceof InfinityGauntletItem) {
             matrices.translate(x, 0.1F, z);
             return;
         }
@@ -36,7 +38,8 @@ public class ItemEntityRendererMixin {
             )
     )
     private void noRot(MatrixStack matrices, Quaternionf q, ItemEntity entity, float f, float g) {
-        if (entity.getStack().getItem() instanceof InfinityStoneItem) return;
+        if (entity.getStack().getItem() instanceof InfinityStoneItem
+                || entity.getStack().getItem() instanceof InfinityGauntletItem) return;
         matrices.multiply(q);
     }
 }

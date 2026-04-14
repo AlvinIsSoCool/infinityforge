@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
     @Inject(
-            method = "interact",
+            method = "interact(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;",
             at = @At("HEAD"),
             cancellable = true
     )
@@ -22,7 +22,7 @@ public class PlayerEntityMixin {
         if(!(entity instanceof ItemEntity itemEntity)) return;
         if (!(itemEntity.getStack().getItem() instanceof InfinityStoneItem)) return;
 
-        PlayerEntity self = (PlayerEntity)(Object)this;
+        PlayerEntity self = (PlayerEntity)(Object) this;
         if (!self.getWorld().isClient) {
             self.getInventory().insertStack(itemEntity.getStack().copy());
             itemEntity.discard();
