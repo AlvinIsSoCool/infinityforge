@@ -15,7 +15,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class InfinityStoneRenderer {
-    private static final Identifier TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/infinity_stone.png");
+    private static final Identifier STONE_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/infinity_stone.png");
     private static final float S = 0.125f;
 
     public void render(ItemStack stack, ModelTransformationMode mode,
@@ -43,10 +43,10 @@ public class InfinityStoneRenderer {
             Matrix4f pos = matrices.peek().getPositionMatrix();
             Matrix3f norm = matrices.peek().getNormalMatrix();
 
-            VertexConsumer baseVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(TEXTURE));
+            VertexConsumer baseVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(STONE_TEXTURE));
             renderCube(baseVc, pos, norm, S, baseColor, 255, light, overlay);
 
-            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(TEXTURE));
+            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(STONE_TEXTURE));
             renderCube(glowVc, pos, norm, S * 1.05f, glowColor, glowAlpha, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay);
         matrices.pop();
     }

@@ -4,7 +4,6 @@ import net.alvin.infinityforge.infinity.InfinityStoneItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -49,7 +48,7 @@ public class MinecraftClientMixin {
         if (closest != null) {
             Vec3d eyePos = player.getEyePos();
             Vec3d lookVec = player.getRotationVec(1.0f);
-            Vec3d reach = eyePos.add(lookVec.multiply(2.0));
+            Vec3d reach = eyePos.add(lookVec.multiply(3.0));
             Box entityBox = closest.getBoundingBox().expand(0.5);
 
             if (client.interactionManager != null && entityBox.raycast(eyePos, reach).isPresent()) {

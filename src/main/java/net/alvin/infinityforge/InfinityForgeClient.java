@@ -16,7 +16,6 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-import javax.swing.text.JTextComponent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +28,7 @@ public class InfinityForgeClient implements ClientModInitializer {
 
         System.out.println("Client: Registering Ability KeyBindings for: " + InfinityForge.MOD_ID);
         registerAbilityKey(ModAbilities.TEST, GLFW.GLFW_KEY_J);
+        registerAbilityKey(ModAbilities.TEST2, GLFW.GLFW_KEY_G);
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null) return;
 
@@ -41,6 +41,9 @@ public class InfinityForgeClient implements ClientModInitializer {
                     }
             );
         });
+
+        System.out.println("Client: Registering Infinity Gauntlet Screen for: " + InfinityForge.MOD_ID);
+        HandledScreens.register(ModScreenHandlers.GAUNTLET, GauntletScreen::new);
     }
 
     private static void registerAbilityKey(GauntletAbility ability, int glfwKey) {
@@ -53,8 +56,5 @@ public class InfinityForgeClient implements ClientModInitializer {
                 )
         );
         ABILITY_KEYS.put(ability.getId(), key);
-
-        System.out.println("Client: Registering Infinity Gauntlet Screen for: " + InfinityForge.MOD_ID);
-        HandledScreens.register(ModScreenHandlers.GAUNTLET, GauntletScreen::new);
     }
 }

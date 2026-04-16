@@ -77,7 +77,7 @@ public class InfinityStones {
             new InfinityStoneType(
                     (world, user, hand) -> TeleportationHelper.onSpaceStoneUse(world, user, user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
-                    List.of(),
+                    List.of(ModAbilities.TEST2),
                     0x0255FF,
                     0x6AC5FF
             )
