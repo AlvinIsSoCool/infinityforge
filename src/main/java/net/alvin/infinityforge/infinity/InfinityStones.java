@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.infinity;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.abilities.ModAbilities;
 import net.alvin.infinityforge.helpers.TeleportationHelper;
 import net.alvin.infinityforge.registries.InfinityStoneTypeRegistry;
 import net.minecraft.block.Blocks;
@@ -65,7 +66,7 @@ public class InfinityStones {
                             }
                         }
                     },
-                    List.of(),
+                    List.of(ModAbilities.TEST),
                     0x8700D3,
                     0x9605FF
             )

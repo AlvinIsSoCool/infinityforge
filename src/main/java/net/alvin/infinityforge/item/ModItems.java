@@ -17,7 +17,7 @@ public class ModItems {
     public static final Item SOUL_STONE = registerItem("soul_stone", new InfinityStoneItem(InfinityStones.SOUL));
     public static final Item MIND_STONE = registerItem("mind_stone", new InfinityStoneItem(InfinityStones.MIND));
     public static final Item TIME_STONE = registerItem("time_stone", new InfinityStoneItem(InfinityStones.TIME));
-    public static final Item INFINITY_GAUNTLET = registerItem("infinity_gauntlet", new InfinityGauntletItem(new FabricItemSettings()));
+    public static final Item INFINITY_GAUNTLET = registerItem("infinity_gauntlet", new InfinityGauntletItem());
 
     // MORE ITEMS HERE //
 

@@ -37,12 +37,13 @@ public class ItemEntityMixin {
     )
     private void cancelDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         ItemEntity self = (ItemEntity)(Object)this;
-        if (self.getStack().getItem() instanceof InfinityStoneItem) {
+        if (self.getStack().getItem() instanceof InfinityStoneItem
+                || self.getStack().getItem() instanceof InfinityGauntletItem) {
             cir.setReturnValue(false);
         }
     }
 
-    @Inject(
+    /*@Inject(
             method = "tick()V",
             at = @At("TAIL")
     )
@@ -64,7 +65,7 @@ public class ItemEntityMixin {
             double strength = Math.min(0.005 / (dist * dist), 0.02);
             self.addVelocity(diff.normalize().multiply(strength));
         }
-    }
+    }*/
 
     @Inject(
             method = "<init>(Lnet/minecraft/entity/ItemEntity;)V",
@@ -76,5 +77,4 @@ public class ItemEntityMixin {
                 || self.getStack().getItem() instanceof InfinityGauntletItem)
             self.setNeverDespawn();
     }
-
 }
