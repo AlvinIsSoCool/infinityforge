@@ -4,17 +4,12 @@ import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.abilities.ModAbilities;
 import net.alvin.infinityforge.helpers.TeleportationHelper;
 import net.alvin.infinityforge.registries.InfinityStoneTypeRegistry;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -68,7 +63,7 @@ public class InfinityStones {
                     },
                     List.of(ModAbilities.TEST),
                     0x8700D3,
-                    0x9605FF
+                    0x9400FF
             )
     );
 
@@ -79,7 +74,7 @@ public class InfinityStones {
                     (stack, world, entity, slot, selected) -> {},
                     List.of(ModAbilities.TEST2),
                     0x0255FF,
-                    0x6AC5FF
+                    0x0EA1FF
             )
     );
 
@@ -101,7 +96,7 @@ public class InfinityStones {
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
                     0xFF3C05,
-                    0xFF5B0F
+                    0xFF5100
             )
     );
 

@@ -15,6 +15,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionOptions;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,13 +31,14 @@ public class TeleportationHelper {
         if (world.isClient) {
             return TypedActionResult.success(stack);
         }
+        ServerWorld serverWorld = (ServerWorld) world;
 
         if (user.isSneaking()) {
-            BlockPos safeSpawn = getSafeTeleportPos2((ServerWorld) world, user);
+            BlockPos safeSpawn = getSafeTeleportPos2(serverWorld, user);
             if (safeSpawn == null) safeSpawn = new BlockPos(0, 64, 0);
 
             System.out.println("Space Stone: spawnPos: " + safeSpawn.getX() + ", " + safeSpawn.getY() + ", " + safeSpawn.getZ());
-            FabricDimensions.teleport(user, (ServerWorld) world,
+            FabricDimensions.teleport(user, serverWorld,
                     new TeleportTarget(
                             new Vec3d(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5),
                             Vec3d.ZERO,
@@ -98,7 +100,7 @@ public class TeleportationHelper {
 
             BlockPos candidate = hasCeiling
                     ? scanBottomUp(world, x, z, bottomY + 5, topY - 5)
-                    : scanTopDown(world, x, z, bottomY, topY);
+                    : scanTopDown(world, x, z, bottomY);
 
             if (candidate != null) return candidate;
         }
@@ -106,6 +108,7 @@ public class TeleportationHelper {
         return null;
     }
 
+    @Nullable
     private static BlockPos getSafeTeleportPos2(ServerWorld world, PlayerEntity user) {
         boolean hasCeiling = world.getDimension().hasCeiling();
         int bottomY = world.getBottomY();
@@ -119,7 +122,7 @@ public class TeleportationHelper {
             world.getChunk(x >> 4, z >> 4);
             BlockPos candidate = hasCeiling
                     ? scanBottomUp(world, x, z, bottomY + 5, topY - 5)
-                    : scanTopDown(world, x, z, bottomY, topY);
+                    : scanTopDown(world, x, z, bottomY);
 
             if (candidate != null) return candidate;
         }
@@ -141,7 +144,7 @@ public class TeleportationHelper {
     }
 
     // For open dimensions (Overworld, End, custom)
-    private static BlockPos scanTopDown(ServerWorld world, int x, int z, int bottomY, int topY) {
+    private static BlockPos scanTopDown(ServerWorld world, int x, int z, int bottomY) {
         BlockPos top = world.getTopPosition(
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                 new BlockPos(x, 0, z)

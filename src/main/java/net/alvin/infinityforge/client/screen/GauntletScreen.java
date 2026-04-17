@@ -13,9 +13,12 @@ public class GauntletScreen extends HandledScreen<GauntletScreenHandler> {
 
     public GauntletScreen(GauntletScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        backgroundHeight = 225;
-        backgroundWidth = 180;
+        backgroundHeight = 210;
+        backgroundWidth = 175;
     }
+
+    @Override
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {}
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {

@@ -3,15 +3,11 @@ package net.alvin.infinityforge.abilities;
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.WeatherCommand;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.EntityList;
 import net.minecraft.world.World;
-import net.minecraft.world.level.ServerWorldProperties;
 
 import java.util.List;
 

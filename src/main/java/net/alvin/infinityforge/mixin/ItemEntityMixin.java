@@ -66,6 +66,6 @@ public class ItemEntityMixin {
         for (ItemEntity other : nearbyItems)
             self.pushAwayFrom(other);
 
-        System.out.println("Item " + self.getStack().getItem().getName().getString() + " -> Age: " + self.getItemAge());
+        //System.out.println("Item " + self.getStack().getItem().getName().getString() + " -> Age: " + self.getItemAge());
     }
 }
