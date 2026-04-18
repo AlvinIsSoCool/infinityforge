@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.client.screen;
+package net.alvin.infinityforge.client.screen.gauntlet;
 
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;

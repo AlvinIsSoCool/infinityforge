@@ -61,9 +61,9 @@ public class InfinityStones {
                             }
                         }
                     },
-                    List.of(ModAbilities.TEST),
+                    List.of(),
                     0x8700D3,
-                    0x9400FF
+                    0x6F00B8
             )
     );
 
@@ -72,9 +72,9 @@ public class InfinityStones {
             new InfinityStoneType(
                     (world, user, hand) -> TeleportationHelper.onSpaceStoneUse(world, user, user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
-                    List.of(ModAbilities.TEST2),
-                    0x0255FF,
-                    0x0EA1FF
+                    List.of(),
+                    0x0A3CFF,
+                    0x0096FF
             )
     );
 
@@ -83,9 +83,9 @@ public class InfinityStones {
             new InfinityStoneType(
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
-                    List.of(),
-                    0x6E0000,
-                    0xFF0000
+                    List.of(ModAbilities.WEATHER),
+                    0x5A0000,
+                    0xFF1E1E
             )
     );
 
@@ -94,9 +94,9 @@ public class InfinityStones {
             new InfinityStoneType(
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
-                    List.of(),
-                    0xFF3C05,
-                    0xFF5100
+                    List.of(ModAbilities.HEALING),
+                    0xE53900,
+                    0xFF5A00
             )
     );
 
@@ -106,8 +106,8 @@ public class InfinityStones {
                     (world, user, hand) -> TypedActionResult.pass(user.getStackInHand(hand)),
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
-                    0xFFDE00,
-                    0xFFFF00
+                    0xE6C200,
+                    0xFFF200
             )
     );
 
@@ -118,7 +118,7 @@ public class InfinityStones {
                     (stack, world, entity, slot, selected) -> {},
                     List.of(),
                     0x05A005,
-                    0x00FF00
+                    0x00E600
             )
     );
 

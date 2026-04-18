@@ -31,23 +31,6 @@ public class TeleportationHelper {
         if (world.isClient) {
             return TypedActionResult.success(stack);
         }
-        ServerWorld serverWorld = (ServerWorld) world;
-
-        if (user.isSneaking()) {
-            BlockPos safeSpawn = getSafeTeleportPos2(serverWorld, user);
-            if (safeSpawn == null) safeSpawn = new BlockPos(0, 64, 0);
-
-            System.out.println("Space Stone: spawnPos: " + safeSpawn.getX() + ", " + safeSpawn.getY() + ", " + safeSpawn.getZ());
-            FabricDimensions.teleport(user, serverWorld,
-                    new TeleportTarget(
-                            new Vec3d(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5),
-                            Vec3d.ZERO,
-                            user.getYaw(),
-                            user.getPitch()
-                    )
-            );
-            return TypedActionResult.success(stack);
-        }
 
         MinecraftServer server = world.getServer();
         RegistryKey<World> currentKey = user.getWorld().getRegistryKey();
@@ -62,14 +45,11 @@ public class TeleportationHelper {
         if (keys.isEmpty()) return TypedActionResult.pass(stack);
 
         Collections.shuffle(keys);
-
         for (RegistryKey<World> key : keys) {
             ServerWorld target = server.getWorld(key);
             if (target == null) continue;
 
             BlockPos safeSpawn = getSafeTeleportPos(target);
-            if (safeSpawn == null) safeSpawn = new BlockPos(0, 64, 0);
-
             System.out.println("Space Stone: spawnPos: " + safeSpawn.getX() + ", " + safeSpawn.getY() + ", " + safeSpawn.getZ());
             FabricDimensions.teleport(user, target,
                     new TeleportTarget(
@@ -94,8 +74,6 @@ public class TeleportationHelper {
         for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
             int x = RANDOM.nextInt(RANDOM_RADIUS * 2) - RANDOM_RADIUS;
             int z = RANDOM.nextInt(RANDOM_RADIUS * 2) - RANDOM_RADIUS;
-
-            // Force chunk load before any block queries
             world.getChunk(x >> 4, z >> 4);
 
             BlockPos candidate = hasCeiling
@@ -105,32 +83,11 @@ public class TeleportationHelper {
             if (candidate != null) return candidate;
         }
 
-        return null;
-    }
-
-    @Nullable
-    private static BlockPos getSafeTeleportPos2(ServerWorld world, PlayerEntity user) {
-        boolean hasCeiling = world.getDimension().hasCeiling();
-        int bottomY = world.getBottomY();
-        int topY = world.getTopY();
-
-        for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-            int x = (RANDOM.nextInt(RANDOM_RADIUS * 2) - RANDOM_RADIUS) + user.getBlockX();
-            int z = (RANDOM.nextInt(RANDOM_RADIUS * 2) - RANDOM_RADIUS) + user.getBlockZ();
-
-            // Force chunk load before any block queries
-            world.getChunk(x >> 4, z >> 4);
-            BlockPos candidate = hasCeiling
-                    ? scanBottomUp(world, x, z, bottomY + 5, topY - 5)
-                    : scanTopDown(world, x, z, bottomY);
-
-            if (candidate != null) return candidate;
-        }
-
-        return null;
+        return new BlockPos(0, 64, 0);
     }
 
     // For ceiling dimensions (Nether, custom)
+    @Nullable
     private static BlockPos scanBottomUp(ServerWorld world, int x, int z, int minY, int maxY) {
         for (int y = minY; y < maxY; y++) {
             BlockPos pos = new BlockPos(x, y, z);
@@ -144,6 +101,7 @@ public class TeleportationHelper {
     }
 
     // For open dimensions (Overworld, End, custom)
+    @Nullable
     private static BlockPos scanTopDown(ServerWorld world, int x, int z, int bottomY) {
         BlockPos top = world.getTopPosition(
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,

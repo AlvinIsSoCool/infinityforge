@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.client.screen;
+package net.alvin.infinityforge.client.screen.gauntlet;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.alvin.infinityforge.InfinityForge;

@@ -21,12 +21,12 @@ public class MinecraftClientMixin {
             cancellable = true
     )
     private void onItemUse(CallbackInfo ci) {
-        MinecraftClient client = (MinecraftClient) (Object) this;
+        MinecraftClient client = (MinecraftClient)(Object) this;
         if (client.player == null) return;
         ClientPlayerEntity player = client.player;
 
         Box box = player.getBoundingBox()
-                .stretch(player.getRotationVec(1.0f).multiply(2.0))
+                .stretch(player.getRotationVec(1.0f).multiply(3.0))
                 .expand(1.0);
         List<ItemEntity> items = player.getWorld().getEntitiesByClass(
                 ItemEntity.class,

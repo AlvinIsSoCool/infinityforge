@@ -22,7 +22,7 @@ public class EntityMixin {
             cancellable = true
     )
     private void cancelVelocity(Vec3d vec, CallbackInfo ci) {
-        if ((Entity)(Object)this instanceof PlayerEntity player) {
+        if ((Object)this instanceof PlayerEntity player) {
             // NOTE: If making this into an event, check whether the player is
             // flying or jumping or sprinting or swimming
             // before allowing knockback handling.

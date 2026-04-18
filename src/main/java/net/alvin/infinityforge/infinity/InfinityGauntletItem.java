@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.infinity;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.abilities.GauntletAbility;
-import net.alvin.infinityforge.client.screen.GauntletScreenHandler;
+import net.alvin.infinityforge.abilities.*;
+import net.alvin.infinityforge.client.screen.gauntlet.GauntletScreenHandler;
 import net.alvin.infinityforge.registries.InfinityStoneTypeRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -37,13 +37,6 @@ public class InfinityGauntletItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        /*ItemStack stack = user.getStackInHand(hand);
-
-        if (!world.isClient)
-            addStone(stack, InfinityStones.POWER);
-
-        System.out.println("Added stone!");*/
-
         if (!world.isClient) {
             user.openHandledScreen(new ExtendedScreenHandlerFactory() {
                 @Override
@@ -91,7 +84,48 @@ public class InfinityGauntletItem extends Item {
 
     public List<GauntletAbility> getGauntletAbilities(ItemStack stack) {
         return getAddedStones(stack).stream()
-                .flatMap(stone -> stone.gauntletAbilities().stream())
+                .flatMap(s -> s.gauntletAbilities().stream())
+                .collect(Collectors.toList());
+    }
+
+    public List<ActiveAbility> getActiveAbilities(ItemStack stack) {
+        return getAddedStones(stack).stream()
+                .flatMap(s -> s.gauntletAbilities().stream())
+                .filter(a -> a instanceof ActiveAbility)
+                .map(a -> (ActiveAbility) a)
+                .collect(Collectors.toList());
+    }
+
+    public List<PassiveAbility> getPassiveAbilities(ItemStack stack) {
+        return getAddedStones(stack).stream()
+                .flatMap(s -> s.gauntletAbilities().stream())
+                .filter(a -> a instanceof PassiveAbility)
+                .map(a -> (PassiveAbility) a)
+                .collect(Collectors.toList());
+    }
+
+    public List<ToggleAbility> getToggleAbilities(ItemStack stack) {
+        return getAddedStones(stack).stream()
+                .flatMap(s -> s.gauntletAbilities().stream())
+                .filter(a -> a instanceof ToggleAbility)
+                .map(a -> (ToggleAbility) a)
+                .collect(Collectors.toList());
+    }
+
+    public List<HeldAbility> getHeldAbilities(ItemStack stack) {
+        return getAddedStones(stack).stream()
+                .flatMap(s -> s.gauntletAbilities().stream())
+                .filter(a -> a instanceof HeldAbility)
+                .map(a -> (HeldAbility) a)
+                .collect(Collectors.toList());
+    }
+
+    public List<GauntletAbility> getVisibleAbilities(ItemStack stack) {
+        return getAddedStones(stack).stream()
+                .flatMap(s -> s.gauntletAbilities().stream())
+                .filter(a -> a instanceof ActiveAbility
+                        || a instanceof ToggleAbility
+                        || a instanceof HeldAbility)
                 .collect(Collectors.toList());
     }
 
