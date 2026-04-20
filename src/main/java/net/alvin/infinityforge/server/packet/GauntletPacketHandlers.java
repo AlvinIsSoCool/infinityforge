@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.server.packet;
 
-import net.alvin.infinityforge.abilities.ActiveAbility;
-import net.alvin.infinityforge.abilities.HeldAbility;
-import net.alvin.infinityforge.abilities.ToggleAbility;
+import net.alvin.infinityforge.abilities.base.ActiveAbility;
+import net.alvin.infinityforge.abilities.base.HeldAbility;
+import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
 import net.alvin.infinityforge.network.c2s.PickupStoneC2SPacket;
 import net.alvin.infinityforge.server.state.GauntletCooldownState;

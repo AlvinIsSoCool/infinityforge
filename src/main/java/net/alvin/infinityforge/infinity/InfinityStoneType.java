@@ -1,8 +1,6 @@
 package net.alvin.infinityforge.infinity;
 
-import net.alvin.infinityforge.abilities.GauntletAbility;
-import net.alvin.infinityforge.abilities.HoldAbility;
-import net.alvin.infinityforge.abilities.UseAbility;
+import net.alvin.infinityforge.abilities.base.GauntletAbility;
 
 import java.util.List;
 

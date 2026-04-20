@@ -1,9 +1,10 @@
 package net.alvin.infinityforge.server.event;
 
-import net.alvin.infinityforge.abilities.GauntletAbility;
-import net.alvin.infinityforge.abilities.HeldAbility;
-import net.alvin.infinityforge.abilities.ToggleAbility;
+import net.alvin.infinityforge.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.abilities.base.HeldAbility;
+import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.server.state.GauntletChargeState;
+import net.alvin.infinityforge.server.state.GauntletCooldownState;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
@@ -49,6 +50,7 @@ public class GauntletConnectionEvents {
                 h.onStop(world, player, activeStones);
         }
 
+        GauntletCooldownState.clear(player);
         GauntletToggleState.clear(player);
         GauntletHeldState.clear(player);
     }

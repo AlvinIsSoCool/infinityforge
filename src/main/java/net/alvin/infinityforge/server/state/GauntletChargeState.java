@@ -28,7 +28,7 @@ public class GauntletChargeState {
                 .put(abilityId, charge);
     }
 
-    // Call clear only on disconnect
+    // Call this only on disconnect
     public static void clearAll(PlayerEntity player) {
         CHARGES.remove(player.getUuid());
         PREVIOUSLY_EQUIPPED.remove(player.getUuid());

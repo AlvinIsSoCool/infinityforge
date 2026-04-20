@@ -6,6 +6,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -78,6 +79,8 @@ public class ItemEntityMixin {
         ItemEntity self = (ItemEntity) (Object) this;
         if (self.getStack().getItem() instanceof InfinityStoneItem
                 || self.getStack().getItem() instanceof InfinityGauntletItem) {
+            Vec3d vec3d = self.getVelocity();
+            self.setVelocity(vec3d.x * 0.99F, 0.0, vec3d.z * 0.99F);
             ci.cancel();
         }
     }

@@ -2,11 +2,10 @@ package net.alvin.infinityforge.client.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.InfinityForgeClient;
-import net.alvin.infinityforge.abilities.ActiveAbility;
-import net.alvin.infinityforge.abilities.GauntletAbility;
-import net.alvin.infinityforge.abilities.HeldAbility;
-import net.alvin.infinityforge.abilities.ToggleAbility;
+import net.alvin.infinityforge.abilities.base.ActiveAbility;
+import net.alvin.infinityforge.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.abilities.base.HeldAbility;
+import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.minecraft.client.MinecraftClient;
@@ -23,8 +22,8 @@ import static net.alvin.infinityforge.client.input.GauntletKeybinds.SLOT_KEYS;
 public class GauntletHudRenderer {
     private static final Identifier HUD_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/gui/ability_bar.png");
 
-    private static final int MARGIN_X = 8;
-    private static final int MARGIN_Y = 12;
+    private static final int MARGIN_X = 10;
+    private static final int MARGIN_Y = 14;
     private static final int SLOT_SIZE = 22; // 1px outline + 2px padding + 16px icon + 2px padding + 1px outline
     private static final int SLOT_STEP = 22; // 22px slot + 2px gap between slots
 
@@ -49,12 +48,12 @@ public class GauntletHudRenderer {
         if (abilities.size() > 6 && client.player.isSneaking()) {
             if (scrollOffset > 0)  {
                 RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-                context.drawTexture(HUD_TEXTURE, startX + 7, startY - 8, 37, 0, 15, 15, 256, 256);
+                context.drawTexture(HUD_TEXTURE, startX + 4, startY - 10, 37, 0, 15, 15, 256, 256);
             }
 
             if (scrollOffset < abilities.size() - 6) {
                 RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-                context.drawTexture(HUD_TEXTURE, startX + 7, startY + visibleCount * SLOT_STEP + 2, 52, 0, 15, 15, 256, 256);
+                context.drawTexture(HUD_TEXTURE, startX + 4, startY + visibleCount * SLOT_STEP + 2, 52, 0, 15, 15, 256, 256);
             }
         }
 

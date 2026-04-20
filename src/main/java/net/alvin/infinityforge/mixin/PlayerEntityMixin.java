@@ -1,16 +1,21 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
+    @Inject(method = "writeCustomDataToNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("TAIL"))
+    private void onWrite(NbtCompound nbt, CallbackInfo ci) {
+        // save something to player here.
+    }
+
+    @Inject(method = "readCustomDataFromNbt(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("TAIL"))
+    private void onRead(NbtCompound nbt, CallbackInfo ci) {
+        // read back from player on login.
+    }
 }

@@ -1,7 +1,12 @@
 package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.abilities.*;
+import net.alvin.infinityforge.abilities.base.ActiveAbility;
+import net.alvin.infinityforge.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.abilities.impl.reality.AbilityWeather;
+import net.alvin.infinityforge.abilities.impl.soul.AbilityHealing;
+import net.alvin.infinityforge.abilities.impl.test.AbilityWeatherHeld;
+import net.alvin.infinityforge.abilities.impl.test.AbilityWeatherToggle;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.abilities.registry.GauntletAbilityRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;

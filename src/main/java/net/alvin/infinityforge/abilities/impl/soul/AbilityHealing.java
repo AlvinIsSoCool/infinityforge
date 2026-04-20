@@ -1,6 +1,7 @@
-package net.alvin.infinityforge.abilities;
+package net.alvin.infinityforge.abilities.impl.soul;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.abilities.base.PassiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;

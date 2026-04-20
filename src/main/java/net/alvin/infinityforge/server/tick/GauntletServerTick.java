@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.server.tick;
 
-import net.alvin.infinityforge.abilities.HeldAbility;
-import net.alvin.infinityforge.abilities.ToggleAbility;
+import net.alvin.infinityforge.abilities.base.HeldAbility;
+import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.server.state.GauntletChargeState;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.alvin.infinityforge.server.state.GauntletToggleState;

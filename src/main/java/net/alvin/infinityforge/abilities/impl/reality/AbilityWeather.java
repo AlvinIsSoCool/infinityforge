@@ -1,6 +1,7 @@
-package net.alvin.infinityforge.abilities;
+package net.alvin.infinityforge.abilities.impl.reality;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -11,12 +12,14 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
+import static net.alvin.infinityforge.helpers.InfinityStoneColors.REALITY_STONE_ABILITY_COLOR;
+
 public class AbilityWeather extends ActiveAbility {
     public AbilityWeather() {
         super(new Identifier(InfinityForge.MOD_ID, "weather"),
                 new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/weather.png"),
                 Text.translatable("abilities." + InfinityForge.MOD_ID + ".weather").getString(),
-                0xFF1E1E,
+                REALITY_STONE_ABILITY_COLOR,
                 600);
     }
 

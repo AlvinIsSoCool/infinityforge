@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.abilities.registry;
 
-import net.alvin.infinityforge.abilities.GauntletAbility;
+import net.alvin.infinityforge.abilities.base.GauntletAbility;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.abilities;
+package net.alvin.infinityforge.abilities.base;
 
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-public abstract non-sealed class ToggleAbility implements GauntletAbility {
+public abstract non-sealed class HeldAbility implements GauntletAbility {
     private final Identifier id;
     private final Identifier icon;
     private final String name;
@@ -15,7 +15,7 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     private final int maxChargeTicks;
     private final int refillRateTicks;
 
-    public ToggleAbility(Identifier id, Identifier icon, String name, int color, int maxChargeTicks, int refillRateTicks) {
+    public HeldAbility(Identifier id, Identifier icon, String name, int color, int maxChargeTicks, int refillRateTicks) {
         this.id = id;
         this.icon = icon;
         this.name = name;
@@ -36,19 +36,16 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     @Override
     public int getColor() { return color; }
 
-    @Override
-    public int getCooldownTicks() { return 0; }
-
-    @Override
     public int getMaxChargeTicks() { return maxChargeTicks; }
 
-    @Override
     public int getRefillRateTicks() { return refillRateTicks; }
 
-    public abstract void onEnable(ServerWorld world, ServerPlayerEntity player,
-                                  List<InfinityStoneType> activeStones);
-    public abstract void onDisable(ServerWorld world, ServerPlayerEntity player,
-                          List<InfinityStoneType> activeStones);
-    public abstract void onTick(ServerWorld world, ServerPlayerEntity player,
-                       List<InfinityStoneType> activeStones);
+    // Called once when key is first pressed
+    public abstract void onStart(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
+
+    // Called every tick while key is held
+    public abstract void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
+
+    // Called once when key is released
+    public abstract void onStop(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
 }

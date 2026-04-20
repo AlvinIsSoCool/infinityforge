@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.abilities;
+package net.alvin.infinityforge.abilities.base;
 
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -31,15 +31,6 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
 
     @Override
     public int getColor() { return color; }
-
-    @Override
-    public int getCooldownTicks() { return 0; }
-
-    @Override
-    public int getMaxChargeTicks() { return 0; }
-
-    @Override
-    public int getRefillRateTicks() { return 0; }
 
     public abstract void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
 }

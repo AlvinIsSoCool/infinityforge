@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.abilities;
+package net.alvin.infinityforge.abilities.base;
 
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public abstract non-sealed class ActiveAbility implements GauntletAbility{
+public abstract non-sealed class ActiveAbility implements GauntletAbility {
     private final Identifier id;
     private final Identifier icon;
     private final String name;
@@ -34,14 +34,7 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility{
     @Override
     public int getColor() { return color; }
 
-    @Override
     public int getCooldownTicks() { return cooldownTicks; }
-
-    @Override
-    public int getMaxChargeTicks() { return 0; }
-
-    @Override
-    public int getRefillRateTicks() { return 0; }
 
     public abstract void onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones);
 }

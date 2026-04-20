@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.abilities;
+package net.alvin.infinityforge.infinity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;

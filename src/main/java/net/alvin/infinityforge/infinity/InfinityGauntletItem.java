@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.infinity;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.abilities.*;
+import net.alvin.infinityforge.abilities.base.*;
 import net.alvin.infinityforge.screen.GauntletScreenHandler;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -39,7 +39,7 @@ public class InfinityGauntletItem extends Item {
         if (!world.isClient) {
             user.openHandledScreen(new ExtendedScreenHandlerFactory() {
                 @Override
-                public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
+                public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
                     return new GauntletScreenHandler(syncId, playerInventory, user.getStackInHand(hand));
                 }
 

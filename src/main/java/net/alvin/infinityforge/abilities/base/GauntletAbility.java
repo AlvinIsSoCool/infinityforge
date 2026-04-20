@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.abilities;
+package net.alvin.infinityforge.abilities.base;
 
 import net.minecraft.util.Identifier;
 
@@ -8,7 +8,5 @@ public sealed interface GauntletAbility permits ActiveAbility, HeldAbility, Pass
     Identifier getIcon();
     String getName();
     int getColor();
-    int getCooldownTicks();
-    int getMaxChargeTicks();
-    int getRefillRateTicks();
+
 }
