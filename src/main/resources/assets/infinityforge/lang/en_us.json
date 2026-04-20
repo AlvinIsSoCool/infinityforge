@@ -7,5 +7,7 @@
   "item.infinityforge.time_stone": "Time Stone",
   "item.infinityforge.infinity_gauntlet": "Infinity Gauntlet",
 
-  "itemgroup.infinity": "Infinity Group"
+  "itemgroup.infinity": "Infinity Group",
+
+  "abilities.infinityforge.weather": "Set Weather"
 }

@@ -25,8 +25,17 @@ public class InfinityStoneRenderer {
         int baseColor = stoneType.baseColor();
         int glowColor = stoneType.glintColor();
 
-        float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
-        int glowAlpha = (int)(80 + 175 * pulse);
+        double t = System.currentTimeMillis();
+        float f1 = (float)(
+                Math.sin(t / 600.0) +
+                0.6 * Math.sin(t / 1400.0)
+        ) * 0.5f + 0.5f;
+        f1 = Math.max(0f, Math.min(1f, f1));
+
+        int glowAlpha = (int)(80 + 175 * f1);
+
+        //float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
+        //int glowAlpha = (int)(80 + 175 * pulse);
 
         matrices.push();
             matrices.translate(0.5f, 0.5f, 0.5f);

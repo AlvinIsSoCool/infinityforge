@@ -10,12 +10,16 @@ import java.util.List;
 public abstract non-sealed class ActiveAbility implements GauntletAbility{
     private final Identifier id;
     private final Identifier icon;
+    private final String name;
     private final int color;
+    private final int cooldownTicks;
 
-    public ActiveAbility(Identifier id, Identifier icon, int color) {
+    public ActiveAbility(Identifier id, Identifier icon, String name, int color, int cooldownTicks) {
         this.id = id;
         this.icon = icon;
+        this.name = name;
         this.color = color;
+        this.cooldownTicks = cooldownTicks;
     }
 
     @Override
@@ -25,7 +29,19 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility{
     public Identifier getIcon() { return icon; }
 
     @Override
+    public String getName() { return name; }
+
+    @Override
     public int getColor() { return color; }
+
+    @Override
+    public int getCooldownTicks() { return cooldownTicks; }
+
+    @Override
+    public int getMaxChargeTicks() { return 0; }
+
+    @Override
+    public int getRefillRateTicks() { return 0; }
 
     public abstract void onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones);
 }

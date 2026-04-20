@@ -2,8 +2,7 @@ package net.alvin.infinityforge.infinity;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.abilities.*;
-import net.alvin.infinityforge.client.screen.gauntlet.GauntletScreenHandler;
-import net.alvin.infinityforge.registries.InfinityStoneTypeRegistry;
+import net.alvin.infinityforge.screen.GauntletScreenHandler;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.player.PlayerEntity;

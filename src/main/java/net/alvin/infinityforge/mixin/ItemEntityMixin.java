@@ -68,4 +68,30 @@ public class ItemEntityMixin {
 
         //System.out.println("Item " + self.getStack().getItem().getName().getString() + " -> Age: " + self.getItemAge());
     }
+
+    @Inject(
+            method = "applyWaterBuoyancy()V",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void onWaterBuoyancy(CallbackInfo ci) {
+        ItemEntity self = (ItemEntity) (Object) this;
+        if (self.getStack().getItem() instanceof InfinityStoneItem
+                || self.getStack().getItem() instanceof InfinityGauntletItem) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(
+            method = "applyLavaBuoyancy()V",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void onLavaBuoyancy(CallbackInfo ci) {
+        ItemEntity self = (ItemEntity) (Object) this;
+        if (self.getStack().getItem() instanceof InfinityStoneItem
+                || self.getStack().getItem() instanceof InfinityGauntletItem) {
+            ci.cancel();
+        }
+    }
 }

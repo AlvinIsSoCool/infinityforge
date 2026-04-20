@@ -1,6 +1,8 @@
 package net.alvin.infinityforge.client.hud;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.InfinityForgeClient;
 import net.alvin.infinityforge.abilities.ActiveAbility;
 import net.alvin.infinityforge.abilities.GauntletAbility;
 import net.alvin.infinityforge.abilities.HeldAbility;
@@ -9,96 +11,150 @@ import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
 
+import static net.alvin.infinityforge.client.input.GauntletKeybinds.SLOT_KEYS;
+
 public class GauntletHudRenderer {
     private static final Identifier HUD_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/gui/ability_bar.png");
+
+    private static final int MARGIN_X = 8;
+    private static final int MARGIN_Y = 12;
+    private static final int SLOT_SIZE = 22; // 1px outline + 2px padding + 16px icon + 2px padding + 1px outline
+    private static final int SLOT_STEP = 22; // 22px slot + 2px gap between slots
 
     public static void render(DrawContext context) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return;
-        if (client.currentScreen != null) return;
+        if (client.currentScreen instanceof HandledScreen) return;
 
         ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(client.player);
         if (gauntletStack == null) return;
 
         InfinityGauntletItem gauntlet = (InfinityGauntletItem) gauntletStack.getItem();
-        List<ActiveAbility> abilities = gauntlet.getActiveAbilities(gauntletStack);
+        List<GauntletAbility> abilities = gauntlet.getVisibleAbilities(gauntletStack);
         if (abilities.isEmpty()) return;
 
         int scrollOffset = GauntletClientState.scrollOffset;
-        int screenWidth = client.getWindow().getScaledWidth();
-        int screenHeight = client.getWindow().getScaledHeight();
-
         int visibleCount = Math.min(6, abilities.size());
-        int startX = (screenWidth - visibleCount * 20) / 2;
-        int startY = screenHeight - 55;
+
+        int startX = MARGIN_X;
+        int startY = MARGIN_Y;
+
+        if (abilities.size() > 6 && client.player.isSneaking()) {
+            if (scrollOffset > 0)  {
+                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                context.drawTexture(HUD_TEXTURE, startX + 7, startY - 8, 37, 0, 15, 15, 256, 256);
+            }
+
+            if (scrollOffset < abilities.size() - 6) {
+                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                context.drawTexture(HUD_TEXTURE, startX + 7, startY + visibleCount * SLOT_STEP + 2, 52, 0, 15, 15, 256, 256);
+            }
+        }
 
         for (int i = 0; i < visibleCount; i++) {
             int abilityIndex = scrollOffset + i;
             GauntletAbility ability = abilities.get(abilityIndex);
-            int slotY = startY + i * 20;
+            int slotY = startY + i * SLOT_STEP;
             renderAbilitySlot(context, ability, startX, slotY, i);
-        }
-
-        // Scroll indicators — only shown while sneaking since that's
-        // the only time scrolling is possible
-        if (abilities.size() > 6 && client.player.isSneaking()) {
-            boolean canScrollUp = scrollOffset > 0;
-            boolean canScrollDown = scrollOffset < abilities.size() - 6;
-
-            int hintX = startX + visibleCount * 20 + 4;
-            int hintY = startY + 4;
-
-            if (canScrollUp)
-                context.drawText(client.textRenderer, "▲", hintX, hintY, 0xFFFFFF, true);
-            if (canScrollDown)
-                context.drawText(client.textRenderer, "▼", hintX, hintY + 10, 0xFFFFFF, true);
         }
     }
 
     private static void renderAbilitySlot(DrawContext context, GauntletAbility ability,
-                                          int x, int y, int visualSlot) {
+                                          int x, int y, int index) {
         MinecraftClient client = MinecraftClient.getInstance();
 
-        // Neutral slot background — always drawn
-        context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 18, 18, 256, 256);
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22, 256, 256);
 
-        // Colored border from ability color
         int color = ability.getColor();
-        context.fill(x, y, x + 18, y + 1, color);
-        context.fill(x, y + 17, x + 18, y + 18, color);
-        context.fill(x, y, x + 1, y + 18, color);
-        context.fill(x + 17, y, x + 18, y + 18, color);
 
-        // Ability icon
+        context.fill(x + 1, y + 1, x + 21, y + 2,  color); // top
+        context.fill(x + 1, y + 20, x + 21, y + 21, color); // bottom
+        context.fill(x + 1, y + 1, x + 2,  y + 21, color); // left
+        context.fill(x + 20, y + 1, x + 21, y + 21, color); // right
+
         Identifier icon = ability.getIcon();
-        if (icon != null)
-            context.drawTexture(icon, x + 1, y + 1, 0, 0, 16, 16, 16, 16);
+        if (icon != null) {
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+            context.drawTexture(icon, x + 3, y + 3, 0, 0, 16, 16, 16, 16);
+        }
 
-        // Toggle indicator — drawn in bottom right corner when active
+        if (ability instanceof ActiveAbility) {
+            long currentTick = client.world.getTime();
+            float progress = GauntletClientState.getCooldownProgress(ability.getId(), currentTick);
+
+            if (progress < 1f) {
+                int barColor = interpolateColor(progress);
+                renderBar(context, x, y, progress, barColor);
+            }
+        } else if (ability instanceof ToggleAbility || ability instanceof HeldAbility) {
+            float progress = GauntletClientState.getChargeProgress(ability.getId());
+            if (progress < 1f) {
+                int barColor = interpolateColor(progress);
+                System.out.println("Progress: " + progress);
+                renderBar(context, x, y, progress, barColor);
+            }
+        }
+
+        // Toggle indicator
         if (ability instanceof ToggleAbility
                 && GauntletClientState.activeToggles.contains(ability.getId())) {
-            // u=18, v=0 — the toggle checkmark region in the sheet
-            context.drawTexture(HUD_TEXTURE, x + 10, y + 10, 18, 0, 8, 8, 256, 256);
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+            context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 23, 0, 7, 7, 256, 256);
         }
 
-        // Held indicator — drawn in bottom right corner while key is held
+        // Held indicator
         if (ability instanceof HeldAbility
                 && GauntletClientState.heldActive.contains(ability.getId())) {
-            // u=26, v=0 — the held indicator region in the sheet
-            context.drawTexture(HUD_TEXTURE, x + 10, y + 10, 26, 0, 8, 8, 256, 256);
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+            context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 30, 0, 7, 7, 256, 256);
         }
 
-        // Key number to the right of the slot
-        context.drawText(
-                client.textRenderer,
-                String.valueOf(visualSlot + 1),
-                x + 20, y + 5,
-                0xFFFFFF, true
-        );
+        if (client.currentScreen instanceof ChatScreen) {
+            context.drawText(
+                    client.textRenderer,
+                    ability.getName(),
+                    x + SLOT_SIZE + 4,
+                    y + 7,
+                    0xFFFFFF, true
+            );
+        } else {
+            context.drawText(
+                    client.textRenderer,
+                    SLOT_KEYS[index].getBoundKeyLocalizedText().getString(),
+                    x + SLOT_SIZE + 4,
+                    y + 7,
+                    0xFFFFFF, true
+            );
+        }
+    }
+
+    private static void renderBar(DrawContext context, int x, int y, float progress, int color) {
+        int barY = y + 17;
+        int barMaxWidth = 14;
+        int barHeight = 1;
+        int barLeftOffset = (SLOT_SIZE - barMaxWidth) / 2;
+
+        // Track
+        context.fill(x + barLeftOffset, barY, x + barLeftOffset + barMaxWidth, barY + barHeight, 0xC0333333);
+
+        // Fill
+        int filledWidth = (int) (barMaxWidth * progress);
+        if (filledWidth > 0)
+            context.fill(x + barLeftOffset, barY, x + barLeftOffset + filledWidth, barY + barHeight, color);
+    }
+
+    private static int interpolateColor(float progress) {
+        // Green at full, yellow at half, red at empty
+        int r = (int) (255 * (1f - progress));
+        int g = (int) (255 * progress);
+        return 0xC0000000 | ((r << 16) | (g << 8));
     }
 }

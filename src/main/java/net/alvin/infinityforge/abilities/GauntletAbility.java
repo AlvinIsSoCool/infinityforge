@@ -6,5 +6,9 @@ public sealed interface GauntletAbility permits ActiveAbility, HeldAbility, Pass
 {
     Identifier getId();
     Identifier getIcon();
+    String getName();
     int getColor();
+    int getCooldownTicks();
+    int getMaxChargeTicks();
+    int getRefillRateTicks();
 }

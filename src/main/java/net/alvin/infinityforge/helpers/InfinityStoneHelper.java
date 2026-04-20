@@ -2,7 +2,7 @@ package net.alvin.infinityforge.helpers;
 
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.InfinityStones;
+import net.alvin.infinityforge.registry.ModStones;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
 
@@ -16,27 +16,27 @@ public class InfinityStoneHelper {
     }
 
     public static boolean isHoldingPowerStone(PlayerEntity player) {
-        return isHoldingStoneType(player, InfinityStones.POWER);
+        return isHoldingStoneType(player, ModStones.POWER);
     }
 
     public static boolean isHoldingSpaceStone(PlayerEntity player) {
-        return isHoldingStoneType(player, InfinityStones.SPACE);
+        return isHoldingStoneType(player, ModStones.SPACE);
     }
 
     public static boolean isHoldingRealityStone(PlayerEntity player) {
-        return isHoldingStoneType(player, InfinityStones.REALITY);
+        return isHoldingStoneType(player, ModStones.REALITY);
     }
 
     public static boolean isHoldingSoulStone(PlayerEntity player) {
-        return isHoldingStoneType(player, InfinityStones.SOUL);
+        return isHoldingStoneType(player, ModStones.SOUL);
     }
 
     public static boolean isHoldingMindStone(PlayerEntity player) {
-        return isHoldingStoneType(player, InfinityStones.MIND);
+        return isHoldingStoneType(player, ModStones.MIND);
     }
 
     public static boolean isHoldingTimeStone(PlayerEntity player) {
-        return isHoldingStoneType(player, InfinityStones.TIME);
+        return isHoldingStoneType(player, ModStones.TIME);
     }
 
     public static InfinityStoneType getHoldingStoneType(PlayerEntity player) {
