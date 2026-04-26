@@ -13,7 +13,7 @@
 		"sources": "https://github.com/AlvinIsSoCool/infinityforge"
 	},
 	"license": "MIT",
-	"icon": "assets/infinityforge/modicon/icon.png",
+	"icon": "assets/infinityforge/modicon/modicon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
