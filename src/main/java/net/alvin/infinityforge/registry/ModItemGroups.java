@@ -21,7 +21,15 @@ public class ModItemGroups {
                         entries.add(ModItems.SOUL_STONE);
                         entries.add(ModItems.MIND_STONE);
                         entries.add(ModItems.TIME_STONE);
+
                         entries.add(ModItems.INFINITY_GAUNTLET);
+
+                        entries.add(ModItems.POWER_TESSERACT);
+                        entries.add(ModItems.SPACE_TESSERACT);
+                        entries.add(ModItems.REALITY_TESSERACT);
+                        entries.add(ModItems.SOUL_TESSERACT);
+                        entries.add(ModItems.MIND_TESSERACT);
+                        entries.add(ModItems.TIME_TESSERACT);
                     })).build());
 
     public static void initialize() {

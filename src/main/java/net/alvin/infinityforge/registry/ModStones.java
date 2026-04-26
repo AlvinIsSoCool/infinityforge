@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.abilities.ModAbilities;
 import net.alvin.infinityforge.infinity.HoldAbilities;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.InfinityStoneTypeRegistry;
@@ -28,7 +29,7 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onSpaceStoneUse,
                     HoldAbilities::onSpaceStoneHold,
-                    List.of(),
+                    List.of(ModAbilities.TELEPORT),
                     SPACE_STONE_BASE_COLOR,
                     SPACE_STONE_GLINT_COLOR
             )
@@ -39,7 +40,9 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onRealityStoneUse,
                     HoldAbilities::onRealityStoneHold,
-                    List.of(ModAbilities.WEATHER, ModAbilities.WEATHER_TOGGLE, ModAbilities.WEATHER_HELD),
+                    List.of(
+                            ModAbilities.WEATHER, ModAbilities.REAL_CHANGE_BLOCK
+                    ),
                     REALITY_STONE_BASE_COLOR,
                     REALITY_STONE_GLINT_COLOR
             )
@@ -50,7 +53,11 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onSoulStoneUse,
                     HoldAbilities::onSoulStoneHold,
-                    List.of(ModAbilities.HEALING),
+                    List.of(
+                            ModAbilities.HEALING, ModAbilities.HEALTH,
+                            ModAbilities.SATURATION, ModAbilities.WATER_BREATHING,
+                            ModAbilities.KILL
+                    ),
                     SOUL_STONE_BASE_COLOR,
                     SOUL_STONE_GLINT_COLOR
             )
@@ -61,7 +68,7 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onMindStoneUse,
                     HoldAbilities::onMindStoneHold,
-                    List.of(ModAbilities.AB_1, ModAbilities.AB_2, ModAbilities.AB_3, ModAbilities.AB_4),
+                    List.of(),
                     MIND_STONE_BASE_COLOR,
                     MIND_STONE_GLINT_COLOR
             )
@@ -76,6 +83,12 @@ public class ModStones {
                     TIME_STONE_BASE_COLOR,
                     TIME_STONE_GLINT_COLOR
             )
+    );
+
+    public static final List<InfinityStoneType> ALL_STONES = List.of(
+            ModStones.POWER, ModStones.SPACE,
+            ModStones.REALITY, ModStones.SOUL,
+            ModStones.MIND, ModStones.TIME
     );
 
     private static InfinityStoneType register(String name, InfinityStoneType type) {

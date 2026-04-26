@@ -97,7 +97,6 @@ public class GauntletHudRenderer {
             float progress = GauntletClientState.getChargeProgress(ability.getId());
             if (progress < 1f) {
                 int barColor = interpolateColor(progress);
-                System.out.println("Progress: " + progress);
                 renderBar(context, x, y, progress, barColor);
             }
         }

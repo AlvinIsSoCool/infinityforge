@@ -2,6 +2,7 @@ package net.alvin.infinityforge.mixin;
 
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
+import net.alvin.infinityforge.infinity.InfinityTesseractItem;
 import net.minecraft.client.render.entity.ItemEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.ItemEntity;
@@ -39,7 +40,8 @@ public class ItemEntityRendererMixin {
     )
     private void noRot(MatrixStack matrices, Quaternionf q, ItemEntity entity, float f, float g) {
         if (entity.getStack().getItem() instanceof InfinityStoneItem
-                || entity.getStack().getItem() instanceof InfinityGauntletItem) return;
+                || entity.getStack().getItem() instanceof InfinityGauntletItem
+                || entity.getStack().getItem() instanceof InfinityTesseractItem) return;
         matrices.multiply(q);
     }
 }

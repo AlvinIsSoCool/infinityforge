@@ -22,7 +22,7 @@ import java.util.List;
 import static net.alvin.infinityforge.server.event.GauntletConnectionEvents.cleanupPlayer;
 
 public class GauntletServerTick {
-    public static void initialize() {
+    public static void register() {
         ServerTickEvents.END_SERVER_TICK.register(GauntletServerTick::onTick);
     }
 
@@ -31,8 +31,11 @@ public class GauntletServerTick {
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
 
             if (stack == null) {
+                if (GauntletChargeState.wasEquipped(player)) {
+                    // Only fires once — the tick it becomes unequipped
+                    cleanupPlayer(player);
+                }
                 GauntletChargeState.setEquipped(player, false);
-                cleanupPlayer(player);
                 continue;
             }
 
@@ -78,6 +81,9 @@ public class GauntletServerTick {
                         t.onDisable(world, player, activeStones);
                         ServerPlayNetworking.send(player,
                                 new SyncToggleStateS2CPacket(t.getId(), false));
+                        // Force send zero charge so client bar empties correctly
+                        ServerPlayNetworking.send(player,
+                                new SyncChargeS2CPacket(t.getId(), 0, t.getMaxChargeTicks()));
                     }
                 } else {
                     if (oldCharge < t.getMaxChargeTicks()
@@ -108,6 +114,8 @@ public class GauntletServerTick {
                         h.onStop(world, player, activeStones);
                         ServerPlayNetworking.send(player,
                                 new SyncHeldForceStopS2CPacket(h.getId()));
+                        ServerPlayNetworking.send(player,
+                                new SyncChargeS2CPacket(h.getId(), 0, h.getMaxChargeTicks()));
                     }
                 } else {
                     if (oldCharge < h.getMaxChargeTicks()

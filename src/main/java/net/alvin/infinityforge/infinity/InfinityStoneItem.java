@@ -30,9 +30,6 @@ public class InfinityStoneItem extends Item {
     @Override
     public boolean isItemBarVisible(ItemStack stack) { return false; }
 
-    @Override
-    public boolean hasGlint(ItemStack stack) { return true; }
-
     public InfinityStoneType getStoneType() {
         return stoneType;
     }

@@ -13,7 +13,7 @@ public class GauntletKeybinds {
             GLFW.GLFW_KEY_V, GLFW.GLFW_KEY_B, GLFW.GLFW_KEY_N
     };
 
-    public static void initialize() {
+    public static void register() {
         for (int i = 0; i < 6; i++) {
             SLOT_KEYS[i] = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                     "key.infinityforge.slot_" + (i + 1),

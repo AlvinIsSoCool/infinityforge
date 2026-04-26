@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class GauntletClientPacketHandlers {
-    public static void initialize() {
+    public static void register() {
         ClientPlayNetworking.registerGlobalReceiver(
                 SyncToggleStateS2CPacket.TYPE, GauntletClientPacketHandlers::onToggleSync);
         ClientPlayNetworking.registerGlobalReceiver(

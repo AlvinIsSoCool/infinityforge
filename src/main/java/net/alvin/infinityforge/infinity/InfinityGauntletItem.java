@@ -88,43 +88,53 @@ public class InfinityGauntletItem extends Item {
     }
 
     public List<ActiveAbility> getActiveAbilities(ItemStack stack) {
-        return getAddedStones(stack).stream()
+        List<InfinityStoneType> activeStones = getAddedStones(stack);
+        return activeStones.stream()
                 .flatMap(s -> s.gauntletAbilities().stream())
                 .filter(a -> a instanceof ActiveAbility)
                 .map(a -> (ActiveAbility) a)
+                .filter(a -> a.meetsCondition(activeStones))
                 .collect(Collectors.toList());
     }
 
     public List<PassiveAbility> getPassiveAbilities(ItemStack stack) {
-        return getAddedStones(stack).stream()
+        List<InfinityStoneType> activeStones = getAddedStones(stack);
+        return activeStones.stream()
                 .flatMap(s -> s.gauntletAbilities().stream())
                 .filter(a -> a instanceof PassiveAbility)
                 .map(a -> (PassiveAbility) a)
+                .filter(a -> a.meetsCondition(activeStones))
                 .collect(Collectors.toList());
     }
 
     public List<ToggleAbility> getToggleAbilities(ItemStack stack) {
-        return getAddedStones(stack).stream()
+        List<InfinityStoneType> activeStones = getAddedStones(stack);
+        return activeStones.stream()
                 .flatMap(s -> s.gauntletAbilities().stream())
                 .filter(a -> a instanceof ToggleAbility)
                 .map(a -> (ToggleAbility) a)
+                .filter(a -> a.meetsCondition(activeStones))
                 .collect(Collectors.toList());
     }
 
     public List<HeldAbility> getHeldAbilities(ItemStack stack) {
-        return getAddedStones(stack).stream()
+        List<InfinityStoneType> activeStones = getAddedStones(stack);
+        return activeStones.stream()
                 .flatMap(s -> s.gauntletAbilities().stream())
                 .filter(a -> a instanceof HeldAbility)
                 .map(a -> (HeldAbility) a)
+                .filter(a -> a.meetsCondition(activeStones))
                 .collect(Collectors.toList());
     }
 
     public List<GauntletAbility> getVisibleAbilities(ItemStack stack) {
-        return getAddedStones(stack).stream()
+        List<InfinityStoneType> activeStones = getAddedStones(stack);
+        return activeStones.stream()
                 .flatMap(s -> s.gauntletAbilities().stream())
                 .filter(a -> a instanceof ActiveAbility
                         || a instanceof ToggleAbility
                         || a instanceof HeldAbility)
+                .filter(a -> a.meetsCondition(activeStones)) // condition check
                 .collect(Collectors.toList());
     }
 

@@ -19,6 +19,7 @@ import net.minecraft.world.dimension.DimensionOptions;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static net.alvin.infinityforge.helpers.TeleportationHelper.getSafeTeleportPos;
 
@@ -38,35 +39,32 @@ public class UseAbilities {
         MinecraftServer server = world.getServer();
         RegistryKey<World> currentKey = user.getWorld().getRegistryKey();
         Registry<DimensionOptions> registry = server.getRegistryManager().get(RegistryKeys.DIMENSION);
-        List<RegistryKey<World>> keys = new ArrayList<>();
 
+        List<RegistryKey<World>> keys = new ArrayList<>();
         for (RegistryKey<DimensionOptions> dimKey : registry.getKeys()) {
             RegistryKey<World> worldKey = RegistryKey.of(RegistryKeys.WORLD, dimKey.getValue());
-            if (!worldKey.getValue().equals(currentKey.getValue())) keys.add(worldKey);
+            if (!worldKey.equals(currentKey)) keys.add(worldKey);
         }
 
         if (keys.isEmpty()) return TypedActionResult.pass(stack);
 
         Collections.shuffle(keys);
-        for (RegistryKey<World> key : keys) {
-            ServerWorld target = server.getWorld(key);
-            if (target == null) continue;
+        ServerWorld target = server.getWorld(keys.get(0));
+        if (target == null) return TypedActionResult.pass(stack);
 
+        CompletableFuture.runAsync(() -> {
             BlockPos safeSpawn = getSafeTeleportPos(target);
-            System.out.println("Space Stone: spawnPos: " + safeSpawn.getX() + ", " + safeSpawn.getY() + ", " + safeSpawn.getZ());
-            FabricDimensions.teleport(user, target,
+            server.execute(() -> FabricDimensions.teleport(user, target,
                     new TeleportTarget(
                             new Vec3d(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5),
                             Vec3d.ZERO,
                             user.getYaw(),
                             user.getPitch()
                     )
-            );
+            ));
+        });
 
-            return TypedActionResult.success(stack);
-        }
-
-        return TypedActionResult.pass(stack);
+        return TypedActionResult.success(stack);
     }
 
     public static TypedActionResult<ItemStack> onRealityStoneUse(World world, PlayerEntity user, Hand hand) {

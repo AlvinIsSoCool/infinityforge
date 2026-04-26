@@ -1,0 +1,43 @@
+package net.alvin.infinityforge.abilities.impl.space;
+
+import net.alvin.infinityforge.abilities.base.ActiveAbility;
+import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.registry.ModStones;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.function.Supplier;
+
+public class TeleportAbility extends ActiveAbility {
+    public TeleportAbility(Identifier id, Identifier icon,
+                           String key, int color,
+                           Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+        super(id, icon, key, color, requiredStones, cooldownTicks);
+    }
+
+    @Override
+    public void onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
+        BlockHitResult hit;
+        if (activeStones.contains(ModStones.POWER))
+             hit = (BlockHitResult) player.raycast(100.0, 1.0f, false);
+        else
+             hit = (BlockHitResult) player.raycast(10.0, 1.0f, false);
+
+        if (hit.getType() == HitResult.Type.BLOCK) {
+            BlockPos pos = hit.getBlockPos().offset(hit.getSide());
+            player.requestTeleport(pos.getX(), pos.getY() + 1.0, pos.getZ());
+            player.damage(world.getDamageSources().fall(), 1.0f);
+            player.getWorld().playSound(
+                    null, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
+                    SoundCategory.PLAYERS, 1.0f, 1.1f
+            );
+        }
+    }
+}

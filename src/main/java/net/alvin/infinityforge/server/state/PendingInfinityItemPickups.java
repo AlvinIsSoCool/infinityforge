@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PendingStonePickups {
+public class PendingInfinityItemPickups {
     // UUID -> game tick when pickup packet was received
     private static final Map<UUID, Long> PENDING = new HashMap<>();
 
@@ -17,7 +17,9 @@ public class PendingStonePickups {
     public static boolean isPending(ServerPlayerEntity player) {
         Long tick = PENDING.get(player.getUuid());
         if (tick == null) return false;
-        // Clear after 5 ticks to avoid permanent suppression
+
+        // Clear after 5 ticks to avoid permanent suppression.
+        // (Handled anyway in ServerPlayConnectionEvents.DISCONNECT event).
         if (player.getServerWorld().getTime() - tick > 5) {
             PENDING.remove(player.getUuid());
             return false;

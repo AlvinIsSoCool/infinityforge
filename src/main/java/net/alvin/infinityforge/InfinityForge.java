@@ -3,6 +3,7 @@ package net.alvin.infinityforge;
 import net.alvin.infinityforge.registry.*;
 import net.alvin.infinityforge.infinity.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
+import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.packet.GauntletPacketHandlers;
 import net.alvin.infinityforge.server.tick.GauntletServerTick;
 import net.fabricmc.api.ModInitializer;
@@ -18,12 +19,13 @@ public class InfinityForge implements ModInitializer {
 	public void onInitialize() {
 		ModItems.initialize();
 		ModItemGroups.initialize();
+		ModStones.initialize();
 		//ModBlocks.initialize();
 		ModScreenHandlers.initialize();
-		ModStones.initialize();
 		InfinityStoneTypeRegistry.initialize();
-		GauntletPacketHandlers.initialize();
-		GauntletServerTick.initialize();
-		GauntletConnectionEvents.initialize();
+		GauntletPacketHandlers.register();
+		GauntletServerTick.register();
+		GauntletConnectionEvents.register();
+		InfinityStoneEventHandler.register();
 	}
 }

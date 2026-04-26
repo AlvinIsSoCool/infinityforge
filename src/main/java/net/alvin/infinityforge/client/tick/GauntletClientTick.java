@@ -19,7 +19,7 @@ import java.util.List;
 import static net.alvin.infinityforge.client.input.GauntletKeybinds.SLOT_KEYS;
 
 public class GauntletClientTick {
-    public static void initialize() {
+    public static void register() {
         ClientTickEvents.END_CLIENT_TICK.register(GauntletClientTick::onTick);
     }
 

@@ -9,10 +9,10 @@
 		"Alvin"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/AlvinIsSoCool/infinityforge",
+		"sources": "https://github.com/AlvinIsSoCool/infinityforge"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/infinityforge/modicon/icon.png",
 	"environment": "*",
 	"entrypoints": {

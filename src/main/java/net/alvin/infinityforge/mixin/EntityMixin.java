@@ -3,6 +3,7 @@ package net.alvin.infinityforge.mixin;
 import net.alvin.infinityforge.helpers.InfinityStoneHelper;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
+import net.alvin.infinityforge.infinity.InfinityTesseractItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,7 +41,21 @@ public class EntityMixin {
     private void makeCollidable(CallbackInfoReturnable<Boolean> cir) {
         if ((Object)this instanceof ItemEntity itemEntity) {
             if (itemEntity.getStack().getItem() instanceof InfinityStoneItem
-                    || itemEntity.getStack().getItem() instanceof InfinityGauntletItem) {
+                    || itemEntity.getStack().getItem() instanceof InfinityGauntletItem
+                    || itemEntity.getStack().getItem() instanceof InfinityTesseractItem) {
+                cir.setReturnValue(true);
+            }
+        }
+    }
+
+    @Inject(
+            method = "canHit()Z",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void makeHittable(CallbackInfoReturnable<Boolean> cir) {
+        if ((Object)this instanceof ItemEntity itemEntity) {
+            if (itemEntity.getStack().getItem() instanceof InfinityTesseractItem) {
                 cir.setReturnValue(true);
             }
         }

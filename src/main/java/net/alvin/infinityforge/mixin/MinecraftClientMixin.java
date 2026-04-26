@@ -1,7 +1,9 @@
 package net.alvin.infinityforge.mixin;
 
+import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.alvin.infinityforge.network.c2s.PickupStoneC2SPacket;
+import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.network.c2s.PickupInfinityItemC2SPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -36,7 +38,9 @@ public class MinecraftClientMixin {
         List<ItemEntity> items = player.getWorld().getEntitiesByClass(
                 ItemEntity.class,
                 box,
-                e -> e.getStack().getItem() instanceof InfinityStoneItem
+                e -> (e.getStack().getItem() instanceof InfinityStoneItem
+                        || e.getStack().getItem() instanceof InfinityGauntletItem
+                        || e.getStack().getItem() instanceof InfinityTesseractItem)
         );
         if (items.isEmpty()) return;
 
@@ -57,10 +61,9 @@ public class MinecraftClientMixin {
             Box entityBox = closest.getBoundingBox().expand(0.5);
 
             if (client.interactionManager != null && entityBox.raycast(eyePos, reach).isPresent()) {
-                ClientPlayNetworking.send(new PickupStoneC2SPacket(closest.getId()));
+                ClientPlayNetworking.send(new PickupInfinityItemC2SPacket(closest.getId()));
+                ci.cancel();
             }
-
-            ci.cancel();
         }
     }
 }

@@ -5,9 +5,24 @@
   "item.infinityforge.soul_stone": "Soul Stone",
   "item.infinityforge.mind_stone": "Mind Stone",
   "item.infinityforge.time_stone": "Time Stone",
+
+  "item.infinityforge.power_tesseract": "Power Tesseract",
+  "item.infinityforge.space_tesseract": "Space Tesseract",
+  "item.infinityforge.reality_tesseract": "Reality Tesseract",
+  "item.infinityforge.soul_tesseract": "Soul Tesseract",
+  "item.infinityforge.mind_tesseract": "Mind Tesseract",
+  "item.infinityforge.time_tesseract": "Time Tesseract",
+
   "item.infinityforge.infinity_gauntlet": "Infinity Gauntlet",
 
-  "itemgroup.infinity": "Infinity Group",
+  "itemgroup.infinity": "Infinity Forge",
 
-  "abilities.infinityforge.weather": "Set Weather"
+  "abilities.infinityforge.teleport": "Teleportation",
+  "abilities.infinityforge.weather": "Set Weather",
+  "abilities.infinityforge.real_change_block": "Change Block",
+  "abilities.infinityforge.kill": "Kill",
+  "abilities.infinityforge.healing": "Healing",
+  "abilities.infinityforge.health": "Health",
+  "abilities.infinityforge.saturation": "Soul Sustenance",
+  "abilities.infinityforge.water_breathing": "Water Breathing"
 }

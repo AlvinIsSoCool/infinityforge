@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.server.state.PendingStonePickups;
+import net.alvin.infinityforge.server.state.PendingInfinityItemPickups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
@@ -21,8 +21,8 @@ public class ServerItemUseMixin {
     )
     private void onInteractItem(ServerPlayerEntity player, World world,
                                 ItemStack stack, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        if (PendingStonePickups.isPending(player)) {
-            PendingStonePickups.clear(player);
+        if (PendingInfinityItemPickups.isPending(player)) {
+            PendingInfinityItemPickups.clear(player);
             cir.setReturnValue(ActionResult.FAIL);
         }
     }

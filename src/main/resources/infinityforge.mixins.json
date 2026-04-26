@@ -6,7 +6,8 @@
 		"ItemEntityMixin",
 		"PlayerEntityMixin",
 		"EntityMixin",
-		"ServerItemUseMixin"
+		"ServerItemUseMixin",
+		"ServerPlayNetworkHandlerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

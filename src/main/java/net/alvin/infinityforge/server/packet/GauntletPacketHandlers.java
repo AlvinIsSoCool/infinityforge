@@ -4,7 +4,8 @@ import net.alvin.infinityforge.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.abilities.base.HeldAbility;
 import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.alvin.infinityforge.network.c2s.PickupStoneC2SPacket;
+import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.network.c2s.PickupInfinityItemC2SPacket;
 import net.alvin.infinityforge.server.state.GauntletCooldownState;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
@@ -15,7 +16,7 @@ import net.alvin.infinityforge.network.c2s.GauntletHeldC2SPacket;
 import net.alvin.infinityforge.network.c2s.GauntletToggleC2SPacket;
 import net.alvin.infinityforge.network.s2c.SyncCooldownS2CPacket;
 import net.alvin.infinityforge.network.s2c.SyncToggleStateS2CPacket;
-import net.alvin.infinityforge.server.state.PendingStonePickups;
+import net.alvin.infinityforge.server.state.PendingInfinityItemPickups;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
@@ -25,11 +26,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.random.Random;
 
 import java.util.List;
 
 public class GauntletPacketHandlers {
-    public static void initialize() {
+    public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(
                 GauntletAbilityC2SPacket.TYPE, GauntletPacketHandlers::onAbilityPacket);
         ServerPlayNetworking.registerGlobalReceiver(
@@ -37,7 +39,7 @@ public class GauntletPacketHandlers {
         ServerPlayNetworking.registerGlobalReceiver(
                 GauntletHeldC2SPacket.TYPE, GauntletPacketHandlers::onHeldPacket);
         ServerPlayNetworking.registerGlobalReceiver(
-                PickupStoneC2SPacket.TYPE, GauntletPacketHandlers::onPickupStone);
+                PickupInfinityItemC2SPacket.TYPE, GauntletPacketHandlers::onPickupInfinityItem);
     }
 
     private static void onAbilityPacket(GauntletAbilityC2SPacket packet,
@@ -121,23 +123,28 @@ public class GauntletPacketHandlers {
         });
     }
 
-    private static void onPickupStone(PickupStoneC2SPacket packet,
-                                      ServerPlayerEntity player, PacketSender responseSender) {
+    private static void onPickupInfinityItem(PickupInfinityItemC2SPacket packet,
+                                             ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
-            PendingStonePickups.markPending(player);
+            if (PendingInfinityItemPickups.isPending(player)) return; // Check pending pickups.
+
             Entity entity = player.getServerWorld().getEntityById(packet.entityId());
             if (!(entity instanceof ItemEntity itemEntity)) return;
-            if (!(itemEntity.getStack().getItem() instanceof InfinityStoneItem)) return;
-
+            if (itemEntity.isRemoved()) return;
+            if (!(itemEntity.getStack().getItem() instanceof InfinityStoneItem
+                    || itemEntity.getStack().getItem() instanceof InfinityGauntletItem
+                    || itemEntity.getStack().getItem() instanceof InfinityTesseractItem)) return;
             if (itemEntity.squaredDistanceTo(player) > 16.0) return;
 
-            ItemStack stone = itemEntity.getStack().copy();
-
-            if (player.getInventory().insertStack(stone)) {
+            ItemStack item = itemEntity.getStack().copy();
+            if (player.getInventory().insertStack(item)) {
                 itemEntity.discard();
+                // Mark only after successful pickup.
+                PendingInfinityItemPickups.markPending(player);
+                Random random = player.getRandom();
                 player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
-                        0.2f, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7f + 1.0f) * 2.0f
+                        0.2f, ((random.nextFloat() - random.nextFloat()) * 0.7f + 1.0f) * 2.0f
                 );
             }
         });
