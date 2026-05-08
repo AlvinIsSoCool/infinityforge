@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.server.tick;
 
 import net.alvin.infinityforge.abilities.base.HeldAbility;
+import net.alvin.infinityforge.abilities.base.PassiveAbility;
 import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.server.state.GauntletChargeState;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
@@ -27,68 +28,86 @@ public class GauntletServerTick {
     }
 
     private static void onTick(MinecraftServer server) {
-        for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+        List<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
+        int count = players.size();
+        if (count == 0) return;
+
+        long time = server.getOverworld().getTime();
+        for (int idx = 0; idx < count; idx++) {
+            ServerPlayerEntity player = players.get(idx);
+
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
 
             if (stack == null) {
                 if (GauntletChargeState.wasEquipped(player)) {
-                    // Only fires once — the tick it becomes unequipped
                     cleanupPlayer(player);
                 }
                 GauntletChargeState.setEquipped(player, false);
                 continue;
             }
 
-            InfinityGauntletItem gauntlet = (InfinityGauntletItem) stack.getItem();
-            List<InfinityStoneType> activeStones = gauntlet.getAddedStones(stack);
             ServerWorld world = (ServerWorld) player.getWorld();
 
-            // Sync all charges on re-equip
+            List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+            List<PassiveAbility> passiveAbilities = InfinityGauntletItem.getPassiveAbilities(activeStones);
+            List<ToggleAbility> toggleAbilities = InfinityGauntletItem.getToggleAbilities(activeStones);
+            List<HeldAbility> heldAbilities = InfinityGauntletItem.getHeldAbilities(activeStones);
+
             boolean equippedLastTick = GauntletChargeState.wasEquipped(player);
             GauntletChargeState.setEquipped(player, true);
 
             if (!equippedLastTick) {
-                for (ToggleAbility t : gauntlet.getToggleAbilities(stack)) {
+                for (int i = 0; i < toggleAbilities.size(); i++) {
+                    ToggleAbility t = toggleAbilities.get(i);
                     int charge = GauntletChargeState.getCharge(player, t.getId(), t.getMaxChargeTicks());
                     ServerPlayNetworking.send(player,
                             new SyncChargeS2CPacket(t.getId(), charge, t.getMaxChargeTicks()));
                     ServerPlayNetworking.send(player,
                             new SyncToggleStateS2CPacket(t.getId(), GauntletToggleState.isActive(player, t.getId())));
                 }
-                for (HeldAbility h : gauntlet.getHeldAbilities(stack)) {
+                for (int i = 0; i < heldAbilities.size(); i++) {
+                    HeldAbility h = heldAbilities.get(i);
                     int charge = GauntletChargeState.getCharge(player, h.getId(), h.getMaxChargeTicks());
                     ServerPlayNetworking.send(player,
                             new SyncChargeS2CPacket(h.getId(), charge, h.getMaxChargeTicks()));
                 }
             }
 
-            // Passives
-            gauntlet.getPassiveAbilities(stack)
-                    .forEach(p -> p.onTick(world, player, activeStones));
+            // Passive abilities
+            for (int i = 0; i < passiveAbilities.size(); i++) {
+                passiveAbilities.get(i).onTick(world, player, activeStones);
+            }
 
             // Toggle abilities
-            for (ToggleAbility t : gauntlet.getToggleAbilities(stack)) {
+            for (int i = 0; i < toggleAbilities.size(); i++) {
+                ToggleAbility t = toggleAbilities.get(i);
                 boolean active = GauntletToggleState.isActive(player, t.getId());
                 int oldCharge = GauntletChargeState.getCharge(player, t.getId(), t.getMaxChargeTicks());
                 int newCharge = oldCharge;
 
                 if (active) {
                     t.onTick(world, player, activeStones);
-                    newCharge = Math.max(0, oldCharge - 1);
+                    if (t.getMaxChargeTicks() != -1) {
+                        newCharge = Math.max(0, oldCharge - 1);
 
-                    if (newCharge == 0) {
-                        GauntletToggleState.setActive(player, t.getId(), false);
-                        t.onDisable(world, player, activeStones);
-                        ServerPlayNetworking.send(player,
-                                new SyncToggleStateS2CPacket(t.getId(), false));
-                        // Force send zero charge so client bar empties correctly
-                        ServerPlayNetworking.send(player,
-                                new SyncChargeS2CPacket(t.getId(), 0, t.getMaxChargeTicks()));
+                        if (newCharge == 0) {
+                            GauntletToggleState.setActive(player, t.getId(), false);
+                            t.onDisable(world, player, activeStones);
+                            ServerPlayNetworking.send(player,
+                                    new SyncToggleStateS2CPacket(t.getId(), false));
+                            ServerPlayNetworking.send(player,
+                                    new SyncChargeS2CPacket(t.getId(), 0, t.getMaxChargeTicks()));
+                        }
                     }
                 } else {
-                    if (oldCharge < t.getMaxChargeTicks()
-                            && world.getTime() % t.getRefillRateTicks() == 0) {
-                        newCharge = oldCharge + 1;
+                    // Staggered by player index. No tick spike potential. Untested on multiplayer!
+                    if (t.getMaxChargeTicks() != -1 && oldCharge < t.getMaxChargeTicks()) {
+                        int rate = t.getRefillRateTicks();
+                        if (rate > 0 && (time + idx) % rate == 0) {
+                            newCharge = oldCharge + 1;
+                        } else if (rate < 0) {
+                            newCharge = Math.min(t.getMaxChargeTicks(), oldCharge + (-rate));
+                        }
                     }
                 }
 
@@ -100,27 +119,34 @@ public class GauntletServerTick {
             }
 
             // Held abilities
-            for (HeldAbility h : gauntlet.getHeldAbilities(stack)) {
+            for (int i = 0; i < heldAbilities.size(); i++) {
+                HeldAbility h = heldAbilities.get(i);
                 boolean active = GauntletHeldState.isHeld(player, h.getId());
                 int oldCharge = GauntletChargeState.getCharge(player, h.getId(), h.getMaxChargeTicks());
                 int newCharge = oldCharge;
 
                 if (active) {
                     h.onTick(world, player, activeStones);
-                    newCharge = Math.max(0, oldCharge - 1);
+                    if (h.getMaxChargeTicks() != -1) {
+                        newCharge = Math.max(0, oldCharge - 1);
 
-                    if (newCharge == 0) {
-                        GauntletHeldState.setHeld(player, h.getId(), false);
-                        h.onStop(world, player, activeStones);
-                        ServerPlayNetworking.send(player,
-                                new SyncHeldForceStopS2CPacket(h.getId()));
-                        ServerPlayNetworking.send(player,
-                                new SyncChargeS2CPacket(h.getId(), 0, h.getMaxChargeTicks()));
+                        if (newCharge == 0) {
+                            GauntletHeldState.setHeld(player, h.getId(), false);
+                            h.onStop(world, player, activeStones);
+                            ServerPlayNetworking.send(player,
+                                    new SyncHeldForceStopS2CPacket(h.getId()));
+                            ServerPlayNetworking.send(player,
+                                    new SyncChargeS2CPacket(h.getId(), 0, h.getMaxChargeTicks()));
+                        }
                     }
                 } else {
-                    if (oldCharge < h.getMaxChargeTicks()
-                            && world.getTime() % h.getRefillRateTicks() == 0) {
-                        newCharge = oldCharge + 1;
+                    if (h.getMaxChargeTicks() != -1 && oldCharge < h.getMaxChargeTicks()) {
+                        int rate = h.getRefillRateTicks();
+                        if (rate > 0 && (time + idx) % rate == 0) {
+                            newCharge = oldCharge + 1;
+                        } else if (rate < 0) {
+                            newCharge = Math.min(h.getMaxChargeTicks(), oldCharge + (-rate));
+                        }
                     }
                 }
 

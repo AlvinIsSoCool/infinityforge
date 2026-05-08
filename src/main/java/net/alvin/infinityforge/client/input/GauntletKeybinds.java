@@ -5,7 +5,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
-// GauntletKeybinds.java — keybind registration, holds SLOT_KEYS
+// KeyBind registration
 public class GauntletKeybinds {
     public static final KeyBinding[] SLOT_KEYS = new KeyBinding[6];
     private static final int[] SLOT_GLFW_KEYS = {

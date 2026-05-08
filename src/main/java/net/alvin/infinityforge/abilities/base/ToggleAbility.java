@@ -15,8 +15,24 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     private final Identifier icon;
     private final String key;
     private final int color;
+    /**
+     * Provides the list of stones needed for the ability.
+     * Needs to include the stone that registers the ability.
+     * e.g. A space stone ability requiring the power stone would provide
+     * required stones as so: {@code () -> List.of(ModStones.POWER, ModStones.SPACE)}
+     */
     private final Supplier<List<InfinityStoneType>> requiredStones;
+    /**
+     * Controls maximum charge for the ability.
+     * -1 indicates no charge. Infinite usage.
+     */
     private final int maxChargeTicks;
+    /**
+     * Controls charge refill speed.
+     * Positive: ticks per +1 charge (e.g. 2 = one charge every 2 ticks)
+     * Zero: no refill
+     * Negative: charges per tick (e.g. -4 = four charges per tick)
+     */
     private final int refillRateTicks;
 
     public ToggleAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
@@ -47,7 +63,6 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     }
 
     public int getMaxChargeTicks() { return maxChargeTicks; }
-
     public int getRefillRateTicks() { return refillRateTicks; }
 
     public abstract void onEnable(ServerWorld world, ServerPlayerEntity player,

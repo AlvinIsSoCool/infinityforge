@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.client.render;
 
+import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.registry.ModItems;
@@ -22,7 +23,7 @@ public class ModItemRenderers {
 
             Identifier stoneId = typeId.withPath(typeId.getPath() + "_stone");
             Item stone = Registries.ITEM.get(stoneId);
-            System.out.println("Registering renderer for: " + stoneId + " item: " + stone);
+            InfinityForge.LOGGER.info("Registering renderer for: " + stoneId + " item: " + stone);
             BuiltinItemRendererRegistry.INSTANCE.register(stone,
                     (stack, mode,
                      matrices, vertexConsumers,
@@ -32,7 +33,7 @@ public class ModItemRenderers {
 
             Identifier tesseractId = typeId.withPath(typeId.getPath() + "_tesseract");
             Item tesseract = Registries.ITEM.get(tesseractId);
-            System.out.println("Registering renderer for: " + tesseractId + " item: " + tesseract);
+            InfinityForge.LOGGER.info("Registering renderer for: " + tesseractId + " item: " + tesseract);
             BuiltinItemRendererRegistry.INSTANCE.register(tesseract,
                     (stack, mode,
                      matrices, vertexConsumers,

@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.mixin;
 
+import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.helpers.InfinityStoneHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,12 +18,12 @@ public class LivingEntityMixin {
             require = 1
     )
     private void cancelKnockback(double strength, double x, double z, CallbackInfo ci) {
-        System.out.println("LivingEntityMixin: Mixin called!");
+        InfinityForge.LOGGER.info("LivingEntityMixin: Mixin called!");
 
         if ((Object)this instanceof PlayerEntity player) {
-            System.out.println("LivingEntityMixin: Is Player.");
+            InfinityForge.LOGGER.info("LivingEntityMixin: Is Player.");
             if (InfinityStoneHelper.isHoldingPowerStone(player)) {
-                System.out.println("LivingEntityMixin: Knockback cancelled!");
+                InfinityForge.LOGGER.info("LivingEntityMixin: Knockback cancelled!");
                 ci.cancel();
             }
         }

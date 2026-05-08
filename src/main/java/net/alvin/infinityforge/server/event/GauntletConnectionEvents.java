@@ -33,7 +33,7 @@ public class GauntletConnectionEvents {
         ServerWorld world = (ServerWorld) player.getWorld();
 
         List<InfinityStoneType> activeStones = stack != null
-                ? ((InfinityGauntletItem) stack.getItem()).getAddedStones(stack)
+                ? InfinityGauntletItem.getAddedStones(stack)
                 : List.of();
 
         for (Identifier id : new HashSet<>(GauntletToggleState.getActive(player))) {
@@ -51,9 +51,8 @@ public class GauntletConnectionEvents {
         for (Identifier id : new HashSet<>(GauntletAttributeState.getActive(player))) {
             GauntletAbility ability = GauntletAbilityRegistry.get(id);
             if (ability instanceof AttributeModifierAbility a) {
-                a.onRemove(player);
+                a.onRemove(player, id);
             }
-            GauntletAttributeState.markInactive(player, id);
         }
 
         GauntletCooldownState.clear(player);

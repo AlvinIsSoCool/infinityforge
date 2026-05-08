@@ -2,6 +2,7 @@ package net.alvin.infinityforge.client.render;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.render.*;
@@ -15,7 +16,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class InfinityStoneRenderer {
-    private static final Identifier STONE_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/white.png");
+    private static final Identifier STONE_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/stone.png");
     protected static final float SIZE = 0.0625f;
 
     public void renderInternal(ItemStack stack, ModelTransformationMode mode,
@@ -25,12 +26,17 @@ public class InfinityStoneRenderer {
         Matrix3f norm = matrices.peek().getNormalMatrix();
 
         int baseColor = stoneType.baseColor();
-        int glowColor = stoneType.glintColor();
+        int glintColor = stoneType.glintColor();
 
         VertexConsumer baseVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(STONE_TEXTURE));
         renderCube(baseVc, pos, norm, SIZE, baseColor, 255, light, overlay);
 
-        if (ModRenderLayers.stoneGlintShader != null
+        if (FabricLoader.getInstance().isModLoaded("iris")) {
+            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(STONE_TEXTURE));
+            float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
+            int glowAlpha = (int)(80 + 175 * pulse);
+            renderCube(glowVc, pos, norm, SIZE * 1.05f, glintColor, glowAlpha, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay);
+        } else if (ModRenderLayers.stoneGlintShader != null
                 && vertexConsumers instanceof VertexConsumerProvider.Immediate immediate) {
             immediate.draw();
 
@@ -40,9 +46,9 @@ public class InfinityStoneRenderer {
 
             if (colorUniform != null)
                 colorUniform.set(
-                        ((glowColor >> 16) & 0xFF) / 255f,
-                        ((glowColor >> 8)  & 0xFF) / 255f,
-                        ( glowColor        & 0xFF) / 255f,
+                        ((glintColor >> 16) & 0xFF) / 255f,
+                        ((glintColor >> 8)  & 0xFF) / 255f,
+                        ( glintColor        & 0xFF) / 255f,
                         0.9f
                 );
             if (timeUniform != null)

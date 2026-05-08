@@ -6,6 +6,7 @@ import net.alvin.infinityforge.abilities.base.HeldAbility;
 import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.network.c2s.GauntletAbilityC2SPacket;
 import net.alvin.infinityforge.network.c2s.GauntletHeldC2SPacket;
 import net.alvin.infinityforge.network.c2s.GauntletToggleC2SPacket;
@@ -26,17 +27,14 @@ public class GauntletClientTick {
     private static void onTick(MinecraftClient client) {
         if (client.player == null) return;
 
-        ItemStack gauntlet = InfinityGauntletItem.findGauntlet(client.player);
-        InfinityGauntletItem gauntletItem = gauntlet != null
-                ? (InfinityGauntletItem) gauntlet.getItem() : null;
-
-        List<GauntletAbility> abilities = gauntletItem != null
-                ? gauntletItem.getVisibleAbilities(gauntlet)
+        ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(client.player);
+        List<InfinityStoneType> activeStones = gauntletStack != null
+                ? InfinityGauntletItem.getAddedStones(gauntletStack)
                 : List.of();
+        List<GauntletAbility> abilities = InfinityGauntletItem.getVisibleAbilities(activeStones);
 
         GauntletClientState.scrollOffset = abilities.size() <= 6 ? 0
                 : Math.min(Math.max(GauntletClientState.scrollOffset, 0), abilities.size() - 6);
-
         for (int slot = 0; slot < 6; slot++) {
             int index = GauntletClientState.scrollOffset + slot;
             if (index >= abilities.size()) continue;

@@ -15,6 +15,12 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
     private final Identifier icon;
     private final String key;
     private final int color;
+    /**
+     * Provides the list of stones needed for the ability.
+     * Needs to include the stone that registers the ability.
+     * e.g. A soul stone ability requiring the power stone would provide
+     * required stones as so: {@code () -> List.of(ModStones.POWER, ModStones.SOUL)}
+     */
     private final Supplier<List<InfinityStoneType>> requiredStones;
 
     public PassiveAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {

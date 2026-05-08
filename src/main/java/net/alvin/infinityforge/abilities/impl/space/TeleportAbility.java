@@ -23,21 +23,28 @@ public class TeleportAbility extends ActiveAbility {
     }
 
     @Override
-    public void onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
+    public boolean onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
         BlockHitResult hit;
         if (activeStones.contains(ModStones.POWER))
-             hit = (BlockHitResult) player.raycast(100.0, 1.0f, false);
+             hit = (BlockHitResult) player.raycast(100.0, 0f, false);
         else
-             hit = (BlockHitResult) player.raycast(10.0, 1.0f, false);
+             hit = (BlockHitResult) player.raycast(10.0, 0f, false);
 
         if (hit.getType() == HitResult.Type.BLOCK) {
             BlockPos pos = hit.getBlockPos().offset(hit.getSide());
+            player.getWorld().playSound(
+                    null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
+                    SoundCategory.PLAYERS, 1.0f, 1.1f
+            );
             player.requestTeleport(pos.getX(), pos.getY() + 1.0, pos.getZ());
-            player.damage(world.getDamageSources().fall(), 1.0f);
             player.getWorld().playSound(
                     null, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                     SoundCategory.PLAYERS, 1.0f, 1.1f
             );
+            player.damage(world.getDamageSources().fall(), 1.0f);
+            return true;
         }
+
+        return false;
     }
 }

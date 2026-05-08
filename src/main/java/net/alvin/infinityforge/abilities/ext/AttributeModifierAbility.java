@@ -36,11 +36,12 @@ public abstract class AttributeModifierAbility extends PassiveAbility {
         }
     }
 
-    public void onRemove(ServerPlayerEntity player) {
+    public void onRemove(ServerPlayerEntity player, Identifier abilityId) {
         for (Map.Entry<EntityAttribute, EntityAttributeModifier> entry : modifiers.entrySet()) {
             EntityAttributeInstance instance = player.getAttributeInstance(entry.getKey());
             if (instance != null && instance.hasModifier(entry.getValue())) {
                 instance.removeModifier(entry.getValue());
+                GauntletAttributeState.markInactive(player, abilityId);
             }
         }
     }

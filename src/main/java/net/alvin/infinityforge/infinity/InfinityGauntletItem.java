@@ -1,10 +1,16 @@
 package net.alvin.infinityforge.infinity;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.abilities.base.*;
 import net.alvin.infinityforge.screen.GauntletScreenHandler;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -23,12 +29,12 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class InfinityGauntletItem extends Item {
     private static final String STONES_KEY = "Stones";
+    private static final WeakHashMap<ItemStack, List<InfinityStoneType>> STONE_CACHE
+            = new WeakHashMap<>();
 
     public InfinityGauntletItem() {
         super(new FabricItemSettings().maxDamage(0).fireproof());
@@ -57,85 +63,107 @@ public class InfinityGauntletItem extends Item {
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 
-    public List<InfinityStoneType> getAddedStones(ItemStack stack) {
+    @Override
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+        if (slot == EquipmentSlot.MAINHAND) {
+            ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
+                    Item.ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", 9.0, EntityAttributeModifier.Operation.ADDITION));
+            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(
+                    Item.ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", -2.8, EntityAttributeModifier.Operation.ADDITION));
+            return builder.build();
+        }
+        return super.getAttributeModifiers(slot);
+    }
+
+    public static List<InfinityStoneType> getAddedStones(ItemStack stack) {
+        List<InfinityStoneType> cached = STONE_CACHE.get(stack);
+        if (cached != null) return cached;
+
         NbtCompound nbt = stack.getNbt();
         if (nbt == null || !nbt.contains(STONES_KEY)) return List.of();
 
         NbtList list = nbt.getList(STONES_KEY, NbtElement.STRING_TYPE);
-        return list.stream()
-                .map(e -> InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.get(new Identifier(e.asString())))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        List<InfinityStoneType> result = new ArrayList<>(list.size());
+        for (int i = 0; i < list.size(); i++) {
+            InfinityStoneType type = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY
+                    .get(new Identifier(list.getString(i)));
+            if (type != null) result.add(type);
+        }
+
+        List<InfinityStoneType> immutable = Collections.unmodifiableList(result);
+        STONE_CACHE.put(stack, immutable);
+        return immutable;
     }
 
-    public void addStone(ItemStack stack, InfinityStoneType stone) {
+    public static void addStones(ItemStack stack, List<InfinityStoneType> stones) {
         NbtCompound nbt = stack.getOrCreateNbt();
-        NbtList list = nbt.getList(STONES_KEY, NbtElement.STRING_TYPE);
-        list.add(NbtString.of(InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stone).toString()));
+        NbtList list = new NbtList();
+        for (InfinityStoneType stone : stones) {
+            list.add(NbtString.of(
+                    InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stone).toString()
+            ));
+        }
         nbt.put(STONES_KEY, list);
-        System.out.println("Added " + InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stone) + " to the gauntlet!");
+        STONE_CACHE.remove(stack);
     }
 
-    public void addStones(ItemStack stack, List<InfinityStoneType> stones) {
-        stack.getOrCreateNbt().put(STONES_KEY, new NbtList());
-        stones.forEach(stone -> addStone(stack, stone));
+    public static List<ActiveAbility> getActiveAbilities(List<InfinityStoneType> activeStones) {
+        List<ActiveAbility> result = new ArrayList<>();
+        for (InfinityStoneType stone : activeStones) {
+            for (GauntletAbility ability : stone.gauntletAbilities()) {
+                if (ability instanceof ActiveAbility a && a.meetsCondition(activeStones))
+                    result.add(a);
+            }
+        }
+        return result;
     }
 
-    public List<GauntletAbility> getGauntletAbilities(ItemStack stack) {
-        return getAddedStones(stack).stream()
-                .flatMap(s -> s.gauntletAbilities().stream())
-                .collect(Collectors.toList());
+    public static List<PassiveAbility> getPassiveAbilities(List<InfinityStoneType> activeStones) {
+        List<PassiveAbility> result = new ArrayList<>();
+        for (InfinityStoneType stone : activeStones) {
+            for (GauntletAbility ability : stone.gauntletAbilities()) {
+                if (ability instanceof PassiveAbility p && p.meetsCondition(activeStones))
+                    result.add(p);
+            }
+        }
+        return result;
     }
 
-    public List<ActiveAbility> getActiveAbilities(ItemStack stack) {
-        List<InfinityStoneType> activeStones = getAddedStones(stack);
-        return activeStones.stream()
-                .flatMap(s -> s.gauntletAbilities().stream())
-                .filter(a -> a instanceof ActiveAbility)
-                .map(a -> (ActiveAbility) a)
-                .filter(a -> a.meetsCondition(activeStones))
-                .collect(Collectors.toList());
+    public static List<ToggleAbility> getToggleAbilities(List<InfinityStoneType> activeStones) {
+        List<ToggleAbility> result = new ArrayList<>();
+        for (InfinityStoneType stone : activeStones) {
+            for (GauntletAbility ability : stone.gauntletAbilities()) {
+                if (ability instanceof ToggleAbility t && t.meetsCondition(activeStones))
+                    result.add(t);
+            }
+        }
+        return result;
     }
 
-    public List<PassiveAbility> getPassiveAbilities(ItemStack stack) {
-        List<InfinityStoneType> activeStones = getAddedStones(stack);
-        return activeStones.stream()
-                .flatMap(s -> s.gauntletAbilities().stream())
-                .filter(a -> a instanceof PassiveAbility)
-                .map(a -> (PassiveAbility) a)
-                .filter(a -> a.meetsCondition(activeStones))
-                .collect(Collectors.toList());
+    public static List<HeldAbility> getHeldAbilities(List<InfinityStoneType> activeStones) {
+        List<HeldAbility> result = new ArrayList<>();
+        for (InfinityStoneType stone : activeStones) {
+            for (GauntletAbility ability : stone.gauntletAbilities()) {
+                if (ability instanceof HeldAbility h && h.meetsCondition(activeStones))
+                    result.add(h);
+            }
+        }
+        return result;
     }
 
-    public List<ToggleAbility> getToggleAbilities(ItemStack stack) {
-        List<InfinityStoneType> activeStones = getAddedStones(stack);
-        return activeStones.stream()
-                .flatMap(s -> s.gauntletAbilities().stream())
-                .filter(a -> a instanceof ToggleAbility)
-                .map(a -> (ToggleAbility) a)
-                .filter(a -> a.meetsCondition(activeStones))
-                .collect(Collectors.toList());
-    }
-
-    public List<HeldAbility> getHeldAbilities(ItemStack stack) {
-        List<InfinityStoneType> activeStones = getAddedStones(stack);
-        return activeStones.stream()
-                .flatMap(s -> s.gauntletAbilities().stream())
-                .filter(a -> a instanceof HeldAbility)
-                .map(a -> (HeldAbility) a)
-                .filter(a -> a.meetsCondition(activeStones))
-                .collect(Collectors.toList());
-    }
-
-    public List<GauntletAbility> getVisibleAbilities(ItemStack stack) {
-        List<InfinityStoneType> activeStones = getAddedStones(stack);
-        return activeStones.stream()
-                .flatMap(s -> s.gauntletAbilities().stream())
-                .filter(a -> a instanceof ActiveAbility
-                        || a instanceof ToggleAbility
-                        || a instanceof HeldAbility)
-                .filter(a -> a.meetsCondition(activeStones)) // condition check
-                .collect(Collectors.toList());
+    public static List<GauntletAbility> getVisibleAbilities(List<InfinityStoneType> activeStones) {
+        List<GauntletAbility> result = new ArrayList<>();
+        for (InfinityStoneType stone : activeStones) {
+            for (GauntletAbility ability : stone.gauntletAbilities()) {
+                if ((ability instanceof ActiveAbility
+                        || ability instanceof ToggleAbility
+                        || ability instanceof HeldAbility)
+                        && ability.meetsCondition(activeStones))
+                    result.add(ability);
+            }
+        }
+        return result;
     }
 
     @Nullable
@@ -143,6 +171,14 @@ public class InfinityGauntletItem extends Item {
         for (Hand hand : Hand.values()) {
             ItemStack stack = player.getStackInHand(hand);
             if (stack.getItem() instanceof InfinityGauntletItem) return stack;
+        }
+        return null;
+    }
+
+    @Nullable
+    public static <T extends GauntletAbility> T findAbility(List<T> abilities, Identifier id) {
+        for (T ability : abilities) {
+            if (ability.getId().equals(id)) return ability;
         }
         return null;
     }

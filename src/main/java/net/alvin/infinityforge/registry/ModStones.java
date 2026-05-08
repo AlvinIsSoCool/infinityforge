@@ -29,7 +29,7 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onSpaceStoneUse,
                     HoldAbilities::onSpaceStoneHold,
-                    List.of(ModAbilities.TELEPORT),
+                    List.of(ModAbilities.TELEPORT, ModAbilities.FORCEFIELD),
                     SPACE_STONE_BASE_COLOR,
                     SPACE_STONE_GLINT_COLOR
             )
@@ -56,7 +56,7 @@ public class ModStones {
                     List.of(
                             ModAbilities.HEALING, ModAbilities.HEALTH,
                             ModAbilities.SATURATION, ModAbilities.WATER_BREATHING,
-                            ModAbilities.KILL
+                            ModAbilities.KILL, ModAbilities.SNAP
                     ),
                     SOUL_STONE_BASE_COLOR,
                     SOUL_STONE_GLINT_COLOR
@@ -68,7 +68,7 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onMindStoneUse,
                     HoldAbilities::onMindStoneHold,
-                    List.of(),
+                    List.of(ModAbilities.FLIGHT),
                     MIND_STONE_BASE_COLOR,
                     MIND_STONE_GLINT_COLOR
             )

@@ -2,9 +2,11 @@ package net.alvin.infinityforge.abilities;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.abilities.impl.mind.FlightAbility;
 import net.alvin.infinityforge.abilities.impl.reality.WeatherAbility;
 import net.alvin.infinityforge.abilities.impl.reality.RealChangeBlockAbility;
 import net.alvin.infinityforge.abilities.impl.soul.*;
+import net.alvin.infinityforge.abilities.impl.space.ForcefieldAbility;
 import net.alvin.infinityforge.abilities.impl.space.TeleportAbility;
 import net.alvin.infinityforge.abilities.registry.GauntletAbilityRegistry;
 import net.alvin.infinityforge.registry.ModStones;
@@ -26,7 +28,18 @@ public class ModAbilities {
                     new Identifier("minecraft", "textures/item/ender_pearl.png"),
                     "abilities." + InfinityForge.MOD_ID + ".teleport",
                     SPACE_STONE_ABILITY_COLOR,
-                    List::of, 0
+                    List::of, 100
+            )
+    );
+
+    public static final GauntletAbility FORCEFIELD = GauntletAbilityRegistry.register(
+            new ForcefieldAbility(
+                    new Identifier(InfinityForge.MOD_ID, "forcefield"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/forcefield.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".forcefield",
+                    SPACE_STONE_ABILITY_COLOR,
+                    List::of,
+                    400, -4
             )
     );
 
@@ -46,7 +59,7 @@ public class ModAbilities {
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/real_change_block.png"),
                     "abilities." + InfinityForge.MOD_ID + ".real_change_block",
                     REALITY_STONE_ABILITY_COLOR,
-                    () -> List.of(ModStones.POWER, ModStones.REALITY), 0
+                    () -> List.of(ModStones.POWER, ModStones.REALITY), 100
             )
     );
 
@@ -58,6 +71,25 @@ public class ModAbilities {
                     "abilities." + InfinityForge.MOD_ID + ".kill",
                     SOUL_STONE_ABILITY_COLOR,
                     () -> List.of(ModStones.POWER, ModStones.SOUL), 100
+            )
+    );
+
+    public static final GauntletAbility HEALTH = GauntletAbilityRegistry.register(
+            new HealthAbility(
+                    new Identifier(InfinityForge.MOD_ID, "health"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/health.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".health",
+                    REALITY_STONE_ABILITY_COLOR,
+                    List::of,
+                    Map.of(
+                            EntityAttributes.GENERIC_MAX_HEALTH,
+                            new EntityAttributeModifier(
+                                    UUID.randomUUID(),
+                                    "Health",
+                                    20,
+                                    EntityAttributeModifier.Operation.ADDITION
+                            )
+                    )
             )
     );
 
@@ -91,22 +123,25 @@ public class ModAbilities {
             )
     );
 
-    public static final GauntletAbility HEALTH = GauntletAbilityRegistry.register(
-            new HealthAbility(
-                    new Identifier(InfinityForge.MOD_ID, "health"),
-                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/health.png"),
-                    "abilities." + InfinityForge.MOD_ID + ".health",
-                    REALITY_STONE_ABILITY_COLOR,
-                    List::of,
-                    Map.of(
-                        EntityAttributes.GENERIC_MAX_HEALTH,
-                        new EntityAttributeModifier(
-                                UUID.randomUUID(),
-                                "Health",
-                                20,
-                                EntityAttributeModifier.Operation.ADDITION
-                        )
-                    )
+    public static final GauntletAbility FLIGHT = GauntletAbilityRegistry.register(
+            new FlightAbility(
+                    new Identifier(InfinityForge.MOD_ID, "flight"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/flight.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".flight",
+                    MIND_STONE_ABILITY_COLOR,
+                    () -> List.of(ModStones.POWER, ModStones.MIND),
+                    -1, 0
+            )
+    );
+
+    public static final GauntletAbility SNAP = GauntletAbilityRegistry.register(
+            new SnapAbility(
+                    new Identifier(InfinityForge.MOD_ID, "snap"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/snap.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".snap",
+                    RAINBOW_ABILITY_COLOR,
+                    () -> List.of(ModStones.POWER, ModStones.SPACE, ModStones.REALITY, ModStones.SOUL, ModStones.MIND, ModStones.TIME),
+                    20
             )
     );
 }

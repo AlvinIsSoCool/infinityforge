@@ -35,13 +35,13 @@ public class GauntletScreenHandler extends ScreenHandler {
         super(ModScreenHandlers.GAUNTLET, syncId);
         this.gauntletStack = gauntletStack;
 
-        loadFromGauntlet((InfinityGauntletItem) gauntletStack.getItem());
+        loadFromGauntlet();
 
         addStoneSlots();
         addPlayerInventory(playerInv);
         addPlayerHotbar(playerInv);
 
-        stoneInventory.addListener(inv -> syncToGauntlet((InfinityGauntletItem) gauntletStack.getItem()));
+        stoneInventory.addListener(inv -> syncToGauntlet());
     }
 
     @Override
@@ -76,8 +76,8 @@ public class GauntletScreenHandler extends ScreenHandler {
         return ItemStack.EMPTY;
     }
 
-    private void loadFromGauntlet(InfinityGauntletItem item) {
-        List<InfinityStoneType> stones = item.getAddedStones(gauntletStack);
+    private void loadFromGauntlet() {
+        List<InfinityStoneType> stones = InfinityGauntletItem.getAddedStones(gauntletStack);
         for (int i = 0; i < stoneOrder.length; i++) {
             if (stones.contains(stoneOrder[i])) {
                 stoneInventory.setStack(i, findStoneItem(stoneOrder[i]));
@@ -85,7 +85,7 @@ public class GauntletScreenHandler extends ScreenHandler {
         }
     }
 
-    private void syncToGauntlet(InfinityGauntletItem item) {
+    private void syncToGauntlet() {
         List<InfinityStoneType> stones = new ArrayList<>();
         for (int i = 0; i < stoneOrder.length; i++) {
             ItemStack stack = stoneInventory.getStack(i);
@@ -93,7 +93,7 @@ public class GauntletScreenHandler extends ScreenHandler {
                 stones.add(stoneItem.getStoneType());
             }
         }
-        item.addStones(gauntletStack, stones);
+        InfinityGauntletItem.addStones(gauntletStack, stones);
     }
 
     private void addStoneSlots() {

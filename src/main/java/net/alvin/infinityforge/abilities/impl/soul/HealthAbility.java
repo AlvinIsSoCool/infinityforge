@@ -21,8 +21,8 @@ public class HealthAbility extends AttributeModifierAbility {
     }
 
     @Override
-    public void onRemove(ServerPlayerEntity player) {
-        super.onRemove(player);
+    public void onRemove(ServerPlayerEntity player, Identifier abilityId) {
+        super.onRemove(player, abilityId);
 
         float maxHealth = player.getMaxHealth();
         if (maxHealth < player.getHealth()) {

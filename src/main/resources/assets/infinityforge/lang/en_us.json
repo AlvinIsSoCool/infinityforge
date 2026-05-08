@@ -18,11 +18,14 @@
   "itemgroup.infinity": "Infinity Forge",
 
   "abilities.infinityforge.teleport": "Teleportation",
+  "abilities.infinityforge.forcefield": "Forcefield",
   "abilities.infinityforge.weather": "Set Weather",
   "abilities.infinityforge.real_change_block": "Change Block",
   "abilities.infinityforge.kill": "Kill",
   "abilities.infinityforge.healing": "Healing",
   "abilities.infinityforge.health": "Health",
   "abilities.infinityforge.saturation": "Soul Sustenance",
-  "abilities.infinityforge.water_breathing": "Water Breathing"
+  "abilities.infinityforge.water_breathing": "Water Breathing",
+  "abilities.infinityforge.flight": "Flight",
+  "abilities.infinityforge.snap": "Snap"
 }

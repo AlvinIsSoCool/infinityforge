@@ -6,38 +6,40 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 public class GauntletToggleState {
-    private static final Map<UUID, Set<Identifier>> ACTIVE_TOGGLES = new HashMap<>();
+    private static final Map<PlayerEntity, Set<Identifier>> ACTIVE_TOGGLES
+            = new IdentityHashMap<>();
 
     public static boolean isActive(PlayerEntity player, Identifier abilityId) {
-        return ACTIVE_TOGGLES
-                .getOrDefault(player.getUuid(), Set.of())
-                .contains(abilityId);
+        Set<Identifier> set = ACTIVE_TOGGLES.get(player);
+        return set != null && set.contains(abilityId);
     }
 
     public static Set<Identifier> getActive(PlayerEntity player) {
-        return ACTIVE_TOGGLES.getOrDefault(player.getUuid(), Set.of());
+        Set<Identifier> set = ACTIVE_TOGGLES.get(player);
+        return set != null ? set : Collections.emptySet();
     }
 
-    // Used for player-initiated toggle only
     public static boolean flip(PlayerEntity player, Identifier abilityId) {
-        Set<Identifier> active = ACTIVE_TOGGLES.computeIfAbsent(player.getUuid(), k -> new HashSet<>());
-        if (active.contains(abilityId)) {
-            active.remove(abilityId);
+        Set<Identifier> set = ACTIVE_TOGGLES.computeIfAbsent(player, k -> new HashSet<>());
+        if (set.contains(abilityId)) {
+            set.remove(abilityId);
             return false;
         } else {
-            active.add(abilityId);
+            set.add(abilityId);
             return true;
         }
     }
 
-    // Used for force disable — explicit, never accidentally flips back on
-    public static void setActive(PlayerEntity player, Identifier abilityId, boolean active) {
-        Set<Identifier> set = ACTIVE_TOGGLES.computeIfAbsent(player.getUuid(), k -> new HashSet<>());
-        if (active) set.add(abilityId);
-        else set.remove(abilityId);
+    public static void setActive(PlayerEntity player, Identifier abilityId, boolean state) {
+        if (state) {
+            ACTIVE_TOGGLES.computeIfAbsent(player, k -> new HashSet<>()).add(abilityId);
+        } else {
+            Set<Identifier> set = ACTIVE_TOGGLES.get(player);
+            if (set != null) set.remove(abilityId);
+        }
     }
 
     public static void clear(PlayerEntity player) {
-        ACTIVE_TOGGLES.remove(player.getUuid());
+        ACTIVE_TOGGLES.remove(player);
     }
 }

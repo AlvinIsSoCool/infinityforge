@@ -1,5 +1,7 @@
 package net.alvin.infinityforge.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.helpers.InfinityStoneHelper;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
@@ -7,12 +9,12 @@ import net.alvin.infinityforge.infinity.InfinityTesseractItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public class EntityMixin {
@@ -27,37 +29,32 @@ public class EntityMixin {
             // flying or jumping or sprinting or swimming
             // before allowing knockback handling.
             if (InfinityStoneHelper.isHoldingPowerStone(player) && vec.length() > 0.1) {
-                System.out.println("EntityMixin: Holding Stone, Velocity Perfect");
+                InfinityForge.LOGGER.info("EntityMixin: Holding Stone, Velocity Perfect");
                 ci.cancel();
             }
         }
     }
 
-    @Inject(
+    @ModifyReturnValue(
             method = "isPushable()Z",
-            at = @At("RETURN"),
-            cancellable = true
+            at = @At("RETURN")
     )
-    private void makeCollidable(CallbackInfoReturnable<Boolean> cir) {
-        if ((Object)this instanceof ItemEntity itemEntity) {
-            if (itemEntity.getStack().getItem() instanceof InfinityStoneItem
-                    || itemEntity.getStack().getItem() instanceof InfinityGauntletItem
-                    || itemEntity.getStack().getItem() instanceof InfinityTesseractItem) {
-                cir.setReturnValue(true);
-            }
-        }
+    private boolean makeCollidable(boolean original) {
+        if (original) return true;
+        if (!((Object)this instanceof ItemEntity itemEntity)) return false;
+        Item item = itemEntity.getStack().getItem();
+        return item instanceof InfinityStoneItem
+                || item instanceof InfinityGauntletItem
+                || item instanceof InfinityTesseractItem;
     }
 
-    @Inject(
+    @ModifyReturnValue(
             method = "canHit()Z",
-            at = @At("RETURN"),
-            cancellable = true
+            at = @At("RETURN")
     )
-    private void makeHittable(CallbackInfoReturnable<Boolean> cir) {
-        if ((Object)this instanceof ItemEntity itemEntity) {
-            if (itemEntity.getStack().getItem() instanceof InfinityTesseractItem) {
-                cir.setReturnValue(true);
-            }
-        }
+    private boolean makeHittable(boolean original) {
+        if (original) return true;
+        return ((Object)this instanceof ItemEntity itemEntity)
+                && itemEntity.getStack().getItem() instanceof InfinityTesseractItem;
     }
 }

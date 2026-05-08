@@ -15,7 +15,17 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
     private final Identifier icon;
     private final String key;
     private final int color;
+    /**
+     * Provides the list of stones needed for the ability.
+     * Needs to include the stone that registers the ability.
+     * e.g. A space stone ability requiring the power stone would provide
+     * required stones as so: {@code () -> List.of(ModStones.POWER, ModStones.SPACE)}
+     */
     private final Supplier<List<InfinityStoneType>> requiredStones;
+    /**
+     * Controls the cooldown of the ability.
+     * Use 0 for no cooldown.
+     */
     private final int cooldownTicks;
 
     public ActiveAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
@@ -46,5 +56,5 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
 
     public int getCooldownTicks() { return cooldownTicks; }
 
-    public abstract void onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones);
+    public abstract boolean onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones);
 }

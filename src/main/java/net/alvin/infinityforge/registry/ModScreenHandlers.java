@@ -22,6 +22,6 @@ public class ModScreenHandlers {
     );
 
     public static void initialize() {
-        System.out.println("Registering Screen Handlers for: " + InfinityForge.MOD_ID);
+        InfinityForge.LOGGER.info("Registering Screen Handlers for: " + InfinityForge.MOD_ID);
     }
 }

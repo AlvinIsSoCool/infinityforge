@@ -1,11 +1,13 @@
 package net.alvin.infinityforge.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityTesseractItem;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -50,17 +52,13 @@ public class ItemEntityMixin {
         }
     }
 
-    @Inject(
+    @ModifyReturnValue(
             method = "isAttackable()Z",
-            at = @At("RETURN"),
-            cancellable = true
+            at = @At("RETURN")
     )
-    private void makeAttackable(CallbackInfoReturnable<Boolean> cir) {
-        if ((Object)this instanceof ItemEntity itemEntity) {
-            if (itemEntity.getStack().getItem() instanceof InfinityTesseractItem) {
-                cir.setReturnValue(true);
-            }
-        }
+    private boolean makeAttackable(boolean original) {
+        if (original) return true;
+        return ((ItemEntity)(Object)this).getStack().getItem() instanceof InfinityTesseractItem;
     }
 
     @Inject(
@@ -69,13 +67,14 @@ public class ItemEntityMixin {
     )
     private void onTick(CallbackInfo ci) {
         ItemEntity self = (ItemEntity)(Object) this;
+        Item item = self.getStack().getItem();
         if (self.getWorld().isClient ||
-                !(self.getStack().getItem() instanceof InfinityStoneItem
-                        || self.getStack().getItem() instanceof InfinityGauntletItem
-                        || self.getStack().getItem() instanceof InfinityTesseractItem)) return;
+                !(item instanceof InfinityStoneItem
+                        || item instanceof InfinityGauntletItem
+                        || item instanceof InfinityTesseractItem)) return;
 
         this.itemAge = 0;
-        Box searchBox = self.getBoundingBox().expand(0.5);
+        Box searchBox = self.getBoundingBox().expand(0.25);
         List<ItemEntity> nearbyItems = self.getWorld().getEntitiesByClass(
                 ItemEntity.class,
                 searchBox,

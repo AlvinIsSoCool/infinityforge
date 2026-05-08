@@ -15,7 +15,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class InfinityTesseractRenderer {
-    private static final Identifier TESSERACT_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/white.png");
+    private static final Identifier TESSERACT_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/stone.png");
     protected static final float SIZE = 0.125f;
 
     public void render(ItemStack stack, ModelTransformationMode mode,
@@ -31,7 +31,7 @@ public class InfinityTesseractRenderer {
             matrices.translate(0.5f, 0.5f, 0.5f);
 
             if (mode == ModelTransformationMode.GUI) {
-                matrices.scale(2f, 2f, 2f);
+                matrices.scale(2.1f, 2.1f, 2.1f);
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30f));
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45f));
             } else if (mode == ModelTransformationMode.FIXED) {

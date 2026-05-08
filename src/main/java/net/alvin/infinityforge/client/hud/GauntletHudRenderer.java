@@ -7,8 +7,11 @@ import net.alvin.infinityforge.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.abilities.base.HeldAbility;
 import net.alvin.infinityforge.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.client.state.GauntletClientState;
+import net.alvin.infinityforge.helpers.InfinityStoneColors;
 import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -24,8 +27,8 @@ public class GauntletHudRenderer {
 
     private static final int MARGIN_X = 10;
     private static final int MARGIN_Y = 14;
-    private static final int SLOT_SIZE = 22; // 1px outline + 2px padding + 16px icon + 2px padding + 1px outline
-    private static final int SLOT_STEP = 22; // 22px slot + 2px gap between slots
+    private static final int SLOT_SIZE = 22;
+    private static final int SLOT_STEP = 22;
 
     public static void render(DrawContext context) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -35,8 +38,8 @@ public class GauntletHudRenderer {
         ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(client.player);
         if (gauntletStack == null) return;
 
-        InfinityGauntletItem gauntlet = (InfinityGauntletItem) gauntletStack.getItem();
-        List<GauntletAbility> abilities = gauntlet.getVisibleAbilities(gauntletStack);
+        List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(gauntletStack);
+        List<GauntletAbility> abilities = InfinityGauntletItem.getVisibleAbilities(activeStones);
         if (abilities.isEmpty()) return;
 
         int scrollOffset = GauntletClientState.scrollOffset;
@@ -45,7 +48,7 @@ public class GauntletHudRenderer {
         int startX = MARGIN_X;
         int startY = MARGIN_Y;
 
-        if (abilities.size() > 6 && client.player.isSneaking()) {
+        if (abilities.size() > 6) {
             if (scrollOffset > 0)  {
                 RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
                 context.drawTexture(HUD_TEXTURE, startX + 4, startY - 10, 37, 0, 15, 15, 256, 256);
@@ -57,36 +60,40 @@ public class GauntletHudRenderer {
             }
         }
 
+        boolean isChatScreen = client.currentScreen instanceof ChatScreen;
+        long currentTick = client.world != null ? client.world.getTime() : 0L;
+
         for (int i = 0; i < visibleCount; i++) {
             int abilityIndex = scrollOffset + i;
             GauntletAbility ability = abilities.get(abilityIndex);
             int slotY = startY + i * SLOT_STEP;
-            renderAbilitySlot(context, ability, startX, slotY, i);
+            renderAbilitySlot(client.textRenderer, context, ability, startX, slotY, i, isChatScreen, currentTick);
         }
     }
 
-    private static void renderAbilitySlot(DrawContext context, GauntletAbility ability,
-                                          int x, int y, int index) {
-        MinecraftClient client = MinecraftClient.getInstance();
-
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+    private static void renderAbilitySlot(TextRenderer textRenderer, DrawContext context,
+                                          GauntletAbility ability,
+                                          int x, int y, int index,
+                                          boolean isChatScreen, long currentTick) {
         context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22, 256, 256);
 
         int color = ability.getColor();
+        if (color == InfinityStoneColors.RAINBOW_ABILITY_COLOR) {
+            context.drawTexture(HUD_TEXTURE, x + 1, y + 1, 68, 0, 20, 20, 256, 256);
 
-        context.fill(x + 1, y + 1, x + 21, y + 2,  color); // top
-        context.fill(x + 1, y + 20, x + 21, y + 21, color); // bottom
-        context.fill(x + 1, y + 1, x + 2,  y + 21, color); // left
-        context.fill(x + 20, y + 1, x + 21, y + 21, color); // right
+        } else {
+            context.fill(x + 1, y + 1, x + 21, y + 2, color); // top
+            context.fill(x + 1, y + 20, x + 21, y + 21, color); // bottom
+            context.fill(x + 1, y + 1, x + 2, y + 21, color); // left
+            context.fill(x + 20, y + 1, x + 21, y + 21, color); // right
+        }
 
         Identifier icon = ability.getIcon();
         if (icon != null) {
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             context.drawTexture(icon, x + 3, y + 3, 0, 0, 16, 16, 16, 16);
         }
 
         if (ability instanceof ActiveAbility) {
-            long currentTick = client.world.getTime();
             float progress = GauntletClientState.getCooldownProgress(ability.getId(), currentTick);
 
             if (progress < 1f) {
@@ -104,20 +111,18 @@ public class GauntletHudRenderer {
         // Toggle indicator
         if (ability instanceof ToggleAbility
                 && GauntletClientState.activeToggles.contains(ability.getId())) {
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 23, 0, 7, 7, 256, 256);
         }
 
         // Held indicator
         if (ability instanceof HeldAbility
                 && GauntletClientState.heldActive.contains(ability.getId())) {
-            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 30, 0, 7, 7, 256, 256);
         }
 
-        if (client.currentScreen instanceof ChatScreen) {
+        if (isChatScreen) {
             context.drawText(
-                    client.textRenderer,
+                    textRenderer,
                     ability.getName(),
                     x + SLOT_SIZE + 4,
                     y + 7,
@@ -125,7 +130,7 @@ public class GauntletHudRenderer {
             );
         } else {
             context.drawText(
-                    client.textRenderer,
+                    textRenderer,
                     SLOT_KEYS[index].getBoundKeyLocalizedText().getString(),
                     x + SLOT_SIZE + 4,
                     y + 7,

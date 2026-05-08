@@ -23,35 +23,37 @@ public class RealChangeBlockAbility extends StatefulAbility<Block> {
     }
 
     @Override
-    public void onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
+    public boolean onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
         Block selected = getState(player);
         BlockHitResult hit = (BlockHitResult) player.raycast(5.0, 1.0f, false);
         boolean missed = hit.getType() != HitResult.Type.BLOCK;
 
         if (player.isSneaking()) {
             if (missed) {
-                // sneaking, looking away
+                // Sneaking and looking away.
                 if (selected != null) {
-                    // has a selection already, just notify
+                    // Has a selection already.
                     player.sendMessage(Text.literal("You will get all the blocks!"), true);
+                    return true;
                 } else {
                     // Has no selection.
                     player.sendMessage(Text.literal("No blocks selected! Try sneaking and selecting a block."), true);
+                    return false;
                 }
-                return;
             }
 
             Block block = world.getBlockState(hit.getBlockPos()).getBlock();
             setState(player, block);
             player.sendMessage(Text.literal("Selected: " +
                     block.getName().getString() + " (" + Registries.BLOCK.getId(block) + ")"), true);
+            return false;
         } else {
             if (selected == null) {
                 player.sendMessage(Text.literal("No blocks selected! Try sneaking and selecting a block."), true);
-                return;
+                return false;
             }
-            if (missed) return;
             world.setBlockState(hit.getBlockPos(), selected.getDefaultState());
+            return true;
         }
     }
 }

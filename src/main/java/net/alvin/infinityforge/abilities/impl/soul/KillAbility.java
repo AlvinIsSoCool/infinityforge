@@ -25,7 +25,7 @@ public class KillAbility extends ActiveAbility {
     }
 
     @Override
-    public void onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
+    public boolean onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
         Vec3d eyePos = player.getEyePos();
         Vec3d lookVec = player.getRotationVec(1.0f);
         Vec3d reach = eyePos.add(lookVec.multiply(3.0));
@@ -46,5 +46,6 @@ public class KillAbility extends ActiveAbility {
                 living.setHealth(0f);
             }
         }
+        return false;
     }
 }

@@ -33,10 +33,13 @@ public class GauntletClientPacketHandlers {
 
     private static void onChargeSync(SyncChargeS2CPacket packet,
                                      ClientPlayerEntity player, PacketSender responseSender) {
-        GauntletClientState.charges.put(
-                packet.abilityId(),
-                new int[]{ packet.charge(), packet.maxCharge() }
-        );
+        int[] existing = GauntletClientState.charges.get(packet.abilityId());
+        if (existing != null) {
+            existing[0] = packet.charge();
+            existing[1] = packet.maxCharge();
+        } else {
+            GauntletClientState.charges.put(packet.abilityId(), new int[]{ packet.charge(), packet.maxCharge() });
+        }
     }
 
     private static void onHeldForceStop(SyncHeldForceStopS2CPacket packet,
@@ -47,9 +50,12 @@ public class GauntletClientPacketHandlers {
 
     private static void onCooldownSync(SyncCooldownS2CPacket packet,
                                      ClientPlayerEntity player, PacketSender responseSender) {
-        GauntletClientState.cooldowns.put(
-                packet.abilityId(),
-                new long[]{ packet.startTick(), packet.durationTicks() }
-        );
+        long[] existing = GauntletClientState.cooldowns.get(packet.abilityId());
+        if (existing != null) {
+            existing[0] = packet.startTick();
+            existing[1] = packet.durationTicks();
+        } else {
+            GauntletClientState.cooldowns.put(packet.abilityId(), new long[]{ packet.startTick(), packet.durationTicks() });
+        }
     }
 }

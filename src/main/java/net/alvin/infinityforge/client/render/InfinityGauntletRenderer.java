@@ -20,7 +20,7 @@ import java.util.List;
 
 public class InfinityGauntletRenderer {
     private static final Identifier GAUNTLET_TEXTURE_3D = new Identifier(InfinityForge.MOD_ID, "textures/item/infinity_gauntlet_3d.png");
-    private static final Identifier SLOT_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/white.png");
+    private static final Identifier SLOT_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/stone.png");
     protected static final ModelIdentifier GAUNTLET_MODEL_2D = new ModelIdentifier(new Identifier(InfinityForge.MOD_ID, "infinity_gauntlet_2d"), "inventory");
 
     public void render(ItemStack stack, ModelTransformationMode mode,
@@ -36,7 +36,7 @@ public class InfinityGauntletRenderer {
             MinecraftClient.getInstance().getItemRenderer().renderBakedItemModel(
                     flatModel,
                     stack,
-                    LightmapTextureManager.MAX_LIGHT_COORDINATE,
+                    light,
                     overlay,
                     matrices,
                     vertexConsumers.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull())
@@ -99,7 +99,7 @@ public class InfinityGauntletRenderer {
             }
 
             // Stones Render.
-            List<InfinityStoneType> stones = ((InfinityGauntletItem)stack.getItem()).getAddedStones(stack);
+            List<InfinityStoneType> stones = InfinityGauntletItem.getAddedStones(stack);
             for (InfinityStoneType stoneType : stones) {
                 float[] slot = getSlotTransform(stoneType);
                 matrices.push();
@@ -112,8 +112,7 @@ public class InfinityGauntletRenderer {
                     matrices.translate(0f, 0f, 0.02f); // Stone depth
                     matrices.scale(0.4f, 0.4f, 0.4f); // Stone Size
 
-                    matrices.translate(-0.5f, -0.5f, -0.5f);
-                    ModItemRenderers.STONE_RENDERER.render(
+                    ModItemRenderers.STONE_RENDERER.renderInternal(
                             stack, mode, matrices, vertexConsumers, light, overlay, stoneType);
                 matrices.pop();
             }

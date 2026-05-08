@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -45,34 +46,21 @@ public class GauntletPacketHandlers {
     private static void onAbilityPacket(GauntletAbilityC2SPacket packet,
                                         ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
-            System.out.println("Server: Ability Processing Called!");
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
-            InfinityGauntletItem gauntletItem = (InfinityGauntletItem) stack.getItem();
-            List<InfinityStoneType> activeStones = gauntletItem.getAddedStones(stack);
-            ServerWorld world = (ServerWorld) player.getWorld();
-
-            ActiveAbility ability = gauntletItem.getActiveAbilities(stack).stream()
-                    .filter(a -> a.getId().equals(packet.abilityId()))
-                    .findFirst()
-                    .orElse(null);
-
+            List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+            ActiveAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getActiveAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
             if (GauntletCooldownState.isOnCooldown(player, ability.getId())) return;
 
-            System.out.println("Server: Has Ability! Not on cooldown.");
-            ability.onActivate(world, player, activeStones);
+            ServerWorld world = (ServerWorld) player.getWorld();
+            boolean success = ability.onActivate(world, player, activeStones);
 
-            if (ability.getCooldownTicks() > 0) {
+            if (ability.getCooldownTicks() > 0 && success) {
                 GauntletCooldownState.setCooldown(player, ability.getId(), ability.getCooldownTicks());
-
-                // Sync to client for HUD rendering
                 ServerPlayNetworking.send(player, new SyncCooldownS2CPacket(
-                        ability.getId(),
-                        ability.getCooldownTicks(),
-                        world.getTime()
-                ));
+                        ability.getId(), ability.getCooldownTicks(), world.getTime()));
             }
         });
     }
@@ -83,20 +71,15 @@ public class GauntletPacketHandlers {
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
-            InfinityGauntletItem gauntlet = (InfinityGauntletItem) stack.getItem();
-            List<InfinityStoneType> activeStones = gauntlet.getAddedStones(stack);
-            ServerWorld world = (ServerWorld) player.getWorld();
-
-            ToggleAbility ability = gauntlet.getToggleAbilities(stack).stream()
-                    .filter(a -> a.getId().equals(packet.abilityId()))
-                    .findFirst().orElse(null);
+            List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+            ToggleAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getToggleAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
+            ServerWorld world = (ServerWorld) player.getWorld();
             boolean nowActive = GauntletToggleState.flip(player, ability.getId());
             if (nowActive) ability.onEnable(world, player, activeStones);
             else ability.onDisable(world, player, activeStones);
 
-            // Tell client so HUD can reflect toggle state
             ServerPlayNetworking.send(player, new SyncToggleStateS2CPacket(ability.getId(), nowActive));
         });
     }
@@ -107,15 +90,11 @@ public class GauntletPacketHandlers {
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
-            InfinityGauntletItem gauntlet = (InfinityGauntletItem) stack.getItem();
-            List<InfinityStoneType> activeStones = gauntlet.getAddedStones(stack);
-            ServerWorld world = (ServerWorld) player.getWorld();
-
-            HeldAbility ability = gauntlet.getHeldAbilities(stack).stream()
-                    .filter(a -> a.getId().equals(packet.abilityId()))
-                    .findFirst().orElse(null);
+            List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+            HeldAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getHeldAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
+            ServerWorld world = (ServerWorld) player.getWorld();
             GauntletHeldState.setHeld(player, ability.getId(), packet.pressing());
 
             if (packet.pressing()) ability.onStart(world, player, activeStones);
@@ -126,26 +105,26 @@ public class GauntletPacketHandlers {
     private static void onPickupInfinityItem(PickupInfinityItemC2SPacket packet,
                                              ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
-            if (PendingInfinityItemPickups.isPending(player)) return; // Check pending pickups.
+            if (PendingInfinityItemPickups.isPending(player)) return;
 
             Entity entity = player.getServerWorld().getEntityById(packet.entityId());
             if (!(entity instanceof ItemEntity itemEntity)) return;
             if (itemEntity.isRemoved()) return;
-            if (!(itemEntity.getStack().getItem() instanceof InfinityStoneItem
-                    || itemEntity.getStack().getItem() instanceof InfinityGauntletItem
-                    || itemEntity.getStack().getItem() instanceof InfinityTesseractItem)) return;
+
+            Item item = itemEntity.getStack().getItem();
+            if (!(item instanceof InfinityStoneItem
+                    || item instanceof InfinityGauntletItem
+                    || item instanceof InfinityTesseractItem)) return;
             if (itemEntity.squaredDistanceTo(player) > 16.0) return;
 
-            ItemStack item = itemEntity.getStack().copy();
-            if (player.getInventory().insertStack(item)) {
+            ItemStack picked = itemEntity.getStack().copy();
+            if (player.getInventory().insertStack(picked)) {
                 itemEntity.discard();
-                // Mark only after successful pickup.
                 PendingInfinityItemPickups.markPending(player);
                 Random random = player.getRandom();
                 player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(),
                         SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS,
-                        0.2f, ((random.nextFloat() - random.nextFloat()) * 0.7f + 1.0f) * 2.0f
-                );
+                        0.2f, ((random.nextFloat() - random.nextFloat()) * 0.7f + 1.0f) * 2.0f);
             }
         });
     }
