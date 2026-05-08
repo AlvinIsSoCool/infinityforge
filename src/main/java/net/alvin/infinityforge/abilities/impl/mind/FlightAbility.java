@@ -20,7 +20,7 @@ public class FlightAbility extends ToggleAbility {
             player.getAbilities().allowFlying = true;
             player.getAbilities().flying = true;
             player.getAbilities().setFlySpeed(0.25f);
-            player.setVelocity(player.getVelocity().x, 0.5, player.getVelocity().z);
+            player.setVelocity(player.getVelocity().x, 1.0, player.getVelocity().z);
             player.velocityModified = true;
             player.sendAbilitiesUpdate();
         }
