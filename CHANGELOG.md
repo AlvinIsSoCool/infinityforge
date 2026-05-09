@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Bump versions of the fabric loader, fabric api and loom.
+- ActiveAbility onActivate takes ServerWorld and ServerPlayerEntity now. 
+Consistent with the other ability types.
+- Added stone use and hold abilities for the rest of the stones.
+- Made soul stone ability color brighter and more distinguishable.
+- Prevent gauntlet ability hud rendering on F3 Menu.
+- Added some time stone abilities.
 
 ## [0.3.0-beta.1] - 2026-05-08
 

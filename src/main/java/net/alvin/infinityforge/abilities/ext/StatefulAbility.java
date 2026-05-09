@@ -16,6 +16,16 @@ public abstract class StatefulAbility<T> extends ActiveAbility {
         super(id, icon, key, color, requiredStones, cooldownTicks);
     }
 
+    public StatefulAbility(Identifier id, Identifier icon,
+                           String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
+        super(id, icon, key, color, requiredStones);
+    }
+
+    public StatefulAbility(Identifier id, Identifier icon,
+                           String key, int color) {
+        super(id, icon, key, color);
+    }
+
     protected T getState(PlayerEntity player) {
         return StatefulAbilityState.get(player, getId());
     }

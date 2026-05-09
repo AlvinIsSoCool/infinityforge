@@ -20,6 +20,7 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
      * Needs to include the stone that registers the ability.
      * e.g. A soul stone ability requiring the power stone would provide
      * required stones as so: {@code () -> List.of(ModStones.POWER, ModStones.SOUL)}
+     * No requirements as so: {@code List::of}
      */
     private final Supplier<List<InfinityStoneType>> requiredStones;
 
@@ -29,6 +30,15 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
         this.key = key;
         this.color = color;
         this.requiredStones = requiredStones;
+    }
+
+    // Convenience Constructor for ability with no stone requirements.
+    public PassiveAbility(Identifier id, Identifier icon, String key, int color) {
+        this.id = id;
+        this.icon = icon;
+        this.key = key;
+        this.color = color;
+        this.requiredStones = List::of;
     }
 
     @Override
@@ -48,5 +58,14 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
         return new HashSet<>(activeStones).containsAll(requiredStones.get());
     }
 
+    /**
+     * The function that runs while this ability is active.
+     * Is dispatched from the server, so all logic contained within should
+     * only be server-side.
+     * @param world The world in which the ability was used.
+     * @param player The player entity that used the ability.
+     * @param activeStones A list of all the infinity stones present in the infinity gauntlet
+     *                     of the user of this ability.
+     */
     public abstract void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
 }

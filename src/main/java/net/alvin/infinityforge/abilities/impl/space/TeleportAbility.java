@@ -3,14 +3,14 @@ package net.alvin.infinityforge.abilities.impl.space;
 import net.alvin.infinityforge.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.ModStones;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -23,7 +23,7 @@ public class TeleportAbility extends ActiveAbility {
     }
 
     @Override
-    public boolean onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
+    public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         BlockHitResult hit;
         if (activeStones.contains(ModStones.POWER))
              hit = (BlockHitResult) player.raycast(100.0, 0f, false);
@@ -41,7 +41,6 @@ public class TeleportAbility extends ActiveAbility {
                     null, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                     SoundCategory.PLAYERS, 1.0f, 1.1f
             );
-            player.damage(world.getDamageSources().fall(), 1.0f);
             return true;
         }
 

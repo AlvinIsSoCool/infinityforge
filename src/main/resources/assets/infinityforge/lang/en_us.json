@@ -20,12 +20,16 @@
   "abilities.infinityforge.teleport": "Teleportation",
   "abilities.infinityforge.forcefield": "Forcefield",
   "abilities.infinityforge.weather": "Set Weather",
-  "abilities.infinityforge.real_change_block": "Change Block",
+  "abilities.infinityforge.spawn_real_block": "Spawn Block",
   "abilities.infinityforge.kill": "Kill",
   "abilities.infinityforge.healing": "Healing",
   "abilities.infinityforge.health": "Health",
   "abilities.infinityforge.saturation": "Soul Sustenance",
   "abilities.infinityforge.water_breathing": "Water Breathing",
   "abilities.infinityforge.flight": "Flight",
-  "abilities.infinityforge.snap": "Snap"
+  "abilities.infinityforge.snap": "Snap",
+  "abilities.infinityforge.advance_time": "Advance Time",
+  "abilities.infinityforge.rewind_time": "Rewind Time",
+  "abilities.infinityforge.stop_time": "Stop Time",
+  "abilities.infinityforge.randomise_time": "Randomise Time"
 }

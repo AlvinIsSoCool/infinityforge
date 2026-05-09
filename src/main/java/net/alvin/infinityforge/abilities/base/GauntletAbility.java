@@ -5,6 +5,9 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
+/**
+ * The sealed interface that all the gauntlet ability types implement.
+ */
 public sealed interface GauntletAbility permits ActiveAbility, HeldAbility, PassiveAbility, ToggleAbility
 {
     Identifier getId();

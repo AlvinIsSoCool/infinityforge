@@ -19,12 +19,14 @@ public class InfinityStoneItem extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return this.stoneType.useAbility().onUse(world, user, hand);
+        return this.stoneType.useAbility() != null
+                ? this.stoneType.useAbility().onUse(world, user, hand)
+                : TypedActionResult.pass(user.getStackInHand(hand));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        this.stoneType.holdAbility().onHold(stack, world, entity, slot, selected);
+        if (this.stoneType.holdAbility() != null) this.stoneType.holdAbility().onHold(stack, world, entity, slot, selected);
     }
 
     @Override

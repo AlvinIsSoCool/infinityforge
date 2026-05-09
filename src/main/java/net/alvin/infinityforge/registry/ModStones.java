@@ -2,6 +2,7 @@ package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.abilities.ModAbilities;
+import net.alvin.infinityforge.helpers.InfinityStoneColors;
 import net.alvin.infinityforge.infinity.HoldAbilities;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.InfinityStoneTypeRegistry;
@@ -10,8 +11,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import java.util.List;
 
-import static net.alvin.infinityforge.helpers.InfinityStoneColors.*;
-
 public class ModStones {
     public static final InfinityStoneType POWER = register(
             "power",
@@ -19,8 +18,8 @@ public class ModStones {
                     UseAbilities::onPowerStoneUse,
                     HoldAbilities::onPowerStoneHold,
                     List.of(),
-                    POWER_STONE_BASE_COLOR,
-                    POWER_STONE_GLINT_COLOR
+                    InfinityStoneColors.POWER_STONE_BASE_COLOR,
+                    InfinityStoneColors.POWER_STONE_GLINT_COLOR
             )
     );
 
@@ -28,10 +27,10 @@ public class ModStones {
             "space",
             new InfinityStoneType(
                     UseAbilities::onSpaceStoneUse,
-                    HoldAbilities::onSpaceStoneHold,
+                    null,
                     List.of(ModAbilities.TELEPORT, ModAbilities.FORCEFIELD),
-                    SPACE_STONE_BASE_COLOR,
-                    SPACE_STONE_GLINT_COLOR
+                    InfinityStoneColors.SPACE_STONE_BASE_COLOR,
+                    InfinityStoneColors.SPACE_STONE_GLINT_COLOR
             )
     );
 
@@ -39,27 +38,27 @@ public class ModStones {
             "reality",
             new InfinityStoneType(
                     UseAbilities::onRealityStoneUse,
-                    HoldAbilities::onRealityStoneHold,
+                    null,
                     List.of(
-                            ModAbilities.WEATHER, ModAbilities.REAL_CHANGE_BLOCK
+                            ModAbilities.WEATHER, ModAbilities.SPAWN_REAL_BLOCK
                     ),
-                    REALITY_STONE_BASE_COLOR,
-                    REALITY_STONE_GLINT_COLOR
+                    InfinityStoneColors.REALITY_STONE_BASE_COLOR,
+                    InfinityStoneColors.REALITY_STONE_GLINT_COLOR
             )
     );
 
     public static final InfinityStoneType SOUL = register(
             "soul",
             new InfinityStoneType(
-                    UseAbilities::onSoulStoneUse,
+                    null,
                     HoldAbilities::onSoulStoneHold,
                     List.of(
                             ModAbilities.HEALING, ModAbilities.HEALTH,
                             ModAbilities.SATURATION, ModAbilities.WATER_BREATHING,
                             ModAbilities.KILL, ModAbilities.SNAP
                     ),
-                    SOUL_STONE_BASE_COLOR,
-                    SOUL_STONE_GLINT_COLOR
+                    InfinityStoneColors.SOUL_STONE_BASE_COLOR,
+                    InfinityStoneColors.SOUL_STONE_GLINT_COLOR
             )
     );
 
@@ -69,8 +68,8 @@ public class ModStones {
                     UseAbilities::onMindStoneUse,
                     HoldAbilities::onMindStoneHold,
                     List.of(ModAbilities.FLIGHT),
-                    MIND_STONE_BASE_COLOR,
-                    MIND_STONE_GLINT_COLOR
+                    InfinityStoneColors.MIND_STONE_BASE_COLOR,
+                    InfinityStoneColors.MIND_STONE_GLINT_COLOR
             )
     );
 
@@ -79,9 +78,10 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onTimeStoneUse,
                     HoldAbilities::onTimeStoneHold,
-                    List.of(),
-                    TIME_STONE_BASE_COLOR,
-                    TIME_STONE_GLINT_COLOR
+                    List.of(ModAbilities.ADVANCE_TIME, ModAbilities.REWIND_TIME,
+                            ModAbilities.STOP_TIME, ModAbilities.RANDOMISE_TIME),
+                    InfinityStoneColors.TIME_STONE_BASE_COLOR,
+                    InfinityStoneColors.TIME_STONE_GLINT_COLOR
             )
     );
 

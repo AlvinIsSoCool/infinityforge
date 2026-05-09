@@ -1,8 +1,10 @@
 package net.alvin.infinityforge.infinity;
 
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -10,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
@@ -37,6 +40,7 @@ public class UseAbilities {
         }
 
         MinecraftServer server = world.getServer();
+        if (server == null) return TypedActionResult.pass(stack);
         RegistryKey<World> currentKey = user.getWorld().getRegistryKey();
         Registry<DimensionOptions> registry = server.getRegistryManager().get(RegistryKeys.DIMENSION);
 
@@ -69,11 +73,15 @@ public class UseAbilities {
 
     public static TypedActionResult<ItemStack> onRealityStoneUse(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        return TypedActionResult.pass(stack);
-    }
 
-    public static TypedActionResult<ItemStack> onSoulStoneUse(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+        if (world.isClient) {
+            return TypedActionResult.success(stack);
+        }
+
+        BlockHitResult hit = (BlockHitResult) user.raycast(5.0, 1.0f, false);
+        int size = Registries.BLOCK.size();
+        Block randBlock = Registries.BLOCK.get(world.getRandom().nextInt(size));
+        world.setBlockState(hit.getBlockPos(), randBlock.getDefaultState());
         return TypedActionResult.pass(stack);
     }
 

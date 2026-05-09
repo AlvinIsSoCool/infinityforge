@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 
 public class ModItemGroups {
     public static final ItemGroup INFINITY_GROUP = Registry.register(Registries.ITEM_GROUP,
-            new Identifier(InfinityForge.MOD_ID, "power_stone"),
+            new Identifier(InfinityForge.MOD_ID, "infinity_itemgroup"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.infinity"))
                     .icon(() -> new ItemStack(ModItems.INFINITY_GAUNTLET))
                     .entries(((displayContext, entries) -> {

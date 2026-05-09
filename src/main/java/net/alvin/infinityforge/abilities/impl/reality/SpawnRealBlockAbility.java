@@ -3,27 +3,27 @@ package net.alvin.infinityforge.abilities.impl.reality;
 import net.alvin.infinityforge.abilities.ext.StatefulAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.function.Supplier;
 
-public class RealChangeBlockAbility extends StatefulAbility<Block> {
+public class SpawnRealBlockAbility extends StatefulAbility<Block> {
 
-    public RealChangeBlockAbility(Identifier id, Identifier icon,
-                                  String key, int color,
-                                  Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+    public SpawnRealBlockAbility(Identifier id, Identifier icon,
+                                 String key, int color,
+                                 Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
     }
 
     @Override
-    public boolean onActivate(World world, PlayerEntity player, List<InfinityStoneType> activeStones) {
+    public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         Block selected = getState(player);
         BlockHitResult hit = (BlockHitResult) player.raycast(5.0, 1.0f, false);
         boolean missed = hit.getType() != HitResult.Type.BLOCK;

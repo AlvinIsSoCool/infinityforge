@@ -7,14 +7,12 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class HealingAbility extends PassiveAbility {
 
     public HealingAbility(Identifier id, Identifier icon,
-                          String key, int color,
-                          Supplier<List<InfinityStoneType>> requiredStones) {
-        super(id, icon, key, color, requiredStones);
+                          String key, int color) {
+        super(id, icon, key, color);
     }
 
     @Override

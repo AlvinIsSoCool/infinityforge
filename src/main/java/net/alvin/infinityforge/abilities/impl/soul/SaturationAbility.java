@@ -8,13 +8,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class SaturationAbility extends PassiveAbility {
     public SaturationAbility(Identifier id, Identifier icon,
-                             String key, int color,
-                             Supplier<List<InfinityStoneType>> requiredStones) {
-        super(id, icon, key, color, requiredStones);
+                             String key, int color) {
+        super(id, icon, key, color);
     }
 
     @Override
@@ -23,5 +21,9 @@ public class SaturationAbility extends PassiveAbility {
 
         if (hungerManager.getSaturationLevel() < 20)
             hungerManager.setSaturationLevel(20);
+
+        if (hungerManager.isNotFull()) {
+            hungerManager.setFoodLevel(20);
+        }
     }
 }

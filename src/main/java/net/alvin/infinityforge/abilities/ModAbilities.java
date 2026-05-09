@@ -4,10 +4,14 @@ import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.abilities.impl.mind.FlightAbility;
 import net.alvin.infinityforge.abilities.impl.reality.WeatherAbility;
-import net.alvin.infinityforge.abilities.impl.reality.RealChangeBlockAbility;
+import net.alvin.infinityforge.abilities.impl.reality.SpawnRealBlockAbility;
 import net.alvin.infinityforge.abilities.impl.soul.*;
 import net.alvin.infinityforge.abilities.impl.space.ForcefieldAbility;
 import net.alvin.infinityforge.abilities.impl.space.TeleportAbility;
+import net.alvin.infinityforge.abilities.impl.time.AdvanceTimeAbility;
+import net.alvin.infinityforge.abilities.impl.time.RandomiseTimeAbility;
+import net.alvin.infinityforge.abilities.impl.time.RewindTimeAbility;
+import net.alvin.infinityforge.abilities.impl.time.StopTimeAbility;
 import net.alvin.infinityforge.abilities.registry.GauntletAbilityRegistry;
 import net.alvin.infinityforge.registry.ModStones;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -53,16 +57,15 @@ public class ModAbilities {
             )
     );
 
-    public static final GauntletAbility REAL_CHANGE_BLOCK = GauntletAbilityRegistry.register(
-            new RealChangeBlockAbility(
-                    new Identifier(InfinityForge.MOD_ID, "real_change_block"),
-                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/real_change_block.png"),
-                    "abilities." + InfinityForge.MOD_ID + ".real_change_block",
+    public static final GauntletAbility SPAWN_REAL_BLOCK = GauntletAbilityRegistry.register(
+            new SpawnRealBlockAbility(
+                    new Identifier(InfinityForge.MOD_ID, "spawn_real_block"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/spawn_real_block.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".spawn_real_block",
                     REALITY_STONE_ABILITY_COLOR,
                     () -> List.of(ModStones.POWER, ModStones.REALITY), 100
             )
     );
-
 
     public static final GauntletAbility KILL = GauntletAbilityRegistry.register(
             new KillAbility(
@@ -79,8 +82,7 @@ public class ModAbilities {
                     new Identifier(InfinityForge.MOD_ID, "health"),
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/health.png"),
                     "abilities." + InfinityForge.MOD_ID + ".health",
-                    REALITY_STONE_ABILITY_COLOR,
-                    List::of,
+                    SOUL_STONE_ABILITY_COLOR,
                     Map.of(
                             EntityAttributes.GENERIC_MAX_HEALTH,
                             new EntityAttributeModifier(
@@ -98,8 +100,7 @@ public class ModAbilities {
                     new Identifier(InfinityForge.MOD_ID, "healing"),
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/healing.png"),
                     "abilities." + InfinityForge.MOD_ID + ".healing",
-                    SOUL_STONE_ABILITY_COLOR,
-                    List::of
+                    SOUL_STONE_ABILITY_COLOR
             )
     );
 
@@ -108,8 +109,7 @@ public class ModAbilities {
                     new Identifier(InfinityForge.MOD_ID, "saturation"),
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/saturation.png"),
                     "abilities." + InfinityForge.MOD_ID + ".saturation",
-                    SOUL_STONE_ABILITY_COLOR,
-                    List::of
+                    SOUL_STONE_ABILITY_COLOR
             )
     );
 
@@ -118,8 +118,7 @@ public class ModAbilities {
                     new Identifier(InfinityForge.MOD_ID, "water_breathing"),
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/water_breathing.png"),
                     "abilities." + InfinityForge.MOD_ID + ".water_breathing",
-                    SOUL_STONE_ABILITY_COLOR,
-                    List::of
+                    SOUL_STONE_ABILITY_COLOR
             )
     );
 
@@ -140,8 +139,51 @@ public class ModAbilities {
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/snap.png"),
                     "abilities." + InfinityForge.MOD_ID + ".snap",
                     RAINBOW_ABILITY_COLOR,
-                    () -> List.of(ModStones.POWER, ModStones.SPACE, ModStones.REALITY, ModStones.SOUL, ModStones.MIND, ModStones.TIME),
+                    () -> ModStones.ALL_STONES,
                     20
+            )
+    );
+
+    public static final GauntletAbility ADVANCE_TIME = GauntletAbilityRegistry.register(
+            new AdvanceTimeAbility(
+                    new Identifier(InfinityForge.MOD_ID, "advance_time"),
+                    new Identifier("minecraft", "textures/item/clock_16.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".advance_time",
+                    TIME_STONE_ABILITY_COLOR,
+                    List::of,
+                    400, -4
+            )
+    );
+
+    public static final GauntletAbility REWIND_TIME = GauntletAbilityRegistry.register(
+            new RewindTimeAbility(
+                    new Identifier(InfinityForge.MOD_ID, "rewind_time"),
+                    new Identifier("minecraft", "textures/item/clock_16.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".rewind_time",
+                    TIME_STONE_ABILITY_COLOR,
+                    List::of,
+                    400, -4
+            )
+    );
+
+    public static final GauntletAbility STOP_TIME = GauntletAbilityRegistry.register(
+            new StopTimeAbility(
+                    new Identifier(InfinityForge.MOD_ID, "stop_time"),
+                    new Identifier("minecraft", "textures/item/clock_16.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".stop_time",
+                    TIME_STONE_ABILITY_COLOR,
+                    List::of,
+                    400, -4
+            )
+    );
+
+    public static final GauntletAbility RANDOMISE_TIME = GauntletAbilityRegistry.register(
+            new RandomiseTimeAbility(
+                    new Identifier(InfinityForge.MOD_ID, "randomise_time"),
+                    new Identifier("minecraft", "textures/item/clock_16.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".randomise_time",
+                    TIME_STONE_ABILITY_COLOR,
+                    List::of, 100
             )
     );
 }

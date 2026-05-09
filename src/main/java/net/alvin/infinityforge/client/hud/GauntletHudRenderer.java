@@ -34,6 +34,7 @@ public class GauntletHudRenderer {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return;
         if (client.currentScreen instanceof HandledScreen) return;
+        if (client.options.debugEnabled) return;
 
         ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(client.player);
         if (gauntletStack == null) return;
@@ -80,7 +81,6 @@ public class GauntletHudRenderer {
         int color = ability.getColor();
         if (color == InfinityStoneColors.RAINBOW_ABILITY_COLOR) {
             context.drawTexture(HUD_TEXTURE, x + 1, y + 1, 68, 0, 20, 20, 256, 256);
-
         } else {
             context.fill(x + 1, y + 1, x + 21, y + 2, color); // top
             context.fill(x + 1, y + 20, x + 21, y + 21, color); // bottom

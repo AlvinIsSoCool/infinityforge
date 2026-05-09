@@ -6,11 +6,12 @@
 	"name": "Infinity Forge",
 	"description": "This is a mod that adds infinity stones and other cool mechanics to Minecraft 1.20.1",
 	"authors": [
-		"Alvin"
+		"AlvinAlex"
 	],
 	"contact": {
 		"homepage": "https://github.com/AlvinIsSoCool/infinityforge",
-		"sources": "https://github.com/AlvinIsSoCool/infinityforge"
+		"sources": "https://github.com/AlvinIsSoCool/infinityforge",
+		"issues": "https://github.com/AlvinIsSoCool/infinityforge/issues"
 	},
 	"license": "MIT",
 	"icon": "assets/infinityforge/modicon/modicon.png",
@@ -32,7 +33,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.18.6",
-		"minecraft": "~1.20.1",
+		"minecraft": "1.20.1",
 		"java": ">=17",
 		"fabric-api": "*"
 	}

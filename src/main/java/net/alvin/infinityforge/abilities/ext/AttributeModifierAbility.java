@@ -24,6 +24,12 @@ public abstract class AttributeModifierAbility extends PassiveAbility {
         this.modifiers = modifiers;
     }
 
+    public AttributeModifierAbility(Identifier id, Identifier icon, String key, int color,
+                                    Map<EntityAttribute, EntityAttributeModifier> modifiers) {
+        super(id, icon, key, color);
+        this.modifiers = modifiers;
+    }
+
     @Override
     public void onTick(ServerWorld world, ServerPlayerEntity player,
                        List<InfinityStoneType> activeStones) {

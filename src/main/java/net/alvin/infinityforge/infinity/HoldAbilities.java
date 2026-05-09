@@ -52,16 +52,25 @@ public class HoldAbilities {
         }
     }
 
-    public static void onSpaceStoneHold(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-    }
-
-    public static void onRealityStoneHold(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-    }
-
     public static void onSoulStoneHold(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        if (world.isClient()) return;
+        if (!(entity instanceof PlayerEntity player)) return;
 
+        boolean inMainHand = player.getMainHandStack() == stack;
+        boolean inOffHand = player.getOffHandStack() == stack;
+
+        if (inMainHand || inOffHand) {
+            if (world.getTime() % 60 == 0) {
+                if (player.getHealth() < player.getMaxHealth()) {
+                    player.heal(2.0f);
+                }
+            }
+
+            if (world.random.nextFloat() < 0.005f) {
+                player.setHealth(2.0f);
+                player.damage(world.getDamageSources().generic(), 1.0f);
+            }
+        }
     }
 
     public static void onMindStoneHold(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
