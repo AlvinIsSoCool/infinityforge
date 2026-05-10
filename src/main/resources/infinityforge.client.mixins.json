@@ -5,8 +5,7 @@
   "client": [
     "ItemEntityRendererMixin",
     "MinecraftClientMixin",
-    "MouseScrollMixin",
-    "DrawContextMixin"
+    "MouseScrollMixin"
   ],
   "injectors": {
     "defaultRequire": 1

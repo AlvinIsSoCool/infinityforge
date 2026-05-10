@@ -26,6 +26,7 @@ public class ModItemGroups {
                         entries.add(ModItems.TIME_STONE);
 
                         entries.add(ModItems.INFINITY_GAUNTLET);
+                        entries.add(ModItems.INFINITY_GAUNTLET_BLUEPRINT);
 
                         entries.add(ModItems.POWER_TESSERACT);
                         entries.add(ModItems.SPACE_TESSERACT);

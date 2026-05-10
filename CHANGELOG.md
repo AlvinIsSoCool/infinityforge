@@ -14,6 +14,10 @@ Consistent with the other ability types.
 - Made soul stone ability color brighter and more distinguishable.
 - Prevent gauntlet ability hud rendering on F3 Menu.
 - Added some time stone abilities.
+- Changed default keybindings.
+- Added translations.
+- Added blueprint item and fake item
+- Removed DrawContextMixin for changes made in infinity_gauntlet.json
 
 ## [0.3.0-beta.1] - 2026-05-08
 

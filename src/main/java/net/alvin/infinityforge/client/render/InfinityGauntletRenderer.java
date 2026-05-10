@@ -32,7 +32,6 @@ public class InfinityGauntletRenderer {
                     .getModels()
                     .getModelManager()
                     .getModel(GAUNTLET_MODEL_2D);
-
             MinecraftClient.getInstance().getItemRenderer().renderBakedItemModel(
                     flatModel,
                     stack,
@@ -41,12 +40,11 @@ public class InfinityGauntletRenderer {
                     matrices,
                     vertexConsumers.getBuffer(TexturedRenderLayers.getItemEntityTranslucentCull())
             );
-
             return;
         }
 
         matrices.push();
-            matrices.translate(0.5, 1.8, 0.5);
+            matrices.translate(0.5, 1.9, 0.5);
             matrices.scale(-1f, -1f, -1f);
 
             // Gauntlet Render.
@@ -67,7 +65,7 @@ public class InfinityGauntletRenderer {
                         -3f, 20f, -3f,  3f, 24f, 3f,
                         0,0, 6,4,6, 64,16);
 
-                renderBox(vc,pos,norm,LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay,255,255,255,255,
+                renderBox(vc,pos,norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay,255,255,255,255,
                         -2.5f, 16f, -2.5f,  2.5f, 20f, 2.5f,
                         24,0, 5,4,5, 64,16);
             matrices.pop();

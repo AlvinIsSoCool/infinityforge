@@ -26,10 +26,10 @@ public class HoldAbilities {
 
             serverWorld.spawnParticles(ParticleTypes.PORTAL,
                     player.getX(), player.getY(), player.getZ(), 20,
-                    0.5, 0.5, 0.5, 1.0);
+                    0.5, 0.5, 0.5, 1.5);
             serverWorld.spawnParticles(ParticleTypes.EXPLOSION,
                     player.getX(), player.getY(), player.getZ(), 10,
-                    0.5, 0.5, 0.5, 1.0);
+                    0.5, 0.5, 0.5, 1.5);
             serverWorld.playSound(null, player.getBlockPos(),
                     SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS,
                     0.5f, 1.0f);

@@ -14,8 +14,9 @@ import static net.alvin.infinityforge.client.render.InfinityGauntletRenderer.GAU
 
 public class ModItemRenderers {
     public static final InfinityStoneRenderer STONE_RENDERER = new InfinityStoneRenderer();
-    public static final InfinityGauntletRenderer GAUNTLET_RENDERER = new InfinityGauntletRenderer();
     public static final InfinityTesseractRenderer TESSERACT_RENDERER = new InfinityTesseractRenderer();
+    public static final InfinityGauntletRenderer GAUNTLET_RENDERER = new InfinityGauntletRenderer();
+    public static final FakeItemRenderer FAKE_ITEM_RENDERER = new FakeItemRenderer();
 
     public static void initialize() {
         for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY) {
@@ -43,8 +44,8 @@ public class ModItemRenderers {
         }
 
         ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(GAUNTLET_MODEL_2D));
+        BuiltinItemRendererRegistry.INSTANCE.register(ModItems.INFINITY_GAUNTLET, GAUNTLET_RENDERER::render);
 
-        BuiltinItemRendererRegistry.INSTANCE.register(ModItems.INFINITY_GAUNTLET,
-                GAUNTLET_RENDERER::render);
+        BuiltinItemRendererRegistry.INSTANCE.register(ModItems.FAKE_ITEM, FAKE_ITEM_RENDERER::render);
     }
 }

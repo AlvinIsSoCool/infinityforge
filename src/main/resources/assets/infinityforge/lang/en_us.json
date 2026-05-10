@@ -14,8 +14,17 @@
   "item.infinityforge.time_tesseract": "Time Tesseract",
 
   "item.infinityforge.infinity_gauntlet": "Infinity Gauntlet",
+  "item.infinityforge.blueprint": "Blueprint",
 
   "itemgroup.infinity": "Infinity Forge",
+  "category.infinityforge": "Ability Keybinds",
+
+  "key.infinityforge.slot_1": "Ability 1",
+  "key.infinityforge.slot_2": "Ability 2",
+  "key.infinityforge.slot_3": "Ability 3",
+  "key.infinityforge.slot_4": "Ability 4",
+  "key.infinityforge.slot_5": "Ability 5",
+  "key.infinityforge.slot_6": "Ability 6",
 
   "abilities.infinityforge.teleport": "Teleportation",
   "abilities.infinityforge.forcefield": "Forcefield",

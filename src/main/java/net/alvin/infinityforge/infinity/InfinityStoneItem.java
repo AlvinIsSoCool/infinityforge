@@ -17,6 +17,10 @@ public class InfinityStoneItem extends Item {
         this.stoneType = stoneType;
     }
 
+    public InfinityStoneType getStoneType() {
+        return stoneType;
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         return this.stoneType.useAbility() != null
@@ -27,12 +31,5 @@ public class InfinityStoneItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (this.stoneType.holdAbility() != null) this.stoneType.holdAbility().onHold(stack, world, entity, slot, selected);
-    }
-
-    @Override
-    public boolean isItemBarVisible(ItemStack stack) { return false; }
-
-    public InfinityStoneType getStoneType() {
-        return stoneType;
     }
 }

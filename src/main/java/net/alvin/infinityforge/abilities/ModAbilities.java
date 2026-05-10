@@ -3,6 +3,8 @@ package net.alvin.infinityforge.abilities;
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.abilities.impl.mind.FlightAbility;
+import net.alvin.infinityforge.abilities.impl.mind.PhasingAbility;
+import net.alvin.infinityforge.abilities.impl.reality.SpawnItemAbility;
 import net.alvin.infinityforge.abilities.impl.reality.WeatherAbility;
 import net.alvin.infinityforge.abilities.impl.reality.SpawnRealBlockAbility;
 import net.alvin.infinityforge.abilities.impl.soul.*;
@@ -47,6 +49,17 @@ public class ModAbilities {
             )
     );
 
+    public static final GauntletAbility PHASING = GauntletAbilityRegistry.register(
+            new PhasingAbility(
+                    new Identifier(InfinityForge.MOD_ID, "phasing"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/phasing.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".phasing",
+                    SPACE_STONE_ABILITY_COLOR,
+                    () -> List.of(ModStones.SPACE, ModStones.MIND),
+                    -1, 0
+            )
+    );
+
     public static final GauntletAbility WEATHER = GauntletAbilityRegistry.register(
             new WeatherAbility(
                     new Identifier(InfinityForge.MOD_ID, "weather"),
@@ -64,6 +77,17 @@ public class ModAbilities {
                     "abilities." + InfinityForge.MOD_ID + ".spawn_real_block",
                     REALITY_STONE_ABILITY_COLOR,
                     () -> List.of(ModStones.POWER, ModStones.REALITY), 100
+            )
+    );
+
+    public static final GauntletAbility SPAWN_FAKE_ITEM = GauntletAbilityRegistry.register(
+            new SpawnItemAbility(
+                    new Identifier(InfinityForge.MOD_ID, "spawn_fake_item"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/spawn_fake_item.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".spawn_fake_item",
+                    REALITY_STONE_ABILITY_COLOR,
+                    () -> List.of(ModStones.POWER, ModStones.REALITY),
+                    100, true
             )
     );
 

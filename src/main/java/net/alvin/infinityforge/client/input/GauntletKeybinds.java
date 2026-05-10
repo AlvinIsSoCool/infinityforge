@@ -9,7 +9,7 @@ import org.lwjgl.glfw.GLFW;
 public class GauntletKeybinds {
     public static final KeyBinding[] SLOT_KEYS = new KeyBinding[6];
     private static final int[] SLOT_GLFW_KEYS = {
-            GLFW.GLFW_KEY_Z, GLFW.GLFW_KEY_X, GLFW.GLFW_KEY_C,
+            GLFW.GLFW_KEY_G, GLFW.GLFW_KEY_H, GLFW.GLFW_KEY_Z,
             GLFW.GLFW_KEY_V, GLFW.GLFW_KEY_B, GLFW.GLFW_KEY_N
     };
 

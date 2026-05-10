@@ -28,7 +28,8 @@ public class ModStones {
             new InfinityStoneType(
                     UseAbilities::onSpaceStoneUse,
                     null,
-                    List.of(ModAbilities.TELEPORT, ModAbilities.FORCEFIELD),
+                    List.of(ModAbilities.TELEPORT, ModAbilities.FORCEFIELD,
+                            ModAbilities.PHASING),
                     InfinityStoneColors.SPACE_STONE_BASE_COLOR,
                     InfinityStoneColors.SPACE_STONE_GLINT_COLOR
             )
@@ -40,7 +41,8 @@ public class ModStones {
                     UseAbilities::onRealityStoneUse,
                     null,
                     List.of(
-                            ModAbilities.WEATHER, ModAbilities.SPAWN_REAL_BLOCK
+                            ModAbilities.WEATHER, ModAbilities.SPAWN_REAL_BLOCK,
+                            ModAbilities.SPAWN_FAKE_ITEM
                     ),
                     InfinityStoneColors.REALITY_STONE_BASE_COLOR,
                     InfinityStoneColors.REALITY_STONE_GLINT_COLOR
