@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -36,6 +36,7 @@ public class ServerPlayNetworkHandlerMixin {
                 SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS,
                 1.0f, 1.25f
         );
+
         world.spawnEntity(
                 new ItemEntity(
                         world,
@@ -43,8 +44,8 @@ public class ServerPlayNetworkHandlerMixin {
                         new ItemStack(item.getStoneItem())
                 )
         );
-        itemEntity.discard();
 
+        itemEntity.discard();
         ci.cancel();
     }
 }

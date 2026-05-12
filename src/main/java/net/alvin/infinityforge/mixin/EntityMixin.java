@@ -1,11 +1,10 @@
 package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.helpers.InfinityStoneHelper;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,11 +24,7 @@ public class EntityMixin {
     )
     private void cancelVelocity(Vec3d vec, CallbackInfo ci) {
         if ((Object)this instanceof PlayerEntity player) {
-            // NOTE: If making this into an event, check whether the player is
-            // flying or jumping or sprinting or swimming
-            // before allowing knockback handling.
-            if (InfinityStoneHelper.isHoldingPowerStone(player) && vec.length() > 0.1) {
-                InfinityForge.LOGGER.info("EntityMixin: Holding Stone, Velocity Perfect");
+            if (InfinityStoneHelper.isHoldingPowerStone(player)) {
                 ci.cancel();
             }
         }

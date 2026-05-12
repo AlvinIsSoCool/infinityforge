@@ -1,15 +1,15 @@
 package net.alvin.infinityforge.server.packet;
 
-import net.alvin.infinityforge.abilities.base.ActiveAbility;
-import net.alvin.infinityforge.abilities.base.HeldAbility;
-import net.alvin.infinityforge.abilities.base.ToggleAbility;
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
+import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
+import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
+import net.alvin.infinityforge.item.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.network.c2s.PickupInfinityItemC2SPacket;
 import net.alvin.infinityforge.server.state.GauntletCooldownState;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.network.c2s.GauntletAbilityC2SPacket;
 import net.alvin.infinityforge.network.c2s.GauntletHeldC2SPacket;

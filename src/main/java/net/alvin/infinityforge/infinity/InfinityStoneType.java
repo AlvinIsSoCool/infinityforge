@@ -1,6 +1,8 @@
 package net.alvin.infinityforge.infinity;
 
-import net.alvin.infinityforge.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.infinity.abilities.base.StoneHoldAbility;
+import net.alvin.infinityforge.infinity.abilities.base.StoneUseAbility;
 
 import java.util.List;
 
@@ -17,6 +19,6 @@ import java.util.List;
  *                   A brighter version of the baseColor is recommended.
  */
 public record InfinityStoneType(
-        UseAbility useAbility, HoldAbility holdAbility, List<GauntletAbility> gauntletAbilities,
+        StoneUseAbility useAbility, StoneHoldAbility holdAbility, List<GauntletAbility> gauntletAbilities,
         int baseColor, int glintColor
 ) {}

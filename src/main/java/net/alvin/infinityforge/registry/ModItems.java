@@ -1,9 +1,9 @@
 package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.item.BlueprintItem;
 import net.alvin.infinityforge.item.BlueprintRecipe;
 import net.alvin.infinityforge.item.FakeItem;

@@ -19,7 +19,5 @@ public class BlueprintItem extends Item {
     public boolean isItemBarVisible(ItemStack stack) { return false; }
 
     @Override
-    public Rarity getRarity(ItemStack stack) {
-        return Rarity.RARE;
-    }
+    public Rarity getRarity(ItemStack stack) { return Rarity.RARE; }
 }

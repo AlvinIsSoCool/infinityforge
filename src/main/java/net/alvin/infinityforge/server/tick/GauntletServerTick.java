@@ -1,12 +1,12 @@
 package net.alvin.infinityforge.server.tick;
 
-import net.alvin.infinityforge.abilities.base.HeldAbility;
-import net.alvin.infinityforge.abilities.base.PassiveAbility;
-import net.alvin.infinityforge.abilities.base.ToggleAbility;
+import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
+import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
+import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.server.state.GauntletChargeState;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.network.s2c.SyncChargeS2CPacket;
 import net.alvin.infinityforge.network.s2c.SyncHeldForceStopS2CPacket;

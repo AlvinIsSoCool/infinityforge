@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.helpers;
 
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.ModStones;
 import net.minecraft.entity.player.PlayerEntity;

@@ -1,11 +1,11 @@
 package net.alvin.infinityforge.client.tick;
 
-import net.alvin.infinityforge.abilities.base.ActiveAbility;
-import net.alvin.infinityforge.abilities.base.GauntletAbility;
-import net.alvin.infinityforge.abilities.base.HeldAbility;
-import net.alvin.infinityforge.abilities.base.ToggleAbility;
+import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
+import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
+import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.client.state.GauntletClientState;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.network.c2s.GauntletAbilityC2SPacket;
 import net.alvin.infinityforge.network.c2s.GauntletHeldC2SPacket;

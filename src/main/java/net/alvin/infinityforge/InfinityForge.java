@@ -1,7 +1,6 @@
 package net.alvin.infinityforge;
 
 import net.alvin.infinityforge.registry.*;
-import net.alvin.infinityforge.infinity.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.packet.GauntletPacketHandlers;

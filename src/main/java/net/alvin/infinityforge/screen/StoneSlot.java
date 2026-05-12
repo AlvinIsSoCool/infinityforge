@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.screen;
 
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;

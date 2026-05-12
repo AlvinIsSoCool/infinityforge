@@ -1,9 +1,9 @@
 package net.alvin.infinityforge.client.render;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.InfinityStoneTypeRegistry;
+import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.model.BakedModel;

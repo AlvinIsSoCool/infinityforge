@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.screen;
 
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.ModScreenHandlers;
 import net.alvin.infinityforge.registry.ModStones;

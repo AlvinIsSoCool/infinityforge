@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.server.event;
 
-import net.alvin.infinityforge.abilities.ModAbilities;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.registry.ModGauntletAbilities;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.ModStones;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
@@ -68,7 +68,7 @@ public class InfinityStoneEventHandler {
         }
 
         if (entity instanceof ServerPlayerEntity player)
-            return !GauntletToggleState.isActive(player, ModAbilities.FORCEFIELD.getId());
+            return !GauntletToggleState.isActive(player, ModGauntletAbilities.FORCEFIELD.getId());
 
         return true;
     }

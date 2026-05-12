@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.client.MinecraftClient;
 import net.alvin.infinityforge.client.state.GauntletClientState;
@@ -36,6 +36,6 @@ public class MouseScrollMixin {
         if (totalAbilities <= 6) return;
 
         GauntletClientState.scroll(totalAbilities, (int) -Math.signum(vertical));
-        ci.cancel(); // prevent hotbar slot change
+        ci.cancel();
     }
 }

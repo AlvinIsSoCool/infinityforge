@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.network.c2s.PickupInfinityItemC2SPacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;

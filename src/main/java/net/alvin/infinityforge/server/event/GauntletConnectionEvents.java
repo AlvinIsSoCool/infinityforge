@@ -1,11 +1,13 @@
 package net.alvin.infinityforge.server.event;
 
-import net.alvin.infinityforge.abilities.base.*;
-import net.alvin.infinityforge.abilities.ext.AttributeModifierAbility;
+import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
+import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
+import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
+import net.alvin.infinityforge.infinity.abilities.ext.AttributeModifierAbility;
 import net.alvin.infinityforge.server.state.*;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.abilities.registry.GauntletAbilityRegistry;
+import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;

@@ -1,12 +1,10 @@
 package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.abilities.ModAbilities;
 import net.alvin.infinityforge.helpers.InfinityStoneColors;
-import net.alvin.infinityforge.infinity.HoldAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.StoneHoldAbilities;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.InfinityStoneTypeRegistry;
-import net.alvin.infinityforge.infinity.UseAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.StoneUseAbilities;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import java.util.List;
@@ -15,8 +13,8 @@ public class ModStones {
     public static final InfinityStoneType POWER = register(
             "power",
             new InfinityStoneType(
-                    UseAbilities::onPowerStoneUse,
-                    HoldAbilities::onPowerStoneHold,
+                    StoneUseAbilities::onPowerStoneUse,
+                    StoneHoldAbilities::onPowerStoneHold,
                     List.of(),
                     InfinityStoneColors.POWER_STONE_BASE_COLOR,
                     InfinityStoneColors.POWER_STONE_GLINT_COLOR
@@ -26,10 +24,10 @@ public class ModStones {
     public static final InfinityStoneType SPACE = register(
             "space",
             new InfinityStoneType(
-                    UseAbilities::onSpaceStoneUse,
+                    StoneUseAbilities::onSpaceStoneUse,
                     null,
-                    List.of(ModAbilities.TELEPORT, ModAbilities.FORCEFIELD,
-                            ModAbilities.PHASING),
+                    List.of(ModGauntletAbilities.TELEPORT, ModGauntletAbilities.FORCEFIELD,
+                            ModGauntletAbilities.PHASING),
                     InfinityStoneColors.SPACE_STONE_BASE_COLOR,
                     InfinityStoneColors.SPACE_STONE_GLINT_COLOR
             )
@@ -38,11 +36,11 @@ public class ModStones {
     public static final InfinityStoneType REALITY = register(
             "reality",
             new InfinityStoneType(
-                    UseAbilities::onRealityStoneUse,
+                    StoneUseAbilities::onRealityStoneUse,
                     null,
                     List.of(
-                            ModAbilities.WEATHER, ModAbilities.SPAWN_REAL_BLOCK,
-                            ModAbilities.SPAWN_FAKE_ITEM
+                            ModGauntletAbilities.WEATHER, ModGauntletAbilities.SPAWN_REAL_BLOCK,
+                            ModGauntletAbilities.SPAWN_FAKE_ITEM
                     ),
                     InfinityStoneColors.REALITY_STONE_BASE_COLOR,
                     InfinityStoneColors.REALITY_STONE_GLINT_COLOR
@@ -53,11 +51,11 @@ public class ModStones {
             "soul",
             new InfinityStoneType(
                     null,
-                    HoldAbilities::onSoulStoneHold,
+                    StoneHoldAbilities::onSoulStoneHold,
                     List.of(
-                            ModAbilities.HEALING, ModAbilities.HEALTH,
-                            ModAbilities.SATURATION, ModAbilities.WATER_BREATHING,
-                            ModAbilities.KILL, ModAbilities.SNAP
+                            ModGauntletAbilities.HEALING, ModGauntletAbilities.HEALTH,
+                            ModGauntletAbilities.SATURATION, ModGauntletAbilities.WATER_BREATHING,
+                            ModGauntletAbilities.KILL, ModGauntletAbilities.SNAP
                     ),
                     InfinityStoneColors.SOUL_STONE_BASE_COLOR,
                     InfinityStoneColors.SOUL_STONE_GLINT_COLOR
@@ -67,9 +65,9 @@ public class ModStones {
     public static final InfinityStoneType MIND = register(
             "mind",
             new InfinityStoneType(
-                    UseAbilities::onMindStoneUse,
-                    HoldAbilities::onMindStoneHold,
-                    List.of(ModAbilities.FLIGHT),
+                    StoneUseAbilities::onMindStoneUse,
+                    StoneHoldAbilities::onMindStoneHold,
+                    List.of(ModGauntletAbilities.FLIGHT),
                     InfinityStoneColors.MIND_STONE_BASE_COLOR,
                     InfinityStoneColors.MIND_STONE_GLINT_COLOR
             )
@@ -78,10 +76,10 @@ public class ModStones {
     public static final InfinityStoneType TIME = register(
             "time",
             new InfinityStoneType(
-                    UseAbilities::onTimeStoneUse,
-                    HoldAbilities::onTimeStoneHold,
-                    List.of(ModAbilities.ADVANCE_TIME, ModAbilities.REWIND_TIME,
-                            ModAbilities.STOP_TIME, ModAbilities.RANDOMISE_TIME),
+                    StoneUseAbilities::onTimeStoneUse,
+                    StoneHoldAbilities::onTimeStoneHold,
+                    List.of(ModGauntletAbilities.ADVANCE_TIME, ModGauntletAbilities.REWIND_TIME,
+                            ModGauntletAbilities.STOP_TIME, ModGauntletAbilities.RANDOMISE_TIME),
                     InfinityStoneColors.TIME_STONE_BASE_COLOR,
                     InfinityStoneColors.TIME_STONE_GLINT_COLOR
             )

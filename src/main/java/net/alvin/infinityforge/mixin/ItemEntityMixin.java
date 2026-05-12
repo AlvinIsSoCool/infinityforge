@@ -1,9 +1,9 @@
 package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.alvin.infinityforge.infinity.InfinityGauntletItem;
-import net.alvin.infinityforge.infinity.InfinityStoneItem;
-import net.alvin.infinityforge.infinity.InfinityTesseractItem;
+import net.alvin.infinityforge.item.InfinityGauntletItem;
+import net.alvin.infinityforge.item.InfinityStoneItem;
+import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;

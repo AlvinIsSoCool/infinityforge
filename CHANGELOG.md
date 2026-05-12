@@ -16,8 +16,10 @@ Consistent with the other ability types.
 - Added some time stone abilities.
 - Changed default keybindings.
 - Added translations.
-- Added blueprint item and fake item
-- Removed DrawContextMixin for changes made in infinity_gauntlet.json
+- Added blueprint item and fake item.
+- Removed DrawContextMixin for changes made in infinity_gauntlet.json.
+- Project hierarchy changes.
+- Made GauntletAbilityRegistry a proper fabric registry.
 
 ## [0.3.0-beta.1] - 2026-05-08
 
