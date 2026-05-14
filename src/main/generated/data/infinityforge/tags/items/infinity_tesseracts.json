@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "infinityforge:power_tesseract",
+    "infinityforge:space_tesseract",
+    "infinityforge:reality_tesseract",
+    "infinityforge:soul_tesseract",
+    "infinityforge:time_tesseract",
+    "infinityforge:mind_tesseract"
+  ]
+}

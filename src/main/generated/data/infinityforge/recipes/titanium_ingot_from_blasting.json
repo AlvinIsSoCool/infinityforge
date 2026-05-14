@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 600,
+  "experience": 2.0,
+  "ingredient": {
+    "item": "infinityforge:raw_titanium"
+  },
+  "result": "infinityforge:titanium_ingot"
+}

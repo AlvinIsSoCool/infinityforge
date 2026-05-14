@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "infinityforge:titanium_ingot"
+    },
+    {
+      "item": "infinityforge:titanium_ingot"
+    },
+    {
+      "item": "infinityforge:titanium_ingot"
+    },
+    {
+      "item": "infinityforge:titanium_ingot"
+    }
+  ],
+  "result": {
+    "item": "infinityforge:gold_titanium_alloy_ingot"
+  }
+}

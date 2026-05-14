@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "infinityforge:power_stone",
+    "infinityforge:space_stone",
+    "infinityforge:reality_stone",
+    "infinityforge:soul_stone",
+    "infinityforge:time_stone",
+    "infinityforge:mind_stone"
+  ]
+}
