@@ -46,6 +46,7 @@ public class GauntletPacketHandlers {
     private static void onAbilityPacket(GauntletAbilityC2SPacket packet,
                                         ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
+            if (player.isSpectator()) return;
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
@@ -68,6 +69,7 @@ public class GauntletPacketHandlers {
     private static void onTogglePacket(GauntletToggleC2SPacket packet,
                                        ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
+            if (player.isSpectator()) return;
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
@@ -77,7 +79,13 @@ public class GauntletPacketHandlers {
 
             ServerWorld world = (ServerWorld) player.getWorld();
             boolean nowActive = GauntletToggleState.flip(player, ability.getId());
-            if (nowActive) ability.onEnable(world, player, activeStones);
+            if (nowActive) {
+                boolean success = ability.onEnable(world, player, activeStones);
+                if (!success) {
+                    GauntletToggleState.setActive(player, ability.getId(), false);
+                    return;
+                }
+            }
             else ability.onDisable(world, player, activeStones);
 
             ServerPlayNetworking.send(player, new SyncToggleStateS2CPacket(ability.getId(), nowActive));
@@ -87,6 +95,7 @@ public class GauntletPacketHandlers {
     private static void onHeldPacket(GauntletHeldC2SPacket packet,
                                      ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
+            if (player.isSpectator()) return;
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
@@ -105,6 +114,7 @@ public class GauntletPacketHandlers {
     private static void onPickupInfinityItem(PickupInfinityItemC2SPacket packet,
                                              ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
+            if (player.isSpectator()) return;
             if (PendingInfinityItemPickups.isPending(player)) return;
 
             Entity entity = player.getServerWorld().getEntityById(packet.entityId());

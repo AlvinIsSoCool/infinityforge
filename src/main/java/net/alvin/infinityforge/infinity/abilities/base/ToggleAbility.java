@@ -79,21 +79,24 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
 
     /**
      * The function that runs when this ability is toggled.
-     * Is dispatched from the server, so all logic contained within should
-     * only be server-side.
-     * @param world The world in which the ability was used.
-     * @param player The player entity that used the ability.
+     * Dispatched from the server, so all logic contained within should
+     * be server-side.
+     *
+     * @param world        The world in which the ability was used.
+     * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
+     * @return true to allow the ability to toggle.
+     *         false to prevent the ability from toggling.
      */
-    public abstract void onEnable(ServerWorld world, ServerPlayerEntity player,
-                                  List<InfinityStoneType> activeStones);
+    public abstract boolean onEnable(ServerWorld world, ServerPlayerEntity player,
+                                     List<InfinityStoneType> activeStones);
     /**
      * The function that runs while this ability is toggled on.
-     * Is dispatched from the server, so all logic contained within should
-     * only be server-side.
-     * @param world The world in which the ability was used.
-     * @param player The player entity that used the ability.
+     * Dispatched from the server, so all logic contained within should
+     * be server-side.
+     * @param world        The world in which the ability was used.
+     * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
      */
@@ -102,10 +105,10 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
 
     /**
      * The function that runs when this ability is toggled off.
-     * Is dispatched from the server, so all logic contained within should
-     * only be server-side.
-     * @param world The world in which the ability was used.
-     * @param player The player entity that used the ability.
+     * Dispatched from the server, so all logic contained within should
+     * be server-side.
+     * @param world        The world in which the ability was used.
+     * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
      */

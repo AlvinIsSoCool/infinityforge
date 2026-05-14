@@ -7,3 +7,6 @@
 # These are Windows script files and should use crlf
 *.bat           text eol=crlf
 
+# To prevent datagen changes from creating diffs
+src/main/generated/** linguist-generated=true
+

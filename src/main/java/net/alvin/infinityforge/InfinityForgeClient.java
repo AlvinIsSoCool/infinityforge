@@ -12,9 +12,11 @@ import net.fabricmc.api.ClientModInitializer;
 public class InfinityForgeClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        ModRenderLayers.initialize();
-        ModItemRenderers.initialize();
-        ModScreens.initialize();
+        ModRenderLayers.register();
+        ModItemRenderers.register();
+
+        ModScreens.register();
+
         GauntletClientPacketHandlers.register();
         GauntletClientTick.register();
         GauntletHudEvents.register();

@@ -35,8 +35,12 @@ public class InfinityTesseractRenderer {
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30f));
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45f));
             } else if (mode == ModelTransformationMode.FIXED) {
-                matrices.scale(1f, 1f, 1f);
-                matrices.translate(0f, 0.75f, 0f);
+                matrices.scale(2f, 2f, 2f);
+                matrices.translate(0f, 0f, -0.05f);
+            } else if (mode == ModelTransformationMode.THIRD_PERSON_LEFT_HAND
+                    || mode == ModelTransformationMode.THIRD_PERSON_RIGHT_HAND) {
+                matrices.scale(0.9f, 0.9f, 0.9f);
+                matrices.translate(0f, 0.1f, -0.1f);
             }
 
             Matrix4f pos = matrices.peek().getPositionMatrix();

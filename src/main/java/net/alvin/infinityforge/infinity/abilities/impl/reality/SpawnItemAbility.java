@@ -16,7 +16,10 @@ import java.util.function.Supplier;
 public class SpawnItemAbility extends ActiveAbility {
     private final boolean spawnFake;
 
-    public SpawnItemAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks, boolean spawnFake) {
+    public SpawnItemAbility(Identifier id, Identifier icon,
+                            String key, int color,
+                            Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks,
+                            boolean spawnFake) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
         this.spawnFake = spawnFake;
     }

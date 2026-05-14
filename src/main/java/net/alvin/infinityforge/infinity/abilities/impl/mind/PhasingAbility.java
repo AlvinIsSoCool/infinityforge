@@ -15,9 +15,10 @@ public class PhasingAbility extends ToggleAbility {
     }
 
     @Override
-    public void onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+    public boolean onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         player.noClip = true;
         //player.setOnGround(false);
+        return true;
     }
 
     @Override

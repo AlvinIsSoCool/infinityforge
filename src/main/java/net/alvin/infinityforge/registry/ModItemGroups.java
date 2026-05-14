@@ -24,20 +24,22 @@ public class ModItemGroups {
                         entries.add(ModItems.SOUL_STONE);
                         entries.add(ModItems.MIND_STONE);
                         entries.add(ModItems.TIME_STONE);
-
                         entries.add(ModItems.INFINITY_GAUNTLET);
-                        entries.add(ModItems.INFINITY_GAUNTLET_BLUEPRINT);
-
                         entries.add(ModItems.POWER_TESSERACT);
                         entries.add(ModItems.SPACE_TESSERACT);
                         entries.add(ModItems.REALITY_TESSERACT);
                         entries.add(ModItems.SOUL_TESSERACT);
                         entries.add(ModItems.MIND_TESSERACT);
                         entries.add(ModItems.TIME_TESSERACT);
+                        entries.add(ModItems.INFINITY_GAUNTLET_BLUEPRINT);
                     })).build());
 
     public static void initialize() {
         InfinityForge.LOGGER.info("Registering Item Groups for: " + InfinityForge.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> entries.addAfter(Items.NETHERITE_AXE, ModItems.INFINITY_GAUNTLET));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
+            entries.addAfter(Items.RAW_GOLD, ModItems.RAW_TITANIUM);
+            entries.addAfter(Items.NETHERITE_INGOT, ModItems.TITANIUM_INGOT, ModItems.GOLD_TITANIUM_ALLOY_INGOT);
+        });
     }
 }

@@ -13,6 +13,7 @@ Consistent with the other ability types.
 - Added stone use and hold abilities for the rest of the stones.
 - Made soul stone ability color brighter and more distinguishable.
 - Prevent gauntlet ability hud rendering on F3 Menu.
+- Prevent gauntlet ability usage on spectator.
 - Added some time stone abilities.
 - Changed default keybindings.
 - Added translations.
@@ -20,6 +21,12 @@ Consistent with the other ability types.
 - Removed DrawContextMixin for changes made in infinity_gauntlet.json.
 - Project hierarchy changes.
 - Made GauntletAbilityRegistry a proper fabric registry.
+- Using Datagen APIs.
+- Made gauntlet textures brighter.
+- Added items for progression.
+- Added ore gen.
+- Added villager trade for infinity gauntlet blueprint
+- Added infinity gauntlet blueprint to armorer villager chest loot table
 
 ## [0.3.0-beta.1] - 2026-05-08
 

@@ -15,29 +15,32 @@ public class FlightAbility extends ToggleAbility {
     }
 
     @Override
-    public void onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        if (!player.isSpectator()) {
+    public boolean onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+        if (player.interactionManager.isSurvivalLike()) {
             player.getAbilities().allowFlying = true;
             player.getAbilities().flying = true;
             player.getAbilities().setFlySpeed(0.25f);
-            player.setVelocity(player.getVelocity().x, 0.75, player.getVelocity().z);
             player.sendAbilitiesUpdate();
-            player.velocityModified = true;
-        }
-    }
 
-    @Override
-    public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        if (!player.isSpectator()) {
-            player.getAbilities().allowFlying = player.isCreative();
-            player.getAbilities().flying = false;
-            player.getAbilities().setFlySpeed(0.05f);
-            player.sendAbilitiesUpdate();
+            player.setVelocity(player.getVelocity().x, 0.75, player.getVelocity().z);
+            player.velocityModified = true;
+            return true;
         }
+        return false;
     }
 
     @Override
     public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
 
+    }
+
+    @Override
+    public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+        if (player.interactionManager.isSurvivalLike()) {
+            player.getAbilities().allowFlying = false;
+            player.getAbilities().flying = false;
+            player.getAbilities().setFlySpeed(0.05f);
+            player.sendAbilitiesUpdate();
+        }
     }
 }

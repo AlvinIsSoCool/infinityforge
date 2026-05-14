@@ -30,7 +30,7 @@ public class ModRenderLayers {
                     .build(false)
     );
 
-    public static void initialize() {
+    public static void register() {
         CoreShaderRegistrationCallback.EVENT.register(context -> context.register(
                 new Identifier(InfinityForge.MOD_ID, "stone_glint"),
                 VertexFormats.POSITION,

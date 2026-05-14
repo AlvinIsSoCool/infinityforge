@@ -20,7 +20,6 @@ public class ModStones {
                     InfinityStoneColors.POWER_STONE_GLINT_COLOR
             )
     );
-
     public static final InfinityStoneType SPACE = register(
             "space",
             new InfinityStoneType(
@@ -32,7 +31,6 @@ public class ModStones {
                     InfinityStoneColors.SPACE_STONE_GLINT_COLOR
             )
     );
-
     public static final InfinityStoneType REALITY = register(
             "reality",
             new InfinityStoneType(
@@ -46,7 +44,6 @@ public class ModStones {
                     InfinityStoneColors.REALITY_STONE_GLINT_COLOR
             )
     );
-
     public static final InfinityStoneType SOUL = register(
             "soul",
             new InfinityStoneType(
@@ -61,7 +58,6 @@ public class ModStones {
                     InfinityStoneColors.SOUL_STONE_GLINT_COLOR
             )
     );
-
     public static final InfinityStoneType MIND = register(
             "mind",
             new InfinityStoneType(
@@ -72,7 +68,6 @@ public class ModStones {
                     InfinityStoneColors.MIND_STONE_GLINT_COLOR
             )
     );
-
     public static final InfinityStoneType TIME = register(
             "time",
             new InfinityStoneType(

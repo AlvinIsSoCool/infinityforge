@@ -27,6 +27,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -76,6 +77,11 @@ public class InfinityGauntletItem extends Item {
             return builder.build();
         }
         return super.getAttributeModifiers(slot);
+    }
+
+    @Override
+    public Rarity getRarity(ItemStack stack) {
+        return Rarity.EPIC;
     }
 
     public static List<InfinityStoneType> getAddedStones(ItemStack stack) {

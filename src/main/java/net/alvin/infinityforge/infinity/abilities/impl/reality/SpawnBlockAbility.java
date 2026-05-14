@@ -14,12 +14,15 @@ import net.minecraft.util.hit.HitResult;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SpawnRealBlockAbility extends StatefulAbility<Block> {
+public class SpawnBlockAbility extends StatefulAbility<Block> {
+    private final boolean spawnFake;
 
-    public SpawnRealBlockAbility(Identifier id, Identifier icon,
-                                 String key, int color,
-                                 Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+    public SpawnBlockAbility(Identifier id, Identifier icon,
+                             String key, int color,
+                             Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks,
+                             boolean spawnFake) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
+        this.spawnFake = spawnFake;
     }
 
     @Override

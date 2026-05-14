@@ -19,15 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GauntletScreenHandler extends ScreenHandler {
-    public static final InfinityStoneType[] stoneOrder = {
-            ModStones.POWER,
-            ModStones.SPACE,
-            ModStones.REALITY,
-            ModStones.SOUL,
-            ModStones.MIND,
-            ModStones.TIME
-    };
-
+    public static final InfinityStoneType[] stoneOrder = ModStones.ALL_STONES.toArray(new InfinityStoneType[0]);
     private final SimpleInventory stoneInventory = new SimpleInventory(stoneOrder.length);
     private final ItemStack gauntletStack;
 

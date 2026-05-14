@@ -193,15 +193,16 @@ public class InfinityGauntletRenderer {
 
     private float[] getSlotTransform(InfinityStoneType stoneType) {
         // format: [x, y, z, rotationY]
-        // Future Note: Pixel-perfect alignments. DO NOT CHANGE CARELESSLY!
+        // Future Note: Pixel-perfect alignments.
+        // Caution advised before modifying.
         String id = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stoneType).getPath();
         return switch (id) {
-            case "soul"    -> new float[]{ 0.119f,  1.06f,  -0.16f, 0f  };
-            case "reality" -> new float[]{ 0.044f,  1.06f,  -0.16f, 0f  };
+            case "soul"    -> new float[]{ 0.119f, 1.06f, -0.16f, 0f  };
+            case "reality" -> new float[]{ 0.044f, 1.06f, -0.16f, 0f  };
             case "space"   -> new float[]{ -0.0375f, 1.06f, -0.16f, 0f  };
-            case "power"   -> new float[]{ -0.118f,  1.06f, -0.16f, 0f  };
-            case "mind"    -> new float[]{ 0.006f,  1.160f, -0.16f, 0f  };
-            case "time"    -> new float[]{ -0.16f,  1.092f,  0.062f, 90f };
+            case "power"   -> new float[]{ -0.118f, 1.06f, -0.16f, 0f  };
+            case "mind"    -> new float[]{ 0.006f, 1.160f, -0.16f, 0f  };
+            case "time"    -> new float[]{ -0.16f, 1.092f, 0.062f, 90f };
             default        -> new float[]{ 0f, 0f, 0f, 0f };
         };
     }

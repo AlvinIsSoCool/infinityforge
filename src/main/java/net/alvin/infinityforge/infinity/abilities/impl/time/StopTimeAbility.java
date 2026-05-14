@@ -17,8 +17,8 @@ public class StopTimeAbility extends ToggleAbility {
     }
 
     @Override
-    public void onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-
+    public boolean onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+        return true;
     }
 
     @Override

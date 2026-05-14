@@ -71,10 +71,12 @@ public class InfinityStoneRenderer {
         matrices.push();
             matrices.translate(0.5f, 0.5f, 0.5f);
 
-            if (mode == ModelTransformationMode.GUI || mode == ModelTransformationMode.FIXED) {
+            if (mode == ModelTransformationMode.GUI) {
                 matrices.scale(3.5f, 3.5f, 3.5f);
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30f));
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45f));
+            } else if (mode == ModelTransformationMode.FIXED) {
+                matrices.scale(3.5f, 3.5f, 3.5f);
             }
 
             renderInternal(stack, mode, matrices, vertexConsumers, light, overlay, stoneType);

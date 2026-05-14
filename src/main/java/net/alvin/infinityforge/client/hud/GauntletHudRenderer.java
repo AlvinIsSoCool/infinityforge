@@ -35,6 +35,7 @@ public class GauntletHudRenderer {
         if (client.player == null) return;
         if (client.currentScreen instanceof HandledScreen) return;
         if (client.options.debugEnabled) return;
+        if (client.player.isSpectator()) return;
 
         ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(client.player);
         if (gauntletStack == null) return;

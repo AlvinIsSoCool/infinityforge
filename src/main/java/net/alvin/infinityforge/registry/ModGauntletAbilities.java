@@ -28,7 +28,6 @@ public class ModGauntletAbilities {
                     List::of, 100
             )
     );
-
     public static final GauntletAbility FORCEFIELD = GauntletAbilityRegistry.register(
             new ForcefieldAbility(
                     new Identifier(InfinityForge.MOD_ID, "forcefield"),
@@ -39,7 +38,6 @@ public class ModGauntletAbilities {
                     400, -4
             )
     );
-
     public static final GauntletAbility PHASING = GauntletAbilityRegistry.register(
             new PhasingAbility(
                     new Identifier(InfinityForge.MOD_ID, "phasing"),
@@ -50,7 +48,6 @@ public class ModGauntletAbilities {
                     -1, 0
             )
     );
-
     public static final GauntletAbility WEATHER = GauntletAbilityRegistry.register(
             new WeatherAbility(
                     new Identifier(InfinityForge.MOD_ID, "weather"),
@@ -60,17 +57,16 @@ public class ModGauntletAbilities {
                     () -> List.of(ModStones.POWER, ModStones.REALITY), 100
             )
     );
-
     public static final GauntletAbility SPAWN_REAL_BLOCK = GauntletAbilityRegistry.register(
-            new SpawnRealBlockAbility(
+            new SpawnBlockAbility(
                     new Identifier(InfinityForge.MOD_ID, "spawn_real_block"),
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/spawn_real_block.png"),
                     "abilities." + InfinityForge.MOD_ID + ".spawn_real_block",
                     REALITY_STONE_ABILITY_COLOR,
-                    () -> List.of(ModStones.POWER, ModStones.REALITY), 100
+                    () -> List.of(ModStones.POWER, ModStones.REALITY), 100,
+                    false
             )
     );
-
     public static final GauntletAbility SPAWN_FAKE_ITEM = GauntletAbilityRegistry.register(
             new SpawnItemAbility(
                     new Identifier(InfinityForge.MOD_ID, "spawn_fake_item"),
@@ -81,7 +77,6 @@ public class ModGauntletAbilities {
                     100, true
             )
     );
-
     public static final GauntletAbility KILL = GauntletAbilityRegistry.register(
             new KillAbility(
                     new Identifier(InfinityForge.MOD_ID, "kill"),
@@ -91,7 +86,6 @@ public class ModGauntletAbilities {
                     () -> List.of(ModStones.POWER, ModStones.SOUL), 100
             )
     );
-
     public static final GauntletAbility HEALTH = GauntletAbilityRegistry.register(
             new HealthAbility(
                     new Identifier(InfinityForge.MOD_ID, "health"),
@@ -109,7 +103,6 @@ public class ModGauntletAbilities {
                     )
             )
     );
-
     public static final GauntletAbility HEALING = GauntletAbilityRegistry.register(
             new HealingAbility(
                     new Identifier(InfinityForge.MOD_ID, "healing"),
@@ -118,7 +111,6 @@ public class ModGauntletAbilities {
                     SOUL_STONE_ABILITY_COLOR
             )
     );
-
     public static final GauntletAbility SATURATION = GauntletAbilityRegistry.register(
             new SaturationAbility(
                     new Identifier(InfinityForge.MOD_ID, "saturation"),
@@ -127,7 +119,6 @@ public class ModGauntletAbilities {
                     SOUL_STONE_ABILITY_COLOR
             )
     );
-
     public static final GauntletAbility WATER_BREATHING = GauntletAbilityRegistry.register(
             new WaterBreathingAbility(
                     new Identifier(InfinityForge.MOD_ID, "water_breathing"),
@@ -136,7 +127,6 @@ public class ModGauntletAbilities {
                     SOUL_STONE_ABILITY_COLOR
             )
     );
-
     public static final GauntletAbility FLIGHT = GauntletAbilityRegistry.register(
             new FlightAbility(
                     new Identifier(InfinityForge.MOD_ID, "flight"),
@@ -147,7 +137,6 @@ public class ModGauntletAbilities {
                     -1, 0
             )
     );
-
     public static final GauntletAbility SNAP = GauntletAbilityRegistry.register(
             new SnapAbility(
                     new Identifier(InfinityForge.MOD_ID, "snap"),
@@ -158,7 +147,6 @@ public class ModGauntletAbilities {
                     20
             )
     );
-
     public static final GauntletAbility ADVANCE_TIME = GauntletAbilityRegistry.register(
             new AdvanceTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "advance_time"),
@@ -169,7 +157,6 @@ public class ModGauntletAbilities {
                     400, -4
             )
     );
-
     public static final GauntletAbility REWIND_TIME = GauntletAbilityRegistry.register(
             new RewindTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "rewind_time"),
@@ -180,7 +167,6 @@ public class ModGauntletAbilities {
                     400, -4
             )
     );
-
     public static final GauntletAbility STOP_TIME = GauntletAbilityRegistry.register(
             new StopTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "stop_time"),
@@ -191,7 +177,6 @@ public class ModGauntletAbilities {
                     400, -4
             )
     );
-
     public static final GauntletAbility RANDOMISE_TIME = GauntletAbilityRegistry.register(
             new RandomiseTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "randomise_time"),

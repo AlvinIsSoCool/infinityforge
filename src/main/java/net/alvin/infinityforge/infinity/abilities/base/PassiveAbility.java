@@ -60,10 +60,10 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
 
     /**
      * The function that runs while this ability is active.
-     * Is dispatched from the server, so all logic contained within should
-     * only be server-side.
-     * @param world The world in which the ability was used.
-     * @param player The player entity that used the ability.
+     * Dispatched from the server, so all logic contained within should
+     * be server-side.
+     * @param world        The world in which the ability was used.
+     * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
      */
