@@ -195,8 +195,8 @@ public class InfinityGauntletRenderer {
         // format: [x, y, z, rotationY]
         // Future Note: Pixel-perfect alignments.
         // Caution advised before modifying.
-        String id = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stoneType).getPath();
-        return switch (id) {
+        String stoneId = InfinityStoneTypeRegistry.getNameFromType(stoneType, "", false);
+        return switch (stoneId) {
             case "soul"    -> new float[]{ 0.119f, 1.06f, -0.16f, 0f  };
             case "reality" -> new float[]{ 0.044f, 1.06f, -0.16f, 0f  };
             case "space"   -> new float[]{ -0.0375f, 1.06f, -0.16f, 0f  };
