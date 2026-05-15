@@ -44,7 +44,9 @@ public class GauntletHudRenderer {
         List<GauntletAbility> abilities = InfinityGauntletItem.getVisibleAbilities(activeStones);
         if (abilities.isEmpty()) return;
 
-        int scrollOffset = GauntletClientState.scrollOffset;
+        int scrollOffset = Math.max(0,
+                Math.min(GauntletClientState.scrollOffset, Math.max(0, abilities.size() - 6))
+        );
         int visibleCount = Math.min(6, abilities.size());
 
         int startX = MARGIN_X;
@@ -111,13 +113,13 @@ public class GauntletHudRenderer {
 
         // Toggle indicator
         if (ability instanceof ToggleAbility
-                && GauntletClientState.activeToggles.contains(ability.getId())) {
+                && GauntletClientState.ACTIVE_TOGGLES.contains(ability.getId())) {
             context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 23, 0, 7, 7, 256, 256);
         }
 
         // Held indicator
         if (ability instanceof HeldAbility
-                && GauntletClientState.heldActive.contains(ability.getId())) {
+                && GauntletClientState.HELD_ACTIVE.contains(ability.getId())) {
             context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 30, 0, 7, 7, 256, 256);
         }
 

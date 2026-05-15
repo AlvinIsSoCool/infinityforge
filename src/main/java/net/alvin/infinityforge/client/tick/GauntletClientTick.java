@@ -51,20 +51,20 @@ public class GauntletClientTick {
 
             } else if (ability instanceof HeldAbility h) {
                 boolean pressing = SLOT_KEYS[slot].isPressed();
-                boolean wasHeld = GauntletClientState.heldActive.contains(h.getId());
-                boolean lockedOut = GauntletClientState.heldLockedOut.contains(h.getId());
+                boolean wasHeld = GauntletClientState.HELD_ACTIVE.contains(h.getId());
+                boolean lockedOut = GauntletClientState.HELD_LOCKED_OUT.contains(h.getId());
 
                 // Clear lockout once key is physically released
                 if (!pressing && lockedOut)
-                    GauntletClientState.heldLockedOut.remove(h.getId());
+                    GauntletClientState.HELD_LOCKED_OUT.remove(h.getId());
 
                 if (lockedOut) continue;
 
                 if (pressing && !wasHeld) {
-                    GauntletClientState.heldActive.add(h.getId());
+                    GauntletClientState.HELD_ACTIVE.add(h.getId());
                     ClientPlayNetworking.send(new GauntletHeldC2SPacket(h.getId(), true));
                 } else if (!pressing && wasHeld) {
-                    GauntletClientState.heldActive.remove(h.getId());
+                    GauntletClientState.HELD_ACTIVE.remove(h.getId());
                     ClientPlayNetworking.send(new GauntletHeldC2SPacket(h.getId(), false));
                 }
             }

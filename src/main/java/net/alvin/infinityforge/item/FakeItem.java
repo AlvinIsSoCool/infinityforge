@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
 public class FakeItem extends Item {
-    public static final String DISGUISE_KEY = "DisguiseId";
+    public static final String DISGUISE_KEY = "disguise_id";
 
     public FakeItem() {
         super(new FabricItemSettings());

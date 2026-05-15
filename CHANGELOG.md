@@ -25,8 +25,12 @@ Consistent with the other ability types.
 - Made gauntlet textures brighter.
 - Added items for progression.
 - Added ore gen.
-- Added villager trade for infinity gauntlet blueprint
-- Added infinity gauntlet blueprint to armorer villager chest loot table
+- Added villager trade for infinity gauntlet blueprint.
+- Added infinity gauntlet blueprint to armorer villager chest loot table.
+- Added gauntlet cooldown saving to nbt.
+- Added gauntlet equipped stones tooltip.
+- Fixed issues with switching between one gauntlet to another gauntlet.
+- Fixed ability scroll offset overflow in some cases.
 
 ## [0.3.0-beta.1] - 2026-05-08
 

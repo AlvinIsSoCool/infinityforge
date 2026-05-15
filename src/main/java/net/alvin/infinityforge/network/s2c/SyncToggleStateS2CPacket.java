@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
-// S2C — tells client which toggles are currently on for HUD rendering
+// Tells client which toggles are currently on for HUD rendering
 public record SyncToggleStateS2CPacket(Identifier abilityId, boolean active) implements FabricPacket {
     public static final PacketType<SyncToggleStateS2CPacket> TYPE =
             PacketType.create(

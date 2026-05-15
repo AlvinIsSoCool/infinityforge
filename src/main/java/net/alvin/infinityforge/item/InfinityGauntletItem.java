@@ -7,8 +7,11 @@ import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.infinity.abilities.base.*;
 import net.alvin.infinityforge.screen.GauntletScreenHandler;
+import net.alvin.infinityforge.server.state.GauntletChargeState;
+import net.alvin.infinityforge.server.state.GauntletCooldownState;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -24,18 +27,20 @@ import net.minecraft.nbt.NbtString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.text.TextColor;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class InfinityGauntletItem extends Item {
-    private static final String STONES_KEY = "Stones";
+    private static final String GAUNTLET_ID_KEY = "gauntlet_id";
+    private static final String STONES_KEY = "gauntlet_equipped_stones";
+    private static final String CHARGES_KEY = "gauntlet_charges";
+    private static final String COOLDOWNS_KEY = "gauntlet_cooldowns";
     private static final WeakHashMap<ItemStack, List<InfinityStoneType>> STONE_CACHE
             = new WeakHashMap<>();
 
@@ -82,6 +87,24 @@ public class InfinityGauntletItem extends Item {
     @Override
     public Rarity getRarity(ItemStack stack) {
         return Rarity.EPIC;
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack, world, tooltip, context);
+        List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+
+        if (!activeStones.isEmpty()) {
+            tooltip.add(Text.literal("Equipped Stones: ").formatted(Formatting.AQUA));
+            for (int i = 0; i < activeStones.size(); i++) {
+                InfinityStoneType stoneType = activeStones.get(i);
+                String stoneName = InfinityStoneTypeRegistry.getNameFromType(stoneType, " Stone", true);
+                Text stoneTooltip = Text.literal("- ").append(stoneName)
+                        .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(stoneType.glintColor())));
+
+                tooltip.add(stoneTooltip);
+            }
+        }
     }
 
     public static List<InfinityStoneType> getAddedStones(ItemStack stack) {
@@ -172,6 +195,48 @@ public class InfinityGauntletItem extends Item {
             }
         }
         return result;
+    }
+
+    public static UUID getOrCreateGauntletId(ItemStack stack) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        if (!nbt.contains(GAUNTLET_ID_KEY)) {
+            nbt.putUuid(GAUNTLET_ID_KEY, UUID.randomUUID());
+            STONE_CACHE.remove(stack);
+        }
+        return nbt.getUuid(GAUNTLET_ID_KEY);
+    }
+
+    public static void saveToStack(ItemStack stack, UUID gauntletId) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+
+        NbtCompound charges = new NbtCompound();
+        Map<Identifier, Integer> chargeMap = GauntletChargeState.getAll(gauntletId);
+        if (chargeMap != null)
+            chargeMap.forEach((id, charge) -> charges.putInt(id.toString(), charge));
+        nbt.put(CHARGES_KEY, charges);
+
+        NbtCompound cooldowns = new NbtCompound();
+        Map<Identifier, Long> cooldownMap = GauntletCooldownState.getAll(gauntletId);
+        if (cooldownMap != null)
+            cooldownMap.forEach((id, expiry) -> cooldowns.putLong(id.toString(), expiry));
+        nbt.put(COOLDOWNS_KEY, cooldowns);
+    }
+
+    public static void loadFromStack(ItemStack stack, UUID gauntletId) {
+        NbtCompound nbt = stack.getNbt();
+        if (nbt == null) return;
+
+        if (nbt.contains(CHARGES_KEY)) {
+            NbtCompound charges = nbt.getCompound(CHARGES_KEY);
+            for (String key : charges.getKeys())
+                GauntletChargeState.setCharge(gauntletId, new Identifier(key), charges.getInt(key));
+        }
+
+        if (nbt.contains(COOLDOWNS_KEY)) {
+            NbtCompound cooldowns = nbt.getCompound(COOLDOWNS_KEY);
+            for (String key : cooldowns.getKeys())
+                GauntletCooldownState.setRawExpiry(gauntletId, new Identifier(key), cooldowns.getLong(key));
+        }
     }
 
     @Nullable

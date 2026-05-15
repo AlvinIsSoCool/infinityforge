@@ -30,6 +30,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.random.Random;
 
 import java.util.List;
+import java.util.UUID;
 
 public class GauntletPacketHandlers {
     public static void register() {
@@ -47,19 +48,23 @@ public class GauntletPacketHandlers {
                                         ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
             if (player.isSpectator()) return;
+
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
+            UUID gauntletId = InfinityGauntletItem.getOrCreateGauntletId(stack);
+            ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+
             ActiveAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getActiveAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
-            if (GauntletCooldownState.isOnCooldown(player, ability.getId())) return;
+            if (GauntletCooldownState.isOnCooldown(gauntletId, ability.getId(), world.getTime())) return;
 
-            ServerWorld world = (ServerWorld) player.getWorld();
             boolean success = ability.onActivate(world, player, activeStones);
+            if (!success) return;
 
-            if (ability.getCooldownTicks() > 0 && success) {
-                GauntletCooldownState.setCooldown(player, ability.getId(), ability.getCooldownTicks());
+            if (ability.getCooldownTicks() > 0) {
+                GauntletCooldownState.setCooldown(gauntletId, ability.getId(), ability.getCooldownTicks(), world.getTime());
                 ServerPlayNetworking.send(player, new SyncCooldownS2CPacket(
                         ability.getId(), ability.getCooldownTicks(), world.getTime()));
             }
@@ -70,14 +75,16 @@ public class GauntletPacketHandlers {
                                        ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
             if (player.isSpectator()) return;
+
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
+            ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+
             ToggleAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getToggleAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
-            ServerWorld world = (ServerWorld) player.getWorld();
             boolean nowActive = GauntletToggleState.flip(player, ability.getId());
             if (nowActive) {
                 boolean success = ability.onEnable(world, player, activeStones);
@@ -85,8 +92,9 @@ public class GauntletPacketHandlers {
                     GauntletToggleState.setActive(player, ability.getId(), false);
                     return;
                 }
+            } else {
+                ability.onDisable(world, player, activeStones);
             }
-            else ability.onDisable(world, player, activeStones);
 
             ServerPlayNetworking.send(player, new SyncToggleStateS2CPacket(ability.getId(), nowActive));
         });
@@ -96,14 +104,16 @@ public class GauntletPacketHandlers {
                                      ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
             if (player.isSpectator()) return;
+
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
+            ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+
             HeldAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getHeldAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
-            ServerWorld world = (ServerWorld) player.getWorld();
             GauntletHeldState.setHeld(player, ability.getId(), packet.pressing());
 
             if (packet.pressing()) ability.onStart(world, player, activeStones);

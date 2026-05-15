@@ -13,6 +13,24 @@ public class InfinityStoneTypeRegistry {
     public static final Registry<InfinityStoneType> STONE_TYPE_REGISTRY =
             FabricRegistryBuilder.createSimple(STONE_TYPE_REGISTRY_KEY).buildAndRegister();
 
+    public static String getNameFromType(InfinityStoneType stoneType, String suffix, boolean capitalize) {
+        Identifier typeId = STONE_TYPE_REGISTRY.getId(stoneType);
+        if (typeId == null) return "";
+
+        String path = typeId.getPath();
+        if (capitalize && !path.isEmpty())
+            path = Character.toUpperCase(path.charAt(0)) + path.substring(1);
+
+        return path + suffix;
+    }
+
+    public static Identifier getIdentifierFromType(InfinityStoneType stoneType, String suffix) {
+        Identifier typeId = STONE_TYPE_REGISTRY.getId(stoneType);
+        if (typeId == null) return new Identifier("");
+
+        return typeId.withPath(typeId.getPath() + suffix);
+    }
+
     public static void initialize() {
         InfinityForge.LOGGER.info("Initializing Stone Type Registry for " + InfinityForge.MOD_ID);
     }

@@ -1,39 +1,56 @@
 package net.alvin.infinityforge.server.state;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
 
 public class GauntletChargeState {
-    private static final Map<PlayerEntity, Map<Identifier, Integer>> CHARGES
-            = new IdentityHashMap<>();
-
+    private static final Map<UUID, Map<Identifier, Integer>> CHARGES = new HashMap<>();
     private static final Set<PlayerEntity> PREVIOUSLY_EQUIPPED
             = Collections.newSetFromMap(new IdentityHashMap<>());
+    private static final Map<PlayerEntity, ItemStack> LAST_KNOWN_STACK
+            = new IdentityHashMap<>();
 
     public static boolean wasEquipped(PlayerEntity player) {
-        return PREVIOUSLY_EQUIPPED.contains(player); // identity check, no hashing
+        return PREVIOUSLY_EQUIPPED.contains(player);
     }
 
-    public static void setEquipped(PlayerEntity player, boolean equipped) {
-        if (equipped) PREVIOUSLY_EQUIPPED.add(player);
-        else          PREVIOUSLY_EQUIPPED.remove(player);
+    public static void setEquipped(PlayerEntity player, boolean equipped, ItemStack stack) {
+        if (equipped) {
+            PREVIOUSLY_EQUIPPED.add(player);
+            LAST_KNOWN_STACK.put(player, stack);
+        } else {
+            PREVIOUSLY_EQUIPPED.remove(player);
+            LAST_KNOWN_STACK.remove(player);
+        }
     }
 
-    public static int getCharge(PlayerEntity player, Identifier abilityId, int max) {
-        Map<Identifier, Integer> inner = CHARGES.get(player); // identity lookup
-        if (inner == null) return max;                         // avoids Map.of() allocation
-        return inner.getOrDefault(abilityId, max);
+    public static ItemStack getLastKnownStack(PlayerEntity player) {
+        return LAST_KNOWN_STACK.get(player);
     }
 
-    public static void setCharge(PlayerEntity player, Identifier abilityId, int charge) {
-        CHARGES.computeIfAbsent(player, k -> new HashMap<>())
-                .put(abilityId, charge);
+    public static int getCharge(UUID gauntletId, Identifier abilityId, int max) {
+        Map<Identifier, Integer> map = CHARGES.get(gauntletId);
+        if (map == null) return max;
+        return map.getOrDefault(abilityId, max);
     }
 
-    public static void clearAll(PlayerEntity player) {
-        CHARGES.remove(player);
+    public static void setCharge(UUID gauntletId, Identifier abilityId, int charge) {
+        CHARGES.computeIfAbsent(gauntletId, k -> new HashMap<>()).put(abilityId, charge);
+    }
+
+    public static Map<Identifier, Integer> getAll(UUID gauntletId) {
+        return CHARGES.get(gauntletId);
+    }
+
+    public static void clear(UUID gauntletId) {
+        CHARGES.remove(gauntletId);
+    }
+
+    public static void clearPlayer(PlayerEntity player) {
         PREVIOUSLY_EQUIPPED.remove(player);
+        LAST_KNOWN_STACK.remove(player);
     }
 }

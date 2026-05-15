@@ -18,22 +18,22 @@ public class InfinityForge implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModStones.initialize();
+		ModItems.initialize();
+		ModBlocks.initialize();
+		ModItemGroups.initialize();
+
 		InfinityStoneTypeRegistry.initialize();
 		GauntletAbilityRegistry.initialize();
 		ModScreenHandlers.initialize();
 
 		ModWorldGeneration.initialize();
 		ModCustomTrades.register();
-		ModLootTableModifiers.modify();
+		ModLootTableModifiers.register();
 
 		GauntletPacketHandlers.register();
 		GauntletServerTick.register();
 		GauntletConnectionEvents.register();
 		InfinityStoneEventHandler.register();
-
-		ModStones.initialize();
-		ModItems.initialize();
-		ModBlocks.initialize();
-		ModItemGroups.initialize();
 	}
 }

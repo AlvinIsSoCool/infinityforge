@@ -1,16 +1,18 @@
 package net.alvin.infinityforge.server.tick;
 
+import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
+import net.alvin.infinityforge.network.s2c.*;
+import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.state.GauntletChargeState;
+import net.alvin.infinityforge.server.state.GauntletCooldownState;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.network.s2c.SyncChargeS2CPacket;
-import net.alvin.infinityforge.network.s2c.SyncHeldForceStopS2CPacket;
-import net.alvin.infinityforge.network.s2c.SyncToggleStateS2CPacket;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
@@ -19,8 +21,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
 import java.util.List;
-
-import static net.alvin.infinityforge.server.event.GauntletConnectionEvents.cleanupPlayer;
+import java.util.UUID;
 
 public class GauntletServerTick {
     public static void register() {
@@ -33,60 +34,86 @@ public class GauntletServerTick {
         if (count == 0) return;
 
         long time = server.getOverworld().getTime();
+
         for (int idx = 0; idx < count; idx++) {
             ServerPlayerEntity player = players.get(idx);
-
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
 
             if (stack == null) {
                 if (GauntletChargeState.wasEquipped(player)) {
-                    cleanupPlayer(player);
+                    ItemStack lastStack = GauntletChargeState.getLastKnownStack(player);
+                    if (lastStack != null) GauntletConnectionEvents.cleanupPlayer(player, lastStack);
                 }
-                GauntletChargeState.setEquipped(player, false);
+                GauntletChargeState.setEquipped(player, false, null);
                 continue;
             }
 
             ServerWorld world = (ServerWorld) player.getWorld();
+            UUID gauntletId = InfinityGauntletItem.getOrCreateGauntletId(stack);
 
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-            List<PassiveAbility> passiveAbilities = InfinityGauntletItem.getPassiveAbilities(activeStones);
-            List<ToggleAbility> toggleAbilities = InfinityGauntletItem.getToggleAbilities(activeStones);
-            List<HeldAbility> heldAbilities = InfinityGauntletItem.getHeldAbilities(activeStones);
+            List<ActiveAbility> actives = InfinityGauntletItem.getActiveAbilities(activeStones);
+            List<PassiveAbility> passives = InfinityGauntletItem.getPassiveAbilities(activeStones);
+            List<ToggleAbility> toggles = InfinityGauntletItem.getToggleAbilities(activeStones);
+            List<HeldAbility> helds = InfinityGauntletItem.getHeldAbilities(activeStones);
 
+            ItemStack lastStack = GauntletChargeState.getLastKnownStack(player);
             boolean equippedLastTick = GauntletChargeState.wasEquipped(player);
-            GauntletChargeState.setEquipped(player, true);
+            boolean gauntletChanged = stack != lastStack;
+            GauntletChargeState.setEquipped(player, true, stack);
 
-            if (!equippedLastTick) {
-                for (int i = 0; i < toggleAbilities.size(); i++) {
-                    ToggleAbility t = toggleAbilities.get(i);
-                    int charge = GauntletChargeState.getCharge(player, t.getId(), t.getMaxChargeTicks());
+            if (!equippedLastTick || gauntletChanged) {
+                InfinityForge.LOGGER.info("Not equipped last tick. Doing stuff...");
+
+                if (equippedLastTick || gauntletChanged) {
+                    if (lastStack != null) GauntletConnectionEvents.cleanupPlayer(player, lastStack);
+                }
+
+                ServerPlayNetworking.send(player, new ClearGauntletClientStateS2CPacket());
+                InfinityGauntletItem.loadFromStack(stack, gauntletId);
+
+                for (int i = 0; i < toggles.size(); i++) {
+                    ToggleAbility t = toggles.get(i);
+                    int charge = GauntletChargeState.getCharge(gauntletId, t.getId(), t.getMaxChargeTicks());
                     ServerPlayNetworking.send(player,
                             new SyncChargeS2CPacket(t.getId(), charge, t.getMaxChargeTicks()));
                     ServerPlayNetworking.send(player,
                             new SyncToggleStateS2CPacket(t.getId(), GauntletToggleState.isActive(player, t.getId())));
                 }
-                for (int i = 0; i < heldAbilities.size(); i++) {
-                    HeldAbility h = heldAbilities.get(i);
-                    int charge = GauntletChargeState.getCharge(player, h.getId(), h.getMaxChargeTicks());
+
+                for (int i = 0; i < helds.size(); i++) {
+                    HeldAbility h = helds.get(i);
+                    int charge = GauntletChargeState.getCharge(gauntletId, h.getId(), h.getMaxChargeTicks());
                     ServerPlayNetworking.send(player,
                             new SyncChargeS2CPacket(h.getId(), charge, h.getMaxChargeTicks()));
                 }
+
+                for (int i = 0; i < actives.size(); i++) {
+                    ActiveAbility a = actives.get(i);
+                    long expiry = GauntletCooldownState.getExpiryTick(gauntletId, a.getId());
+                    int remaining = (int)(expiry - time);
+                    if (remaining > 0) {
+                        ServerPlayNetworking.send(player, new SyncCooldownS2CPacket(
+                                a.getId(), a.getCooldownTicks(), expiry - a.getCooldownTicks()));
+                    }
+
+                    //InfinityForge.LOGGER.info("Ability Cooldown: {}, expiry: {}, remaining: {}, startTick: {}", a.getCooldownTicks(), expiry, remaining, expiry - a.getCooldownTicks());
+                }
             }
 
-            // Passive abilities
-            for (int i = 0; i < passiveAbilities.size(); i++) {
-                passiveAbilities.get(i).onTick(world, player, activeStones);
+            for (int i = 0; i < passives.size(); i++) {
+                passives.get(i).onTick(world, player, activeStones);
             }
 
-            // Toggle abilities
-            for (int i = 0; i < toggleAbilities.size(); i++) {
-                ToggleAbility t = toggleAbilities.get(i);
+            for (int i = 0; i < toggles.size(); i++) {
+                ToggleAbility t = toggles.get(i);
                 boolean active = GauntletToggleState.isActive(player, t.getId());
-                int oldCharge = GauntletChargeState.getCharge(player, t.getId(), t.getMaxChargeTicks());
+                int oldCharge = GauntletChargeState.getCharge(gauntletId, t.getId(), t.getMaxChargeTicks());
                 int newCharge = oldCharge;
 
                 if (active) {
                     t.onTick(world, player, activeStones);
+
                     if (t.getMaxChargeTicks() != -1) {
                         newCharge = Math.max(0, oldCharge - 1);
 
@@ -100,7 +127,6 @@ public class GauntletServerTick {
                         }
                     }
                 } else {
-                    // Staggered by player index. No tick spike potential. Untested on multiplayer!
                     if (t.getMaxChargeTicks() != -1 && oldCharge < t.getMaxChargeTicks()) {
                         int rate = t.getRefillRateTicks();
                         if (rate > 0 && (time + idx) % rate == 0) {
@@ -112,21 +138,21 @@ public class GauntletServerTick {
                 }
 
                 if (newCharge != oldCharge) {
-                    GauntletChargeState.setCharge(player, t.getId(), newCharge);
+                    GauntletChargeState.setCharge(gauntletId, t.getId(), newCharge);
                     ServerPlayNetworking.send(player,
                             new SyncChargeS2CPacket(t.getId(), newCharge, t.getMaxChargeTicks()));
                 }
             }
 
-            // Held abilities
-            for (int i = 0; i < heldAbilities.size(); i++) {
-                HeldAbility h = heldAbilities.get(i);
+            for (int i = 0; i < helds.size(); i++) {
+                HeldAbility h = helds.get(i);
                 boolean active = GauntletHeldState.isHeld(player, h.getId());
-                int oldCharge = GauntletChargeState.getCharge(player, h.getId(), h.getMaxChargeTicks());
-                int newCharge = oldCharge;
+                int oldCharge  = GauntletChargeState.getCharge(gauntletId, h.getId(), h.getMaxChargeTicks());
+                int newCharge  = oldCharge;
 
                 if (active) {
                     h.onTick(world, player, activeStones);
+
                     if (h.getMaxChargeTicks() != -1) {
                         newCharge = Math.max(0, oldCharge - 1);
 
@@ -151,7 +177,7 @@ public class GauntletServerTick {
                 }
 
                 if (newCharge != oldCharge) {
-                    GauntletChargeState.setCharge(player, h.getId(), newCharge);
+                    GauntletChargeState.setCharge(gauntletId, h.getId(), newCharge);
                     ServerPlayNetworking.send(player,
                             new SyncChargeS2CPacket(h.getId(), newCharge, h.getMaxChargeTicks()));
                 }

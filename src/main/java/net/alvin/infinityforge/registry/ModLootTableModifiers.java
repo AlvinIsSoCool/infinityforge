@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 public class ModLootTableModifiers {
     private static final Identifier VILLAGE_ARMORER_CHEST_ID = new Identifier("minecraft", "loot_tables/chests/village/village_armorer");
 
-    public static void modify() {
+    public static void register() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
             if (id.equals(VILLAGE_ARMORER_CHEST_ID)) {
                 LootPool.Builder poolBuilder = LootPool.builder()

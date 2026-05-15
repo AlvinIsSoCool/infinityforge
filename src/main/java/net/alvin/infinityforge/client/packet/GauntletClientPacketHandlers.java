@@ -1,10 +1,8 @@
 package net.alvin.infinityforge.client.packet;
 
+import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.client.state.GauntletClientState;
-import net.alvin.infinityforge.network.s2c.SyncChargeS2CPacket;
-import net.alvin.infinityforge.network.s2c.SyncCooldownS2CPacket;
-import net.alvin.infinityforge.network.s2c.SyncHeldForceStopS2CPacket;
-import net.alvin.infinityforge.network.s2c.SyncToggleStateS2CPacket;
+import net.alvin.infinityforge.network.s2c.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -19,43 +17,48 @@ public class GauntletClientPacketHandlers {
                 SyncHeldForceStopS2CPacket.TYPE, GauntletClientPacketHandlers::onHeldForceStop);
         ClientPlayNetworking.registerGlobalReceiver(
                 SyncCooldownS2CPacket.TYPE, GauntletClientPacketHandlers::onCooldownSync);
-        //ClientPlayNetworking.registerGlobalReceiver(
-                //ClearChargesS2CPacket.TYPE, GauntletClientPacketHandlers::onClearCharges);
-        //ClientPlayNetworking.registerGlobalReceiver(
-               // SyncSizeS2CPacket.TYPE, GauntletClientPacketHandlers::onSizeSync);
+        ClientPlayNetworking.registerGlobalReceiver(
+                ClearGauntletClientStateS2CPacket.TYPE, GauntletClientPacketHandlers::onClearClientState);
     }
+
 
     private static void onToggleSync(SyncToggleStateS2CPacket packet,
                                      ClientPlayerEntity player, PacketSender responseSender) {
-        if (packet.active()) GauntletClientState.activeToggles.add(packet.abilityId());
-        else GauntletClientState.activeToggles.remove(packet.abilityId());
+        if (packet.active()) GauntletClientState.ACTIVE_TOGGLES.add(packet.abilityId());
+        else GauntletClientState.ACTIVE_TOGGLES.remove(packet.abilityId());
     }
 
     private static void onChargeSync(SyncChargeS2CPacket packet,
                                      ClientPlayerEntity player, PacketSender responseSender) {
-        int[] existing = GauntletClientState.charges.get(packet.abilityId());
+        int[] existing = GauntletClientState.CHARGES.get(packet.abilityId());
         if (existing != null) {
             existing[0] = packet.charge();
             existing[1] = packet.maxCharge();
         } else {
-            GauntletClientState.charges.put(packet.abilityId(), new int[]{ packet.charge(), packet.maxCharge() });
+            GauntletClientState.CHARGES.put(packet.abilityId(), new int[]{ packet.charge(), packet.maxCharge() });
         }
     }
 
     private static void onHeldForceStop(SyncHeldForceStopS2CPacket packet,
                                         ClientPlayerEntity player, PacketSender responseSender) {
-        GauntletClientState.heldActive.remove(packet.abilityId());
-        GauntletClientState.heldLockedOut.add(packet.abilityId());
+        GauntletClientState.HELD_ACTIVE.remove(packet.abilityId());
+        GauntletClientState.HELD_LOCKED_OUT.add(packet.abilityId());
     }
 
     private static void onCooldownSync(SyncCooldownS2CPacket packet,
                                      ClientPlayerEntity player, PacketSender responseSender) {
-        long[] existing = GauntletClientState.cooldowns.get(packet.abilityId());
+        long[] existing = GauntletClientState.COOLDOWNS.get(packet.abilityId());
         if (existing != null) {
             existing[0] = packet.startTick();
             existing[1] = packet.durationTicks();
         } else {
-            GauntletClientState.cooldowns.put(packet.abilityId(), new long[]{ packet.startTick(), packet.durationTicks() });
+            GauntletClientState.COOLDOWNS.put(packet.abilityId(), new long[]{ packet.startTick(), packet.durationTicks() });
         }
+    }
+
+    private static void onClearClientState(ClearGauntletClientStateS2CPacket packet,
+                                       ClientPlayerEntity player, PacketSender responseSender) {
+        InfinityForge.LOGGER.info("Clear packet received on client!");
+        GauntletClientState.clearAll();
     }
 }
