@@ -1,6 +1,6 @@
 package net.alvin.infinityforge;
 
-import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.registry.ModBlocks;
 import net.alvin.infinityforge.registry.*;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;

@@ -16,6 +16,8 @@ public class InfinityForgeDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModLanguageProvider::new);
 		pack.addProvider(ModRecipeProvider::new);
 		pack.addProvider(ModItemTagProvider::new);
+		pack.addProvider(ModBlockTagProvider::new);
+		pack.addProvider(ModLootTableProvider::new);
 		pack.addProvider(ModWorldGenerator::new);
 	}
 

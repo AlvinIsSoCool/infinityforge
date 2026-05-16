@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.datagen;
 
-import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.registry.ModBlocks;
 import net.alvin.infinityforge.registry.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;

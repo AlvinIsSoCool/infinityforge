@@ -95,11 +95,12 @@ public class InfinityGauntletItem extends Item {
         List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
 
         if (!activeStones.isEmpty()) {
-            tooltip.add(Text.literal("Equipped Stones: ").formatted(Formatting.AQUA));
+            tooltip.add(Text.literal(""));
+            tooltip.add(Text.literal("Equipped Stones: ").formatted(Formatting.GRAY));
             for (int i = 0; i < activeStones.size(); i++) {
                 InfinityStoneType stoneType = activeStones.get(i);
                 String stoneName = InfinityStoneTypeRegistry.getNameFromType(stoneType, " Stone", true);
-                Text stoneTooltip = Text.literal("- ").append(stoneName)
+                Text stoneTooltip = Text.literal("  - ").append(stoneName)
                         .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(stoneType.glintColor())));
 
                 tooltip.add(stoneTooltip);
@@ -131,9 +132,8 @@ public class InfinityGauntletItem extends Item {
         NbtCompound nbt = stack.getOrCreateNbt();
         NbtList list = new NbtList();
         for (InfinityStoneType stone : stones) {
-            list.add(NbtString.of(
-                    InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stone).toString()
-            ));
+            Identifier typeId = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stone);
+            if (typeId != null) list.add(NbtString.of(typeId.toString()));
         }
         nbt.put(STONES_KEY, list);
         STONE_CACHE.remove(stack);

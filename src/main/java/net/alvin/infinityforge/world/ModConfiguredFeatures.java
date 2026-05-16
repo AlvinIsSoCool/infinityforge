@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.world;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.registry.ModBlocks;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;

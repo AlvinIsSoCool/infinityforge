@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.block;
+package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -14,9 +14,9 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 public class ModBlocks {
     public static final Block TITANIUM_ORE = registerBlock("titanium_ore",
-            new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(2f), UniformIntProvider.create(2, 5)));
+            new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.DIAMOND_ORE).strength(4.5f, 6.0f), UniformIntProvider.create(4, 9)));
     public static final Block DEEPSLATE_TITANIUM_ORE = registerBlock("deepslate_titanium_ore",
-            new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(4f), UniformIntProvider.create(2, 5)));
+            new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_DIAMOND_ORE).strength(6.0f, 7.0f), UniformIntProvider.create(4, 9)));
 
     private static Block registerBlock(String name, Block block) {
         Registry.register(Registries.ITEM, new Identifier(InfinityForge.MOD_ID, name),
