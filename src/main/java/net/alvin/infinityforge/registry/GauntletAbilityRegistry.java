@@ -8,17 +8,17 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
 public class GauntletAbilityRegistry {
-    public static final RegistryKey<Registry<GauntletAbility>> ABILITY_REGISTRY_KEY =
+    public static final RegistryKey<Registry<GauntletAbility>> REGISTRY_KEY =
             RegistryKey.ofRegistry(new Identifier(InfinityForge.MOD_ID, "gauntlet_abilities"));
-    public static final Registry<GauntletAbility> ABILITY_REGISTRY =
-            FabricRegistryBuilder.createSimple(ABILITY_REGISTRY_KEY).buildAndRegister();
+    public static final Registry<GauntletAbility> REGISTRY =
+            FabricRegistryBuilder.createSimple(REGISTRY_KEY).buildAndRegister();
 
     public static GauntletAbility register(GauntletAbility ability) {
-        return Registry.register(ABILITY_REGISTRY, ability.getId(), ability);
+        return Registry.register(REGISTRY, ability.getId(), ability);
     }
 
     public static GauntletAbility get(Identifier id) {
-        return ABILITY_REGISTRY.get(id);
+        return REGISTRY.get(id);
     }
 
     public static void initialize() {

@@ -45,7 +45,7 @@ public class GauntletConnectionEvents {
         List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
 
         UUID gauntletId = InfinityGauntletItem.getOrCreateGauntletId(stack);
-        InfinityGauntletItem.saveToStack(stack, gauntletId);
+        InfinityGauntletItem.saveToStack(stack, gauntletId, world.getTime());
         GauntletChargeState.clear(gauntletId);
         GauntletCooldownState.clear(gauntletId);
 

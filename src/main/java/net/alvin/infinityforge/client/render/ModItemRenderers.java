@@ -17,9 +17,9 @@ public class ModItemRenderers {
     public static final FakeItemRenderer FAKE_ITEM_RENDERER = new FakeItemRenderer();
 
     public static void register() {
-        for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY) {
-            String stoneName = InfinityStoneTypeRegistry.getNameFromType(stoneType, " Stone", true);
-            Identifier stoneId = InfinityStoneTypeRegistry.getIdentifierFromType(stoneType, "_stone");
+        for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.REGISTRY) {
+            String stoneName = InfinityStoneTypeRegistry.getStoneNameFromType(stoneType, " Stone", true);
+            Identifier stoneId = InfinityStoneTypeRegistry.getStoneIdFromType(stoneType, "_stone");
             Item stoneItem = Registries.ITEM.get(stoneId);
 
             InfinityForge.LOGGER.info("Registering renderer for Item: {} ({})", stoneName, stoneId.toString());
@@ -30,8 +30,8 @@ public class ModItemRenderers {
                             matrices, vertexConsumers,
                             light, overlay, stoneType));
 
-            String tesseractName = InfinityStoneTypeRegistry.getNameFromType(stoneType, " Tesseract", true);
-            Identifier tesseractId = InfinityStoneTypeRegistry.getIdentifierFromType(stoneType, "_tesseract");
+            String tesseractName = InfinityStoneTypeRegistry.getStoneNameFromType(stoneType, " Tesseract", true);
+            Identifier tesseractId = InfinityStoneTypeRegistry.getStoneIdFromType(stoneType, "_tesseract");
             Item tesseractItem = Registries.ITEM.get(tesseractId);
 
             InfinityForge.LOGGER.info("Registering renderer for Item: {} ({})", tesseractName, tesseractId.toString());

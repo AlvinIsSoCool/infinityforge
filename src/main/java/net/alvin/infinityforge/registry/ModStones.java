@@ -88,7 +88,7 @@ public class ModStones {
 
     private static InfinityStoneType register(String name, InfinityStoneType type) {
         return Registry.register(
-                InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY,
+                InfinityStoneTypeRegistry.REGISTRY,
                 new Identifier(InfinityForge.MOD_ID, name),
                 type
         );

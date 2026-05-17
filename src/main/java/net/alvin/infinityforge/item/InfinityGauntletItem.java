@@ -3,6 +3,7 @@ package net.alvin.infinityforge.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.infinity.abilities.base.*;
 import net.alvin.infinityforge.screen.GauntletScreenHandler;
@@ -98,7 +99,7 @@ public class InfinityGauntletItem extends Item {
             tooltip.add(Text.literal("Equipped Stones: ").formatted(Formatting.GRAY));
             for (int i = 0; i < activeStones.size(); i++) {
                 InfinityStoneType stoneType = activeStones.get(i);
-                String stoneName = InfinityStoneTypeRegistry.getNameFromType(stoneType, " Stone", true);
+                String stoneName = InfinityStoneTypeRegistry.getStoneNameFromType(stoneType, " Stone", true);
                 Text stoneTooltip = Text.literal("  - ").append(stoneName)
                         .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(stoneType.glintColor())));
 
@@ -117,7 +118,7 @@ public class InfinityGauntletItem extends Item {
         NbtList list = nbt.getList(STONES_KEY, NbtElement.STRING_TYPE);
         List<InfinityStoneType> result = new ArrayList<>(list.size());
         for (int i = 0; i < list.size(); i++) {
-            InfinityStoneType type = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY
+            InfinityStoneType type = InfinityStoneTypeRegistry.REGISTRY
                     .get(new Identifier(list.getString(i)));
             if (type != null) result.add(type);
         }
@@ -131,7 +132,7 @@ public class InfinityGauntletItem extends Item {
         NbtCompound nbt = stack.getOrCreateNbt();
         NbtList list = new NbtList();
         for (InfinityStoneType stone : stones) {
-            Identifier typeId = InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY.getId(stone);
+            Identifier typeId = InfinityStoneTypeRegistry.REGISTRY.getId(stone);
             if (typeId != null) list.add(NbtString.of(typeId.toString()));
         }
         nbt.put(STONES_KEY, list);
@@ -205,19 +206,29 @@ public class InfinityGauntletItem extends Item {
         return nbt.getUuid(GAUNTLET_ID_KEY);
     }
 
-    public static void saveToStack(ItemStack stack, UUID gauntletId) {
+    public static void saveToStack(ItemStack stack, UUID gauntletId, long currentTick) {
         NbtCompound nbt = stack.getOrCreateNbt();
 
         NbtCompound charges = new NbtCompound();
         Map<Identifier, Integer> chargeMap = GauntletChargeState.getAll(gauntletId);
         if (chargeMap != null)
-            chargeMap.forEach((id, charge) -> charges.putInt(id.toString(), charge));
+            chargeMap.forEach((id, charge) -> {
+                GauntletAbility ability = GauntletAbilityRegistry.get(id);
+                int max = ability instanceof ToggleAbility t ? t.getMaxChargeTicks()
+                        : ability instanceof HeldAbility h ? h.getMaxChargeTicks()
+                          : Integer.MAX_VALUE;
+                if (charge < max)
+                    charges.putInt(id.toString(), charge);
+            });
         nbt.put(CHARGES_KEY, charges);
 
         NbtCompound cooldowns = new NbtCompound();
         Map<Identifier, Long> cooldownMap = GauntletCooldownState.getAll(gauntletId);
         if (cooldownMap != null)
-            cooldownMap.forEach((id, expiry) -> cooldowns.putLong(id.toString(), expiry));
+            cooldownMap.forEach((id, expiry) -> {
+                if (expiry > currentTick)
+                    cooldowns.putLong(id.toString(), expiry);
+            });
         nbt.put(COOLDOWNS_KEY, cooldowns);
     }
 

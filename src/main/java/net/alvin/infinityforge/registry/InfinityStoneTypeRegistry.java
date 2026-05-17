@@ -8,13 +8,13 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
 public class InfinityStoneTypeRegistry {
-    public static final RegistryKey<Registry<InfinityStoneType>> STONE_TYPE_REGISTRY_KEY =
+    public static final RegistryKey<Registry<InfinityStoneType>> REGISTRY_KEY =
             RegistryKey.ofRegistry(new Identifier(InfinityForge.MOD_ID, "stone_types"));
-    public static final Registry<InfinityStoneType> STONE_TYPE_REGISTRY =
-            FabricRegistryBuilder.createSimple(STONE_TYPE_REGISTRY_KEY).buildAndRegister();
+    public static final Registry<InfinityStoneType> REGISTRY =
+            FabricRegistryBuilder.createSimple(REGISTRY_KEY).buildAndRegister();
 
-    public static String getNameFromType(InfinityStoneType stoneType, String suffix, boolean capitalize) {
-        Identifier typeId = STONE_TYPE_REGISTRY.getId(stoneType);
+    public static String getStoneNameFromType(InfinityStoneType stoneType, String suffix, boolean capitalize) {
+        Identifier typeId = REGISTRY.getId(stoneType);
         if (typeId == null) return "";
 
         String path = typeId.getPath();
@@ -24,8 +24,8 @@ public class InfinityStoneTypeRegistry {
         return path + suffix;
     }
 
-    public static Identifier getIdentifierFromType(InfinityStoneType stoneType, String suffix) {
-        Identifier typeId = STONE_TYPE_REGISTRY.getId(stoneType);
+    public static Identifier getStoneIdFromType(InfinityStoneType stoneType, String suffix) {
+        Identifier typeId = REGISTRY.getId(stoneType);
         if (typeId == null) return new Identifier("");
 
         return typeId.withPath(typeId.getPath() + suffix);

@@ -73,7 +73,7 @@ public class InfinityGauntletRenderer {
             // Stone slot render.
             // Future Note: Positions, transforms and scale are all very fragile.
             // Caution advised before modifying.
-            for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.STONE_TYPE_REGISTRY) {
+            for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.REGISTRY) {
                 float[] slot = getSlotTransform(stoneType);
                 matrices.push();
                     matrices.translate(slot[0], slot[1], slot[2]);
@@ -195,7 +195,7 @@ public class InfinityGauntletRenderer {
         // format: [x, y, z, rotationY]
         // Future Note: Pixel-perfect alignments.
         // Caution advised before modifying.
-        String stoneId = InfinityStoneTypeRegistry.getNameFromType(stoneType, "", false);
+        String stoneId = InfinityStoneTypeRegistry.getStoneNameFromType(stoneType, "", false);
         return switch (stoneId) {
             case "soul"    -> new float[]{ 0.119f, 1.06f, -0.16f, 0f  };
             case "reality" -> new float[]{ 0.044f, 1.06f, -0.16f, 0f  };
