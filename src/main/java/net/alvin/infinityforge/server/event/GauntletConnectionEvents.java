@@ -4,6 +4,7 @@ import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.abilities.ext.AttributeModifierAbility;
+import net.alvin.infinityforge.item.FakeItem;
 import net.alvin.infinityforge.server.state.*;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
@@ -27,6 +28,11 @@ public class GauntletConnectionEvents {
 
     private static void onDisconnect(ServerPlayNetworkHandler handler, MinecraftServer server) {
         ServerPlayerEntity player = handler.getPlayer();
+        player.getInventory().remove(
+                stack -> stack.getItem() instanceof FakeItem,
+                Integer.MAX_VALUE,
+                player.getInventory()
+        );
         ItemStack stack = GauntletChargeState.getLastKnownStack(player);
         if (stack != null) cleanupPlayer(player, stack);
         GauntletChargeState.clearPlayer(player);

@@ -26,7 +26,7 @@ public class SpawnItemAbility extends ActiveAbility {
 
     @Override
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        ItemStack fakeItem = FakeItem.create(Items.DIAMOND);
+        ItemStack fakeItem = FakeItem.create(Items.DIAMOND, 64);
         ItemEntity entity = new ItemEntity(world, player.getX(), player.getY(), player.getZ() + 1.0, fakeItem);
         world.spawnEntity(entity);
         return false;

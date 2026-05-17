@@ -16,10 +16,8 @@ public class StoneHoldAbilities {
         if (world.isClient) return;
         if (!(entity instanceof PlayerEntity player)) return;
 
-        boolean inMainHand = player.getMainHandStack() == stack;
         boolean inOffHand = player.getOffHandStack() == stack;
-
-        if (inMainHand || inOffHand) {
+        if (selected || inOffHand) {
             ServerWorld serverWorld = (ServerWorld) world;
             Random random = new Random();
             float radius = 5.0f;
@@ -56,17 +54,15 @@ public class StoneHoldAbilities {
         if (world.isClient()) return;
         if (!(entity instanceof PlayerEntity player)) return;
 
-        boolean inMainHand = player.getMainHandStack() == stack;
         boolean inOffHand = player.getOffHandStack() == stack;
-
-        if (inMainHand || inOffHand) {
+        if (selected || inOffHand) {
             if (world.getTime() % 60 == 0) {
                 if (player.getHealth() < player.getMaxHealth()) {
                     player.heal(2.0f);
                 }
             }
 
-            if (world.random.nextFloat() < 0.005f) {
+            if (world.random.nextFloat() < 0.05f) {
                 player.setHealth(2.0f);
                 player.damage(world.getDamageSources().generic(), 1.0f);
             }

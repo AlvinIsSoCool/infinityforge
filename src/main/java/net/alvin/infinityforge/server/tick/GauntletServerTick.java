@@ -34,7 +34,6 @@ public class GauntletServerTick {
         if (count == 0) return;
 
         long time = server.getOverworld().getTime();
-
         for (int idx = 0; idx < count; idx++) {
             ServerPlayerEntity player = players.get(idx);
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
@@ -96,8 +95,6 @@ public class GauntletServerTick {
                         ServerPlayNetworking.send(player, new SyncCooldownS2CPacket(
                                 a.getId(), a.getCooldownTicks(), expiry - a.getCooldownTicks()));
                     }
-
-                    //InfinityForge.LOGGER.info("Ability Cooldown: {}, expiry: {}, remaining: {}, startTick: {}", a.getCooldownTicks(), expiry, remaining, expiry - a.getCooldownTicks());
                 }
             }
 

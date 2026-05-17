@@ -2,7 +2,6 @@ package net.alvin.infinityforge.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.infinity.abilities.base.*;
@@ -59,7 +58,7 @@ public class InfinityGauntletItem extends Item {
 
                 @Override
                 public Text getDisplayName() {
-                    return Text.translatable("gui." + InfinityForge.MOD_ID + ".gauntlet");
+                    return Text.empty();
                 }
 
                 @Override
@@ -95,7 +94,7 @@ public class InfinityGauntletItem extends Item {
         List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
 
         if (!activeStones.isEmpty()) {
-            tooltip.add(Text.literal(""));
+            tooltip.add(Text.empty());
             tooltip.add(Text.literal("Equipped Stones: ").formatted(Formatting.GRAY));
             for (int i = 0; i < activeStones.size(); i++) {
                 InfinityStoneType stoneType = activeStones.get(i);
@@ -226,16 +225,30 @@ public class InfinityGauntletItem extends Item {
         NbtCompound nbt = stack.getNbt();
         if (nbt == null) return;
 
+        List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+        Set<Identifier> validIds = new HashSet<>();
+        for (int i = 0; i < activeStones.size(); i++) {
+            for (GauntletAbility ability : activeStones.get(i).gauntletAbilities()) {
+                validIds.add(ability.getId());
+            }
+        }
+
         if (nbt.contains(CHARGES_KEY)) {
             NbtCompound charges = nbt.getCompound(CHARGES_KEY);
-            for (String key : charges.getKeys())
-                GauntletChargeState.setCharge(gauntletId, new Identifier(key), charges.getInt(key));
+            for (String key : charges.getKeys()) {
+                Identifier id = new Identifier(key);
+                if (validIds.contains(id))
+                    GauntletChargeState.setCharge(gauntletId, id, charges.getInt(key));
+            }
         }
 
         if (nbt.contains(COOLDOWNS_KEY)) {
             NbtCompound cooldowns = nbt.getCompound(COOLDOWNS_KEY);
-            for (String key : cooldowns.getKeys())
-                GauntletCooldownState.setRawExpiry(gauntletId, new Identifier(key), cooldowns.getLong(key));
+            for (String key : cooldowns.getKeys()) {
+                Identifier id = new Identifier(key);
+                if (validIds.contains(id))
+                    GauntletCooldownState.setRawExpiry(gauntletId, id, cooldowns.getLong(key));
+            }
         }
     }
 

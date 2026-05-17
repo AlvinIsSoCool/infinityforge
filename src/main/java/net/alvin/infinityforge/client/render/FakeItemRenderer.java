@@ -12,10 +12,14 @@ public class FakeItemRenderer {
     public void render(ItemStack stack, ModelTransformationMode mode,
                        MatrixStack matrices, VertexConsumerProvider vertexConsumers,
                        int light, int overlay) {
-        ItemStack disguiseStack = FakeItem.getDisguiseStack(stack);
+        ItemStack disguiseStack = new ItemStack(FakeItem.getDisguise(stack));
         if (disguiseStack.getItem() == ModItems.FAKE_ITEM) return;
         matrices.translate(0.5, 0.5, 0.5);
-        MinecraftClient.getInstance().getItemRenderer()
-                .renderItem(disguiseStack, mode, light, overlay, matrices, vertexConsumers, null, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(
+                disguiseStack, mode,
+                light, overlay,
+                matrices, vertexConsumers,
+                null, 0
+        );
     }
 }
