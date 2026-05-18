@@ -89,12 +89,12 @@ public class GauntletScreenHandler extends ScreenHandler {
     }
 
     private void addStoneSlots() {
-        addSlot(new StoneSlot(stoneInventory, 0, 43, 28, stoneOrder[0]));
-        addSlot(new StoneSlot(stoneInventory, 1, 64, 28, stoneOrder[1]));
-        addSlot(new StoneSlot(stoneInventory, 2, 85, 28, stoneOrder[2]));
-        addSlot(new StoneSlot(stoneInventory, 3, 106, 28, stoneOrder[3]));
-        addSlot(new StoneSlot(stoneInventory, 4, 74, 58, stoneOrder[4]));
-        addSlot(new StoneSlot(stoneInventory, 5, 134, 38, stoneOrder[5]));
+        addSlot(new GauntletStoneSlot(stoneInventory, 0, 43, 28, stoneOrder[0]));
+        addSlot(new GauntletStoneSlot(stoneInventory, 1, 64, 28, stoneOrder[1]));
+        addSlot(new GauntletStoneSlot(stoneInventory, 2, 85, 28, stoneOrder[2]));
+        addSlot(new GauntletStoneSlot(stoneInventory, 3, 106, 28, stoneOrder[3]));
+        addSlot(new GauntletStoneSlot(stoneInventory, 4, 74, 58, stoneOrder[4]));
+        addSlot(new GauntletStoneSlot(stoneInventory, 5, 134, 38, stoneOrder[5]));
     }
 
     private void addPlayerInventory(PlayerInventory inv) {

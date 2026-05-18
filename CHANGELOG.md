@@ -31,7 +31,6 @@ Consistent with the other ability types.
 - Added gauntlet equipped stones tooltip.
 - Fixed issues with switching between one gauntlet to another gauntlet.
 - Fixed ability scroll offset overflow in some cases.
-- Added equipped stones tooltip to gauntlet.
 
 ## [0.3.0-beta.1] - 2026-05-08
 

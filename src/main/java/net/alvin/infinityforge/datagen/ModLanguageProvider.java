@@ -32,6 +32,7 @@ public class ModLanguageProvider extends FabricLanguageProvider {
 
         translationBuilder.add(ModBlocks.TITANIUM_ORE, "Titanium Ore");
         translationBuilder.add(ModBlocks.DEEPSLATE_TITANIUM_ORE, "Deepslate Titanium Ore");
+        //translationBuilder.add(ModBlocks.BLUEPRINT_TABLE, "Blueprint Table");
 
         translationBuilder.add("itemgroup.infinity", "Infinity Forge");
         translationBuilder.add("category.infinityforge", "Ability Keybinds");

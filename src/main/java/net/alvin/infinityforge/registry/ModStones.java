@@ -15,7 +15,8 @@ public class ModStones {
             new InfinityStoneType(
                     StoneUseAbilities::onPowerStoneUse,
                     StoneHoldAbilities::onPowerStoneHold,
-                    List.of(),
+                    List.of(ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
+                            ModGauntletAbilities.ATTACK_SPEED),
                     InfinityStoneColors.POWER_STONE_BASE_COLOR,
                     InfinityStoneColors.POWER_STONE_GLINT_COLOR
             )

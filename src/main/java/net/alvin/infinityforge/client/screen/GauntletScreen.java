@@ -1,6 +1,5 @@
 package net.alvin.infinityforge.client.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.screen.GauntletScreenHandler;
 import net.minecraft.client.gui.DrawContext;
@@ -23,8 +22,6 @@ public class GauntletScreen extends HandledScreen<GauntletScreenHandler> {
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShaderTexture(0, GUI_TEXTURE);
-
         context.drawTexture(
                 GUI_TEXTURE,
                 x, y,

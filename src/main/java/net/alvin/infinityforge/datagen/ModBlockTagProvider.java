@@ -17,7 +17,8 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(ModBlocks.TITANIUM_ORE)
-                .add(ModBlocks.DEEPSLATE_TITANIUM_ORE);
+                .add(ModBlocks.DEEPSLATE_TITANIUM_ORE)
+                .add(ModBlocks.BLUEPRINT_TABLE);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.TITANIUM_ORE)

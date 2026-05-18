@@ -19,6 +19,60 @@ import static net.alvin.infinityforge.helpers.InfinityStoneColors.*;
 
 public class ModGauntletAbilities {
 
+    public static final GauntletAbility KNOCKBACK_RESISTANCE = GauntletAbilityRegistry.register(
+            new HealthAbility(
+                    new Identifier(InfinityForge.MOD_ID, "knockback_resistance"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/knockback_resistance.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".knockback_resistance",
+                    POWER_STONE_ABILITY_COLOR,
+                    Map.of(
+                            EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
+                            new EntityAttributeModifier(
+                                    UUID.randomUUID(),
+                                    "Knockback Resistance",
+                                    1.0,
+                                    EntityAttributeModifier.Operation.ADDITION
+                            )
+                    )
+            )
+    );
+
+    public static final GauntletAbility SPEED = GauntletAbilityRegistry.register(
+            new HealthAbility(
+                    new Identifier(InfinityForge.MOD_ID, "speed"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/speed.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".speed",
+                    POWER_STONE_ABILITY_COLOR,
+                    Map.of(
+                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                            new EntityAttributeModifier(
+                                    UUID.randomUUID(),
+                                    "Speed",
+                                    2.0,
+                                    EntityAttributeModifier.Operation.ADDITION
+                            )
+                    )
+            )
+    );
+
+    public static final GauntletAbility ATTACK_SPEED = GauntletAbilityRegistry.register(
+            new HealthAbility(
+                    new Identifier(InfinityForge.MOD_ID, "attack_speed"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/attack_speed.png"),
+                    "abilities." + InfinityForge.MOD_ID + ".attack_speed",
+                    POWER_STONE_ABILITY_COLOR,
+                    Map.of(
+                            EntityAttributes.GENERIC_ATTACK_SPEED,
+                            new EntityAttributeModifier(
+                                    UUID.randomUUID(),
+                                    "Attack Speed",
+                                    2.0,
+                                    EntityAttributeModifier.Operation.ADDITION
+                            )
+                    )
+            )
+    );
+
     public static final GauntletAbility TELEPORT = GauntletAbilityRegistry.register(
             new TeleportAbility(
                     new Identifier(InfinityForge.MOD_ID, "teleport"),

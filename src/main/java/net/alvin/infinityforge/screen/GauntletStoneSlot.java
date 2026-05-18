@@ -6,10 +6,10 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 
-public class StoneSlot extends Slot {
+public class GauntletStoneSlot extends Slot {
     private final InfinityStoneType acceptedType;
 
-    public StoneSlot(Inventory inventory, int index, int x, int y, InfinityStoneType acceptedType) {
+    public GauntletStoneSlot(Inventory inventory, int index, int x, int y, InfinityStoneType acceptedType) {
         super(inventory, index, x, y);
         this.acceptedType = acceptedType;
     }

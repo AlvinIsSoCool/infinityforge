@@ -1,6 +1,5 @@
 package net.alvin.infinityforge.client.packet;
 
-import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.alvin.infinityforge.network.s2c.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -58,7 +57,6 @@ public class GauntletClientPacketHandlers {
 
     private static void onClearClientState(ClearGauntletClientStateS2CPacket packet,
                                        ClientPlayerEntity player, PacketSender responseSender) {
-        InfinityForge.LOGGER.info("Clear packet received on client!");
         GauntletClientState.clearAll();
     }
 }
