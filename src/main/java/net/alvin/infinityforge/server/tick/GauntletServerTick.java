@@ -1,6 +1,5 @@
 package net.alvin.infinityforge.server.tick;
 
-import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
@@ -29,7 +28,6 @@ public class GauntletServerTick {
     }
 
     private static void onTick(MinecraftServer server) {
-        //long t1 = System.nanoTime();
         List<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
         int count = players.size();
         if (count == 0) return;
@@ -41,7 +39,6 @@ public class GauntletServerTick {
 
             if (stack == null) {
                 if (GauntletChargeState.wasEquipped(player)) {
-                    InfinityForge.LOGGER.info("Gauntlet was equipped, stack null.");
                     ItemStack lastStack = GauntletChargeState.getLastKnownStack(player);
                     if (lastStack != null) GauntletConnectionEvents.cleanupPlayer(player, lastStack);
                 }
@@ -62,7 +59,6 @@ public class GauntletServerTick {
             boolean equippedLastTick = GauntletChargeState.wasEquipped(player);
             boolean gauntletChanged = stack != lastStack;
             GauntletChargeState.setEquipped(player, true, stack);
-            InfinityForge.LOGGER.info("Gauntlet wasEquipped: {}, gauntletChanged: {}", equippedLastTick, gauntletChanged);
 
             if (equippedLastTick && gauntletChanged) {
                 if (lastStack != null) GauntletConnectionEvents.cleanupPlayer(player, lastStack);
@@ -70,7 +66,6 @@ public class GauntletServerTick {
             }
 
             if (!equippedLastTick || gauntletChanged) {
-                //InfinityForge.LOGGER.info("Not equipped last tick or gauntlet changed!");
                 InfinityGauntletItem.loadFromStack(stack, gauntletId);
 
                 for (int i = 0; i < toggles.size(); i++) {
@@ -182,8 +177,5 @@ public class GauntletServerTick {
                 }
             }
         }
-
-        //long t2 = System.nanoTime();
-        //InfinityForge.LOGGER.info("Total time taken for tick function: {}, t1: {}, t2: {}", (t2 - t1), t1, t2);
     }
 }
