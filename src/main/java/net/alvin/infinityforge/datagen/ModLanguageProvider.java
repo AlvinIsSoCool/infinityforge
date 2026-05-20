@@ -25,15 +25,16 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModItems.MIND_TESSERACT, "Mind Tesseract");
         translationBuilder.add(ModItems.TIME_TESSERACT, "Time Tesseract");
         translationBuilder.add(ModItems.INFINITY_GAUNTLET, "Infinity Gauntlet");
-        translationBuilder.add(ModItems.INFINITY_GAUNTLET_BLUEPRINT, "Blueprint");
+        translationBuilder.add(ModItems.BLUEPRINT, "Blueprint");
         translationBuilder.add(ModItems.RAW_TITANIUM, "Raw Titanium");
         translationBuilder.add(ModItems.TITANIUM_INGOT, "Titanium Ingot");
         translationBuilder.add(ModItems.GOLD_TITANIUM_ALLOY_INGOT, "Gold-Titanium Alloy Ingot");
 
         translationBuilder.add(ModBlocks.TITANIUM_ORE, "Titanium Ore");
         translationBuilder.add(ModBlocks.DEEPSLATE_TITANIUM_ORE, "Deepslate Titanium Ore");
-        //translationBuilder.add(ModBlocks.BLUEPRINT_TABLE, "Blueprint Table");
+        translationBuilder.add(ModBlocks.BLUEPRINT_TABLE, "Blueprint Table");
 
+        translationBuilder.add("gui.infinityforge.blueprint_table", "Blueprint Table");
         translationBuilder.add("itemgroup.infinity", "Infinity Forge");
         translationBuilder.add("category.infinityforge", "Ability Keybinds");
 

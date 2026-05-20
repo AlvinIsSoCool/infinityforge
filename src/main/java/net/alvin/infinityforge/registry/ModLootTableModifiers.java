@@ -18,7 +18,7 @@ public class ModLootTableModifiers {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(1f))
-                        .with(ItemEntry.builder(ModItems.INFINITY_GAUNTLET_BLUEPRINT))
+                        .with(ItemEntry.builder(ModBlueprints.INFINITY_GAUNTLET_BLUEPRINT.getItem()))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
 
                 tableBuilder.pool(poolBuilder.build());

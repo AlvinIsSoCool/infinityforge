@@ -24,7 +24,7 @@ public class GauntletScreenHandler extends ScreenHandler {
     private final ItemStack gauntletStack;
 
     public GauntletScreenHandler(int syncId, PlayerInventory playerInv, ItemStack gauntletStack) {
-        super(ModScreenHandlers.GAUNTLET, syncId);
+        super(ModScreenHandlers.GAUNTLET_SCREEN_HANDLER, syncId);
         this.gauntletStack = gauntletStack;
 
         loadFromGauntlet();
@@ -108,6 +108,7 @@ public class GauntletScreenHandler extends ScreenHandler {
             addSlot(new Slot(inv, col, 8 + col * 18, 187));
     }
 
+    // TODO: Check whether this can be integrated with the stone type registry helpers.
     private static ItemStack findStoneItem(InfinityStoneType type) {
         for (Item item : Registries.ITEM) {
             if (item instanceof InfinityStoneItem stoneItem && stoneItem.getStoneType() == type)

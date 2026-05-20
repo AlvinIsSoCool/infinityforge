@@ -5,11 +5,9 @@ import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.item.BlueprintItem;
-import net.alvin.infinityforge.item.BlueprintRecipe;
 import net.alvin.infinityforge.item.FakeItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -32,15 +30,7 @@ public class ModItems {
     public static final Item RAW_TITANIUM = registerItem("raw_titanium", new Item(new FabricItemSettings().maxCount(64).fireproof()));
     public static final Item TITANIUM_INGOT = registerItem("titanium_ingot", new Item(new FabricItemSettings().maxCount(64).fireproof()));
     public static final Item GOLD_TITANIUM_ALLOY_INGOT = registerItem("gold_titanium_alloy_ingot", new Item(new FabricItemSettings().maxCount(64).fireproof()));
-    public static final Item INFINITY_GAUNTLET_BLUEPRINT = registerItem(
-            "blueprint",
-            new BlueprintItem(
-                    new BlueprintRecipe(
-                            new ItemStack(ModItems.GOLD_TITANIUM_ALLOY_INGOT, 32), new ItemStack(ModItems.INFINITY_GAUNTLET),
-                            200
-                    )
-            )
-    );
+    public static final Item BLUEPRINT = registerItem("blueprint", new BlueprintItem());
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(InfinityForge.MOD_ID, name), item);

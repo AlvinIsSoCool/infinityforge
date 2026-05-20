@@ -21,6 +21,7 @@ public class InfinityForge implements ModInitializer {
 		ModStones.initialize();
 		ModItems.initialize();
 		ModBlocks.initialize();
+		ModBlockEntities.initialize();
 		ModItemGroups.initialize();
 
 		InfinityStoneTypeRegistry.initialize();

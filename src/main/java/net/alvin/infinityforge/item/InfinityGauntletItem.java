@@ -91,7 +91,6 @@ public class InfinityGauntletItem extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
         List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
 
         if (!activeStones.isEmpty()) {
@@ -106,6 +105,7 @@ public class InfinityGauntletItem extends Item {
                 tooltip.add(stoneTooltip);
             }
         }
+        super.appendTooltip(stack, world, tooltip, context);
     }
 
     public static List<InfinityStoneType> getAddedStones(ItemStack stack) {

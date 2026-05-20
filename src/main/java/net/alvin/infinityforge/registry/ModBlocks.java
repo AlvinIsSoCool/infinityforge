@@ -19,7 +19,7 @@ public class ModBlocks {
     public static final Block DEEPSLATE_TITANIUM_ORE = registerBlock("deepslate_titanium_ore",
             new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_DIAMOND_ORE).strength(6.0f, 7.0f), UniformIntProvider.create(4, 9)));
     public static final Block BLUEPRINT_TABLE = registerBlock("blueprint_table",
-            new BlueprintTableBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
+            new BlueprintTableBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
 
     private static Block registerBlock(String name, Block block) {
         Registry.register(Registries.ITEM, new Identifier(InfinityForge.MOD_ID, name),
