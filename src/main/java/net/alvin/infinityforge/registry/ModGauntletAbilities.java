@@ -48,7 +48,7 @@ public class ModGauntletAbilities {
                             new EntityAttributeModifier(
                                     UUID.randomUUID(),
                                     "Speed",
-                                    2.0,
+                                    0.2,
                                     EntityAttributeModifier.Operation.ADDITION
                             )
                     )
