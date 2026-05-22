@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.soul;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class HealingAbility extends PassiveAbility {
 
-    public HealingAbility(Identifier id, Identifier icon,
+    public HealingAbility(Identifier id, AbilityIcon icon,
                           String key, int color) {
         super(id, icon, key, color);
     }

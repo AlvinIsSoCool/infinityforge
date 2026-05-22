@@ -71,9 +71,6 @@ public class BlueprintItem extends Item {
             return;
         }
 
-        int craftingTime = BlueprintItem.getCraftingTime(stack);
-        int seconds = craftingTime / 20;
-
         tooltip.add(Text.literal("Output: ").formatted(Formatting.GRAY));
         tooltip.add(Text.literal(String.format("  %dx ", output.getCount()))
                 .append(output.getName().copy().formatted(output.getRarity().formatting))
@@ -83,13 +80,6 @@ public class BlueprintItem extends Item {
         tooltip.add(Text.literal(String.format("  %dx ", ingredient.getCount()))
                 .append(ingredient.getName().copy().formatted(ingredient.getRarity().formatting))
         );
-
-        String timeStr = seconds >= 60 ? String.format("%dm %ds", seconds / 60, seconds % 60)
-                : String.format("%ds", seconds);
-
-        tooltip.add(Text.empty());
-        tooltip.add(Text.literal("Crafting Time: ").formatted(Formatting.GRAY));
-        tooltip.add(Text.literal("  " + timeStr).formatted(Formatting.YELLOW));
 
         super.appendTooltip(stack, world, tooltip, context);
     }

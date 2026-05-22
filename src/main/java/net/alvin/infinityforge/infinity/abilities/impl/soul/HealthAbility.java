@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.soul;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.ext.AttributeModifierAbility;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public class HealthAbility extends AttributeModifierAbility {
 
-    public HealthAbility(Identifier id, Identifier icon,
+    public HealthAbility(Identifier id, AbilityIcon icon,
                          String key, int color,
                          Map<EntityAttribute, EntityAttributeModifier> modifiers) {
         super(id, icon, key, color, modifiers);

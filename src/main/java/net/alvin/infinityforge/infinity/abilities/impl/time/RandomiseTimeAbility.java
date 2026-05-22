@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.time;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class RandomiseTimeAbility extends ActiveAbility {
-    public RandomiseTimeAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+    public RandomiseTimeAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
     }
 

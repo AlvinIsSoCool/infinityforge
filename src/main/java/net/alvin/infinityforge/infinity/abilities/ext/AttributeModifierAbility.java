@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.ext;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.server.state.GauntletAttributeState;
@@ -17,14 +18,14 @@ import java.util.function.Supplier;
 public abstract class AttributeModifierAbility extends PassiveAbility {
     private final Map<EntityAttribute, EntityAttributeModifier> modifiers;
 
-    public AttributeModifierAbility(Identifier id, Identifier icon, String key, int color,
+    public AttributeModifierAbility(Identifier id, AbilityIcon icon, String key, int color,
                                     Supplier<List<InfinityStoneType>> requiredStones,
                                     Map<EntityAttribute, EntityAttributeModifier> modifiers) {
         super(id, icon, key, color, requiredStones);
         this.modifiers = modifiers;
     }
 
-    public AttributeModifierAbility(Identifier id, Identifier icon, String key, int color,
+    public AttributeModifierAbility(Identifier id, AbilityIcon icon, String key, int color,
                                     Map<EntityAttribute, EntityAttributeModifier> modifiers) {
         super(id, icon, key, color);
         this.modifiers = modifiers;
@@ -36,7 +37,7 @@ public abstract class AttributeModifierAbility extends PassiveAbility {
         for (Map.Entry<EntityAttribute, EntityAttributeModifier> entry : modifiers.entrySet()) {
             EntityAttributeInstance instance = player.getAttributeInstance(entry.getKey());
             if (instance != null && !instance.hasModifier(entry.getValue())) {
-                instance.addPersistentModifier(entry.getValue());
+                instance.addTemporaryModifier(entry.getValue());
                 GauntletAttributeState.markActive(player, getId());
             }
         }

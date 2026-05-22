@@ -1,6 +1,8 @@
 package net.alvin.infinityforge;
 
-import net.alvin.infinityforge.registry.ModBlocks;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.registry.*;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
@@ -18,6 +20,8 @@ public class InfinityForge implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		AutoConfig.register(InfinityForgeConfig.class, GsonConfigSerializer::new);
+
 		ModStones.initialize();
 		ModItems.initialize();
 		ModBlocks.initialize();

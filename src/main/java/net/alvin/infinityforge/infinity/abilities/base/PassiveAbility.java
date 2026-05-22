@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public abstract non-sealed class PassiveAbility implements GauntletAbility {
     private final Identifier id;
-    private final Identifier icon;
+    private final AbilityIcon icon;
     private final String key;
     private final int color;
     /**
@@ -24,7 +24,7 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
      */
     private final Supplier<List<InfinityStoneType>> requiredStones;
 
-    public PassiveAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
+    public PassiveAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
         this.id = id;
         this.icon = icon;
         this.key = key;
@@ -32,20 +32,15 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
         this.requiredStones = requiredStones;
     }
 
-    // Convenience Constructor for ability with no stone requirements.
-    public PassiveAbility(Identifier id, Identifier icon, String key, int color) {
-        this.id = id;
-        this.icon = icon;
-        this.key = key;
-        this.color = color;
-        this.requiredStones = List::of;
+    public PassiveAbility(Identifier id, AbilityIcon icon, String key, int color) {
+        this(id, icon, key, color, List::of);
     }
 
     @Override
     public Identifier getId() { return id; }
 
     @Override
-    public Identifier getIcon() { return icon; }
+    public AbilityIcon getIcon() { return icon; }
 
     @Override
     public String getName() { return Text.translatable(key).getString(); }

@@ -54,12 +54,10 @@ public class GauntletHudRenderer {
 
         if (abilities.size() > 6) {
             if (scrollOffset > 0)  {
-                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
                 context.drawTexture(HUD_TEXTURE, startX + 4, startY - 10, 37, 0, 15, 15, 256, 256);
             }
 
             if (scrollOffset < abilities.size() - 6) {
-                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
                 context.drawTexture(HUD_TEXTURE, startX + 4, startY + visibleCount * SLOT_STEP + 2, 52, 0, 15, 15, 256, 256);
             }
         }
@@ -79,6 +77,9 @@ public class GauntletHudRenderer {
                                           GauntletAbility ability,
                                           int x, int y, int index,
                                           boolean isChatScreen, long currentTick) {
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+
         context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22, 256, 256);
 
         int color = ability.getColor();
@@ -91,11 +92,12 @@ public class GauntletHudRenderer {
             context.fill(x + 20, y + 1, x + 21, y + 21, color); // right
         }
 
-        Identifier icon = ability.getIcon();
-        if (icon != null) {
-            context.drawTexture(icon, x + 3, y + 3, 0, 0, 16, 16, 16, 16);
-        }
-
+        Identifier iconLocation = ability.getIcon().getIconLocation();
+        int iconIndex = ability.getIcon().getIconIndex();
+        int u = (iconIndex % 16) * 16;
+        int v = (iconIndex / 16) * 16;
+        context.drawTexture(iconLocation, x + 3, y + 3, u, v, 16, 16, 256, 256);
+        
         if (ability instanceof ActiveAbility) {
             float progress = GauntletClientState.getCooldownProgress(ability.getId(), currentTick);
 
@@ -161,6 +163,6 @@ public class GauntletHudRenderer {
         // Green at full, yellow at half, red at empty
         int r = (int) (255 * (1f - progress));
         int g = (int) (255 * progress);
-        return 0xC0000000 | ((r << 16) | (g << 8));
+        return 0xFF000000 | ((r << 16) | (g << 8));
     }
 }

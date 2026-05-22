@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.soul;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.entity.Entity;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class KillAbility extends ActiveAbility {
-    public KillAbility(Identifier id, Identifier icon,
+    public KillAbility(Identifier id, AbilityIcon icon,
                                   String key, int color,
                                   Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);

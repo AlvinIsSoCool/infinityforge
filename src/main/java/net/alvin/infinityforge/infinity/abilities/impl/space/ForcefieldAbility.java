@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.space;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ForcefieldAbility extends ToggleAbility {
-    public ForcefieldAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
+    public ForcefieldAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
         super(id, icon, key, color, requiredStones, maxChargeTicks, refillRateTicks);
     }
 

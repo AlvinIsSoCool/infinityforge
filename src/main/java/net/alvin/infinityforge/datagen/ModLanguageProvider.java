@@ -6,9 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 public class ModLanguageProvider extends FabricLanguageProvider {
-    public ModLanguageProvider(FabricDataOutput dataOutput) {
-        super(dataOutput, "en_us");
-    }
+    public ModLanguageProvider(FabricDataOutput dataOutput) { super(dataOutput, "en_us"); }
 
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {

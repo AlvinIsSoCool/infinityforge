@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public abstract non-sealed class HeldAbility implements GauntletAbility {
     private final Identifier id;
-    private final Identifier icon;
+    private final AbilityIcon icon;
     private final String key;
     private final int color;
     /**
@@ -36,7 +36,7 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
      */
     private final int refillRateTicks;
 
-    public HeldAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
+    public HeldAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
         this.id = id;
         this.icon = icon;
         this.key = key;
@@ -46,22 +46,15 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
         this.refillRateTicks = refillRateTicks;
     }
 
-    // Convenience Constructor for ability with no cooldown.
-    public HeldAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
-        this.id = id;
-        this.icon = icon;
-        this.key = key;
-        this.color = color;
-        this.requiredStones = requiredStones;
-        this.maxChargeTicks = -1;
-        this.refillRateTicks = 0;
+    public HeldAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
+       this(id, icon, key, color, requiredStones, -1, 0);
     }
 
     @Override
     public Identifier getId() { return id; }
 
     @Override
-    public Identifier getIcon() { return icon; }
+    public AbilityIcon getIcon() { return icon; }
 
     @Override
     public String getName() { return Text.translatable(key).getString(); }

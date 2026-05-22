@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.ext.StatefulAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.block.Block;
@@ -17,7 +18,7 @@ import java.util.function.Supplier;
 public class SpawnBlockAbility extends StatefulAbility<Block> {
     private final boolean spawnFake;
 
-    public SpawnBlockAbility(Identifier id, Identifier icon,
+    public SpawnBlockAbility(Identifier id, AbilityIcon icon,
                              String key, int color,
                              Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks,
                              boolean spawnFake) {

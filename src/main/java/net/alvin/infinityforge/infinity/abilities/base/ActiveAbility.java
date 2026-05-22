@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public abstract non-sealed class ActiveAbility implements GauntletAbility {
     private final Identifier id;
-    private final Identifier icon;
+    private final AbilityIcon icon;
     private final String key;
     private final int color;
     /**
@@ -29,7 +29,7 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
      */
     private final int cooldownTicks;
 
-    public ActiveAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+    public ActiveAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         this.id = id;
         this.icon = icon;
         this.key = key;
@@ -38,31 +38,19 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
         this.cooldownTicks = cooldownTicks;
     }
 
-    // Convenience Constructor for ability with no cooldown.
-    public ActiveAbility(Identifier id, Identifier icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
-        this.id = id;
-        this.icon = icon;
-        this.key = key;
-        this.color = color;
-        this.requiredStones = requiredStones;
-        this.cooldownTicks = 0;
+    public ActiveAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
+        this(id, icon, key, color, requiredStones, 0);
     }
 
-    // Convenience Constructor for ability with no cooldown and no stone requirements.
-    public ActiveAbility(Identifier id, Identifier icon, String key, int color) {
-        this.id = id;
-        this.icon = icon;
-        this.key = key;
-        this.color = color;
-        this.requiredStones = List::of;
-        this.cooldownTicks = 0;
+    public ActiveAbility(Identifier id, AbilityIcon icon, String key, int color) {
+        this(id, icon, key, color, List::of, 0);
     }
 
     @Override
     public Identifier getId() { return id; }
 
     @Override
-    public Identifier getIcon() { return icon; }
+    public AbilityIcon getIcon() { return icon; }
 
     @Override
     public String getName() { return Text.translatable(key).getString(); }

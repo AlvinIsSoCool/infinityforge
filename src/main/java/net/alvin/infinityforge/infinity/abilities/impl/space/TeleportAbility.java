@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.space;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.ModStones;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class TeleportAbility extends ActiveAbility {
-    public TeleportAbility(Identifier id, Identifier icon,
+    public TeleportAbility(Identifier id, AbilityIcon icon,
                            String key, int color,
                            Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
