@@ -19,7 +19,7 @@ public class SpawnBlockAbility extends StatefulAbility<Block> {
     private final boolean spawnFake;
 
     public SpawnBlockAbility(Identifier id, AbilityIcon icon,
-                             String key, int color,
+                             String key, Supplier<Integer> color,
                              Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks,
                              boolean spawnFake) {
         super(id, icon, key, color, requiredStones, cooldownTicks);

@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class TeleportAbility extends ActiveAbility {
     public TeleportAbility(Identifier id, AbilityIcon icon,
-                           String key, int color,
+                           String key, Supplier<Integer> color,
                            Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
     }

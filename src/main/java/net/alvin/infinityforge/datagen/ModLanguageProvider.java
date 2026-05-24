@@ -58,5 +58,34 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("abilities.infinityforge.rewind_time", "Rewind Time");
         translationBuilder.add("abilities.infinityforge.stop_time", "Stop Time");
         translationBuilder.add("abilities.infinityforge.randomise_time", "Randomise Time");
+
+        translationBuilder.add("text.autoconfig.infinityforge.title", "Infinity Forge Options");
+        translationBuilder.add("text.autoconfig.infinityforge.category.color_options", "Color Options");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneBaseColors", "Infinity Stone Base Colors");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneGlintColors", "Infinity Stone Glint Colors");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors", "Ability Outline Colors");
+
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneBaseColors.powerStone", "Power Stone Base Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneBaseColors.spaceStone", "Space Stone Base Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneBaseColors.realityStone", "Reality Stone Base Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneBaseColors.soulStone", "Soul Stone Base Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneBaseColors.mindStone", "Mind Stone Base Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneBaseColors.timeStone", "Time Stone Base Color");
+
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneGlintColors.powerStone", "Power Stone Glint Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneGlintColors.spaceStone", "Space Stone Glint Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneGlintColors.realityStone", "Reality Stone Glint Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneGlintColors.soulStone", "Soul Stone Glint Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneGlintColors.mindStone", "Mind Stone Glint Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.stoneGlintColors.timeStone", "Time Stone Glint Color");
+
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.powerStone", "Power Stone Ability Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.spaceStone", "Space Stone Ability Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.realityStone", "Reality Stone Ability Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.soulStone", "Soul Stone Ability Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.mindStone", "Mind Stone Ability Color");
+        translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.timeStone", "Time Stone Ability Color");
+
+
     }
 }

@@ -8,11 +8,12 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class HealingAbility extends PassiveAbility {
 
     public HealingAbility(Identifier id, AbilityIcon icon,
-                          String key, int color) {
+                          String key, Supplier<Integer> color) {
         super(id, icon, key, color);
     }
 

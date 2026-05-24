@@ -12,18 +12,18 @@ import java.util.function.Supplier;
 
 public abstract class StatefulAbility<T> extends ActiveAbility {
     public StatefulAbility(Identifier id, AbilityIcon icon,
-                           String key, int color,
+                           String key, Supplier<Integer> color,
                            Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
     }
 
     public StatefulAbility(Identifier id, AbilityIcon icon,
-                           String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
+                           String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
         super(id, icon, key, color, requiredStones);
     }
 
     public StatefulAbility(Identifier id, AbilityIcon icon,
-                           String key, int color) {
+                           String key, Supplier<Integer> color) {
         super(id, icon, key, color);
     }
 

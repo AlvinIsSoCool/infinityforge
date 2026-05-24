@@ -7,7 +7,6 @@ import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.client.state.GauntletClientState;
-import net.alvin.infinityforge.helpers.InfinityStoneColors;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.client.MinecraftClient;
@@ -83,7 +82,7 @@ public class GauntletHudRenderer {
         context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22, 256, 256);
 
         int color = ability.getColor();
-        if (color == InfinityStoneColors.RAINBOW_ABILITY_COLOR) {
+        if (color == 0xFF7FFFFF) {
             context.drawTexture(HUD_TEXTURE, x + 1, y + 1, 68, 0, 20, 20, 256, 256);
         } else {
             context.fill(x + 1, y + 1, x + 21, y + 2, color); // top

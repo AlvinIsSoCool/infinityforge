@@ -14,7 +14,11 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
     private final Identifier id;
     private final AbilityIcon icon;
     private final String key;
-    private final int color;
+    /**
+     * Provides the color of the ability.
+     * Use RGB format. ARGB conversion happens internally.
+     */
+    private final Supplier<Integer> color;
     /**
      * Provides the list of stones needed for the ability.
      * Needs to include the stone that registers the ability.
@@ -29,7 +33,7 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
      */
     private final int cooldownTicks;
 
-    public ActiveAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+    public ActiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         this.id = id;
         this.icon = icon;
         this.key = key;
@@ -38,11 +42,11 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
         this.cooldownTicks = cooldownTicks;
     }
 
-    public ActiveAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
+    public ActiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
         this(id, icon, key, color, requiredStones, 0);
     }
 
-    public ActiveAbility(Identifier id, AbilityIcon icon, String key, int color) {
+    public ActiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color) {
         this(id, icon, key, color, List::of, 0);
     }
 
@@ -56,7 +60,7 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getColor() { return color; }
+    public int getColor() { return 0xFF000000 | color.get(); }
 
     @Override
     public boolean meetsCondition(List<InfinityStoneType> activeStones) {

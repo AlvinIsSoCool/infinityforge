@@ -8,10 +8,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class WaterBreathingAbility extends PassiveAbility {
     public WaterBreathingAbility(Identifier id, AbilityIcon icon,
-                             String key, int color) {
+                                 String key, Supplier<Integer> color) {
         super(id, icon, key, color);
     }
 

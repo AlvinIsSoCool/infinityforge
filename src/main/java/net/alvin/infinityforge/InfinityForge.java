@@ -1,13 +1,14 @@
 package net.alvin.infinityforge;
 
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.registry.*;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.packet.GauntletPacketHandlers;
 import net.alvin.infinityforge.server.tick.GauntletServerTick;
+import net.alvin.infinityforge.world.gen.ModStructures;
 import net.alvin.infinityforge.world.gen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 
@@ -20,7 +21,7 @@ public class InfinityForge implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		AutoConfig.register(InfinityForgeConfig.class, GsonConfigSerializer::new);
+		AutoConfig.register(InfinityForgeConfig.class, JanksonConfigSerializer::new);
 
 		ModStones.initialize();
 		ModItems.initialize();
@@ -33,6 +34,7 @@ public class InfinityForge implements ModInitializer {
 		ModScreenHandlers.initialize();
 
 		ModWorldGeneration.initialize();
+		ModStructures.initialize();
 		ModCustomTrades.register();
 		ModLootTableModifiers.register();
 

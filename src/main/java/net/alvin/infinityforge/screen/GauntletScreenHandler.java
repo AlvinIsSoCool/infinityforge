@@ -3,17 +3,18 @@ package net.alvin.infinityforge.screen;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.registry.ModScreenHandlers;
 import net.alvin.infinityforge.registry.ModStones;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,12 +109,10 @@ public class GauntletScreenHandler extends ScreenHandler {
             addSlot(new Slot(inv, col, 8 + col * 18, 187));
     }
 
-    // TODO: Check whether this can be integrated with the stone type registry helpers.
     private static ItemStack findStoneItem(InfinityStoneType type) {
-        for (Item item : Registries.ITEM) {
-            if (item instanceof InfinityStoneItem stoneItem && stoneItem.getStoneType() == type)
-                return new ItemStack(item);
-        }
-        return ItemStack.EMPTY;
+        Identifier stoneId = InfinityStoneTypeRegistry.getStoneIdFromType(type, "_stone");
+        return Registries.ITEM.getOrEmpty(stoneId)
+                .map(ItemStack::new)
+                .orElse(ItemStack.EMPTY);
     }
 }

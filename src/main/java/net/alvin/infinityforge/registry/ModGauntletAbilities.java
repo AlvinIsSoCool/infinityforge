@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.ext.AttributeModifierAbility;
@@ -17,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static net.alvin.infinityforge.helpers.InfinityStoneColors.*;
-
 public class ModGauntletAbilities {
     static {
         AbilityIcon.setSheet(new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/ability_icons.png"));
@@ -34,7 +33,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "knockback_resistance"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.knockback_resistance",
-                    POWER_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
                     Map.of(
                             EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
                             new EntityAttributeModifier(
@@ -52,7 +51,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "speed"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.speed",
-                    POWER_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
                     Map.of(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
                             new EntityAttributeModifier(
@@ -70,7 +69,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "attack_speed"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.attack_speed",
-                    POWER_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
                     Map.of(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             new EntityAttributeModifier(
@@ -88,7 +87,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "teleport"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.teleport",
-                    SPACE_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.spaceStone,
                     List::of, 100
             )
     );
@@ -97,7 +96,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "forcefield"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.forcefield",
-                    SPACE_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.spaceStone,
                     List::of,
                     400, -4
             )
@@ -107,7 +106,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "phasing"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.phasing",
-                    SPACE_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.spaceStone,
                     () -> List.of(ModStones.SPACE, ModStones.MIND),
                     -1, 0
             )
@@ -117,7 +116,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "weather"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.weather",
-                    REALITY_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     () -> List.of(ModStones.POWER, ModStones.REALITY), 100
             )
     );
@@ -126,7 +125,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "spawn_real_block"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.spawn_real_block",
-                    REALITY_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     () -> List.of(ModStones.POWER, ModStones.REALITY), 100,
                     false
             )
@@ -136,7 +135,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "spawn_fake_item"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.spawn_fake_item",
-                    REALITY_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     () -> List.of(ModStones.POWER, ModStones.REALITY),
                     100, true
             )
@@ -146,7 +145,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "kill"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.kill",
-                    SOUL_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone,
                     () -> List.of(ModStones.POWER, ModStones.SOUL), 100
             )
     );
@@ -155,7 +154,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "health"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.health",
-                    SOUL_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone,
                     Map.of(
                             EntityAttributes.GENERIC_MAX_HEALTH,
                             new EntityAttributeModifier(
@@ -172,7 +171,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "healing"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.healing",
-                    SOUL_STONE_ABILITY_COLOR
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone
             )
     );
     public static final GauntletAbility SATURATION = GauntletAbilityRegistry.register(
@@ -180,7 +179,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "saturation"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.saturation",
-                    SOUL_STONE_ABILITY_COLOR
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone
             )
     );
     public static final GauntletAbility WATER_BREATHING = GauntletAbilityRegistry.register(
@@ -188,7 +187,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "water_breathing"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.water_breathing",
-                    SOUL_STONE_ABILITY_COLOR
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone
             )
     );
     public static final GauntletAbility FLIGHT = GauntletAbilityRegistry.register(
@@ -196,7 +195,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "flight"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.flight",
-                    MIND_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.mindStone,
                     () -> List.of(ModStones.POWER, ModStones.MIND),
                     -1, 0
             )
@@ -206,7 +205,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "snap"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.snap",
-                    RAINBOW_ABILITY_COLOR,
+                    () -> 0x7FFFFF,
                     () -> ModStones.ALL_STONES,
                     20
             )
@@ -214,9 +213,9 @@ public class ModGauntletAbilities {
     public static final GauntletAbility ADVANCE_TIME = GauntletAbilityRegistry.register(
             new AdvanceTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "advance_time"),
-                    AbilityIcon.next(),
+                    AbilityIcon.missingno(),
                     "abilities.infinityforge.advance_time",
-                    TIME_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
                     List::of,
                     400, -4
             )
@@ -226,7 +225,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "rewind_time"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.rewind_time",
-                    TIME_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
                     List::of,
                     400, -4
             )
@@ -236,7 +235,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "stop_time"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.stop_time",
-                    TIME_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
                     List::of,
                     400, -4
             )
@@ -246,7 +245,7 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "randomise_time"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.randomise_time",
-                    TIME_STONE_ABILITY_COLOR,
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
                     List::of, 100
             )
     );

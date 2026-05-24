@@ -100,7 +100,7 @@ public class InfinityGauntletItem extends Item {
                 InfinityStoneType stoneType = activeStones.get(i);
                 String stoneName = InfinityStoneTypeRegistry.getStoneNameFromType(stoneType, " Stone", true);
                 Text stoneTooltip = Text.literal("  - ").append(stoneName)
-                        .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(stoneType.glintColor())));
+                        .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(stoneType.getGlintColor())));
 
                 tooltip.add(stoneTooltip);
             }

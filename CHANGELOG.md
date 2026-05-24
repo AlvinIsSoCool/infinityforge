@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-
-## [0.6.0-beta.1] - 2026-05-20
-
 - Added REI integration.
 - Added Mod Menu and Cloth Config API integration.
+- New AbilityIcon system.
+- Some new icons.
+- Added some config options.
 
+## [0.6.0-beta.1] - 2026-05-20
 
 ### Added
 

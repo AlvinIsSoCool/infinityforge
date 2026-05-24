@@ -18,14 +18,14 @@ import java.util.function.Supplier;
 public abstract class AttributeModifierAbility extends PassiveAbility {
     private final Map<EntityAttribute, EntityAttributeModifier> modifiers;
 
-    public AttributeModifierAbility(Identifier id, AbilityIcon icon, String key, int color,
+    public AttributeModifierAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color,
                                     Supplier<List<InfinityStoneType>> requiredStones,
                                     Map<EntityAttribute, EntityAttributeModifier> modifiers) {
         super(id, icon, key, color, requiredStones);
         this.modifiers = modifiers;
     }
 
-    public AttributeModifierAbility(Identifier id, AbilityIcon icon, String key, int color,
+    public AttributeModifierAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color,
                                     Map<EntityAttribute, EntityAttributeModifier> modifiers) {
         super(id, icon, key, color);
         this.modifiers = modifiers;

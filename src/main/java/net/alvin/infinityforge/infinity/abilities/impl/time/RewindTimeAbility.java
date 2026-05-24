@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class RewindTimeAbility extends ToggleAbility {
-    public RewindTimeAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
+    public RewindTimeAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
         super(id, icon, key, color, requiredStones, maxChargeTicks, refillRateTicks);
     }
 

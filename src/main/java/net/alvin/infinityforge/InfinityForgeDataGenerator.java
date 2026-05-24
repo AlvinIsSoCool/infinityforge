@@ -3,6 +3,7 @@ package net.alvin.infinityforge;
 import net.alvin.infinityforge.datagen.*;
 import net.alvin.infinityforge.world.ModConfiguredFeatures;
 import net.alvin.infinityforge.world.ModPlacedFeatures;
+import net.alvin.infinityforge.world.gen.ModStructures;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
@@ -25,5 +26,9 @@ public class InfinityForgeDataGenerator implements DataGeneratorEntrypoint {
 	public void buildRegistry(RegistryBuilder registryBuilder) {
 		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap);
 		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModPlacedFeatures::bootstrap);
+		registryBuilder.addRegistry(RegistryKeys.PROCESSOR_LIST, ModStructures::bootstrapProcessors);
+		registryBuilder.addRegistry(RegistryKeys.TEMPLATE_POOL, ModStructures::bootstrapPools);
+		registryBuilder.addRegistry(RegistryKeys.STRUCTURE, ModStructures::bootstrapStructure);
+		registryBuilder.addRegistry(RegistryKeys.STRUCTURE_SET, ModStructures::bootstrapStructureSet);
 	}
 }

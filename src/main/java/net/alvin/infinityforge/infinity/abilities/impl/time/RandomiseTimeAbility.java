@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class RandomiseTimeAbility extends ActiveAbility {
-    public RandomiseTimeAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+    public RandomiseTimeAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
     }
 

@@ -20,8 +20,8 @@ import java.util.function.Supplier;
 
 public class KillAbility extends ActiveAbility {
     public KillAbility(Identifier id, AbilityIcon icon,
-                                  String key, int color,
-                                  Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+                       String key, Supplier<Integer> color,
+                       Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         super(id, icon, key, color, requiredStones, cooldownTicks);
     }
 

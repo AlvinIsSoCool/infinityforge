@@ -15,7 +15,5 @@ public class InfinityTesseractItem extends Item {
     @Override
     public boolean isItemBarVisible(ItemStack stack) { return false; }
 
-    public Item getStoneItem() {
-        return stoneItem;
-    }
+    public Item getStoneItem() { return stoneItem; }
 }

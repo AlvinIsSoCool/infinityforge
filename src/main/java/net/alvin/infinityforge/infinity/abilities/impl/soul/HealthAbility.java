@@ -8,11 +8,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class HealthAbility extends AttributeModifierAbility {
 
     public HealthAbility(Identifier id, AbilityIcon icon,
-                         String key, int color,
+                         String key, Supplier<Integer> color,
                          Map<EntityAttribute, EntityAttributeModifier> modifiers) {
         super(id, icon, key, color, modifiers);
     }

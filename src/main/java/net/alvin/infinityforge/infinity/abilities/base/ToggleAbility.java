@@ -14,7 +14,11 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     private final Identifier id;
     private final AbilityIcon icon;
     private final String key;
-    private final int color;
+    /**
+     * Provides the color of the ability.
+     * Use RGB format. ARGB conversion happens internally.
+     */
+    private final Supplier<Integer> color;
     /**
      * Provides the list of stones needed for the ability.
      * Needs to include the stone that registers the ability.
@@ -36,7 +40,7 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
      */
     private final int refillRateTicks;
 
-    public ToggleAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
+    public ToggleAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
         this.id = id;
         this.icon = icon;
         this.key = key;
@@ -46,7 +50,7 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
         this.refillRateTicks = refillRateTicks;
     }
 
-    public ToggleAbility(Identifier id, AbilityIcon icon, String key, int color, Supplier<List<InfinityStoneType>> requiredStones) {
+    public ToggleAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
         this(id, icon, key, color, requiredStones, -1, 0);
     }
 
@@ -60,7 +64,7 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getColor() { return color; }
+    public int getColor() { return 0xFF000000 | color.get(); }
 
     @Override
     public boolean meetsCondition(List<InfinityStoneType> activeStones) {
@@ -74,7 +78,6 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
      * The function that runs when this ability is toggled.
      * Dispatched from the server, so all logic contained within should
      * be server-side.
-     *
      * @param world        The world in which the ability was used.
      * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
