@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.client.packet;
 
+import net.alvin.infinityforge.client.state.AbilityDynamicIconState;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.alvin.infinityforge.network.s2c.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -18,6 +19,8 @@ public class GauntletClientPacketHandlers {
                 SyncCooldownS2CPacket.TYPE, GauntletClientPacketHandlers::onCooldownSync);
         ClientPlayNetworking.registerGlobalReceiver(
                 ClearGauntletClientStateS2CPacket.TYPE, GauntletClientPacketHandlers::onClearClientState);
+        ClientPlayNetworking.registerGlobalReceiver(
+                SyncAbilityDynamicIconS2CPacket.TYPE, GauntletClientPacketHandlers::onAbilityDynamicIconSync);
     }
 
 
@@ -58,5 +61,10 @@ public class GauntletClientPacketHandlers {
     private static void onClearClientState(ClearGauntletClientStateS2CPacket packet,
                                        ClientPlayerEntity player, PacketSender responseSender) {
         GauntletClientState.clearAll();
+    }
+
+    private static void onAbilityDynamicIconSync(SyncAbilityDynamicIconS2CPacket packet,
+                                                 ClientPlayerEntity player, PacketSender responseSender) {
+        AbilityDynamicIconState.put(packet.abilityId(), packet.iconStack());
     }
 }

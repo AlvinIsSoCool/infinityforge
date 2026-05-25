@@ -4,6 +4,7 @@ import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.ext.StatefulAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -28,14 +29,14 @@ public class SpawnBlockAbility extends StatefulAbility<Block> {
 
     @Override
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        Block selected = getState(player);
+        Block selectedBlock = getState(player);
         BlockHitResult hit = (BlockHitResult) player.raycast(5.0, 1.0f, false);
         boolean missed = hit.getType() != HitResult.Type.BLOCK;
 
         if (player.isSneaking()) {
             if (missed) {
                 // Sneaking and looking away.
-                if (selected != null) {
+                if (selectedBlock != null) {
                     // Has a selection already.
                     player.sendMessage(Text.literal("You will get all the blocks!"), true);
                     return true;
@@ -52,12 +53,22 @@ public class SpawnBlockAbility extends StatefulAbility<Block> {
                     block.getName().getString() + " (" + Registries.BLOCK.getId(block) + ")"), true);
             return false;
         } else {
-            if (selected == null) {
+            if (selectedBlock == null) {
                 player.sendMessage(Text.literal("No blocks selected! Try sneaking and selecting a block."), true);
                 return false;
             }
-            world.setBlockState(hit.getBlockPos(), selected.getDefaultState());
+            world.setBlockState(hit.getBlockPos(), selectedBlock.getDefaultState());
             return true;
         }
+    }
+
+    @Override
+    protected Class<Block> getStateType() {
+        return Block.class;
+    }
+
+    @Override
+    protected ItemStack getStateIconStack(Block state) {
+        return state == null ? null : new ItemStack(state.asItem());
     }
 }

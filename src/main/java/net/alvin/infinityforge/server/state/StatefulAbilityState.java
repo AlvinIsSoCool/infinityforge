@@ -11,16 +11,26 @@ public class StatefulAbilityState {
     private static final Map<PlayerEntity, Map<Identifier, Object>> STATE
             = new IdentityHashMap<>();
 
-    @SuppressWarnings("unchecked")
-    public static <T> T get(PlayerEntity player, Identifier abilityId) {
+    public static <T> T get(PlayerEntity player, Identifier abilityId, Class<T> type) {
         Map<Identifier, Object> map = STATE.get(player);
         if (map == null) return null;
-        return (T) map.get(abilityId);
+        Object value = map.get(abilityId);
+        if (value == null) return null;
+        return type.cast(value);
     }
 
     public static void set(PlayerEntity player, Identifier abilityId, Object state) {
+        if (state == null) {
+            clear(player, abilityId);
+            return;
+        }
         STATE.computeIfAbsent(player, k -> new HashMap<>())
                 .put(abilityId, state);
+    }
+
+    public static void clear(PlayerEntity player, Identifier abilityId) {
+        Map<Identifier, Object> map = STATE.get(player);
+        if (map != null) map.remove(abilityId);
     }
 
     public static void clear(PlayerEntity player) {

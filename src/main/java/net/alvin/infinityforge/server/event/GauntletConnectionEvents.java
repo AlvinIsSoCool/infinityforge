@@ -11,8 +11,6 @@ import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -23,11 +21,11 @@ import java.util.UUID;
 
 public class GauntletConnectionEvents {
     public static void register() {
-        ServerPlayConnectionEvents.DISCONNECT.register(GauntletConnectionEvents::onDisconnect);
+        ServerPlayConnectionEvents.DISCONNECT.register(
+                (handler, server) -> cleanupPlayerAll(handler.getPlayer()));
     }
 
-    private static void onDisconnect(ServerPlayNetworkHandler handler, MinecraftServer server) {
-        ServerPlayerEntity player = handler.getPlayer();
+    public static void cleanupPlayerAll(ServerPlayerEntity player) {
         player.getInventory().remove(
                 stack -> stack.getItem() instanceof FakeItem,
                 Integer.MAX_VALUE,

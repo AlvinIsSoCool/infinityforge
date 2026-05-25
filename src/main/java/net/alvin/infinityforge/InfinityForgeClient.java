@@ -1,5 +1,6 @@
 package net.alvin.infinityforge;
 
+import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
 import net.alvin.infinityforge.client.event.GauntletHudEvents;
 import net.alvin.infinityforge.client.input.GauntletKeybinds;
 import net.alvin.infinityforge.client.packet.GauntletClientPacketHandlers;
@@ -17,6 +18,7 @@ public class InfinityForgeClient implements ClientModInitializer {
 
         ModScreens.register();
 
+        GauntletClientConnectionEvents.register();
         GauntletClientPacketHandlers.register();
         GauntletClientTick.register();
         GauntletHudEvents.register();

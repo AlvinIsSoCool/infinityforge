@@ -2,18 +2,20 @@ package net.alvin.infinityforge.client.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.client.state.AbilityDynamicIconState;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.client.state.GauntletClientState;
+import net.alvin.infinityforge.infinity.abilities.ext.StatefulAbility;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -61,23 +63,22 @@ public class GauntletHudRenderer {
             }
         }
 
-        boolean isChatScreen = client.currentScreen instanceof ChatScreen;
-        long currentTick = client.world != null ? client.world.getTime() : 0L;
-
         for (int i = 0; i < visibleCount; i++) {
             int abilityIndex = scrollOffset + i;
             GauntletAbility ability = abilities.get(abilityIndex);
             int slotY = startY + i * SLOT_STEP;
-            renderAbilitySlot(client.textRenderer, context, ability, startX, slotY, i, isChatScreen, currentTick);
+            renderAbilitySlot(client, context, ability, startX, slotY, i);
         }
     }
 
-    private static void renderAbilitySlot(TextRenderer textRenderer, DrawContext context,
+    private static void renderAbilitySlot(MinecraftClient client, DrawContext context,
                                           GauntletAbility ability,
-                                          int x, int y, int index,
-                                          boolean isChatScreen, long currentTick) {
+                                          int x, int y, int index) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
+
+        boolean isChatScreen = client.currentScreen instanceof ChatScreen;
+        long currentTick = client.world != null ? client.world.getTime() : 0L;
 
         context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22, 256, 256);
 
@@ -91,12 +92,23 @@ public class GauntletHudRenderer {
             context.fill(x + 20, y + 1, x + 21, y + 21, color); // right
         }
 
-        Identifier iconLocation = ability.getIcon().getIconLocation();
-        int iconIndex = ability.getIcon().getIconIndex();
-        int u = (iconIndex % 16) * 16;
-        int v = (iconIndex / 16) * 16;
-        context.drawTexture(iconLocation, x + 3, y + 3, u, v, 16, 16, 256, 256);
-        
+        if (ability instanceof StatefulAbility<?>) {
+            ItemStack iconStack = AbilityDynamicIconState.get(ability.getId());
+            if (!iconStack.isEmpty()) {
+                context.getMatrices().push();
+                context.getMatrices().translate(x + 3, y + 3, 0);
+                context.drawItem(iconStack, 0, 0);
+                context.getMatrices().pop();
+            }
+        } else {
+            Identifier iconLocation = ability.getIcon().getIconLocation();
+            int iconIndex = ability.getIcon().getIconIndex();
+            int u = (iconIndex % 16) * 16;
+            int v = (iconIndex / 16) * 16;
+            context.drawTexture(iconLocation, x + 3, y + 3, u, v, 16, 16, 256, 256);
+        }
+
+        // Active Ability Cooldown.
         if (ability instanceof ActiveAbility) {
             float progress = GauntletClientState.getCooldownProgress(ability.getId(), currentTick);
 
@@ -112,13 +124,13 @@ public class GauntletHudRenderer {
             }
         }
 
-        // Toggle indicator
+        // Toggle Indicator.
         if (ability instanceof ToggleAbility
                 && GauntletClientState.ACTIVE_TOGGLES.contains(ability.getId())) {
             context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 23, 0, 7, 7, 256, 256);
         }
 
-        // Held indicator
+        // Held Indicator.
         if (ability instanceof HeldAbility
                 && GauntletClientState.HELD_ACTIVE.contains(ability.getId())) {
             context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 30, 0, 7, 7, 256, 256);
@@ -126,7 +138,7 @@ public class GauntletHudRenderer {
 
         if (isChatScreen) {
             context.drawText(
-                    textRenderer,
+                    client.textRenderer,
                     ability.getName(),
                     x + SLOT_SIZE + 4,
                     y + 7,
@@ -134,7 +146,7 @@ public class GauntletHudRenderer {
             );
         } else {
             context.drawText(
-                    textRenderer,
+                    client.textRenderer,
                     SLOT_KEYS[index].getBoundKeyLocalizedText().getString(),
                     x + SLOT_SIZE + 4,
                     y + 7,
@@ -149,17 +161,15 @@ public class GauntletHudRenderer {
         int barHeight = 1;
         int barLeftOffset = (SLOT_SIZE - barMaxWidth) / 2;
 
-        // Track
-        context.fill(x + barLeftOffset, barY, x + barLeftOffset + barMaxWidth, barY + barHeight, 0xC0333333);
+        context.fill(RenderLayer.getGuiOverlay(), x + barLeftOffset, barY, x + barLeftOffset + barMaxWidth, barY + barHeight, 0xC0333333);
 
-        // Fill
-        int filledWidth = (int) (barMaxWidth * progress);
+        int filledWidth = (int)(barMaxWidth * progress);
         if (filledWidth > 0)
-            context.fill(x + barLeftOffset, barY, x + barLeftOffset + filledWidth, barY + barHeight, color);
+            context.fill(RenderLayer.getGuiOverlay(),x + barLeftOffset, barY, x + barLeftOffset + filledWidth, barY + barHeight, color);
     }
 
     private static int interpolateColor(float progress) {
-        // Green at full, yellow at half, red at empty
+        // Green at full, yellow at half, red at empty.
         int r = (int) (255 * (1f - progress));
         int g = (int) (255 * progress);
         return 0xFF000000 | ((r << 16) | (g << 8));

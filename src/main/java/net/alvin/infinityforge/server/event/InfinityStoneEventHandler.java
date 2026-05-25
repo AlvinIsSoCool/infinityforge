@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.server.event;
 
+import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
 import net.alvin.infinityforge.registry.ModGauntletAbilities;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
@@ -24,9 +25,14 @@ public class InfinityStoneEventHandler {
     public static void register() {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(InfinityStoneEventHandler::onAllowDamage);
         ServerLivingEntityEvents.ALLOW_DEATH.register(InfinityStoneEventHandler::onAllowDeath);
+        ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
+            if (entity instanceof ServerPlayerEntity player) {
+                GauntletConnectionEvents.cleanupPlayerAll(player);
+                GauntletClientConnectionEvents.clearAll();
+            }
+        });
     }
 
-    @SuppressWarnings("SameReturnValue")
     private static boolean onAllowDamage(LivingEntity entity, DamageSource source, float amount) {
         Entity attacker = source.getAttacker();
         if (attacker instanceof ServerPlayerEntity player) {
@@ -34,7 +40,7 @@ public class InfinityStoneEventHandler {
             if (stack == null) return true;
 
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-            if (new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
+            if (new HashSet<>(activeStones).contains(ModStones.POWER)) {
                 if (entity.isBlocking()) {
                     ItemStack shield = entity.getActiveItem();
                     if (!shield.isEmpty()) {
