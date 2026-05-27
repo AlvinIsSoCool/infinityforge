@@ -3,6 +3,8 @@ package net.alvin.infinityforge.registry;
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
@@ -29,6 +31,13 @@ public class InfinityStoneTypeRegistry {
         if (typeId == null) return new Identifier("");
 
         return typeId.withPath(typeId.getPath() + suffix);
+    }
+
+    public static ItemStack findItemFromStoneType(InfinityStoneType type, String suffix) {
+        Identifier stoneId = InfinityStoneTypeRegistry.getStoneIdFromType(type, suffix);
+        return Registries.ITEM.getOrEmpty(stoneId)
+                .map(ItemStack::new)
+                .orElse(ItemStack.EMPTY);
     }
 
     public static void initialize() {

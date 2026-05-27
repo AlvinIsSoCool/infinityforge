@@ -5,6 +5,7 @@
 	"mixins": [
 		"ItemEntityMixin",
 		"EntityMixin",
+		"MobEntityMixin",
 		"ServerItemUseMixin",
 		"ServerPlayNetworkHandlerMixin"
 	],

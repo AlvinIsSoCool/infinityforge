@@ -1,12 +1,16 @@
 package net.alvin.infinityforge.infinity.abilities.impl;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -69,11 +73,15 @@ public class StoneHoldAbilities {
         }
     }
 
-    public static void onMindStoneHold(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-
-    }
-
     public static void onTimeStoneHold(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        if (world.isClient()) return;
+        if (!(entity instanceof PlayerEntity player)) return;
 
+        boolean inOffHand = player.getOffHandStack() == stack;
+        if (selected || inOffHand) {
+            Box box = player.getBoundingBox().expand(16);
+            world.getEntitiesByClass(LivingEntity.class, box, le -> le.isAlive() && le != player)
+                    .forEach(le -> le.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 3)));
+        }
     }
 }

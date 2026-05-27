@@ -13,7 +13,7 @@ public class ModStones {
     public static final InfinityStoneType POWER = register(
             "power",
             new InfinityStoneType(
-                    StoneUseAbilities::onPowerStoneUse,
+                    null,
                     StoneHoldAbilities::onPowerStoneHold,
                     List.of(ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
                             ModGauntletAbilities.ATTACK_SPEED),
@@ -62,8 +62,8 @@ public class ModStones {
     public static final InfinityStoneType MIND = register(
             "mind",
             new InfinityStoneType(
-                    StoneUseAbilities::onMindStoneUse,
-                    StoneHoldAbilities::onMindStoneHold,
+                    null,
+                    null,
                     List.of(ModGauntletAbilities.FLIGHT),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.mindStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.mindStone
@@ -72,7 +72,7 @@ public class ModStones {
     public static final InfinityStoneType TIME = register(
             "time",
             new InfinityStoneType(
-                    StoneUseAbilities::onTimeStoneUse,
+                    null,
                     StoneHoldAbilities::onTimeStoneHold,
                     List.of(ModGauntletAbilities.ADVANCE_TIME, ModGauntletAbilities.REWIND_TIME,
                             ModGauntletAbilities.STOP_TIME, ModGauntletAbilities.RANDOMISE_TIME),

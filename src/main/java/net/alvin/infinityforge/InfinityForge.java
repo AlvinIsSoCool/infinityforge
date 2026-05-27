@@ -8,6 +8,7 @@ import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.packet.GauntletPacketHandlers;
 import net.alvin.infinityforge.server.tick.GauntletServerTick;
+import net.alvin.infinityforge.world.event.WorldGenEventHandler;
 import net.alvin.infinityforge.world.gen.ModStructures;
 import net.alvin.infinityforge.world.gen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
@@ -38,6 +39,7 @@ public class InfinityForge implements ModInitializer {
 		ModCustomTrades.register();
 		ModLootTableModifiers.register();
 
+		WorldGenEventHandler.register();
 		GauntletPacketHandlers.register();
 		GauntletServerTick.register();
 		GauntletConnectionEvents.register();

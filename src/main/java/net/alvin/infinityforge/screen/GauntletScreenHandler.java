@@ -10,11 +10,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +71,8 @@ public class GauntletScreenHandler extends ScreenHandler {
         List<InfinityStoneType> stones = InfinityGauntletItem.getAddedStones(gauntletStack);
         for (int i = 0; i < stoneOrder.length; i++) {
             if (stones.contains(stoneOrder[i])) {
-                stoneInventory.setStack(i, findStoneItem(stoneOrder[i]));
+                stoneInventory.setStack(i,
+                        InfinityStoneTypeRegistry.findItemFromStoneType(stoneOrder[i], "_stone"));
             }
         }
     }
@@ -107,12 +106,5 @@ public class GauntletScreenHandler extends ScreenHandler {
     private void addPlayerHotbar(PlayerInventory inv) {
         for (int col = 0; col < 9; col++)
             addSlot(new Slot(inv, col, 8 + col * 18, 187));
-    }
-
-    private static ItemStack findStoneItem(InfinityStoneType type) {
-        Identifier stoneId = InfinityStoneTypeRegistry.getStoneIdFromType(type, "_stone");
-        return Registries.ITEM.getOrEmpty(stoneId)
-                .map(ItemStack::new)
-                .orElse(ItemStack.EMPTY);
     }
 }

@@ -27,17 +27,9 @@ import java.util.concurrent.CompletableFuture;
 import static net.alvin.infinityforge.helpers.TeleportationHelper.getSafeTeleportPos;
 
 public class StoneUseAbilities {
-    public static TypedActionResult<ItemStack> onPowerStoneUse(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        return TypedActionResult.pass(stack);
-    }
-
     public static TypedActionResult<ItemStack> onSpaceStoneUse(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-
-        if (world.isClient) {
-            return TypedActionResult.success(stack);
-        }
+        if (world.isClient) return TypedActionResult.success(stack);
 
         MinecraftServer server = world.getServer();
         if (server == null) return TypedActionResult.pass(stack);
@@ -73,25 +65,12 @@ public class StoneUseAbilities {
 
     public static TypedActionResult<ItemStack> onRealityStoneUse(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-
-        if (world.isClient) {
-            return TypedActionResult.success(stack);
-        }
+        if (world.isClient) return TypedActionResult.success(stack);
 
         BlockHitResult hit = (BlockHitResult) user.raycast(5.0, 1.0f, false);
-        int size = Registries.BLOCK.size();
-        Block randBlock = Registries.BLOCK.get(world.getRandom().nextInt(size));
+        Block randBlock = Registries.BLOCK.get(
+                world.getRandom().nextInt(Registries.BLOCK.size()));
         world.setBlockState(hit.getBlockPos(), randBlock.getDefaultState());
-        return TypedActionResult.pass(stack);
-    }
-
-    public static TypedActionResult<ItemStack> onMindStoneUse(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        return TypedActionResult.pass(stack);
-    }
-
-    public static TypedActionResult<ItemStack> onTimeStoneUse(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
         return TypedActionResult.pass(stack);
     }
 }

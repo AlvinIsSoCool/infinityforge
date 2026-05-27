@@ -1,7 +1,6 @@
 package net.alvin.infinityforge.world.gen;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.world.gen.processor.InfinityStoneTempleProcessor;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -28,15 +27,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class ModStructures {
-    public static final StructureProcessorType<InfinityStoneTempleProcessor> STONE_TEMPLE_PROCESSOR =
-            StructureProcessorType.register("infinityforge:infinity_stone_temple_processor", InfinityStoneTempleProcessor.CODEC);
-    public static final RegistryKey<Structure> STONE_TEMPLE_STRUCTURE = RegistryKey.of(RegistryKeys.STRUCTURE, new Identifier(InfinityForge.MOD_ID, "stone_temple"));
-    public static final RegistryKey<StructureSet> STONE_TEMPLE_STRUCTURE_SET = RegistryKey.of(RegistryKeys.STRUCTURE_SET, new Identifier(InfinityForge.MOD_ID, "stone_temple_structure_set"));
-    public static final RegistryKey<StructurePool> STONE_TEMPLE_STRUCTURE_POOL = RegistryKey.of(RegistryKeys.TEMPLATE_POOL, new Identifier(InfinityForge.MOD_ID, "stone_temple_structure_pool"));
-    public static final RegistryKey<StructureProcessorList> STONE_TEMPLE_PROCESSOR_LIST = RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(InfinityForge.MOD_ID, "stone_temple_processor_list"));
+    public static final StructureProcessorType<CrystalHypercubeProcessor> CRYSTAL_HYPERCUBE_PROCESSOR =
+            StructureProcessorType.register("infinityforge:crystal_hypercube_processor", CrystalHypercubeProcessor.CODEC);
+    public static final RegistryKey<Structure> CRYSTAL_HYPERCUBE_STRUCTURE = RegistryKey.of(RegistryKeys.STRUCTURE, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube"));
+    public static final RegistryKey<StructureSet> CRYSTAL_HYPERCUBE_STRUCTURE_SET = RegistryKey.of(RegistryKeys.STRUCTURE_SET, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_structure_set"));
+    public static final RegistryKey<StructurePool> CRYSTAL_HYPERCUBE_STRUCTURE_POOL = RegistryKey.of(RegistryKeys.TEMPLATE_POOL, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_structure_pool"));
+    public static final RegistryKey<StructureProcessorList> CRYSTAL_HYPERCUBE_PROCESSOR_LIST = RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_processor_list"));
 
     public static StructureProcessorList createProcessorList() {
-        return new StructureProcessorList(List.of(new InfinityStoneTempleProcessor()));
+        return new StructureProcessorList(List.of(new CrystalHypercubeProcessor()));
     }
 
     public static JigsawStructure createStructure(RegistryEntryList<Biome> biomes, RegistryEntry<StructurePool> startPool) {
@@ -52,7 +51,7 @@ public class ModStructures {
     }
 
     public static void bootstrapProcessors(Registerable<StructureProcessorList> context) {
-        context.register(STONE_TEMPLE_PROCESSOR_LIST, createProcessorList());
+        context.register(CRYSTAL_HYPERCUBE_PROCESSOR_LIST, createProcessorList());
     }
 
     public static void bootstrapPools(Registerable<StructurePool> context) {
@@ -61,7 +60,7 @@ public class ModStructures {
         RegistryEntry<StructurePool> fallback =
                 context.getRegistryLookup(RegistryKeys.TEMPLATE_POOL).getOrThrow(emptyPoolKey);
 
-        context.register(STONE_TEMPLE_STRUCTURE_POOL,
+        context.register(CRYSTAL_HYPERCUBE_STRUCTURE_POOL,
                 new StructurePool(fallback, List.of(), StructurePool.Projection.RIGID));
     }
 
@@ -70,7 +69,7 @@ public class ModStructures {
         RegistryEntry<StructurePool> emptyPool = context.getRegistryLookup(RegistryKeys.TEMPLATE_POOL)
                 .getOrThrow(emptyPoolKey);
 
-        context.register(STONE_TEMPLE_STRUCTURE,
+        context.register(CRYSTAL_HYPERCUBE_STRUCTURE,
                 new JigsawStructure(
                         new Structure.Config(
                                 RegistryEntryList.of(), Collections.emptyMap(),
@@ -87,9 +86,9 @@ public class ModStructures {
 
     public static void bootstrapStructureSet(Registerable<StructureSet> context) {
         RegistryEntry<Structure> structureEntry = context.getRegistryLookup(RegistryKeys.STRUCTURE)
-                .getOrThrow(STONE_TEMPLE_STRUCTURE);
+                .getOrThrow(CRYSTAL_HYPERCUBE_STRUCTURE);
 
-        context.register(STONE_TEMPLE_STRUCTURE_SET,
+        context.register(CRYSTAL_HYPERCUBE_STRUCTURE_SET,
                 new StructureSet(structureEntry,
                         new RandomSpreadStructurePlacement(0, 0, SpreadType.LINEAR, 0)));
     }

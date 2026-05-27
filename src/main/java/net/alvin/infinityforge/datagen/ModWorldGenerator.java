@@ -38,15 +38,15 @@ public class ModWorldGenerator extends FabricDynamicRegistryProvider {
         entries.addAll(registries.getWrapperOrThrow(RegistryKeys.PLACED_FEATURE));
 
         RegistryEntryLookup<StructureProcessorList> processorLookup = registries.getWrapperOrThrow(RegistryKeys.PROCESSOR_LIST);
-        RegistryEntry<StructureProcessorList> processorEntry = processorLookup.getOrThrow(ModStructures.STONE_TEMPLE_PROCESSOR_LIST);
+        RegistryEntry<StructureProcessorList> processorEntry = processorLookup.getOrThrow(ModStructures.CRYSTAL_HYPERCUBE_PROCESSOR_LIST);
 
         StructurePool myPool = getStructurePool(processorEntry, registries);
-        entries.add(ModStructures.STONE_TEMPLE_STRUCTURE_POOL, myPool);
+        entries.add(ModStructures.CRYSTAL_HYPERCUBE_STRUCTURE_POOL, myPool);
 
         RegistryEntryLookup<StructurePool> poolLookup =
                 registries.getWrapperOrThrow(RegistryKeys.TEMPLATE_POOL);
         RegistryEntry<StructurePool> startPool =
-                poolLookup.getOrThrow(ModStructures.STONE_TEMPLE_STRUCTURE_POOL);
+                poolLookup.getOrThrow(ModStructures.CRYSTAL_HYPERCUBE_STRUCTURE_POOL);
 
         RegistryWrapper<Biome> biomeWrapper = registries.getWrapperOrThrow(RegistryKeys.BIOME);
         RegistryEntryList<Biome> allBiomes = RegistryEntryList.of(
@@ -54,22 +54,22 @@ public class ModWorldGenerator extends FabricDynamicRegistryProvider {
         );
 
         JigsawStructure myStructure = ModStructures.createStructure(allBiomes, startPool);
-        entries.add(ModStructures.STONE_TEMPLE_STRUCTURE, myStructure);
+        entries.add(ModStructures.CRYSTAL_HYPERCUBE_STRUCTURE, myStructure);
 
         RegistryEntry<Structure> structureEntry =
-                registries.getWrapperOrThrow(RegistryKeys.STRUCTURE).getOrThrow(ModStructures.STONE_TEMPLE_STRUCTURE);
+                registries.getWrapperOrThrow(RegistryKeys.STRUCTURE).getOrThrow(ModStructures.CRYSTAL_HYPERCUBE_STRUCTURE);
         StructurePlacement placement = new RandomSpreadStructurePlacement(
-                80, 40, SpreadType.LINEAR, 123456789
+                10, 5, SpreadType.LINEAR, 725639014
         );
 
         StructureSet structureSet = new StructureSet(structureEntry, placement);
-        entries.add(ModStructures.STONE_TEMPLE_STRUCTURE_SET, structureSet);
+        entries.add(ModStructures.CRYSTAL_HYPERCUBE_STRUCTURE_SET, structureSet);
     }
 
     private static StructurePool getStructurePool(RegistryEntry<StructureProcessorList> processorEntry,
                                                   RegistryWrapper.WrapperLookup registries) {
         Function<StructurePool.Projection, ? extends StructurePoolElement> elementFunction =
-                StructurePoolElement.ofProcessedLegacySingle("infinityforge:stone_temple", processorEntry);
+                StructurePoolElement.ofProcessedLegacySingle("infinityforge:crystal_hypercube", processorEntry);
 
         RegistryKey<StructurePool> emptyPoolKey = RegistryKey.of(RegistryKeys.TEMPLATE_POOL, new Identifier("empty"));
         RegistryEntry<StructurePool> fallback = registries.getWrapperOrThrow(RegistryKeys.TEMPLATE_POOL)

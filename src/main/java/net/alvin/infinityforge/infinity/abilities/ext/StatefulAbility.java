@@ -49,6 +49,7 @@ public abstract class StatefulAbility<T> extends ActiveAbility {
      * Set the state that the ability should store
      * @param player The player that the state will be keyed on (This is the player on the server)
      * @param state The state the ability will store.
+     *              null clears the state implicitly.
      */
     protected void setState(PlayerEntity player, T state) {
         StatefulAbilityState.set(player, getId(), state);
@@ -63,7 +64,6 @@ public abstract class StatefulAbility<T> extends ActiveAbility {
             }
         }
     }
-    protected void clearState(PlayerEntity player) { StatefulAbilityState.clear(player, getId()); }
 
     /**
      * Return an itemstack that represents an icon for the current state.
