@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Stone World Gen.
 - Internal changes for performance.
 - Added dynamic ability icons.
+- Added more abilities.
+- Added translations.
+- Fixed and balanced infinity stone damage event handling.
 
 ## [0.6.0-beta.1] - 2026-05-20
 

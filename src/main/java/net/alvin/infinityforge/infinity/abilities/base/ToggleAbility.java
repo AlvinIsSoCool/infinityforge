@@ -11,8 +11,19 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public abstract non-sealed class ToggleAbility implements GauntletAbility {
+    /**
+     * Provides the Identifier of the ability.
+     */
     private final Identifier id;
+    /**
+     * Provides the default static icon for the ability.
+     */
     private final AbilityIcon icon;
+    /**
+     * Provides the translation key for the ability.
+     * The format is: abilities.modid.ability_name
+     * (Ex: abilities.infinityforge.advance_time)
+     */
     private final String key;
     /**
      * Provides the color of the ability.
@@ -50,10 +61,6 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
         this.refillRateTicks = refillRateTicks;
     }
 
-    public ToggleAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
-        this(id, icon, key, color, requiredStones, -1, 0);
-    }
-
     @Override
     public Identifier getId() { return id; }
 
@@ -64,7 +71,10 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getColor() { return 0xFF000000 | color.get(); }
+    public int getARGBColor() { return 0xFF000000 | color.get(); }
+
+    @Override
+    public int getRGBColor() { return color.get(); }
 
     @Override
     public boolean meetsCondition(List<InfinityStoneType> activeStones) {
@@ -82,8 +92,8 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
      * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
-     * @return true to allow the ability to toggle.
-     *         false to prevent the ability from toggling.
+     * @return {@code true} - Allows the ability to toggle on.<br>
+     *         {@code false} - Prevents the ability from toggling off.
      */
     public abstract boolean onEnable(ServerWorld world, ServerPlayerEntity player,
                                      List<InfinityStoneType> activeStones);

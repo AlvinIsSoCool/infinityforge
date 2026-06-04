@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public class WaterBreathingAbility extends PassiveAbility {
     public WaterBreathingAbility(Identifier id, AbilityIcon icon,
                                  String key, Supplier<Integer> color) {
-        super(id, icon, key, color);
+        super(id, icon, key, color, List::of);
     }
 
     @Override

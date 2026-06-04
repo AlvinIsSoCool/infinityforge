@@ -3,9 +3,10 @@
 	"package": "net.alvin.infinityforge.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ItemEntityMixin",
 		"EntityMixin",
-		"MobEntityMixin",
+		"ItemEntityMixin",
+		"PlayerEntityMixin",
+		"LivingEntityMixin",
 		"ServerItemUseMixin",
 		"ServerPlayNetworkHandlerMixin"
 	],

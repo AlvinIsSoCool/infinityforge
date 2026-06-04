@@ -16,6 +16,7 @@ public class ModItemRenderers {
     public static final InfinityGauntletRenderer GAUNTLET_RENDERER = new InfinityGauntletRenderer();
     public static final FakeItemRenderer FAKE_ITEM_RENDERER = new FakeItemRenderer();
 
+    @SuppressWarnings("LoggingSimilarMessage")
     public static void register() {
         for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.REGISTRY) {
             String stoneName = InfinityStoneTypeRegistry.getStoneNameFromType(stoneType, " Stone", true);

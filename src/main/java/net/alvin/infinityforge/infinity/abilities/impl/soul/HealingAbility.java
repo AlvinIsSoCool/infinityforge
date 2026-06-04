@@ -14,7 +14,7 @@ public class HealingAbility extends PassiveAbility {
 
     public HealingAbility(Identifier id, AbilityIcon icon,
                           String key, Supplier<Integer> color) {
-        super(id, icon, key, color);
+        super(id, icon, key, color, List::of);
     }
 
     @Override

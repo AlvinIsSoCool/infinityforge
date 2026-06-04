@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfinityStoneTrackerState extends PersistentState {
+public class InfinityStoneWorldGenState extends PersistentState {
     public static final String KEY = InfinityForge.MOD_ID + "_stone_tracker";
     public record SpawnRecord(Identifier stoneId, BlockPos pos, Identifier dimension, long timestamp) {
         public NbtCompound toNbt() {
@@ -65,6 +65,7 @@ public class InfinityStoneTrackerState extends PersistentState {
         return spawnRecords.stream().anyMatch(r -> r.stoneId().equals(id));
     }
 
+    // TODO: Add config value for number of infinity stone sets to spawn.
     public boolean canSpawn(InfinityStoneType chosenStone) {
         int maxSets = 1; // -1 for unlimited.
         if (maxSets == -1) return true;
@@ -87,8 +88,8 @@ public class InfinityStoneTrackerState extends PersistentState {
         return nbt;
     }
 
-    public static InfinityStoneTrackerState readNbt(NbtCompound nbt) {
-        InfinityStoneTrackerState state = new InfinityStoneTrackerState();
+    public static InfinityStoneWorldGenState readNbt(NbtCompound nbt) {
+        InfinityStoneWorldGenState state = new InfinityStoneWorldGenState();
         NbtList list = nbt.getList("records", NbtElement.COMPOUND_TYPE);
         for (int i = 0; i < list.size(); i++) {
             state.spawnRecords.add(SpawnRecord.fromNbt(list.getCompound(i)));
@@ -96,9 +97,8 @@ public class InfinityStoneTrackerState extends PersistentState {
         return state;
     }
 
-    public static InfinityStoneTrackerState get(ServerWorld world) {
+    public static InfinityStoneWorldGenState get(ServerWorld world) {
         return world.getServer().getOverworld().getPersistentStateManager()
-                .getOrCreate(InfinityStoneTrackerState::readNbt,
-                        InfinityStoneTrackerState::new, KEY);
+                .getOrCreate(InfinityStoneWorldGenState::readNbt, InfinityStoneWorldGenState::new, KEY);
     }
 }

@@ -8,11 +8,11 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 public class StatefulAbilityState {
-    private static final Map<PlayerEntity, Map<Identifier, Object>> STATE
+    private static final Map<PlayerEntity, Map<Identifier, Object>> STATES
             = new IdentityHashMap<>();
 
     public static <T> T get(PlayerEntity player, Identifier abilityId, Class<T> type) {
-        Map<Identifier, Object> map = STATE.get(player);
+        Map<Identifier, Object> map = STATES.get(player);
         if (map == null) return null;
         Object value = map.get(abilityId);
         if (value == null) return null;
@@ -24,16 +24,14 @@ public class StatefulAbilityState {
             clear(player, abilityId);
             return;
         }
-        STATE.computeIfAbsent(player, k -> new HashMap<>())
+        STATES.computeIfAbsent(player, k -> new HashMap<>())
                 .put(abilityId, state);
     }
 
     public static void clear(PlayerEntity player, Identifier abilityId) {
-        Map<Identifier, Object> map = STATE.get(player);
+        Map<Identifier, Object> map = STATES.get(player);
         if (map != null) map.remove(abilityId);
     }
 
-    public static void clear(PlayerEntity player) {
-        STATE.remove(player);
-    }
+    public static void clear(PlayerEntity player) { STATES.remove(player); }
 }

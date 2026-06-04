@@ -2,7 +2,8 @@ package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.abilities.ext.StatefulAbility;
+import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
+import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.item.FakeItem;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
@@ -15,7 +16,7 @@ import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SpawnItemAbility extends StatefulAbility<Item> {
+public class SpawnItemAbility extends ActiveAbility implements AbilityState<Item> {
     private final boolean spawnFake;
 
     public SpawnItemAbility(Identifier id, AbilityIcon icon,
@@ -32,16 +33,14 @@ public class SpawnItemAbility extends StatefulAbility<Item> {
         setState(player, FakeItem.getDisguise(fakeItem));
         ItemEntity entity = new ItemEntity(world, player.getX(), player.getY(), player.getZ() + 1.0, fakeItem);
         world.spawnEntity(entity);
-        return false;
+        return true;
     }
 
     @Override
-    protected ItemStack getStateIconStack(Item state) {
+    public Class<Item> getType() { return Item.class; }
+
+    @Override
+    public ItemStack getDynamicIcon(Item state) {
         return spawnFake ? FakeItem.create(state, 1) : new ItemStack(state);
-    }
-
-    @Override
-    protected Class<Item> getStateType() {
-        return Item.class;
     }
 }

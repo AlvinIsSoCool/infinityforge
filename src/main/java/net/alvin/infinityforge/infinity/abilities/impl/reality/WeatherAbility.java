@@ -27,7 +27,6 @@ public class WeatherAbility extends ActiveAbility {
         } else {
             world.setWeather(Integer.MAX_VALUE, 0, false, false);
         }
-
         return true;
     }
 }

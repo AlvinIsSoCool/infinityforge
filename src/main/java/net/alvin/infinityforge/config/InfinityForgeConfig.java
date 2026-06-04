@@ -9,8 +9,8 @@ import net.alvin.infinityforge.InfinityForge;
 
 @Config(name = InfinityForge.MOD_ID)
 public class InfinityForgeConfig implements ConfigData {
-
-
+    @Comment("Allows full infinity stone power and prevents death.")
+    public boolean godMode = true;
 
     @ConfigEntry.Category("color_options")
     @ConfigEntry.Gui.TransitiveObject

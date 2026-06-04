@@ -8,6 +8,7 @@ import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.packet.GauntletPacketHandlers;
 import net.alvin.infinityforge.server.tick.GauntletServerTick;
+import net.alvin.infinityforge.server.tick.PlayerForcefieldServerTick;
 import net.alvin.infinityforge.world.event.WorldGenEventHandler;
 import net.alvin.infinityforge.world.gen.ModStructures;
 import net.alvin.infinityforge.world.gen.ModWorldGeneration;
@@ -29,6 +30,7 @@ public class InfinityForge implements ModInitializer {
 		ModBlocks.initialize();
 		ModBlockEntities.initialize();
 		ModItemGroups.initialize();
+		ModStatusEffects.initialize();
 
 		InfinityStoneTypeRegistry.initialize();
 		GauntletAbilityRegistry.initialize();
@@ -42,6 +44,7 @@ public class InfinityForge implements ModInitializer {
 		WorldGenEventHandler.register();
 		GauntletPacketHandlers.register();
 		GauntletServerTick.register();
+		PlayerForcefieldServerTick.register();
 		GauntletConnectionEvents.register();
 		InfinityStoneEventHandler.register();
 	}

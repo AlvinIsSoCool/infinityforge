@@ -6,23 +6,23 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 public class PendingInfinityItemPickups {
-    private static final Map<ServerPlayerEntity, Long> PENDING = new IdentityHashMap<>();
+    private static final Map<ServerPlayerEntity, Long> PENDING_PICKUPS = new IdentityHashMap<>();
 
     public static void markPending(ServerPlayerEntity player) {
-        PENDING.put(player, player.getServerWorld().getTime());
+        PENDING_PICKUPS.put(player, player.getServerWorld().getTime());
     }
 
     public static boolean isPending(ServerPlayerEntity player) {
-        Long tick = PENDING.get(player);
+        Long tick = PENDING_PICKUPS.get(player);
         if (tick == null) return false;
         if (player.getServerWorld().getTime() - tick > 5) {
-            PENDING.remove(player);
+            PENDING_PICKUPS.remove(player);
             return false;
         }
         return true;
     }
 
     public static void clear(ServerPlayerEntity player) {
-        PENDING.remove(player);
+        PENDING_PICKUPS.remove(player);
     }
 }

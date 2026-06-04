@@ -16,7 +16,7 @@ public class ModStones {
                     null,
                     StoneHoldAbilities::onPowerStoneHold,
                     List.of(ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
-                            ModGauntletAbilities.ATTACK_SPEED),
+                            ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.powerStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.powerStone
             )
@@ -39,7 +39,8 @@ public class ModStones {
                     null,
                     List.of(
                             ModGauntletAbilities.WEATHER, ModGauntletAbilities.SPAWN_REAL_BLOCK,
-                            ModGauntletAbilities.SPAWN_FAKE_ITEM
+                            ModGauntletAbilities.SPAWN_FAKE_ITEM, ModGauntletAbilities.INVISIBILITY,
+                            ModGauntletAbilities.SIZE_CHANGE_BIG, ModGauntletAbilities.SIZE_CHANGE_SMALL
                     ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.realityStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone
@@ -64,7 +65,7 @@ public class ModStones {
             new InfinityStoneType(
                     null,
                     null,
-                    List.of(ModGauntletAbilities.FLIGHT),
+                    List.of(ModGauntletAbilities.FLIGHT, ModGauntletAbilities.CHANGE_SNAP),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.mindStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.mindStone
             )

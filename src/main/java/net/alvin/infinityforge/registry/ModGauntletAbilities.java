@@ -2,16 +2,22 @@ package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
-import net.alvin.infinityforge.infinity.abilities.ext.AttributeModifierAbility;
+import net.alvin.infinityforge.infinity.abilities.base.AttributeModifierAbility;
+import net.alvin.infinityforge.infinity.abilities.base.LifecyclePassiveAbility;
 import net.alvin.infinityforge.infinity.abilities.impl.mind.*;
 import net.alvin.infinityforge.infinity.abilities.impl.reality.*;
 import net.alvin.infinityforge.infinity.abilities.impl.soul.*;
 import net.alvin.infinityforge.infinity.abilities.impl.space.*;
 import net.alvin.infinityforge.infinity.abilities.impl.time.*;
+import net.alvin.infinityforge.network.s2c.SyncStepHeightS2CPacket;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -34,6 +40,7 @@ public class ModGauntletAbilities {
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.knockback_resistance",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
+                    List::of,
                     Map.of(
                             EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
                             new EntityAttributeModifier(
@@ -52,6 +59,7 @@ public class ModGauntletAbilities {
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.speed",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
+                    List::of,
                     Map.of(
                             EntityAttributes.GENERIC_MOVEMENT_SPEED,
                             new EntityAttributeModifier(
@@ -70,6 +78,7 @@ public class ModGauntletAbilities {
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.attack_speed",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
+                    List::of,
                     Map.of(
                             EntityAttributes.GENERIC_ATTACK_SPEED,
                             new EntityAttributeModifier(
@@ -80,6 +89,28 @@ public class ModGauntletAbilities {
                             )
                     )
             ) {}
+    );
+
+    public static final GauntletAbility STEP_HEIGHT = GauntletAbilityRegistry.register(
+            new LifecyclePassiveAbility(
+                    new Identifier(InfinityForge.MOD_ID, "step_height"),
+                    PASSIVE_ICONS.next(),
+                    "abilities.infinityforge.step_height",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
+                    List::of
+                    ) {
+                @Override
+                public void onStart(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+                    player.setStepHeight(1.0f);
+                    ServerPlayNetworking.send(player, new SyncStepHeightS2CPacket(1.0f));
+                }
+
+                @Override
+                public void onEnd(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+                    player.setStepHeight(0.6f);
+                    ServerPlayNetworking.send(player, new SyncStepHeightS2CPacket(0.6f));
+                }
+            }
     );
 
     public static final GauntletAbility TELEPORT = GauntletAbilityRegistry.register(
@@ -118,6 +149,38 @@ public class ModGauntletAbilities {
                     "abilities.infinityforge.weather",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     () -> List.of(ModStones.POWER, ModStones.REALITY), 100
+            )
+    );
+    public static final GauntletAbility INVISIBILITY = GauntletAbilityRegistry.register(
+            new InvisibilityAbility(
+                    new Identifier(InfinityForge.MOD_ID, "invisibility"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.invisibility",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
+                    List::of,
+                    -1, 0
+            )
+    );
+    public static final GauntletAbility SIZE_CHANGE_SMALL = GauntletAbilityRegistry.register(
+            new SizeChangeAbility(
+                    new Identifier(InfinityForge.MOD_ID, "size_change_small"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.size_change_small",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
+                    List::of,
+                    -1, 0,
+                    0.5f
+            )
+    );
+    public static final GauntletAbility SIZE_CHANGE_BIG = GauntletAbilityRegistry.register(
+            new SizeChangeAbility(
+                    new Identifier(InfinityForge.MOD_ID, "size_change_big"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.size_change_big",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
+                    List::of,
+                    -1, 0,
+                    2.0f
             )
     );
     public static final GauntletAbility SPAWN_REAL_BLOCK = GauntletAbilityRegistry.register(
@@ -190,6 +253,16 @@ public class ModGauntletAbilities {
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone
             )
     );
+    public static final GauntletAbility SNAP = GauntletAbilityRegistry.register(
+            new SnapAbility(
+                    new Identifier(InfinityForge.MOD_ID, "snap"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.snap",
+                    () -> 0x7FFFFF,
+                    () -> ModStones.ALL_STONES,
+                    20
+            )
+    );
     public static final GauntletAbility FLIGHT = GauntletAbilityRegistry.register(
             new FlightAbility(
                     new Identifier(InfinityForge.MOD_ID, "flight"),
@@ -200,14 +273,14 @@ public class ModGauntletAbilities {
                     -1, 0
             )
     );
-    public static final GauntletAbility SNAP = GauntletAbilityRegistry.register(
-            new SnapAbility(
-                    new Identifier(InfinityForge.MOD_ID, "snap"),
+    public static final GauntletAbility CHANGE_SNAP = GauntletAbilityRegistry.register(
+            new ChangeSnapAbility(
+                    new Identifier(InfinityForge.MOD_ID, "change_snap"),
                     AbilityIcon.next(),
-                    "abilities.infinityforge.snap",
-                    () -> 0x7FFFFF,
+                    "abilities.infinityforge.change_snap",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.mindStone,
                     () -> ModStones.ALL_STONES,
-                    20
+                    0
             )
     );
     public static final GauntletAbility ADVANCE_TIME = GauntletAbilityRegistry.register(

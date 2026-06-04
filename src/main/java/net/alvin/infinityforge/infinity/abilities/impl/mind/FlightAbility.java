@@ -3,6 +3,7 @@ package net.alvin.infinityforge.infinity.abilities.impl.mind;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -23,8 +24,8 @@ public class FlightAbility extends ToggleAbility {
             player.getAbilities().setFlySpeed(0.25f);
             player.sendAbilitiesUpdate();
 
-            player.setVelocity(player.getVelocity().x, 0.75, player.getVelocity().z);
-            player.velocityModified = true;
+            player.setVelocity(player.getVelocity().x, 0.5, player.getVelocity().z);
+            player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player));
             return true;
         }
         return false;

@@ -1,15 +1,14 @@
 package net.alvin.infinityforge.server.event;
 
 import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
-import net.alvin.infinityforge.registry.ModGauntletAbilities;
+import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.infinity.abilities.impl.space.ForcefieldAbility;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.registry.ModItems;
 import net.alvin.infinityforge.registry.ModStones;
-import net.alvin.infinityforge.server.state.GauntletToggleState;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,6 +22,8 @@ import java.util.List;
 
 public class InfinityStoneEventHandler {
     public static void register() {
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register(ForcefieldAbility::onDamageEntity);
+
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(InfinityStoneEventHandler::onAllowDamage);
         ServerLivingEntityEvents.ALLOW_DEATH.register(InfinityStoneEventHandler::onAllowDeath);
         ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
@@ -33,48 +34,58 @@ public class InfinityStoneEventHandler {
         });
     }
 
-    private static boolean onAllowDamage(LivingEntity entity, DamageSource source, float amount) {
-        Entity attacker = source.getAttacker();
-        if (attacker instanceof ServerPlayerEntity player) {
-            ItemStack stack = InfinityGauntletItem.findGauntlet(player);
-            if (stack == null) return true;
+    public static void applyDamageInfinity(LivingEntity entity, DamageSource source) {
+        if (!entity.isAlive()) return;
 
-            List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-            if (new HashSet<>(activeStones).contains(ModStones.POWER)) {
-                if (entity.isBlocking()) {
-                    ItemStack shield = entity.getActiveItem();
-                    if (!shield.isEmpty()) {
-                        shield.setDamage(shield.getMaxDamage());
-                        if (entity.getActiveHand() == Hand.MAIN_HAND) {
-                            entity.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-                            entity.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-                        } else {
-                            entity.sendEquipmentBreakStatus(EquipmentSlot.OFFHAND);
-                            entity.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
-                        }
-                    }
-                } else {
-                    for (EquipmentSlot slot : new EquipmentSlot[]{
-                            EquipmentSlot.HEAD, EquipmentSlot.CHEST,
-                            EquipmentSlot.LEGS, EquipmentSlot.FEET}
-                    ) {
-                        ItemStack armor = entity.getEquippedStack(slot);
-                        if (!armor.isEmpty() && armor.isDamageable()) {
-                            armor.setDamage(armor.getMaxDamage());
-                            entity.sendEquipmentBreakStatus(slot);
-                            entity.equipStack(slot, ItemStack.EMPTY);
-                        }
-                    }
+        if (entity.isBlocking()) {
+            ItemStack shield = entity.getActiveItem();
+            if (!shield.isEmpty()) {
+                shield.setDamage(shield.getMaxDamage());
+                EquipmentSlot slot = entity.getActiveHand() == Hand.MAIN_HAND
+                        ? EquipmentSlot.MAINHAND
+                        : EquipmentSlot.OFFHAND;
+                entity.sendEquipmentBreakStatus(slot);
+                entity.equipStack(slot, ItemStack.EMPTY);
+            }
+        } else {
+            for (EquipmentSlot slot : new EquipmentSlot[]{
+                    EquipmentSlot.HEAD, EquipmentSlot.CHEST,
+                    EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
+                ItemStack armor = entity.getEquippedStack(slot);
+                if (!armor.isEmpty() && armor.isDamageable()) {
+                    armor.setDamage(armor.getMaxDamage());
+                    entity.sendEquipmentBreakStatus(slot);
+                    entity.equipStack(slot, ItemStack.EMPTY);
                 }
-
-                entity.getDamageTracker().onDamage(source, entity.getHealth());
-                entity.setHealth(0.0f);
-                entity.onDeath(source);
             }
         }
 
-        if (entity instanceof ServerPlayerEntity player)
-            return !GauntletToggleState.isActive(player, ModGauntletAbilities.FORCEFIELD.getId());
+        float previousHealth = entity.getHealth();
+        entity.getDamageTracker().onDamage(source, previousHealth);
+        entity.setHealth(0.0f);
+
+        boolean deathAllowed = ServerLivingEntityEvents.ALLOW_DEATH.invoker()
+                .allowDeath(entity, source, previousHealth);
+        if (!deathAllowed) return;
+
+        entity.onDeath(source);
+        ServerLivingEntityEvents.AFTER_DEATH.invoker().afterDeath(entity, source);
+    }
+
+    // TODO: Implement damage resistance feature here.
+    private static boolean onAllowDamage(LivingEntity entity, DamageSource source, float amount) {
+        boolean equippedMainHand = entity.getStackInHand(Hand.MAIN_HAND).isOf(ModItems.POWER_STONE);
+        boolean equippedOffHand = entity.getStackInHand(Hand.OFF_HAND).isOf(ModItems.POWER_STONE);
+        if (equippedMainHand || equippedOffHand) return false;
+
+        Entity attacker = source.getAttacker();
+        if (attacker instanceof ServerPlayerEntity player) {
+            ItemStack stack = InfinityGauntletItem.findGauntlet(player);
+            if (stack != null && InfinityGauntletItem.getAddedStones(stack).contains(ModStones.POWER)) {
+                InfinityStoneEventHandler.applyDamageInfinity(entity, source);
+                return !(entity instanceof ServerPlayerEntity);
+            }
+        }
 
         return true;
     }
@@ -87,9 +98,10 @@ public class InfinityStoneEventHandler {
         if (stack == null) return true;
 
         List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-        if (new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
+        if (InfinityForgeConfig.get().godMode
+                && new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
             player.setHealth(player.getMaxHealth());
-            world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS, 1.0f, 0.8f);
+            world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS, 2.0f, 0.75f);
             return false;
         }
 

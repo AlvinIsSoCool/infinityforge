@@ -45,12 +45,12 @@ public class StoneUseAbilities {
         if (keys.isEmpty()) return TypedActionResult.pass(stack);
 
         Collections.shuffle(keys);
-        ServerWorld target = server.getWorld(keys.get(0));
-        if (target == null) return TypedActionResult.pass(stack);
+        ServerWorld targetWorld = server.getWorld(keys.get(0));
+        if (targetWorld == null) return TypedActionResult.pass(stack);
 
         CompletableFuture.runAsync(() -> {
-            BlockPos safeSpawn = getSafeTeleportPos(target);
-            server.execute(() -> FabricDimensions.teleport(user, target,
+            BlockPos safeSpawn = getSafeTeleportPos(targetWorld);
+            server.execute(() -> FabricDimensions.teleport(user, targetWorld,
                     new TeleportTarget(
                             new Vec3d(safeSpawn.getX() + 0.5, safeSpawn.getY(), safeSpawn.getZ() + 0.5),
                             Vec3d.ZERO,

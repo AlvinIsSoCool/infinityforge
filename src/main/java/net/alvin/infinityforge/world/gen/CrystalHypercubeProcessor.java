@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
 import net.alvin.infinityforge.registry.ModStones;
-import net.alvin.infinityforge.world.data.InfinityStoneTrackerState;
+import net.alvin.infinityforge.world.data.InfinityStoneWorldGenState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -64,7 +64,7 @@ public class CrystalHypercubeProcessor extends StructureProcessor {
 
         boolean canSpawn = CAN_SPAWN_CACHE.computeIfAbsent(pivot, k -> {
             if (world instanceof ServerWorldAccess swa)
-                return InfinityStoneTrackerState.get(swa.toServerWorld()).canSpawn(chosenStone);
+                return InfinityStoneWorldGenState.get(swa.toServerWorld()).canSpawn(chosenStone);
             return true;
         });
 
@@ -82,7 +82,7 @@ public class CrystalHypercubeProcessor extends StructureProcessor {
                         blockPos.getY() + 0.5,
                         blockPos.getZ() + 0.5,
                         tesseractStack));
-                InfinityStoneTrackerState.get(sw)
+                InfinityStoneWorldGenState.get(sw)
                         .recordSpawn(chosenStone, blockPos, sw.getRegistryKey(), sw.getTime());
             }
             return new StructureTemplate.StructureBlockInfo(

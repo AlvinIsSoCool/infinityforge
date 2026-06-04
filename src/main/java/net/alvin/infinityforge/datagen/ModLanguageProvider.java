@@ -2,6 +2,7 @@ package net.alvin.infinityforge.datagen;
 
 import net.alvin.infinityforge.registry.ModBlocks;
 import net.alvin.infinityforge.registry.ModItems;
+import net.alvin.infinityforge.registry.ModStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -32,6 +33,10 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.DEEPSLATE_TITANIUM_ORE, "Deepslate Titanium Ore");
         translationBuilder.add(ModBlocks.BLUEPRINT_TABLE, "Blueprint Table");
 
+        translationBuilder.add(ModStatusEffects.SNAP_EFFECT, "I don't feel so good...");
+        translationBuilder.add(ModStatusEffects.MOVEMENT_LOCKED_EFFECT, "Movement Locked");
+        translationBuilder.add(ModStatusEffects.SCROLL_LOCKED_EFFECT, "Scroll Locked");
+
         translationBuilder.add("gui.infinityforge.blueprint_table", "Blueprint Table");
         translationBuilder.add("itemgroup.infinity", "Infinity Forge");
         translationBuilder.add("category.infinityforge", "Ability Keybinds");
@@ -43,21 +48,41 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("key.infinityforge.slot_5", "Ability 5");
         translationBuilder.add("key.infinityforge.slot_6", "Ability 6");
 
+        translationBuilder.add("abilities.infinityforge.knockback_resistance", "Knockback Resistance");
+        translationBuilder.add("abilities.infinityforge.speed", "Speed");
+        translationBuilder.add("abilities.infinityforge.attack_speed", "Attack Speed");
+        translationBuilder.add("abilities.infinityforge.step_height", "Step Height");
         translationBuilder.add("abilities.infinityforge.teleport", "Teleportation");
         translationBuilder.add("abilities.infinityforge.forcefield", "Forcefield");
         translationBuilder.add("abilities.infinityforge.weather", "Set Weather");
         translationBuilder.add("abilities.infinityforge.spawn_real_block", "Spawn Block");
+        translationBuilder.add("abilities.infinityforge.invisibility", "Invisibility");
+        translationBuilder.add("abilities.infinityforge.size_change_small", "Shrink");
+        translationBuilder.add("abilities.infinityforge.size_change_big", "Enlarge");
         translationBuilder.add("abilities.infinityforge.kill", "Kill");
         translationBuilder.add("abilities.infinityforge.healing", "Healing");
         translationBuilder.add("abilities.infinityforge.health", "Health");
-        translationBuilder.add("abilities.infinityforge.saturation", "Soul Sustenance");
+        translationBuilder.add("abilities.infinityforge.saturation", "Self-Sustenance");
         translationBuilder.add("abilities.infinityforge.water_breathing", "Water Breathing");
         translationBuilder.add("abilities.infinityforge.flight", "Flight");
         translationBuilder.add("abilities.infinityforge.snap", "Snap");
+        translationBuilder.add("abilities.infinityforge.change_snap", "Change Snap Function");
         translationBuilder.add("abilities.infinityforge.advance_time", "Advance Time");
         translationBuilder.add("abilities.infinityforge.rewind_time", "Rewind Time");
         translationBuilder.add("abilities.infinityforge.stop_time", "Stop Time");
         translationBuilder.add("abilities.infinityforge.randomise_time", "Randomise Time");
+
+        translationBuilder.add("snapfunctions.infinityforge.kill_half", "Kill Half");
+        translationBuilder.add("snapfunctions.infinityforge.kill_all", "Kill All");
+        translationBuilder.add("snapfunctions.infinityforge.kill_hostiles", "Kill Hostile Mobs");
+        translationBuilder.add("snapfunctions.infinityforge.revert_kills", "Bring Back The Dead");
+        translationBuilder.add("snapfunctions.infinityforge.recreate_world", "Recreate the world (N/A)");
+        translationBuilder.add("snapfunctions.infinityforge.destroy_stones", "Destroy The Stones");
+        translationBuilder.add("snapfunctions.infinityforge.creative_mode", "Switch To Creative Mode");
+        translationBuilder.add("snapfunctions.infinityforge.spectator_mode", "Switch To Spectator Mode");
+
+        translationBuilder.add("snapmessages.infinityforge.missing", "No Snap Function Selected!");
+        translationBuilder.add("snapmessages.infinityforge.destroy_stones", "%s: I used the stones... to destroy the stones!");
 
         translationBuilder.add("text.autoconfig.infinityforge.title", "Infinity Forge Options");
         translationBuilder.add("text.autoconfig.infinityforge.category.color_options", "Color Options");

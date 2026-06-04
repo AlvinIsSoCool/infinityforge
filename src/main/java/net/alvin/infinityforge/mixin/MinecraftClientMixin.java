@@ -28,8 +28,8 @@ public class MinecraftClientMixin {
     private void onItemUse(CallbackInfo ci) {
         MinecraftClient client = (MinecraftClient)(Object) this;
         if (client.player == null) return;
-        ClientPlayerEntity player = client.player;
 
+        ClientPlayerEntity player = client.player;
         if (player.getActiveHand() != Hand.MAIN_HAND) return;
 
         Box box = player.getBoundingBox()

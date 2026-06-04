@@ -44,9 +44,7 @@ public class InfinityGauntletItem extends Item {
     private static final WeakHashMap<ItemStack, List<InfinityStoneType>> STONE_CACHE
             = new WeakHashMap<>();
 
-    public InfinityGauntletItem() {
-        super(new FabricItemSettings().maxDamage(0).fireproof());
-    }
+    public InfinityGauntletItem() { super(new FabricItemSettings().maxDamage(0).fireproof()); }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
@@ -136,6 +134,15 @@ public class InfinityGauntletItem extends Item {
             if (typeId != null) list.add(NbtString.of(typeId.toString()));
         }
         nbt.put(STONES_KEY, list);
+        STONE_CACHE.remove(stack);
+    }
+
+    public static void removeStones(ItemStack stack) {
+        NbtCompound nbt = stack.getNbt();
+        if (nbt != null && nbt.contains(STONES_KEY)) {
+            nbt.remove(STONES_KEY);
+            if (nbt.isEmpty()) stack.setNbt(null);
+        }
         STONE_CACHE.remove(stack);
     }
 
@@ -268,14 +275,6 @@ public class InfinityGauntletItem extends Item {
         for (Hand hand : Hand.values()) {
             ItemStack stack = player.getStackInHand(hand);
             if (stack.getItem() instanceof InfinityGauntletItem) return stack;
-        }
-        return null;
-    }
-
-    @Nullable
-    public static <T extends GauntletAbility> T findAbility(List<T> abilities, Identifier id) {
-        for (T ability : abilities) {
-            if (ability.getId().equals(id)) return ability;
         }
         return null;
     }

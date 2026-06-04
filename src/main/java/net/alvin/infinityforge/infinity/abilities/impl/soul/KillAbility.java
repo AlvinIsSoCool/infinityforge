@@ -3,10 +3,12 @@ package net.alvin.infinityforge.infinity.abilities.impl.soul;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.boss.dragon.phase.PhaseType;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -44,7 +46,14 @@ public class KillAbility extends ActiveAbility {
                 part.owner.setHealth(0f);
                 part.owner.getPhaseManager().setPhase(PhaseType.DYING);
             } else if (target instanceof LivingEntity living) {
-                living.setHealth(0f);
+                DamageSource source = living.getDamageSources().generic();
+                float previousHealth = living.getHealth();
+                living.getDamageTracker().onDamage(source, previousHealth);
+                living.setHealth(0.0f);
+
+                boolean deathAllowed = ServerLivingEntityEvents.ALLOW_DEATH.invoker()
+                        .allowDeath(living, source, previousHealth);
+                if (deathAllowed) living.onDeath(source);
             }
         }
         return false;

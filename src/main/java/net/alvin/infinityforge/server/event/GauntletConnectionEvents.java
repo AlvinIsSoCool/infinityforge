@@ -2,8 +2,9 @@ package net.alvin.infinityforge.server.event;
 
 import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
+import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
-import net.alvin.infinityforge.infinity.abilities.ext.AttributeModifierAbility;
+import net.alvin.infinityforge.infinity.abilities.base.LifecyclePassiveAbility;
 import net.alvin.infinityforge.item.FakeItem;
 import net.alvin.infinityforge.server.state.*;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
@@ -59,14 +60,13 @@ public class GauntletConnectionEvents {
                 h.onStop(world, player, activeStones);
         }
 
-        for (Identifier id : new HashSet<>(GauntletAttributeState.getActive(player))) {
-            GauntletAbility ability = GauntletAbilityRegistry.get(id);
-            if (ability instanceof AttributeModifierAbility a)
-                a.onRemove(player, id);
+        List<PassiveAbility> passives = InfinityGauntletItem.getPassiveAbilities(activeStones);
+        for (PassiveAbility p : passives) {
+            if (p instanceof LifecyclePassiveAbility lp)
+                lp.triggerEnd(world, player, activeStones);
         }
 
         GauntletToggleState.clear(player);
         GauntletHeldState.clear(player);
-        GauntletAttributeState.clear(player);
     }
 }

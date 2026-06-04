@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.server.packet;
 
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
+import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.item.InfinityStoneItem;
@@ -56,7 +57,7 @@ public class GauntletPacketHandlers {
             ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
 
-            ActiveAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getActiveAbilities(activeStones), packet.abilityId());
+            ActiveAbility ability = GauntletAbility.findAbility(InfinityGauntletItem.getActiveAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
             if (GauntletCooldownState.isOnCooldown(gauntletId, ability.getId(), world.getTime())) return;
 
@@ -82,7 +83,7 @@ public class GauntletPacketHandlers {
             ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
 
-            ToggleAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getToggleAbilities(activeStones), packet.abilityId());
+            ToggleAbility ability = GauntletAbility.findAbility(InfinityGauntletItem.getToggleAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
             boolean nowActive = GauntletToggleState.flip(player, ability.getId());
@@ -111,7 +112,7 @@ public class GauntletPacketHandlers {
             ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
 
-            HeldAbility ability = InfinityGauntletItem.findAbility(InfinityGauntletItem.getHeldAbilities(activeStones), packet.abilityId());
+            HeldAbility ability = GauntletAbility.findAbility(InfinityGauntletItem.getHeldAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
             GauntletHeldState.setHeld(player, ability.getId(), packet.pressing());

@@ -1,7 +1,8 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
-import net.alvin.infinityforge.infinity.abilities.ext.StatefulAbility;
+import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
+import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,7 @@ import net.minecraft.util.hit.HitResult;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SpawnBlockAbility extends StatefulAbility<Block> {
+public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Block> {
     private final boolean spawnFake;
 
     public SpawnBlockAbility(Identifier id, AbilityIcon icon,
@@ -63,12 +64,8 @@ public class SpawnBlockAbility extends StatefulAbility<Block> {
     }
 
     @Override
-    protected Class<Block> getStateType() {
-        return Block.class;
-    }
+    public Class<Block> getType() { return Block.class; }
 
     @Override
-    protected ItemStack getStateIconStack(Block state) {
-        return state == null ? null : new ItemStack(state.asItem());
-    }
+    public ItemStack getDynamicIcon(Block state) { return state == null ? null : new ItemStack(state.asItem());}
 }

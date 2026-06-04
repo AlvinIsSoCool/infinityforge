@@ -8,6 +8,7 @@ import net.alvin.infinityforge.client.screen.ModScreens;
 import net.alvin.infinityforge.client.tick.GauntletClientTick;
 import net.alvin.infinityforge.client.render.ModItemRenderers;
 import net.alvin.infinityforge.client.render.ModRenderLayers;
+import net.alvin.infinityforge.client.tick.ScaleAnimationClientTick;
 import net.fabricmc.api.ClientModInitializer;
 
 public class InfinityForgeClient implements ClientModInitializer {
@@ -21,6 +22,7 @@ public class InfinityForgeClient implements ClientModInitializer {
         GauntletClientConnectionEvents.register();
         GauntletClientPacketHandlers.register();
         GauntletClientTick.register();
+        ScaleAnimationClientTick.register();
         GauntletHudEvents.register();
         GauntletKeybinds.register();
     }

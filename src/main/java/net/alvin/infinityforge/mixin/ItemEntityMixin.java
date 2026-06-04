@@ -68,10 +68,9 @@ public class ItemEntityMixin {
     private void onTick(CallbackInfo ci) {
         ItemEntity self = (ItemEntity)(Object) this;
         Item item = self.getStack().getItem();
-        if (self.getWorld().isClient ||
-                !(item instanceof InfinityStoneItem
-                        || item instanceof InfinityGauntletItem
-                        || item instanceof InfinityTesseractItem)) return;
+        if (self.getWorld().isClient) return;
+        if (!(item instanceof InfinityStoneItem || item instanceof InfinityGauntletItem
+                || item instanceof InfinityTesseractItem)) return;
 
         this.itemAge = 0;
         Box searchBox = self.getBoundingBox().expand(0.25);
@@ -99,7 +98,7 @@ public class ItemEntityMixin {
                 || self.getStack().getItem() instanceof InfinityGauntletItem
                 || self.getStack().getItem() instanceof InfinityTesseractItem) {
             Vec3d vec3d = self.getVelocity();
-            self.setVelocity(vec3d.x * 0.95F, -0.04, vec3d.z * 0.95F);
+            self.setVelocity(vec3d.x * 0.96F, -0.04, vec3d.z * 0.96F);
             ci.cancel();
         }
     }
@@ -115,7 +114,7 @@ public class ItemEntityMixin {
                 || self.getStack().getItem() instanceof InfinityGauntletItem
                 || self.getStack().getItem() instanceof InfinityTesseractItem) {
             Vec3d vec3d = self.getVelocity();
-            self.setVelocity(vec3d.x * 0.95F, -0.04, vec3d.z * 0.95F);
+            self.setVelocity(vec3d.x * 0.93F, -0.035, vec3d.z * 0.93F);
             ci.cancel();
         }
     }

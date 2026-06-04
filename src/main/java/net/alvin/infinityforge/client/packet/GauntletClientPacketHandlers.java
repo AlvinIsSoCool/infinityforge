@@ -17,10 +17,19 @@ public class GauntletClientPacketHandlers {
                 SyncHeldForceStopS2CPacket.TYPE, GauntletClientPacketHandlers::onHeldForceStop);
         ClientPlayNetworking.registerGlobalReceiver(
                 SyncCooldownS2CPacket.TYPE, GauntletClientPacketHandlers::onCooldownSync);
+
         ClientPlayNetworking.registerGlobalReceiver(
-                ClearGauntletClientStateS2CPacket.TYPE, GauntletClientPacketHandlers::onClearClientState);
+                ClearGauntletClientStateS2CPacket.TYPE,
+                (packet, player, responseSender)
+                        -> GauntletClientState.clearAll());
         ClientPlayNetworking.registerGlobalReceiver(
-                SyncAbilityDynamicIconS2CPacket.TYPE, GauntletClientPacketHandlers::onAbilityDynamicIconSync);
+                SyncAbilityDynamicIconS2CPacket.TYPE,
+                (packet, player, responseSender)
+                        -> AbilityDynamicIconState.put(packet.abilityId(), packet.iconStack()));
+        ClientPlayNetworking.registerGlobalReceiver(
+                SyncStepHeightS2CPacket.TYPE,
+                (packet, player, responseSender)
+                        -> player.setStepHeight(packet.stepHeight()));
     }
 
 
@@ -56,15 +65,5 @@ public class GauntletClientPacketHandlers {
         } else {
             GauntletClientState.COOLDOWNS.put(packet.abilityId(), new long[]{ packet.startTick(), packet.durationTicks() });
         }
-    }
-
-    private static void onClearClientState(ClearGauntletClientStateS2CPacket packet,
-                                       ClientPlayerEntity player, PacketSender responseSender) {
-        GauntletClientState.clearAll();
-    }
-
-    private static void onAbilityDynamicIconSync(SyncAbilityDynamicIconS2CPacket packet,
-                                                 ClientPlayerEntity player, PacketSender responseSender) {
-        AbilityDynamicIconState.put(packet.abilityId(), packet.iconStack());
     }
 }

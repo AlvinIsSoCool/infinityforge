@@ -49,7 +49,7 @@ public class InfinityStoneRenderer {
                         ((glintColor >> 16) & 0xFF) / 255f,
                         ((glintColor >> 8)  & 0xFF) / 255f,
                         ( glintColor        & 0xFF) / 255f,
-                        0.9f
+                        1.0f
                 );
             if (timeUniform != null)
                 timeUniform.set((float)((System.currentTimeMillis() % 100000L) / 1000.0));

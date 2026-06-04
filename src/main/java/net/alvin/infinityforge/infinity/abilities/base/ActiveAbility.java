@@ -11,8 +11,19 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public abstract non-sealed class ActiveAbility implements GauntletAbility {
+    /**
+     * Provides the Identifier of the ability.
+     */
     private final Identifier id;
+    /**
+     * Provides the default static icon for the ability.
+     */
     private final AbilityIcon icon;
+    /**
+     * Provides the translation key for the ability.
+     * The format is: abilities.modid.ability_name
+     * (Ex: abilities.infinityforge.teleport)
+     */
     private final String key;
     /**
      * Provides the color of the ability.
@@ -42,14 +53,6 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
         this.cooldownTicks = cooldownTicks;
     }
 
-    public ActiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
-        this(id, icon, key, color, requiredStones, 0);
-    }
-
-    public ActiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color) {
-        this(id, icon, key, color, List::of, 0);
-    }
-
     @Override
     public Identifier getId() { return id; }
 
@@ -60,7 +63,10 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getColor() { return 0xFF000000 | color.get(); }
+    public int getARGBColor() { return 0xFF000000 | color.get(); }
+
+    @Override
+    public int getRGBColor() { return color.get(); }
 
     @Override
     public boolean meetsCondition(List<InfinityStoneType> activeStones) {
@@ -71,14 +77,13 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
 
     /**
      * The function that runs on usage of this ability type.
-     * Dispatched from the server, so all logic contained within should
-     * be server-side.
+     * All logic contained within should be server-side.
      * @param world        The world in which the ability was used.
      * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
-     * @return true, for starting the ability cooldown after usage, if cooldownTicks is non-zero.
-     *         false, for not starting the ability cooldown after usage.
+     * @return {@code true}- Starts the ability cooldown after usage, if cooldownTicks is non-zero.<br>
+     *         {@code false} - Starts the ability cooldown after usage.
      */
     public abstract boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
 }

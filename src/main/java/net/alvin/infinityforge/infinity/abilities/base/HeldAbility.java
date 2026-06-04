@@ -11,8 +11,19 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public abstract non-sealed class HeldAbility implements GauntletAbility {
+    /**
+     * Provides the Identifier of the ability.
+     */
     private final Identifier id;
+    /**
+     * Provides the default static icon for the ability.
+     */
     private final AbilityIcon icon;
+    /**
+     * Provides the translation key for the ability.
+     * The format is: abilities.modid.ability_name
+     * (Ex: abilities.infinityforge.power_tendrils)
+     */
     private final String key;
     /**
      * Provides the color of the ability.
@@ -50,10 +61,6 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
         this.refillRateTicks = refillRateTicks;
     }
 
-    public HeldAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
-       this(id, icon, key, color, requiredStones, -1, 0);
-    }
-
     @Override
     public Identifier getId() { return id; }
 
@@ -64,7 +71,10 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getColor() { return 0xFF000000 | color.get(); }
+    public int getARGBColor() { return 0xFF000000 | color.get(); }
+
+    @Override
+    public int getRGBColor() { return color.get(); }
 
     @Override
     public boolean meetsCondition(List<InfinityStoneType> activeStones) {

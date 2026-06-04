@@ -19,8 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class BlueprintTableBlock extends BlockWithEntity implements BlockEntityProvider {
-
     public BlueprintTableBlock(Settings settings) {
         super(settings);
     }

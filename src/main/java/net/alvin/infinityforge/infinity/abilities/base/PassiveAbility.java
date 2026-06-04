@@ -11,8 +11,19 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public abstract non-sealed class PassiveAbility implements GauntletAbility {
+    /**
+     * Provides the Identifier of the ability.
+     */
     private final Identifier id;
+    /**
+     * Provides the default static icon for the ability.
+     */
     private final AbilityIcon icon;
+    /**
+     * Provides the translation key for the ability.
+     * The format is: abilities.modid.ability_name
+     * (Ex: abilities.infinityforge.knockback_resistance)
+     */
     private final String key;
     /**
      * Provides the color of the ability.
@@ -36,10 +47,6 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
         this.requiredStones = requiredStones;
     }
 
-    public PassiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color) {
-        this(id, icon, key, color, List::of);
-    }
-
     @Override
     public Identifier getId() { return id; }
 
@@ -50,7 +57,10 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getColor() { return 0xFF000000 | color.get(); }
+    public int getARGBColor() { return 0xFF000000 | color.get(); }
+
+    @Override
+    public int getRGBColor() { return color.get(); }
 
     @Override
     public boolean meetsCondition(List<InfinityStoneType> activeStones) {
@@ -66,5 +76,5 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
      */
-    public abstract void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
+    public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {}
 }

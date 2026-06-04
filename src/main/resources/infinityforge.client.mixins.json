@@ -5,7 +5,10 @@
     "client": [
         "ItemEntityRendererMixin",
         "MinecraftClientMixin",
-        "MouseScrollMixin"
+        "MouseScrollMixin",
+        "PlayerEntityRendererMixin",
+        "HeldItemRendererMixin",
+        "EntityRenderDispatcherMixin"
     ],
     "injectors": {
       "defaultRequire": 1

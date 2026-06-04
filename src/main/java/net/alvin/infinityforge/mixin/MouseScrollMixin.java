@@ -2,6 +2,7 @@ package net.alvin.infinityforge.mixin;
 
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.registry.ModStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.minecraft.client.Mouse;
@@ -24,18 +25,23 @@ public class MouseScrollMixin {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.currentScreen != null) return;
         if (client.player == null) return;
-        if (!client.player.isSneaking()) return;
 
-        ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(client.player);
-        if (gauntletStack == null) return;
+        if (client.player.hasStatusEffect(ModStatusEffects.SCROLL_LOCKED_EFFECT)) {
+            ci.cancel();
+            return;
+        }
 
-        List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(gauntletStack);
-        int totalAbilities = InfinityGauntletItem
-                .getVisibleAbilities(activeStones).size();
+        if (client.player.isSneaking()) {
+            ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(client.player);
+            if (gauntletStack == null) return;
 
-        if (totalAbilities <= 6) return;
+            List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(gauntletStack);
+            int totalAbilities = InfinityGauntletItem
+                    .getVisibleAbilities(activeStones).size();
+            if (totalAbilities <= 6) return;
 
-        GauntletClientState.scroll(totalAbilities, (int) -Math.signum(vertical));
-        ci.cancel();
+            GauntletClientState.scroll(totalAbilities, (int) -Math.signum(vertical));
+            ci.cancel();
+        }
     }
 }
