@@ -36,10 +36,7 @@ public class InfinityStoneRenderer {
             float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
             int glowAlpha = (int)(80 + 175 * pulse);
             ModRenderHelper.renderCube(glowVc, pos, norm, SIZE * 1.05f, glintColor, glowAlpha, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay);
-        } else if (ModRenderLayers.stoneGlintShader != null
-                && vertexConsumers instanceof VertexConsumerProvider.Immediate immediate) {
-            immediate.draw();
-
+        } else if (vertexConsumers instanceof VertexConsumerProvider.Immediate immediate) {
             GlUniform colorUniform = ModRenderLayers.stoneGlintShader.getUniform("GlintColor");
             GlUniform timeUniform = ModRenderLayers.stoneGlintShader.getUniform("GlintTime");
             GlUniform screenUniform = ModRenderLayers.stoneGlintShader.getUniform("ScreenSize");

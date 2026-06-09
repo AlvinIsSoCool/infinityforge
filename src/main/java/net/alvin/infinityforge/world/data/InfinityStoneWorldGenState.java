@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class InfinityStoneWorldGenState extends PersistentState {
     public static final String KEY = InfinityForge.MOD_ID + "_stone_tracker";
@@ -54,15 +55,47 @@ public class InfinityStoneWorldGenState extends PersistentState {
 
     public List<BlockPos> getSpawnedPositions(InfinityStoneType stone) {
         Identifier id = InfinityStoneTypeRegistry.REGISTRY.getId(stone);
+        return getSpawnedPositions(id);
+    }
+
+    public List<BlockPos> getSpawnedPositions(Identifier stoneId) {
         return spawnRecords.stream()
-                .filter(r -> r.stoneId().equals(id))
+                .filter(r -> r.stoneId().equals(stoneId))
                 .map(SpawnRecord::pos)
+                .toList();
+    }
+
+    public List<Map.Entry<BlockPos, Identifier>> getSpawnedPositionsWithDimId(InfinityStoneType stone) {
+        Identifier id = InfinityStoneTypeRegistry.REGISTRY.getId(stone);
+        return getSpawnedPositionsWithDimId(id);
+    }
+
+    public List<Map.Entry<BlockPos, Identifier>> getSpawnedPositionsWithDimId(Identifier stoneId) {
+        return spawnRecords.stream()
+                .filter(r -> r.stoneId().equals(stoneId))
+                .map(r -> Map.entry(r.pos(), r.dimension()))
+                .toList();
+    }
+
+    public List<BlockPos> getAllSpawnedPositions() {
+        return spawnRecords.stream()
+                .map(SpawnRecord::pos)
+                .toList();
+    }
+
+    public List<Map.Entry<BlockPos, Identifier>> getAllSpawnedPositionsWithDimId() {
+        return spawnRecords.stream()
+                .map(r -> Map.entry(r.pos(), r.dimension()))
                 .toList();
     }
 
     public boolean hasBeenSpawned(InfinityStoneType stone) {
         Identifier id = InfinityStoneTypeRegistry.REGISTRY.getId(stone);
-        return spawnRecords.stream().anyMatch(r -> r.stoneId().equals(id));
+        return hasBeenSpawned(id);
+    }
+
+    public boolean hasBeenSpawned(Identifier stoneId) {
+        return spawnRecords.stream().anyMatch(r -> r.stoneId().equals(stoneId));
     }
 
     // TODO: Add config value for number of infinity stone sets to spawn.

@@ -67,7 +67,6 @@ public class CrystalHypercubeProcessor extends StructureProcessor {
                 return InfinityStoneWorldGenState.get(swa.toServerWorld()).canSpawn(chosenStone);
             return true;
         });
-
         if (!canSpawn) return null;
 
         if (currentBlockInfo.state().isOf(Blocks.SCULK)) {
@@ -83,7 +82,7 @@ public class CrystalHypercubeProcessor extends StructureProcessor {
                         blockPos.getZ() + 0.5,
                         tesseractStack));
                 InfinityStoneWorldGenState.get(sw)
-                        .recordSpawn(chosenStone, blockPos, sw.getRegistryKey(), sw.getTime());
+                        .recordSpawn(chosenStone, pivot, sw.getRegistryKey(), sw.getTime());
             }
             return new StructureTemplate.StructureBlockInfo(
                     blockPos, Blocks.AIR.getDefaultState(), null);

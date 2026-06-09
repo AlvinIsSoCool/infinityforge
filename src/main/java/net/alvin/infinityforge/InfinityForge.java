@@ -29,7 +29,7 @@ public class InfinityForge implements ModInitializer {
 		ModItems.initialize();
 		ModBlocks.initialize();
 		ModBlockEntities.initialize();
-		ModItemGroups.initialize();
+		ModItemGroups.register();
 		ModStatusEffects.initialize();
 
 		InfinityStoneTypeRegistry.initialize();
@@ -41,6 +41,7 @@ public class InfinityForge implements ModInitializer {
 		ModCustomTrades.register();
 		ModLootTableModifiers.register();
 
+		ModCommands.register();
 		WorldGenEventHandler.register();
 		GauntletPacketHandlers.register();
 		GauntletServerTick.register();

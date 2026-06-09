@@ -45,7 +45,7 @@ public class ModItemGroups {
                         entries.add(ModBlocks.BLUEPRINT_TABLE);
                     })).build());
 
-    public static void initialize() {
+    public static void register() {
         InfinityForge.LOGGER.info("Registering Item Groups for: " + InfinityForge.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> entries.addAfter(Items.NETHERITE_AXE, ModItems.INFINITY_GAUNTLET));

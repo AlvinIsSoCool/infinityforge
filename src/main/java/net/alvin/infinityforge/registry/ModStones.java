@@ -26,7 +26,8 @@ public class ModStones {
             new InfinityStoneType(
                     StoneUseAbilities::onSpaceStoneUse,
                     null,
-                    List.of(ModGauntletAbilities.TELEPORT, ModGauntletAbilities.FORCEFIELD,
+                    List.of(ModGauntletAbilities.TELEPORT, ModGauntletAbilities.PORTAL,
+                            ModGauntletAbilities.BLACKHOLE, ModGauntletAbilities.FORCEFIELD,
                             ModGauntletAbilities.PHASING),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.spaceStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone
@@ -38,9 +39,10 @@ public class ModStones {
                     StoneUseAbilities::onRealityStoneUse,
                     null,
                     List.of(
-                            ModGauntletAbilities.WEATHER, ModGauntletAbilities.SPAWN_REAL_BLOCK,
-                            ModGauntletAbilities.SPAWN_FAKE_ITEM, ModGauntletAbilities.INVISIBILITY,
-                            ModGauntletAbilities.SIZE_CHANGE_BIG, ModGauntletAbilities.SIZE_CHANGE_SMALL
+                            ModGauntletAbilities.WEATHER, ModGauntletAbilities.INVISIBILITY,
+                            ModGauntletAbilities.SIZE_CHANGE_BIG, ModGauntletAbilities.SIZE_CHANGE_SMALL,
+                            ModGauntletAbilities.SPAWN_REAL_BLOCK,
+                            ModGauntletAbilities.SPAWN_FAKE_ITEM
                     ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.realityStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone

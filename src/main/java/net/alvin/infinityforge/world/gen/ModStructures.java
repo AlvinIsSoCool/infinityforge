@@ -2,6 +2,7 @@ package net.alvin.infinityforge.world.gen;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.minecraft.registry.Registerable;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -12,14 +13,12 @@ import net.minecraft.structure.processor.StructureProcessorList;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.StructureTerrainAdaptation;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.chunk.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.gen.chunk.placement.SpreadType;
 import net.minecraft.world.gen.heightprovider.ConstantHeightProvider;
-import net.minecraft.world.gen.heightprovider.HeightProvider;
 import net.minecraft.world.gen.structure.JigsawStructure;
 import net.minecraft.world.gen.structure.Structure;
 
@@ -29,29 +28,18 @@ import java.util.List;
 public class ModStructures {
     public static final StructureProcessorType<CrystalHypercubeProcessor> CRYSTAL_HYPERCUBE_PROCESSOR =
             StructureProcessorType.register("infinityforge:crystal_hypercube_processor", CrystalHypercubeProcessor.CODEC);
-    public static final RegistryKey<Structure> CRYSTAL_HYPERCUBE_STRUCTURE = RegistryKey.of(RegistryKeys.STRUCTURE, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube"));
-    public static final RegistryKey<StructureSet> CRYSTAL_HYPERCUBE_STRUCTURE_SET = RegistryKey.of(RegistryKeys.STRUCTURE_SET, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_structure_set"));
+    public static final RegistryKey<Structure> CRYSTAL_HYPERCUBE_OVERWORLD = RegistryKey.of(RegistryKeys.STRUCTURE, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_overworld"));
+    public static final RegistryKey<StructureSet> CRYSTAL_HYPERCUBE_OVERWORLD_SET = RegistryKey.of(RegistryKeys.STRUCTURE_SET, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_overworld_set"));
+    public static final RegistryKey<Structure> CRYSTAL_HYPERCUBE_NETHER = RegistryKey.of(RegistryKeys.STRUCTURE, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_nether"));
+    public static final RegistryKey<StructureSet> CRYSTAL_HYPERCUBE_NETHER_SET = RegistryKey.of(RegistryKeys.STRUCTURE_SET, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_nether_set"));
+    public static final RegistryKey<Structure> CRYSTAL_HYPERCUBE_END = RegistryKey.of(RegistryKeys.STRUCTURE, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_end"));
+    public static final RegistryKey<StructureSet> CRYSTAL_HYPERCUBE_END_SET = RegistryKey.of(RegistryKeys.STRUCTURE_SET, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_end_set"));
     public static final RegistryKey<StructurePool> CRYSTAL_HYPERCUBE_STRUCTURE_POOL = RegistryKey.of(RegistryKeys.TEMPLATE_POOL, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_structure_pool"));
     public static final RegistryKey<StructureProcessorList> CRYSTAL_HYPERCUBE_PROCESSOR_LIST = RegistryKey.of(RegistryKeys.PROCESSOR_LIST, new Identifier(InfinityForge.MOD_ID, "crystal_hypercube_processor_list"));
 
-    public static StructureProcessorList createProcessorList() {
-        return new StructureProcessorList(List.of(new CrystalHypercubeProcessor()));
-    }
-
-    public static JigsawStructure createStructure(RegistryEntryList<Biome> biomes, RegistryEntry<StructurePool> startPool) {
-        Structure.Config config = new Structure.Config(
-                biomes,
-                Collections.emptyMap(),
-                GenerationStep.Feature.SURFACE_STRUCTURES,
-                StructureTerrainAdaptation.BEARD_THIN
-        );
-
-        HeightProvider startHeight = ConstantHeightProvider.create(YOffset.fixed(0));
-        return new JigsawStructure(config, startPool, 7, startHeight, false, Heightmap.Type.WORLD_SURFACE_WG);
-    }
-
     public static void bootstrapProcessors(Registerable<StructureProcessorList> context) {
-        context.register(CRYSTAL_HYPERCUBE_PROCESSOR_LIST, createProcessorList());
+        context.register(CRYSTAL_HYPERCUBE_PROCESSOR_LIST,
+                new StructureProcessorList(List.of(new CrystalHypercubeProcessor())));
     }
 
     public static void bootstrapPools(Registerable<StructurePool> context) {
@@ -68,28 +56,38 @@ public class ModStructures {
         RegistryKey<StructurePool> emptyPoolKey = RegistryKey.of(RegistryKeys.TEMPLATE_POOL, new Identifier("empty"));
         RegistryEntry<StructurePool> emptyPool = context.getRegistryLookup(RegistryKeys.TEMPLATE_POOL)
                 .getOrThrow(emptyPoolKey);
-
-        context.register(CRYSTAL_HYPERCUBE_STRUCTURE,
-                new JigsawStructure(
-                        new Structure.Config(
-                                RegistryEntryList.of(), Collections.emptyMap(),
-                                GenerationStep.Feature.SURFACE_STRUCTURES, StructureTerrainAdaptation.NONE
-                        ),
-                        emptyPool,
-                        0,
-                        ConstantHeightProvider.create(YOffset.fixed(0)),
-                        false,
-                        Heightmap.Type.WORLD_SURFACE_WG
-                )
+        JigsawStructure emptyStructure = new JigsawStructure(
+                new Structure.Config(
+                        RegistryEntryList.of(),
+                        Collections.emptyMap(),
+                        GenerationStep.Feature.SURFACE_STRUCTURES,
+                        StructureTerrainAdaptation.NONE
+                ),
+                emptyPool,
+                0,
+                ConstantHeightProvider.create(YOffset.fixed(0)),
+                false,
+                Heightmap.Type.WORLD_SURFACE_WG
         );
+
+        context.register(CRYSTAL_HYPERCUBE_OVERWORLD, emptyStructure);
+        context.register(CRYSTAL_HYPERCUBE_NETHER, emptyStructure);
+        context.register(CRYSTAL_HYPERCUBE_END, emptyStructure);
     }
 
     public static void bootstrapStructureSet(Registerable<StructureSet> context) {
-        RegistryEntry<Structure> structureEntry = context.getRegistryLookup(RegistryKeys.STRUCTURE)
-                .getOrThrow(CRYSTAL_HYPERCUBE_STRUCTURE);
+        RegistryEntryLookup<Structure> structureLookup = context.getRegistryLookup(RegistryKeys.STRUCTURE);
 
-        context.register(CRYSTAL_HYPERCUBE_STRUCTURE_SET,
-                new StructureSet(structureEntry,
+        context.register(CRYSTAL_HYPERCUBE_OVERWORLD_SET,
+                new StructureSet(structureLookup.getOrThrow(CRYSTAL_HYPERCUBE_OVERWORLD),
+                        new RandomSpreadStructurePlacement(0, 0, SpreadType.LINEAR, 0)));
+
+        context.register(CRYSTAL_HYPERCUBE_NETHER_SET,
+                new StructureSet(structureLookup.getOrThrow(CRYSTAL_HYPERCUBE_NETHER),
+                        new RandomSpreadStructurePlacement(0, 0, SpreadType.LINEAR, 0)));
+
+        context.register(CRYSTAL_HYPERCUBE_END_SET,
+                new StructureSet(structureLookup.getOrThrow(CRYSTAL_HYPERCUBE_END),
                         new RandomSpreadStructurePlacement(0, 0, SpreadType.LINEAR, 0)));
     }
 

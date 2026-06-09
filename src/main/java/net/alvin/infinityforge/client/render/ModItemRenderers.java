@@ -44,7 +44,8 @@ public class ModItemRenderers {
                             light, overlay, stoneType));
         }
 
-        ModelLoadingPlugin.register(pluginContext -> pluginContext.addModels(InfinityGauntletRenderer.GAUNTLET_MODEL_2D));
+        ModelLoadingPlugin.register(pluginContext ->
+                pluginContext.addModels(InfinityGauntletRenderer.GAUNTLET_MODEL_2D));
         BuiltinItemRendererRegistry.INSTANCE.register(ModItems.INFINITY_GAUNTLET, GAUNTLET_RENDERER::render);
         BuiltinItemRendererRegistry.INSTANCE.register(ModItems.FAKE_ITEM, FAKE_ITEM_RENDERER::render);
     }

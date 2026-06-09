@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 368333975,
+    "separation": 5,
+    "spacing": 10
+  },
+  "structures": [
+    {
+      "structure": "infinityforge:crystal_hypercube_nether",
+      "weight": 1
+    }
+  ]
+}

@@ -26,12 +26,12 @@ import java.util.UUID;
 
 public class ModGauntletAbilities {
     static {
-        AbilityIcon.setSheet(new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/ability_icons.png"));
+        AbilityIcon.setSheet(new Identifier(InfinityForge.MOD_ID, "textures/gui/ability_icons.png"));
     }
 
     private static final AbilityIcon.Allocator PASSIVE_ICONS =
             new AbilityIcon.Allocator(
-                    new Identifier(InfinityForge.MOD_ID, "textures/gui/abilities/passive_ability_icons.png"),
+                    new Identifier(InfinityForge.MOD_ID, "textures/gui/passive_ability_icons.png"),
                     0);
 
     public static final GauntletAbility KNOCKBACK_RESISTANCE = GauntletAbilityRegistry.register(
@@ -52,7 +52,6 @@ public class ModGauntletAbilities {
                     )
             ) {}
     );
-
     public static final GauntletAbility SPEED = GauntletAbilityRegistry.register(
             new AttributeModifierAbility(
                     new Identifier(InfinityForge.MOD_ID, "speed"),
@@ -71,7 +70,6 @@ public class ModGauntletAbilities {
                     )
             ) {}
     );
-
     public static final GauntletAbility ATTACK_SPEED = GauntletAbilityRegistry.register(
             new AttributeModifierAbility(
                     new Identifier(InfinityForge.MOD_ID, "attack_speed"),
@@ -90,7 +88,6 @@ public class ModGauntletAbilities {
                     )
             ) {}
     );
-
     public static final GauntletAbility STEP_HEIGHT = GauntletAbilityRegistry.register(
             new LifecyclePassiveAbility(
                     new Identifier(InfinityForge.MOD_ID, "step_height"),
@@ -112,7 +109,6 @@ public class ModGauntletAbilities {
                 }
             }
     );
-
     public static final GauntletAbility TELEPORT = GauntletAbilityRegistry.register(
             new TeleportAbility(
                     new Identifier(InfinityForge.MOD_ID, "teleport"),
@@ -120,6 +116,25 @@ public class ModGauntletAbilities {
                     "abilities.infinityforge.teleport",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.spaceStone,
                     List::of, 100
+            )
+    );
+    public static final GauntletAbility PORTAL = GauntletAbilityRegistry.register(
+            new PortalAbility(
+                    new Identifier(InfinityForge.MOD_ID, "portal"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.portal",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.spaceStone,
+                    List::of, 0
+            )
+    );
+    public static final GauntletAbility BLACKHOLE = GauntletAbilityRegistry.register(
+            new BlackholeAbility(
+                    new Identifier(InfinityForge.MOD_ID, "blackhole"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.blackhole",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.spaceStone,
+                    List::of,
+                    400, -1
             )
     );
     public static final GauntletAbility FORCEFIELD = GauntletAbilityRegistry.register(

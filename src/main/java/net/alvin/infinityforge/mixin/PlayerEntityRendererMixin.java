@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.mixin;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
-import net.alvin.infinityforge.client.render.PlayerGlintFeatureRenderer;
+import net.alvin.infinityforge.client.render.PlayerForcefieldFeatureRenderer;
+import net.alvin.infinityforge.client.render.vc.AlphaMultiplyingVertexConsumer;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -10,19 +10,24 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin {
+    @Unique
+    private boolean isCustomPhasing = false;
+
     @Inject(
             method = "<init>(Lnet/minecraft/client/render/entity/EntityRendererFactory$Context;Z)V",
             at = @At("TAIL")
     )
     private void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         PlayerEntityRenderer renderer = (PlayerEntityRenderer)(Object) this;
-        renderer.addFeature(new PlayerGlintFeatureRenderer(renderer));
+        renderer.addFeature(new PlayerForcefieldFeatureRenderer(renderer));
     }
 
     @Inject(
@@ -39,8 +44,7 @@ public abstract class PlayerEntityRendererMixin {
             return;
         }
 
-        if (access.isCustomPhasing())
-            RenderSystem.setShaderColor(1f, 1f, 1f, 0.25f);
+        isCustomPhasing = access.isCustomPhasing();
 
         float animatedScale = PlayerScaleAnimationState.getAnimatedScale(player);
         if (animatedScale != 1.0f) {
@@ -48,13 +52,17 @@ public abstract class PlayerEntityRendererMixin {
         }
     }
 
-    @Inject(
+    @ModifyArg(
             method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
-            at = @At("RETURN")
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"
+            ),
+            index = 4
     )
-    private void renderAtReturn(AbstractClientPlayerEntity player, float yaw, float tickDelta,
-                          MatrixStack matrices, VertexConsumerProvider provider,
-                          int light, CallbackInfo ci) {
-        RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+    private VertexConsumerProvider applyPhasingAlpha(VertexConsumerProvider original) {
+        if (isCustomPhasing)
+            return layer -> new AlphaMultiplyingVertexConsumer(original.getBuffer(layer), 0.25f);
+        return original;
     }
 }

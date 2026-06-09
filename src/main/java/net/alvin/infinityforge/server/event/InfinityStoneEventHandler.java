@@ -3,6 +3,7 @@ package net.alvin.infinityforge.server.event;
 import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.abilities.impl.space.ForcefieldAbility;
+import net.alvin.infinityforge.infinity.abilities.impl.space.PhasingAbility;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.ModItems;
@@ -23,6 +24,7 @@ import java.util.List;
 public class InfinityStoneEventHandler {
     public static void register() {
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(ForcefieldAbility::onDamageEntity);
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register(PhasingAbility::onDamageEntity);
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(InfinityStoneEventHandler::onAllowDamage);
         ServerLivingEntityEvents.ALLOW_DEATH.register(InfinityStoneEventHandler::onAllowDeath);
