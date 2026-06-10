@@ -2,7 +2,7 @@ package net.alvin.infinityforge.mixin;
 
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.registry.ModStatusEffects;
+import net.alvin.infinityforge.effect.ModStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.minecraft.client.Mouse;

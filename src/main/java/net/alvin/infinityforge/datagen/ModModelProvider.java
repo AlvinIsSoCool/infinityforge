@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.datagen;
 
-import net.alvin.infinityforge.registry.ModBlocks;
-import net.alvin.infinityforge.registry.ModItems;
+import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -21,6 +21,7 @@ public class ModModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.TITANIUM_ORE);
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.DEEPSLATE_TITANIUM_ORE);
         blockStateModelGenerator.registerSimpleState(ModBlocks.BLUEPRINT_TABLE);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FAKE_BLOCK);
     }
 
     @Override
@@ -38,6 +39,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.MIND_TESSERACT, BUILTIN_ENTITY);
         itemModelGenerator.register(ModItems.TIME_TESSERACT, BUILTIN_ENTITY);
         itemModelGenerator.register(ModItems.FAKE_ITEM, BUILTIN_ENTITY);
+        itemModelGenerator.register(ModBlocks.FAKE_BLOCK.asItem(), BUILTIN_ENTITY);
 
         itemModelGenerator.register(ModItems.RAW_TITANIUM, Models.GENERATED);
         itemModelGenerator.register(ModItems.TITANIUM_INGOT, Models.GENERATED);

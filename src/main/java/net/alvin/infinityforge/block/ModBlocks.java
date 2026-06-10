@@ -1,7 +1,6 @@
-package net.alvin.infinityforge.registry;
+package net.alvin.infinityforge.block;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.block.BlueprintTableBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -20,6 +19,8 @@ public class ModBlocks {
             new ExperienceDroppingBlock(FabricBlockSettings.copyOf(Blocks.DEEPSLATE_DIAMOND_ORE).strength(6.0f, 7.0f), UniformIntProvider.create(4, 9)));
     public static final Block BLUEPRINT_TABLE = registerBlock("blueprint_table",
             new BlueprintTableBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
+    public static final Block FAKE_BLOCK = registerBlock("fake_block",
+            new FakeBlock(FabricBlockSettings.copyOf(Blocks.STONE).nonOpaque()));
 
     private static Block registerBlock(String name, Block block) {
         Registry.register(Registries.ITEM, new Identifier(InfinityForge.MOD_ID, name),

@@ -1,11 +1,7 @@
-package net.alvin.infinityforge.registry;
+package net.alvin.infinityforge.item;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.item.InfinityStoneItem;
-import net.alvin.infinityforge.item.InfinityTesseractItem;
-import net.alvin.infinityforge.item.BlueprintItem;
-import net.alvin.infinityforge.item.FakeItem;
+import net.alvin.infinityforge.infinity.ModStones;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;

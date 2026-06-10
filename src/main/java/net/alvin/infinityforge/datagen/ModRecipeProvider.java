@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.datagen;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.registry.ModItems;
+import net.alvin.infinityforge.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;

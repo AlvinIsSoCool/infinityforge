@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.registry;
 
 import net.alvin.infinityforge.item.BlueprintItem;
+import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;

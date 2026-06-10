@@ -1,7 +1,6 @@
 package net.alvin.infinityforge.block.entity;
 
 import net.alvin.infinityforge.item.BlueprintItem;
-import net.alvin.infinityforge.registry.ModBlockEntities;
 import net.alvin.infinityforge.screen.BlueprintTableScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;

@@ -1,8 +1,6 @@
-package net.alvin.infinityforge.registry;
+package net.alvin.infinityforge.screen;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.screen.BlueprintTableScreenHandler;
-import net.alvin.infinityforge.screen.GauntletScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;

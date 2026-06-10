@@ -1,7 +1,6 @@
 package net.alvin.infinityforge.screen;
 
 import net.alvin.infinityforge.block.entity.BlueprintTableBlockEntity;
-import net.alvin.infinityforge.registry.ModScreenHandlers;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

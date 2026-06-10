@@ -1,6 +1,5 @@
 package net.alvin.infinityforge.item;
 
-import net.alvin.infinityforge.registry.ModItems;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;

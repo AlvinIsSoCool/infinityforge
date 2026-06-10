@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.client.packet;
 
+import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.state.AbilityDynamicIconState;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.alvin.infinityforge.network.s2c.*;
@@ -30,6 +31,13 @@ public class GauntletClientPacketHandlers {
                 SyncStepHeightS2CPacket.TYPE,
                 (packet, player, responseSender)
                         -> player.setStepHeight(packet.stepHeight()));
+        ClientPlayNetworking.registerGlobalReceiver(
+                SyncSizeChangeS2CPacket.TYPE,
+                (packet, player, responseSender)
+                        -> {
+                    ((PlayerEffectsAccess) player).setCustomScale(packet.scale());
+                    player.calculateDimensions();
+                });
     }
 
 

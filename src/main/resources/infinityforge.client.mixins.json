@@ -7,7 +7,6 @@
         "MinecraftClientMixin",
         "MouseScrollMixin",
         "PlayerEntityRendererMixin",
-        "HeldItemRendererMixin",
         "EntityRenderDispatcherMixin"
     ],
     "injectors": {

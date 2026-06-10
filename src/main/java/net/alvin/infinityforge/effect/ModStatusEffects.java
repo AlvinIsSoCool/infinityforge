@@ -1,10 +1,6 @@
-package net.alvin.infinityforge.registry;
+package net.alvin.infinityforge.effect;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.effect.HealthDrainStatusEffect;
-import net.alvin.infinityforge.effect.MovementLockedStatusEffect;
-import net.alvin.infinityforge.effect.ScrollLockedStatusEffect;
-import net.alvin.infinityforge.effect.SnapStatusEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;

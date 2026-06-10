@@ -1,10 +1,11 @@
-package net.alvin.infinityforge.registry;
+package net.alvin.infinityforge.infinity;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
-import net.alvin.infinityforge.infinity.abilities.impl.StoneHoldAbilities;
-import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.abilities.impl.StoneUseAbilities;
+import net.alvin.infinityforge.infinity.abilities.StoneHoldAbilities;
+import net.alvin.infinityforge.infinity.abilities.StoneUseAbilities;
+import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
+import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import java.util.List;
@@ -16,7 +17,8 @@ public class ModStones {
                     null,
                     StoneHoldAbilities::onPowerStoneHold,
                     List.of(ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
-                            ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT),
+                            ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT
+                    ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.powerStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.powerStone
             )
@@ -28,7 +30,8 @@ public class ModStones {
                     null,
                     List.of(ModGauntletAbilities.TELEPORT, ModGauntletAbilities.PORTAL,
                             ModGauntletAbilities.BLACKHOLE, ModGauntletAbilities.FORCEFIELD,
-                            ModGauntletAbilities.PHASING),
+                            ModGauntletAbilities.PHASING
+                    ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.spaceStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone
             )
@@ -41,8 +44,8 @@ public class ModStones {
                     List.of(
                             ModGauntletAbilities.WEATHER, ModGauntletAbilities.INVISIBILITY,
                             ModGauntletAbilities.SIZE_CHANGE_BIG, ModGauntletAbilities.SIZE_CHANGE_SMALL,
-                            ModGauntletAbilities.SPAWN_REAL_BLOCK,
-                            ModGauntletAbilities.SPAWN_FAKE_ITEM
+                            ModGauntletAbilities.SPAWN_REAL_BLOCK, ModGauntletAbilities.SPAWN_FAKE_BLOCK,
+                            ModGauntletAbilities.SPAWN_REAL_ITEM, ModGauntletAbilities.SPAWN_FAKE_ITEM
                     ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.realityStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone
@@ -78,7 +81,8 @@ public class ModStones {
                     null,
                     StoneHoldAbilities::onTimeStoneHold,
                     List.of(ModGauntletAbilities.ADVANCE_TIME, ModGauntletAbilities.REWIND_TIME,
-                            ModGauntletAbilities.STOP_TIME, ModGauntletAbilities.RANDOMISE_TIME),
+                            ModGauntletAbilities.STOP_TIME, ModGauntletAbilities.RANDOMISE_TIME
+                    ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.timeStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.timeStone
             )

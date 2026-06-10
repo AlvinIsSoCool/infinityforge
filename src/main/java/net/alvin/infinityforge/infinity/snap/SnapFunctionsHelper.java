@@ -4,7 +4,7 @@ import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
 import net.alvin.infinityforge.effect.SnapStatusEffect;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.registry.ModStatusEffects;
+import net.alvin.infinityforge.effect.ModStatusEffects;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.world.data.SnappedEntitiesState;
 import net.minecraft.entity.Entity;

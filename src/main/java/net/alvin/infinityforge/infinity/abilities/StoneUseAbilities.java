@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.infinity.abilities.impl;
+package net.alvin.infinityforge.infinity.abilities;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;

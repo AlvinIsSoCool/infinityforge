@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "infinityforge:block/fake_block"
+    }
+  }
+}

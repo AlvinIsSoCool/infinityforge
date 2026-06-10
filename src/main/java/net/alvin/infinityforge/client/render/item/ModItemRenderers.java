@@ -1,9 +1,9 @@
-package net.alvin.infinityforge.client.render;
+package net.alvin.infinityforge.client.render.item;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
-import net.alvin.infinityforge.registry.ModItems;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.item.Item;

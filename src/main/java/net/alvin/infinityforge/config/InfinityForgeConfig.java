@@ -60,7 +60,7 @@ public class InfinityForgeConfig implements ConfigData {
 
         @Comment("The glint color of the space stone. The tesseract uses this color as well.")
         @ConfigEntry.ColorPicker
-        public int spaceStone = 0x0096FF;
+        public int spaceStone = 0x0472FF;
 
         @Comment("The glint color of the reality stone. The tesseract uses this color as well.")
         @ConfigEntry.ColorPicker

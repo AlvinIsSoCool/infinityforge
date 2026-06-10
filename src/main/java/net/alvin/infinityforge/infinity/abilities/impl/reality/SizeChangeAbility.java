@@ -4,7 +4,9 @@ import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
-import net.alvin.infinityforge.registry.ModStones;
+import net.alvin.infinityforge.infinity.ModStones;
+import net.alvin.infinityforge.network.s2c.SyncSizeChangeS2CPacket;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -24,10 +26,11 @@ public class SizeChangeAbility extends ToggleAbility {
     public boolean onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
         float newScale = activeStones.contains(ModStones.POWER)
-                ? (this.scale > 1.0f ? 3.0f : (this.scale < 1.0f ? this.scale * 0.5f : this.scale))
+                ? (this.scale > 1.0f ? this.scale * 2 : (this.scale < 1.0f ? this.scale * 0.5f : this.scale))
                 : this.scale;
         access.setCustomScale(newScale);
         player.calculateDimensions();
+        ServerPlayNetworking.send(player, new SyncSizeChangeS2CPacket(newScale));
         return true;
     }
 
@@ -41,5 +44,6 @@ public class SizeChangeAbility extends ToggleAbility {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
         access.setCustomScale(1.0f);
         player.calculateDimensions();
+        ServerPlayNetworking.send(player, new SyncSizeChangeS2CPacket(1.0f));
     }
 }

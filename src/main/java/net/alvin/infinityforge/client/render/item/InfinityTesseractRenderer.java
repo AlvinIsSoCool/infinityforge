@@ -1,6 +1,7 @@
-package net.alvin.infinityforge.client.render;
+package net.alvin.infinityforge.client.render.item;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.client.render.ModRenderHelper;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;

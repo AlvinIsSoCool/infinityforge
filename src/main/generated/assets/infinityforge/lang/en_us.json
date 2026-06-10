@@ -24,6 +24,7 @@
   "abilities.infinityforge.weather": "Set Weather",
   "block.infinityforge.blueprint_table": "Blueprint Table",
   "block.infinityforge.deepslate_titanium_ore": "Deepslate Titanium Ore",
+  "block.infinityforge.fake_block": "Fake Block",
   "block.infinityforge.titanium_ore": "Titanium Ore",
   "category.infinityforge": "Ability Keybinds",
   "effect.infinityforge.movement_locked": "Movement Locked",

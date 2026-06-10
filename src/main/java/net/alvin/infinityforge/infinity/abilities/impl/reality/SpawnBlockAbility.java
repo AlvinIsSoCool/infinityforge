@@ -1,9 +1,11 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
+import net.alvin.infinityforge.block.entity.FakeBlockEntity;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.item.FakeItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -32,7 +34,7 @@ public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Blo
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         Block selectedBlock = getState(player);
         BlockHitResult hit = (BlockHitResult) player.raycast(5.0, 1.0f, false);
-        boolean missed = hit.getType() != HitResult.Type.BLOCK;
+        boolean missed = (hit.getType() != HitResult.Type.BLOCK);
 
         if (player.isSneaking()) {
             if (missed) {
@@ -50,15 +52,22 @@ public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Blo
 
             Block block = world.getBlockState(hit.getBlockPos()).getBlock();
             setState(player, block);
-            player.sendMessage(Text.literal("Selected: " +
-                    block.getName().getString() + " (" + Registries.BLOCK.getId(block) + ")"), true);
+
+            String format = "Selected: %s (%s)";
+            Text message = Text.literal(String.format(format,
+                    block.getName().getString(), Registries.BLOCK.getId(block)));
+            player.sendMessage(message, true);
             return false;
         } else {
             if (selectedBlock == null) {
                 player.sendMessage(Text.literal("No blocks selected! Try sneaking and selecting a block."), true);
                 return false;
             }
-            world.setBlockState(hit.getBlockPos(), selectedBlock.getDefaultState());
+            if (spawnFake) {
+                FakeBlockEntity.place(world, hit.getBlockPos(), selectedBlock);
+            } else {
+                world.setBlockState(hit.getBlockPos(), selectedBlock.getDefaultState());
+            }
             return true;
         }
     }
@@ -67,5 +76,7 @@ public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Blo
     public Class<Block> getType() { return Block.class; }
 
     @Override
-    public ItemStack getDynamicIcon(Block state) { return state == null ? null : new ItemStack(state.asItem());}
+    public ItemStack getDynamicIcon(Block state) {
+        return spawnFake ? FakeItem.create(state.asItem(), 1) : new ItemStack(state);
+    }
 }

@@ -15,54 +15,42 @@ public class ModRenderHelper {
         int b = rgb & 0xFF;
 
         // DOWN
-        quad(vc, pos, norm,
-                light, overlay,
-                r, g, b, alpha,
-                -size, -size, -size,  0,1,
+        quad(vc, pos, norm, light, overlay, r, g, b, alpha,
+                -size, -size, -size, 0,1,
                 size, -size, -size,  1,1,
                 size, -size,  size,  1,0,
                 -size, -size,  size,  0,0,
                 0,-1,0);
         // UP
-        quad(vc, pos, norm,
-                light, overlay,
-                r, g, b, alpha,
+        quad(vc, pos, norm, light, overlay, r, g, b, alpha,
                 -size,  size,  size,  0,0,
                 size,  size,  size,  1,0,
                 size,  size, -size,  1,1,
                 -size,  size, -size,  0,1,
                 0,1,0);
         // NORTH
-        quad(vc, pos, norm,
-                light, overlay,
-                r, g, b, alpha,
+        quad(vc, pos, norm, light, overlay, r, g, b, alpha,
                 size,  size, -size,  0,0,
-                -size,  size, -size,  1,0,
+                -size, size, -size,  1,0,
                 -size, -size, -size,  1,1,
-                size, -size, -size,  0,1,
+                size,  -size, -size,  0,1,
                 0,0,-1);
         // SOUTH
-        quad(vc, pos, norm,
-                light, overlay,
-                r, g, b, alpha,
+        quad(vc, pos, norm, light, overlay, r, g, b, alpha,
                 -size,  size,  size,  0,0,
-                size,  size,  size,  1,0,
-                size, -size,  size,  1,1,
+                 size,  size,  size,  1,0,
+                 size, -size,  size,  1,1,
                 -size, -size,  size,  0,1,
                 0,0,1);
         // WEST
-        quad(vc, pos, norm,
-                light, overlay,
-                r, g, b, alpha,
+        quad(vc, pos, norm, light, overlay, r, g, b, alpha,
                 -size,  size, -size,  0,0,
                 -size,  size,  size,  1,0,
                 -size, -size,  size,  1,1,
                 -size, -size, -size,  0,1,
                 -1,0,0);
         // EAST
-        quad(vc, pos, norm,
-                light, overlay,
-                r, g, b, alpha,
+        quad(vc, pos, norm, light, overlay, r, g, b, alpha,
                 size,  size,  size,  0,0,
                 size,  size, -size,  1,0,
                 size, -size, -size,  1,1,
@@ -73,48 +61,49 @@ public class ModRenderHelper {
     public static void renderCubeGlint(VertexConsumer vc, Matrix4f pos, float size) {
         // DOWN
         quadGlint(vc, pos,
-                -size, -size, -size,
-                size,-size,-size,
-                size,-size, size,
-                -size,-size, size
+                -size,  -size, -size,
+                 size,  -size, -size,
+                 size,  -size,  size,
+                -size,  -size,  size
         );
 
         // UP
         quadGlint(vc, pos,
-                -size, size, size,
-                size, size, size,
-                size, size,-size,
-                -size, size,-size
+                -size, size,  size,
+                 size, size,  size,
+                 size, size, -size,
+                -size, size, -size
         );
 
         // NORTH
-        quadGlint(vc, pos,  size, size, -size,
-                -size, size,-size,
-                -size,-size,-size,
-                size,-size,-size
+        quadGlint(vc, pos,
+                 size,  size, -size,
+                -size,  size, -size,
+                -size, -size, -size,
+                 size, -size, -size
         );
         // SOUTH
         quadGlint(vc, pos,
-                -size, size, size,
-                size, size, size,
-                size,-size, size,
-                -size,-size, size
+                -size,  size,  size,
+                 size,  size,  size,
+                 size, -size,  size,
+                -size, -size,  size
         );
 
         // WEST
         quadGlint(vc, pos,
-                -size, size, -size,
-                -size, size, size,
-                -size,-size, size,
-                -size,-size,-size
+                -size,  size, -size,
+                -size,  size,  size,
+                -size, -size,  size,
+                -size, -size, -size
         );
 
         // EAST
         quadGlint(vc, pos,
-                size, size, size,
-                size, size,-size,
-                size,-size,-size,
-                size,-size, size
+                size,  size,  size,
+                size,  size, -size,
+                size, -size, -size,
+                size, -size,  size
         );
     }
 

@@ -1,7 +1,7 @@
-package net.alvin.infinityforge.client.render;
+package net.alvin.infinityforge.client.render.item;
 
 import net.alvin.infinityforge.item.FakeItem;
-import net.alvin.infinityforge.registry.ModItems;
+import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.json.ModelTransformationMode;

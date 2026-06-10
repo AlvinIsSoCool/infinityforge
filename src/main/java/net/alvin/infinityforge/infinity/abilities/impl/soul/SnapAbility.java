@@ -5,7 +5,7 @@ import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.snap.SnapFunctions;
 import net.alvin.infinityforge.infinity.snap.SnapFunctionsHelper;
-import net.alvin.infinityforge.registry.ModGauntletAbilities;
+import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
 import net.alvin.infinityforge.server.state.StatefulAbilityState;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;

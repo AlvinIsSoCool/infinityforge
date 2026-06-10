@@ -1,6 +1,8 @@
-package net.alvin.infinityforge.registry;
+package net.alvin.infinityforge.item;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.registry.ModBlueprints;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Blocks;

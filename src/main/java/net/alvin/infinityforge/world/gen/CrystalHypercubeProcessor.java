@@ -3,7 +3,7 @@ package net.alvin.infinityforge.world.gen;
 import com.mojang.serialization.Codec;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
-import net.alvin.infinityforge.registry.ModStones;
+import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.world.data.InfinityStoneWorldGenState;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

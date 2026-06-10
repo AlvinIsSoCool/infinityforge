@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.datagen;
 
-import net.alvin.infinityforge.registry.ModBlocks;
-import net.alvin.infinityforge.registry.ModItems;
-import net.alvin.infinityforge.registry.ModStatusEffects;
+import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.item.ModItems;
+import net.alvin.infinityforge.effect.ModStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -32,6 +32,7 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.TITANIUM_ORE, "Titanium Ore");
         translationBuilder.add(ModBlocks.DEEPSLATE_TITANIUM_ORE, "Deepslate Titanium Ore");
         translationBuilder.add(ModBlocks.BLUEPRINT_TABLE, "Blueprint Table");
+        translationBuilder.add(ModBlocks.FAKE_BLOCK, "Fake Block");
 
         translationBuilder.add(ModStatusEffects.SNAP_EFFECT, "I don't feel so good...");
         translationBuilder.add(ModStatusEffects.MOVEMENT_LOCKED_EFFECT, "Movement Locked");

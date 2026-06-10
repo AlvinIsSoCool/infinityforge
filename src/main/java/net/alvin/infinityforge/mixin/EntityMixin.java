@@ -6,7 +6,7 @@ import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.item.InfinityTesseractItem;
-import net.alvin.infinityforge.registry.ModItems;
+import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

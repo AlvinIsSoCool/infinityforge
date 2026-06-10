@@ -3,7 +3,7 @@ package net.alvin.infinityforge.infinity.abilities.impl.space;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.registry.ModStones;
+import net.alvin.infinityforge.infinity.ModStones;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;

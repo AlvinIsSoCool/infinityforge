@@ -2,8 +2,15 @@ package net.alvin.infinityforge;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.block.entity.ModBlockEntities;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.infinity.ModStones;
+import net.alvin.infinityforge.item.ModItemGroups;
+import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.registry.*;
+import net.alvin.infinityforge.screen.ModScreenHandlers;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.packet.GauntletPacketHandlers;

@@ -1,8 +1,9 @@
-package net.alvin.infinityforge.registry;
+package net.alvin.infinityforge.infinity.abilities;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.AttributeModifierAbility;
@@ -13,6 +14,7 @@ import net.alvin.infinityforge.infinity.abilities.impl.soul.*;
 import net.alvin.infinityforge.infinity.abilities.impl.space.*;
 import net.alvin.infinityforge.infinity.abilities.impl.time.*;
 import net.alvin.infinityforge.network.s2c.SyncStepHeightS2CPacket;
+import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -204,8 +206,28 @@ public class ModGauntletAbilities {
                     AbilityIcon.next(),
                     "abilities.infinityforge.spawn_real_block",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
-                    () -> List.of(ModStones.POWER, ModStones.REALITY), 100,
-                    false
+                    () -> List.of(ModStones.POWER, ModStones.REALITY),
+                    100, false
+            )
+    );
+    public static final GauntletAbility SPAWN_FAKE_BLOCK = GauntletAbilityRegistry.register(
+            new SpawnBlockAbility(
+                    new Identifier(InfinityForge.MOD_ID, "spawn_fake_block"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.spawn_fake_block",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
+                    List::of,
+                    100, true
+            )
+    );
+    public static final GauntletAbility SPAWN_REAL_ITEM = GauntletAbilityRegistry.register(
+            new SpawnItemAbility(
+                    new Identifier(InfinityForge.MOD_ID, "spawn_real_item"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.spawn_real_item",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
+                    () -> List.of(ModStones.POWER, ModStones.REALITY),
+                    100, false
             )
     );
     public static final GauntletAbility SPAWN_FAKE_ITEM = GauntletAbilityRegistry.register(
@@ -214,7 +236,7 @@ public class ModGauntletAbilities {
                     AbilityIcon.next(),
                     "abilities.infinityforge.spawn_fake_item",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
-                    () -> List.of(ModStones.POWER, ModStones.REALITY),
+                    List::of,
                     100, true
             )
     );

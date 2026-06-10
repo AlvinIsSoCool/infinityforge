@@ -10,7 +10,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.item.BlueprintItem;
-import net.alvin.infinityforge.registry.ModBlocks;
+import net.alvin.infinityforge.block.ModBlocks;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;

@@ -41,33 +41,5 @@ public class PlayerForcefieldFeatureRenderer extends
         VertexConsumer glowVc = provider.getBuffer(RenderLayer.getEntityTranslucentEmissive(PLAIN_TEXTURE));
         this.getContextModel().render(matrices, glowVc, LightmapTextureManager.MAX_LIGHT_COORDINATE,
                 OverlayTexture.DEFAULT_UV, r, g, b, alpha);
-
-        /*if (FabricLoader.getInstance().isModLoaded("iris")) {
-            float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
-            float alpha = (80 + 175 * pulse) / 255f;
-
-            VertexConsumer glowVc = provider.getBuffer(RenderLayer.getEntityTranslucentEmissive(PLAIN_TEXTURE));
-            this.getContextModel().render(matrices, glowVc, light, OverlayTexture.DEFAULT_UV,
-                    r, g, b, alpha);
-        } else if (provider instanceof VertexConsumerProvider.Immediate immediate) {
-            GlUniform colorUniform = ModRenderLayers.playerGlintShader.getUniform("GlintColor");
-            GlUniform timeUniform = ModRenderLayers.playerGlintShader.getUniform("GlintTime");
-            GlUniform screenUniform = ModRenderLayers.playerGlintShader.getUniform("ScreenSize");
-
-            if (colorUniform != null)
-                colorUniform.set(r, g, b, 1f);
-            if (timeUniform != null)
-                timeUniform.set((float)((System.currentTimeMillis() % 100000L) / 1000.0));
-            if (screenUniform != null) {
-                Window w = MinecraftClient.getInstance().getWindow();
-                screenUniform.set((float)w.getFramebufferWidth(), (float)w.getFramebufferHeight());
-            }
-
-            VertexConsumer vc = immediate.getBuffer(ModRenderLayers.PLAYER_GLINT);
-            this.getContextModel().render(matrices, vc, light, OverlayTexture.DEFAULT_UV,
-                    1f, 1f, 1f, access.isCustomPhasing() ? 0.25f : 1f);
-
-            immediate.draw(ModRenderLayers.PLAYER_GLINT);
-        } */
     }
 }

@@ -2,7 +2,7 @@ package net.alvin.infinityforge.mixin;
 
 import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.render.PlayerForcefieldFeatureRenderer;
-import net.alvin.infinityforge.client.render.vc.AlphaMultiplyingVertexConsumer;
+import net.alvin.infinityforge.client.render.AlphaMultiplyingVertexConsumer;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -45,10 +45,18 @@ public abstract class PlayerEntityRendererMixin {
         }
 
         isCustomPhasing = access.isCustomPhasing();
+    }
 
+    @Inject(
+            method = "scale(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void applyCustomScale(AbstractClientPlayerEntity player, MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         float animatedScale = PlayerScaleAnimationState.getAnimatedScale(player);
         if (animatedScale != 1.0f) {
             matrices.scale(animatedScale, animatedScale, animatedScale);
+            ci.cancel();
         }
     }
 
