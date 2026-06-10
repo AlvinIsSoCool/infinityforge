@@ -52,7 +52,6 @@ public class CrystalHypercubeProcessor extends StructureProcessor {
         DIMENSION_STONES.put(World.END, List.of(ModStones.POWER, ModStones.MIND));
     }
 
-    // TODO: Fix nether roof spawning of this structure.
     @Override
     public @Nullable StructureTemplate.StructureBlockInfo process(WorldView world, BlockPos pos, BlockPos pivot, StructureTemplate.StructureBlockInfo originalBlockInfo, StructureTemplate.StructureBlockInfo currentBlockInfo, StructurePlacementData data) {
         InfinityStoneType chosenStone = CHOSEN_STONES_CACHE.computeIfAbsent(pivot, k -> {
