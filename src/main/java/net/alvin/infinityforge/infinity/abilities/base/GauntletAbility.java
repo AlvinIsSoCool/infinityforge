@@ -4,6 +4,8 @@ import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractCollection;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,6 +24,9 @@ public sealed interface GauntletAbility permits ActiveAbility, HeldAbility, Pass
      * @param activeStones The list of infinity stone types in the gauntlet at the time of
      *                     this function call.
      * @return Whether the required stones are present.
+     * @implNote If requiredStones for a child ability is empty, meetsCondition will return true, due to
+     *           {@link AbstractCollection#containsAll(Collection)} check in the child classes.
+     *           Explicitly check whether requiredStones list is empty to handle this special case.
      */
     default boolean meetsCondition(List<InfinityStoneType> activeStones) { return true; }
 
@@ -31,6 +36,10 @@ public sealed interface GauntletAbility permits ActiveAbility, HeldAbility, Pass
      * @param id The Identifier of the ability that is to be found
      * @return The ability that is found, or {@code null} if the ability is not found
      * @param <T> Any class that extends GauntletAbility.
+     * @implNote It seems much faster to just iterate through the GauntletAbilityRegistry with the
+     *           ability id for certain situations. This method should only be used when an
+     *           abilities list is provided by performant code, instead of manually calling for the
+     *           list and using this method on it.
      */
     @Nullable
     static <T extends GauntletAbility> T findAbility(List<T> abilities, Identifier id) {

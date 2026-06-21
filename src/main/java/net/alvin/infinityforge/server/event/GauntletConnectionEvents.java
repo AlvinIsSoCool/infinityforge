@@ -32,9 +32,9 @@ public class GauntletConnectionEvents {
                 Integer.MAX_VALUE,
                 player.getInventory()
         );
-        ItemStack stack = GauntletChargeState.getLastKnownStack(player);
+        ItemStack stack = GauntletLastKnownState.getLastKnownStack(player);
         if (stack != null) cleanupPlayer(player, stack);
-        GauntletChargeState.clearPlayer(player);
+        GauntletLastKnownState.clearPlayer(player);
         StatefulAbilityState.clear(player);
         PendingInfinityItemPickups.clear(player);
     }

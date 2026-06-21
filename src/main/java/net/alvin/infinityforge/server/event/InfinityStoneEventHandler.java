@@ -36,55 +36,55 @@ public class InfinityStoneEventHandler {
         });
     }
 
-    public static void applyDamageInfinity(LivingEntity entity, DamageSource source) {
+    public static void applyDamageInfinity(LivingEntity entity, DamageSource source, boolean breakArmor) {
         if (!entity.isAlive()) return;
 
-        if (entity.isBlocking()) {
-            ItemStack shield = entity.getActiveItem();
-            if (!shield.isEmpty()) {
-                shield.setDamage(shield.getMaxDamage());
-                EquipmentSlot slot = entity.getActiveHand() == Hand.MAIN_HAND
-                        ? EquipmentSlot.MAINHAND
-                        : EquipmentSlot.OFFHAND;
-                entity.sendEquipmentBreakStatus(slot);
-                entity.equipStack(slot, ItemStack.EMPTY);
-            }
-        } else {
-            for (EquipmentSlot slot : new EquipmentSlot[]{
-                    EquipmentSlot.HEAD, EquipmentSlot.CHEST,
-                    EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
-                ItemStack armor = entity.getEquippedStack(slot);
-                if (!armor.isEmpty() && armor.isDamageable()) {
-                    armor.setDamage(armor.getMaxDamage());
+        if (breakArmor) {
+            if (entity.isBlocking()) {
+                ItemStack shield = entity.getActiveItem();
+                if (!shield.isEmpty()) {
+                    shield.setDamage(shield.getMaxDamage());
+                    EquipmentSlot slot = entity.getActiveHand() == Hand.MAIN_HAND
+                            ? EquipmentSlot.MAINHAND
+                            : EquipmentSlot.OFFHAND;
                     entity.sendEquipmentBreakStatus(slot);
                     entity.equipStack(slot, ItemStack.EMPTY);
+                }
+            } else {
+                for (EquipmentSlot slot : new EquipmentSlot[]{
+                        EquipmentSlot.HEAD, EquipmentSlot.CHEST,
+                        EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
+                    ItemStack armor = entity.getEquippedStack(slot);
+                    if (!armor.isEmpty() && armor.isDamageable()) {
+                        armor.setDamage(armor.getMaxDamage());
+                        entity.sendEquipmentBreakStatus(slot);
+                        entity.equipStack(slot, ItemStack.EMPTY);
+                    }
                 }
             }
         }
 
         float previousHealth = entity.getHealth();
-        entity.getDamageTracker().onDamage(source, previousHealth);
-        entity.setHealth(0.0f);
-
         boolean deathAllowed = ServerLivingEntityEvents.ALLOW_DEATH.invoker()
                 .allowDeath(entity, source, previousHealth);
         if (!deathAllowed) return;
 
+        entity.getDamageTracker().onDamage(source, previousHealth);
+        entity.setHealth(0.0f);
         entity.onDeath(source);
         ServerLivingEntityEvents.AFTER_DEATH.invoker().afterDeath(entity, source);
     }
-
-    // TODO: Implement damage resistance feature here.
+    
     private static boolean onAllowDamage(LivingEntity entity, DamageSource source, float amount) {
-        boolean equippedMainHand = entity.getStackInHand(Hand.MAIN_HAND).isOf(ModItems.POWER_STONE);
-        boolean equippedOffHand = entity.getStackInHand(Hand.OFF_HAND).isOf(ModItems.POWER_STONE);
-        if (equippedMainHand || equippedOffHand) return false;
+        boolean isHoldingStone = entity.getMainHandStack().isOf(ModItems.POWER_STONE)
+                || entity.getOffHandStack().isOf(ModItems.POWER_STONE);
+        if (isHoldingStone) return false;
 
         Entity attacker = source.getAttacker();
         if (attacker instanceof ServerPlayerEntity player) {
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack != null && InfinityGauntletItem.getAddedStones(stack).contains(ModStones.POWER)) {
-                InfinityStoneEventHandler.applyDamageInfinity(entity, source);
+                InfinityStoneEventHandler.applyDamageInfinity(entity, source, true);
                 return !(entity instanceof ServerPlayerEntity);
             }
         }

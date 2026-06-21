@@ -39,17 +39,17 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.MIND_TESSERACT, BUILTIN_ENTITY);
         itemModelGenerator.register(ModItems.TIME_TESSERACT, BUILTIN_ENTITY);
         itemModelGenerator.register(ModItems.FAKE_ITEM, BUILTIN_ENTITY);
-        itemModelGenerator.register(ModBlocks.FAKE_BLOCK.asItem(), BUILTIN_ENTITY);
 
         itemModelGenerator.register(ModItems.RAW_TITANIUM, Models.GENERATED);
         itemModelGenerator.register(ModItems.TITANIUM_INGOT, Models.GENERATED);
         itemModelGenerator.register(ModItems.GOLD_TITANIUM_ALLOY_INGOT, Models.GENERATED);
+        itemModelGenerator.register(ModItems.BLUEPRINT, Models.GENERATED);
 
-        Models.GENERATED.upload(
+        /*Models.GENERATED.upload(
                 new Identifier("infinityforge", "item/blueprint"),
                 TextureMap.layer0(new Identifier("minecraft", "item/paper")),
                 itemModelGenerator.writer
-        );
+        );*/
 
         Models.GENERATED.upload(
                 new Identifier("infinityforge", "item/infinity_gauntlet_2d"),

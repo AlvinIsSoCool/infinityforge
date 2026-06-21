@@ -76,7 +76,7 @@ public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Blo
     public Class<Block> getType() { return Block.class; }
 
     @Override
-    public ItemStack getDynamicIcon(Block state) {
+    public ItemStack getDynamicIconFromState(Block state) {
         return spawnFake ? FakeItem.create(state.asItem(), 1) : new ItemStack(state);
     }
 }

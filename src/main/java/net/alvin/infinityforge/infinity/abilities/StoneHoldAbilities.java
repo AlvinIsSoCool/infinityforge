@@ -2,6 +2,7 @@ package net.alvin.infinityforge.infinity.abilities;
 
 import net.alvin.infinityforge.effect.HealthDrainStatusEffect;
 import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -23,8 +24,9 @@ public class StoneHoldAbilities {
         if (world.isClient) return;
         if (!(entity instanceof LivingEntity living)) return;
 
-        boolean inOffHand = living.getOffHandStack() == stack;
-        if (selected || inOffHand) {
+        boolean isHoldingStone = living.getMainHandStack().isOf(ModItems.POWER_STONE)
+                || living.getOffHandStack().isOf(ModItems.POWER_STONE);
+        if (isHoldingStone) {
             StatusEffectInstance healthDrain = new StatusEffectInstance(
                     ModStatusEffects.HEALTH_DRAIN_EFFECT, 40, 0, false,
                     false, true);
@@ -70,10 +72,10 @@ public class StoneHoldAbilities {
                 );
             }
         } else {
-            // TODO: Check whether this can be avoided, if more than one power stone is present.
             EntityAttributeInstance attr = living.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
-            if (attr == null) return;
-            attr.removeModifier(HealthDrainStatusEffect.HEALTH_DRAIN_UUID);
+            if (attr != null) {
+                attr.removeModifier(HealthDrainStatusEffect.HEALTH_DRAIN_UUID);
+            }
         }
     }
 
@@ -81,8 +83,9 @@ public class StoneHoldAbilities {
         if (world.isClient()) return;
         if (!(entity instanceof LivingEntity living)) return;
 
-        boolean inOffHand = living.getOffHandStack() == stack;
-        if (selected || inOffHand) {
+        boolean isHoldingStone = living.getMainHandStack().isOf(ModItems.SOUL_STONE)
+                || living.getOffHandStack().isOf(ModItems.SOUL_STONE);
+        if (isHoldingStone) {
             if (world.getTime() % 60 == 0) {
                 if (living.getHealth() < living.getMaxHealth()) {
                     living.heal(2.0f);
@@ -100,8 +103,9 @@ public class StoneHoldAbilities {
         if (world.isClient()) return;
         if (!(entity instanceof LivingEntity living)) return;
 
-        boolean inOffHand = living.getOffHandStack() == stack;
-        if (selected || inOffHand) {
+        boolean isHoldingStone = living.getMainHandStack().isOf(ModItems.TIME_STONE)
+                || living.getOffHandStack().isOf(ModItems.TIME_STONE);
+        if (isHoldingStone) {
             Box box = living.getBoundingBox().expand(16);
             StatusEffectInstance slowness = new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 3);
             world.getEntitiesByClass(LivingEntity.class, box, le -> le.isAlive() && le != living)

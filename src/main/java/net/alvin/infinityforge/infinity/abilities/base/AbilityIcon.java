@@ -23,6 +23,7 @@ public final class AbilityIcon {
     public static AbilityIcon peek(int index) { return GLOBAL.peek(index); }
     public static AbilityIcon takeAt(int index) { return GLOBAL.takeAt(index); }
     public static AbilityIcon of(Identifier sheet, int index) { return new AbilityIcon(sheet, index); }
+    public static AbilityIcon empty() { return AbilityIcon.peek(254); }
     public static AbilityIcon missingno() { return AbilityIcon.peek(255); }
 
     public Identifier getIconLocation() { return sheetLocation; }

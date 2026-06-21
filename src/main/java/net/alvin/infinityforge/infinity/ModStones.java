@@ -16,7 +16,8 @@ public class ModStones {
             new InfinityStoneType(
                     null,
                     StoneHoldAbilities::onPowerStoneHold,
-                    List.of(ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
+                    List.of(
+                            ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
                             ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT
                     ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.powerStone,
@@ -28,7 +29,8 @@ public class ModStones {
             new InfinityStoneType(
                     StoneUseAbilities::onSpaceStoneUse,
                     null,
-                    List.of(ModGauntletAbilities.TELEPORT, ModGauntletAbilities.PORTAL,
+                    List.of(
+                            ModGauntletAbilities.TELEPORT, ModGauntletAbilities.PORTAL,
                             ModGauntletAbilities.BLACKHOLE, ModGauntletAbilities.FORCEFIELD,
                             ModGauntletAbilities.PHASING
                     ),
@@ -44,8 +46,9 @@ public class ModStones {
                     List.of(
                             ModGauntletAbilities.WEATHER, ModGauntletAbilities.INVISIBILITY,
                             ModGauntletAbilities.SIZE_CHANGE_BIG, ModGauntletAbilities.SIZE_CHANGE_SMALL,
-                            ModGauntletAbilities.SPAWN_REAL_BLOCK, ModGauntletAbilities.SPAWN_FAKE_BLOCK,
-                            ModGauntletAbilities.SPAWN_REAL_ITEM, ModGauntletAbilities.SPAWN_FAKE_ITEM
+                            ModGauntletAbilities.TURN_INTO_BUBBLES, ModGauntletAbilities.SPAWN_REAL_BLOCK,
+                            ModGauntletAbilities.SPAWN_FAKE_BLOCK, ModGauntletAbilities.SPAWN_REAL_ITEM,
+                            ModGauntletAbilities.SPAWN_FAKE_ITEM
                     ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.realityStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone
@@ -80,7 +83,8 @@ public class ModStones {
             new InfinityStoneType(
                     null,
                     StoneHoldAbilities::onTimeStoneHold,
-                    List.of(ModGauntletAbilities.ADVANCE_TIME, ModGauntletAbilities.REWIND_TIME,
+                    List.of(
+                            ModGauntletAbilities.ADVANCE_TIME, ModGauntletAbilities.REWIND_TIME,
                             ModGauntletAbilities.STOP_TIME, ModGauntletAbilities.RANDOMISE_TIME
                     ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.timeStone,

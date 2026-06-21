@@ -26,8 +26,7 @@ public class RandomiseTimeAbility extends ActiveAbility {
         player.networkHandler.sendPacket(new WorldTimeUpdateS2CPacket(
                 world.getTime(),
                 nextTime,
-                world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)
-        ));
+                world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)));
         return true;
     }
 }

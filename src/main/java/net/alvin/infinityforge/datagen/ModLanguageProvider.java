@@ -55,8 +55,14 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("abilities.infinityforge.step_height", "Step Height");
         translationBuilder.add("abilities.infinityforge.teleport", "Teleportation");
         translationBuilder.add("abilities.infinityforge.forcefield", "Forcefield");
+        translationBuilder.add("abilities.infinityforge.portal", "Portal");
+        translationBuilder.add("abilities.infinityforge.blackhole", "Black Hole");
         translationBuilder.add("abilities.infinityforge.weather", "Set Weather");
+        translationBuilder.add("abilities.infinityforge.turn_into_bubbles", "Turn Into Bubbles");
         translationBuilder.add("abilities.infinityforge.spawn_real_block", "Spawn Block");
+        translationBuilder.add("abilities.infinityforge.spawn_real_item", "Spawn Item");
+        translationBuilder.add("abilities.infinityforge.spawn_fake_block", "Spawn Fake Block");
+        translationBuilder.add("abilities.infinityforge.spawn_fake_item", "Spawn Fake Item");
         translationBuilder.add("abilities.infinityforge.invisibility", "Invisibility");
         translationBuilder.add("abilities.infinityforge.size_change_small", "Shrink");
         translationBuilder.add("abilities.infinityforge.size_change_big", "Enlarge");
@@ -80,9 +86,11 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("snapfunctions.infinityforge.recreate_world", "Recreate the world (N/A)");
         translationBuilder.add("snapfunctions.infinityforge.destroy_stones", "Destroy The Stones");
         translationBuilder.add("snapfunctions.infinityforge.creative_mode", "Switch To Creative Mode");
-        translationBuilder.add("snapfunctions.infinityforge.spectator_mode", "Switch To Spectator Mode");
 
         translationBuilder.add("snapmessages.infinityforge.missing", "No Snap Function Selected!");
+        translationBuilder.add("snapmessages.infinityforge.kill_half", "%s: You should have gone for the head.");
+        translationBuilder.add("snapmessages.infinityforge.kill_all", "%s: I AM... INEVITABLE!");
+        translationBuilder.add("snapmessages.infinityforge.kill_hostiles", "%s: And I am... Iron Man...!");
         translationBuilder.add("snapmessages.infinityforge.destroy_stones", "%s: I used the stones... to destroy the stones!");
 
         translationBuilder.add("text.autoconfig.infinityforge.title", "Infinity Forge Options");
@@ -111,7 +119,5 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.soulStone", "Soul Stone Ability Color");
         translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.mindStone", "Mind Stone Ability Color");
         translationBuilder.add("text.autoconfig.infinityforge.option.colorOptions.abilityOutlineColors.timeStone", "Time Stone Ability Color");
-
-
     }
 }

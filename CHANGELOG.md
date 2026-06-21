@@ -13,11 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Some new icons.
 - Added some config options.
 - Added Stone World Gen.
-- Internal changes for performance.
 - Added dynamic ability icons.
 - Added more abilities.
 - Added translations.
+- Internal changes for performance.
 - Fixed and balanced infinity stone damage event handling.
+- Fixed ability cleanup on stone removal.
+
 
 ## [0.6.0-beta.1] - 2026-05-20
 

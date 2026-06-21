@@ -20,13 +20,12 @@ public class WeatherAbility extends ActiveAbility {
 
     @Override
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        if (!world.isRaining() && !world.isThundering()) {
+        if (!world.isRaining() && !world.isThundering())
             world.setWeather(0, Integer.MAX_VALUE, true, false);
-        } else if (world.isRaining() && !world.isThundering()) {
+        else if (world.isRaining() && !world.isThundering())
             world.setWeather(0, Integer.MAX_VALUE, true, true);
-        } else {
+        else
             world.setWeather(Integer.MAX_VALUE, 0, false, false);
-        }
         return true;
     }
 }

@@ -1,33 +1,30 @@
 package net.alvin.infinityforge.server.packet;
 
-import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
-import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
-import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
-import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
+import net.alvin.infinityforge.infinity.abilities.base.*;
+import net.alvin.infinityforge.infinity.abilities.impl.reality.SpawnItemAbility;
 import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.item.InfinityTesseractItem;
-import net.alvin.infinityforge.network.c2s.PickupInfinityItemC2SPacket;
-import net.alvin.infinityforge.server.state.GauntletCooldownState;
-import net.alvin.infinityforge.server.state.GauntletHeldState;
-import net.alvin.infinityforge.server.state.GauntletToggleState;
+import net.alvin.infinityforge.network.c2s.*;
+import net.alvin.infinityforge.network.s2c.SyncAbilityDynamicIconS2CPacket;
+import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
+import net.alvin.infinityforge.screen.ItemSelectionScreenHandler;
+import net.alvin.infinityforge.server.state.*;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.network.c2s.GauntletAbilityC2SPacket;
-import net.alvin.infinityforge.network.c2s.GauntletHeldC2SPacket;
-import net.alvin.infinityforge.network.c2s.GauntletToggleC2SPacket;
 import net.alvin.infinityforge.network.s2c.SyncCooldownS2CPacket;
 import net.alvin.infinityforge.network.s2c.SyncToggleStateS2CPacket;
-import net.alvin.infinityforge.server.state.PendingInfinityItemPickups;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
 import java.util.List;
@@ -43,6 +40,8 @@ public class GauntletPacketHandlers {
                 GauntletHeldC2SPacket.TYPE, GauntletPacketHandlers::onHeldPacket);
         ServerPlayNetworking.registerGlobalReceiver(
                 PickupInfinityItemC2SPacket.TYPE, GauntletPacketHandlers::onPickupInfinityItem);
+        ServerPlayNetworking.registerGlobalReceiver(
+                ItemSelectionC2SPacket.TYPE, GauntletPacketHandlers::onItemSelection);
     }
 
     private static void onAbilityPacket(GauntletAbilityC2SPacket packet,
@@ -148,5 +147,23 @@ public class GauntletPacketHandlers {
                         0.2f, ((random.nextFloat() - random.nextFloat()) * 0.7f + 1.0f) * 2.0f);
             }
         });
+    }
+
+    private static void onItemSelection(ItemSelectionC2SPacket packet,
+                                        ServerPlayerEntity player, PacketSender responseSender) {
+        if (player.currentScreenHandler instanceof ItemSelectionScreenHandler handler) {
+            Item pickedItem = Registries.ITEM.get(packet.id());
+            ItemStack pickedStack = new ItemStack(pickedItem, packet.shiftClicked() ? pickedItem.getMaxCount() : 1);
+
+            Identifier abilityId = handler.getAbilityId();
+            StatefulAbilityState.set(player, abilityId, pickedStack);
+
+            GauntletAbility ability = GauntletAbilityRegistry.get(abilityId);
+            if (ability instanceof SpawnItemAbility spa) {
+                ServerPlayNetworking.send(player, new SyncAbilityDynamicIconS2CPacket(abilityId, spa.getDynamicIconFromState(pickedStack)));
+            }
+
+            player.closeHandledScreen();
+        }
     }
 }

@@ -158,7 +158,7 @@ public abstract class PlayerEntityMixin implements PlayerEffectsAccess {
         if (!new HashSet<>(InfinityGauntletItem.getAddedStones(stack))
                 .containsAll(ModStones.ALL_STONES)) return;
 
-        InfinityStoneEventHandler.applyDamageInfinity(self, source);
+        InfinityStoneEventHandler.applyDamageInfinity(self, source, true);
         cir.setReturnValue(true);
     }
 }

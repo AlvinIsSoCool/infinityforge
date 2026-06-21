@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class PlayerScaleAnimationState {
     private static final Map<UUID, PlayerAnimationState> STATES = new HashMap<>();
-    private static final float TRANSITION_TIME = 1.0f;
+    private static final float TRANSITION_TIME = 1.25f;
 
     public static void onClientTick(MinecraftClient client) {
         if (client.world == null) {

@@ -7,8 +7,7 @@ public enum SnapFunctions {
     REVERT_KILLS("snapfunctions.infinityforge.revert_kills"),
     RECREATE_WORLD("snapfunctions.infinityforge.recreate_world"),
     DESTROY_STONES("snapfunctions.infinityforge.destroy_stones"),
-    CREATIVE_MODE("snapfunctions.infinityforge.creative_mode"),
-    SPECTATOR_MODE("snapfunctions.infinityforge.spectator_mode");
+    CREATIVE_MODE("snapfunctions.infinityforge.creative_mode");
 
     public final String key;
     SnapFunctions(String key) { this.key = key; }

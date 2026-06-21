@@ -10,13 +10,13 @@ public class GauntletHeldState {
             = new IdentityHashMap<>();
 
     public static boolean isHeld(PlayerEntity player, Identifier abilityId) {
-        Set<Identifier> set = HELD_ACTIVE.get(player);  // no Set.of() allocation on miss
+        Set<Identifier> set = HELD_ACTIVE.get(player);
         return set != null && set.contains(abilityId);
     }
 
     public static Set<Identifier> getHeld(PlayerEntity player) {
         Set<Identifier> set = HELD_ACTIVE.get(player);
-        return set != null ? set : Collections.emptySet(); // emptySet() is a cached singleton
+        return set != null ? set : Collections.emptySet();
     }
 
     public static void setHeld(PlayerEntity player, Identifier abilityId, boolean held) {

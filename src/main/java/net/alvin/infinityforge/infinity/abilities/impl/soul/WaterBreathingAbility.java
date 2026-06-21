@@ -18,6 +18,7 @@ public class WaterBreathingAbility extends PassiveAbility {
 
     @Override
     public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        if (player.getAir() < player.getMaxAir()) player.setAir(player.getMaxAir());
+        if (player.getAir() < player.getMaxAir())
+            player.setAir(player.getMaxAir());
     }
 }

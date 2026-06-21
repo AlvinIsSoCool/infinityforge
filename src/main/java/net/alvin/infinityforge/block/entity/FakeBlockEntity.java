@@ -9,7 +9,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -54,6 +56,13 @@ public class FakeBlockEntity extends BlockEntity {
 
         if (world.getTime() - created >= 200) {
             world.removeBlock(pos, false);
+
+            ServerWorld serverWorld = (ServerWorld) world;
+            double cx = pos.getX() + 0.5;
+            double cy = pos.getY() + 0.5;
+            double cz = pos.getZ() + 0.5;
+            serverWorld.spawnParticles(ParticleTypes.BUBBLE_POP, cx, cy, cz, 50, 0.3, 0.4, 0.3, 0.005);
+            serverWorld.spawnParticles(ParticleTypes.BUBBLE_POP, cx, cy, cz, 50, 0.5, 0.6, 0.5, 0.025);
             CREATION_TIME_CACHE.remove(be);
         }
     }

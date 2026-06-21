@@ -1,25 +1,28 @@
 package net.alvin.infinityforge.infinity.abilities.impl.space;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.entity.PortalEntity;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
-import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.TeleportTarget;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -38,19 +41,32 @@ public class PortalAbility extends ActiveAbility {
 
     @Override
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        BlockPos pos = getSafeTeleportPos(world, new BlockPos(0, 0, 0), DEFAULT_SEARCH_RADIUS)
+        Random rand = new Random();
+        BlockPos pos = getSafeTeleportPos(world, new BlockPos(rand.nextInt(10000), rand.nextInt(100), rand.nextInt(10000)), DEFAULT_SEARCH_RADIUS)
                 .orElse(world.getSpawnPos());
         InfinityForge.LOGGER.info("Safe Position: X: {}, Y: {}, Z: {}", pos.getX(), pos.getY(), pos.getZ());
-        FabricDimensions.teleport(
-                player,
-                world,
-                new TeleportTarget(
-                        pos.toCenterPos().add(0.0, 1.0, 0.0),
-                        Vec3d.ZERO,
-                        player.getYaw(),
-                        player.getPitch()
-                )
-        );
+
+        HitResult hit = player.raycast(3.0, 1.0f, false);
+        Vec3d spawnPos, facing;
+        if (hit.getType() == HitResult.Type.BLOCK) {
+            BlockHitResult blockHit = (BlockHitResult) hit;
+            Vec3d faceNormal = Vec3d.of(blockHit.getSide().getVector());
+            spawnPos = hit.getPos().add(faceNormal.multiply(0.05));
+            facing = faceNormal;
+        } else {
+            Vec3d lookVec = player.getRotationVec(1.0f);
+            spawnPos = player.getEyePos().add(lookVec.multiply(3.0));
+            facing = lookVec.negate();
+        }
+
+        float portalYaw = (float) Math.toDegrees(Math.atan2(facing.z, facing.x)) - 90.0f;
+        double horiz = Math.sqrt(facing.x * facing.x + facing.z * facing.z);
+        float portalPitch = (float) -Math.toDegrees(Math.atan2(facing.y, horiz));
+
+        PortalEntity.spawnLinkedPair(world, spawnPos.x, spawnPos.y, spawnPos.z,
+                portalYaw, portalPitch,
+                world.getServer().getWorld(World.NETHER), pos.getX(), pos.getY(), pos.getZ(),
+                portalYaw + 180f, portalPitch);
         return true;
     }
 

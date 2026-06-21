@@ -1,15 +1,10 @@
 package net.alvin.infinityforge.server.tick;
 
-import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
-import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
-import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
-import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
+import net.alvin.infinityforge.infinity.abilities.base.*;
 import net.alvin.infinityforge.network.s2c.*;
+import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
-import net.alvin.infinityforge.server.state.GauntletChargeState;
-import net.alvin.infinityforge.server.state.GauntletCooldownState;
-import net.alvin.infinityforge.server.state.GauntletHeldState;
-import net.alvin.infinityforge.server.state.GauntletToggleState;
+import net.alvin.infinityforge.server.state.*;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -18,14 +13,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
 public class GauntletServerTick {
-    public static void register() {
-        ServerTickEvents.END_SERVER_TICK.register(GauntletServerTick::onTick);
-    }
+    public static void register() { ServerTickEvents.END_SERVER_TICK.register(GauntletServerTick::onTick); }
 
     private static void onTick(MinecraftServer server) {
         List<ServerPlayerEntity> players = server.getPlayerManager().getPlayerList();
@@ -38,27 +34,72 @@ public class GauntletServerTick {
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
 
             if (stack == null) {
-                if (GauntletChargeState.wasEquipped(player)) {
-                    ItemStack lastStack = GauntletChargeState.getLastKnownStack(player);
+                if (GauntletLastKnownState.wasEquipped(player)) {
+                    ItemStack lastStack = GauntletLastKnownState.getLastKnownStack(player);
                     if (lastStack != null) GauntletConnectionEvents.cleanupPlayer(player, lastStack);
                 }
-                GauntletChargeState.setEquipped(player, false, null);
+                GauntletLastKnownState.setEquipped(player, false, null);
                 continue;
             }
 
             ServerWorld world = (ServerWorld) player.getWorld();
             UUID gauntletId = InfinityGauntletItem.getOrCreateGauntletId(stack);
-
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
+            List<InfinityStoneType> lastStones = GauntletLastKnownState.getLastKnownStones(player);
+            GauntletLastKnownState.setLastKnownStones(player, activeStones);
+
             List<ActiveAbility> actives = InfinityGauntletItem.getActiveAbilities(activeStones);
             List<PassiveAbility> passives = InfinityGauntletItem.getPassiveAbilities(activeStones);
             List<ToggleAbility> toggles = InfinityGauntletItem.getToggleAbilities(activeStones);
             List<HeldAbility> helds = InfinityGauntletItem.getHeldAbilities(activeStones);
 
-            ItemStack lastStack = GauntletChargeState.getLastKnownStack(player);
-            boolean equippedLastTick = GauntletChargeState.wasEquipped(player);
+            if (!lastStones.equals(activeStones)) {
+                List<InfinityStoneType> removedStones = new ArrayList<>(lastStones);
+                removedStones.removeAll(activeStones);
+
+                for (Identifier id : new HashSet<>(GauntletToggleState.getActive(player))) {
+                    GauntletAbility ability = GauntletAbilityRegistry.get(id);
+                    if (ability instanceof ToggleAbility t) {
+                        boolean ownerRemoved = removedStones.stream()
+                                .anyMatch(stone -> stone.gauntletAbilities().contains(t));
+                        if (ownerRemoved || !t.meetsCondition(activeStones)) {
+                            GauntletToggleState.setActive(player, t.getId(), false);
+                            t.onDisable(world, player, activeStones);
+                            ServerPlayNetworking.send(player, new SyncToggleStateS2CPacket(t.getId(), false));
+                        }
+                    }
+                }
+
+                for (Identifier id : new HashSet<>(GauntletHeldState.getHeld(player))) {
+                    GauntletAbility ability = GauntletAbilityRegistry.get(id);
+                    if (ability instanceof HeldAbility h) {
+                        boolean ownerRemoved = removedStones.stream()
+                                .anyMatch(stone -> stone.gauntletAbilities().contains(h));
+                        if (ownerRemoved || !h.meetsCondition(activeStones)) {
+                            GauntletHeldState.setHeld(player, h.getId(), false);
+                            h.onStop(world, player, activeStones);
+                            ServerPlayNetworking.send(player, new SyncHeldForceStopS2CPacket(h.getId()));
+                        }
+                    }
+                }
+
+                List<PassiveAbility> lastPassives = InfinityGauntletItem.getPassiveAbilities(lastStones);
+                for (PassiveAbility p : lastPassives) {
+                    if (p instanceof LifecyclePassiveAbility lp) {
+                        boolean ownerRemoved = removedStones.stream()
+                                .anyMatch(stone -> stone.gauntletAbilities().contains(lp));
+                        if (ownerRemoved || !lp.meetsCondition(activeStones))
+                            lp.triggerEnd(world, player, activeStones);
+                    }
+                }
+
+                GauntletLastKnownState.setLastKnownStones(player, activeStones);
+            }
+
+            ItemStack lastStack = GauntletLastKnownState.getLastKnownStack(player);
+            boolean equippedLastTick = GauntletLastKnownState.wasEquipped(player);
             boolean gauntletChanged = stack != lastStack;
-            GauntletChargeState.setEquipped(player, true, stack);
+            GauntletLastKnownState.setEquipped(player, true, stack);
 
             if (equippedLastTick && gauntletChanged) {
                 if (lastStack != null) GauntletConnectionEvents.cleanupPlayer(player, lastStack);

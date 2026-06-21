@@ -21,12 +21,12 @@ public interface AbilityState<T> {
         StatefulAbilityState.set(player, id, state);
 
         if (player instanceof ServerPlayerEntity serverPlayer) {
-            ItemStack icon = getDynamicIcon(state);
+            ItemStack iconStack = getDynamicIconFromState(state);
             ServerPlayNetworking.send(serverPlayer,
                     new SyncAbilityDynamicIconS2CPacket(id,
-                            icon != null ? icon : ItemStack.EMPTY));
+                            iconStack != null ? iconStack : ItemStack.EMPTY));
         }
     }
 
-    default ItemStack getDynamicIcon(T state) { return null; }
+    default ItemStack getDynamicIconFromState(T state) { return null; }
 }

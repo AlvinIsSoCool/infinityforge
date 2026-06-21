@@ -20,7 +20,7 @@ public class ModBlocks {
     public static final Block BLUEPRINT_TABLE = registerBlock("blueprint_table",
             new BlueprintTableBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
     public static final Block FAKE_BLOCK = registerBlock("fake_block",
-            new FakeBlock(FabricBlockSettings.copyOf(Blocks.STONE).nonOpaque()));
+            new FakeBlock(FabricBlockSettings.copyOf(Blocks.DIRT).nonOpaque()));
 
     private static Block registerBlock(String name, Block block) {
         Registry.register(Registries.ITEM, new Identifier(InfinityForge.MOD_ID, name),

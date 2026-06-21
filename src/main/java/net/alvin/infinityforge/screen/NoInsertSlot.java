@@ -4,8 +4,8 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
 
-public class BlueprintTableOutputSlot extends Slot {
-    public BlueprintTableOutputSlot(Inventory inventory, int index, int x, int y) {
+public class NoInsertSlot extends Slot {
+    public NoInsertSlot(Inventory inventory, int index, int x, int y) {
         super(inventory, index, x, y);
     }
 

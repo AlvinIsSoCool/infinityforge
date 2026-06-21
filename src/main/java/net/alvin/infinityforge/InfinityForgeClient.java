@@ -5,6 +5,7 @@ import net.alvin.infinityforge.client.event.GauntletHudEvents;
 import net.alvin.infinityforge.client.input.GauntletKeybinds;
 import net.alvin.infinityforge.client.packet.GauntletClientPacketHandlers;
 import net.alvin.infinityforge.client.render.be.ModBERenderers;
+import net.alvin.infinityforge.client.render.entity.ModEntityRenderers;
 import net.alvin.infinityforge.client.screen.ModScreens;
 import net.alvin.infinityforge.client.tick.GauntletClientTick;
 import net.alvin.infinityforge.client.render.item.ModItemRenderers;
@@ -18,6 +19,7 @@ public class InfinityForgeClient implements ClientModInitializer {
         ModRenderLayers.register();
         ModItemRenderers.register();
         ModBERenderers.register();
+        ModEntityRenderers.register();
 
         ModScreens.register();
 

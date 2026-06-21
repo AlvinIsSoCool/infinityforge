@@ -26,8 +26,8 @@ public class SnapAbility extends ActiveAbility {
 
     @Override
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        SnapFunctions snapFunction =
-                StatefulAbilityState.get(player, ModGauntletAbilities.CHANGE_SNAP.getId(), SnapFunctions.class);
+        SnapFunctions snapFunction = StatefulAbilityState.get(player,
+                ModGauntletAbilities.CHANGE_SNAP.getId(), SnapFunctions.class);
         if (snapFunction != null) executeSnap(player, snapFunction);
         else player.sendMessage(
                 Text.translatable("snapmessages.infinityforge.missing")
@@ -46,11 +46,6 @@ public class SnapAbility extends ActiveAbility {
             case CREATIVE_MODE -> {
                 if (player.interactionManager.getGameMode() != GameMode.CREATIVE)
                     player.changeGameMode(GameMode.CREATIVE);
-                else player.changeGameMode(GameMode.SURVIVAL);
-            }
-            case SPECTATOR_MODE -> {
-                if (player.interactionManager.getGameMode() != GameMode.SPECTATOR)
-                    player.changeGameMode(GameMode.SPECTATOR);
                 else player.changeGameMode(GameMode.SURVIVAL);
             }
         }

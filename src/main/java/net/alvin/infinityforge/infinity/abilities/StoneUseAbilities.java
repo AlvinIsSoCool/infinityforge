@@ -75,7 +75,7 @@ public class StoneUseAbilities {
         int radius = isEnd ? END_RADIUS : DEFAULT_RADIUS;
 
         for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-            InfinityForge.LOGGER.info("TeleportationHelper: Teleportation Attempt {}", attempt+1);
+            InfinityForge.LOGGER.info("TeleportationHelper: Teleportation Attempt {}", ++attempt);
             int x = RANDOM.nextInt(radius * 2) - radius;
             int z = RANDOM.nextInt(radius * 2) - radius;
 
@@ -86,7 +86,7 @@ public class StoneUseAbilities {
 
             if (candidate != null) {
                 InfinityForge.LOGGER.info("TeleportationHelper: Position (X: {}, Y: {}, Z: {}) Found in {} attempts!",
-                        candidate.getX(), candidate.getY(), candidate.getZ(), attempt+1);
+                        candidate.getX(), candidate.getY(), candidate.getZ(), ++attempt);
                 return candidate;
             }
         }

@@ -1,11 +1,9 @@
 package net.alvin.infinityforge.infinity.snap;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
 import net.alvin.infinityforge.effect.SnapStatusEffect;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.effect.ModStatusEffects;
-import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.world.data.SnappedEntitiesState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -46,7 +44,8 @@ public class SnapFunctionsHelper {
         List<LivingEntity> halfTargets = getRandomTargetsHalf(targets);
         InfinityForge.LOGGER.info("Found {} entities for KILL_HALF Snap Function.", halfTargets.size());
         applySnapEffectByDistanceOrder(halfTargets, player);
-        sendSnapMessage(player, "snapmessages.infinityforge.kill_half", Formatting.DARK_PURPLE);
+        sendSnapMessageStyled(player, "snapmessages.infinityforge.kill_half",
+                Style.EMPTY.withColor(0xFA8128));
         applyPostSnapEffects(player);
     }
 
@@ -62,8 +61,7 @@ public class SnapFunctionsHelper {
 
         InfinityForge.LOGGER.info("Found {} entities for KILL_ALL Snap Function.", targets.size());
         applySnapEffectByDistanceOrder(targets, player);
-        sendSnapMessageStyled(player, "snapmessages.infinityforge.kill_all",
-                Style.EMPTY.withColor(0xFA8128));
+        sendSnapMessage(player, "snapmessages.infinityforge.kill_all", Formatting.DARK_PURPLE);
         applyPostSnapEffects(player);
     }
 
@@ -110,9 +108,7 @@ public class SnapFunctionsHelper {
         if (stack == null) return;
 
         sendSnapMessage(player, "snapmessages.infinityforge.destroy_stones", Formatting.LIGHT_PURPLE);
-        GauntletConnectionEvents.cleanupPlayerAll(player);
         InfinityGauntletItem.removeStones(stack);
-        GauntletClientConnectionEvents.clearAll();
         applyPostSnapEffects(player);
     }
 
@@ -131,12 +127,12 @@ public class SnapFunctionsHelper {
     }
 
     private static void applyPostSnapEffects(PlayerEntity player) {
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 255));
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200, 255));
         player.getHungerManager().setSaturationLevel(1f);
         player.getHungerManager().setFoodLevel(1);
         player.damage(player.getDamageSources().magic(), 1.0f);
         player.setHealth(1.0f);
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 255));
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200, 255));
     }
 
     private static <T extends LivingEntity> List<T> getRandomTargetsHalf(List<T> targets) {

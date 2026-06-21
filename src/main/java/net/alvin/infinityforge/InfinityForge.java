@@ -6,6 +6,7 @@ import net.alvin.infinityforge.block.ModBlocks;
 import net.alvin.infinityforge.block.entity.ModBlockEntities;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.entity.ModEntities;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.item.ModItemGroups;
 import net.alvin.infinityforge.item.ModItems;
@@ -36,8 +37,9 @@ public class InfinityForge implements ModInitializer {
 		ModItems.initialize();
 		ModBlocks.initialize();
 		ModBlockEntities.initialize();
-		ModItemGroups.register();
+		ModEntities.initialise();
 		ModStatusEffects.initialize();
+		ModItemGroups.register();
 
 		InfinityStoneTypeRegistry.initialize();
 		GauntletAbilityRegistry.initialize();

@@ -25,6 +25,12 @@ public class ModScreenHandlers {
                     new ExtendedScreenHandlerType<>(BlueprintTableScreenHandler::new)
             );
 
+    public static final ScreenHandlerType<ItemSelectionScreenHandler> ITEM_SELECTION_SCREEN_HANDLER =
+            Registry.register(Registries.SCREEN_HANDLER,
+                    new Identifier(InfinityForge.MOD_ID, "item_selection_sh"),
+                    new ExtendedScreenHandlerType<>(ItemSelectionScreenHandler::new)
+            );
+
     public static void initialize() {
         InfinityForge.LOGGER.info("Registering Screen Handlers for: {}", InfinityForge.MOD_ID);
     }

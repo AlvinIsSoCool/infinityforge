@@ -7,5 +7,6 @@ public class ModScreens {
     public static void register() {
         HandledScreens.register(ModScreenHandlers.GAUNTLET_SCREEN_HANDLER, GauntletScreen::new);
         HandledScreens.register(ModScreenHandlers.BLUEPRINT_TABLE_SCREEN_HANDLER, BlueprintTableScreen::new);
+        HandledScreens.register(ModScreenHandlers.ITEM_SELECTION_SCREEN_HANDLER, ItemSelectionScreen::new);
     }
 }

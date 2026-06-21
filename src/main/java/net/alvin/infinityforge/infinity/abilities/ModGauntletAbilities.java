@@ -130,7 +130,7 @@ public class ModGauntletAbilities {
             )
     );
     public static final GauntletAbility BLACKHOLE = GauntletAbilityRegistry.register(
-            new BlackholeAbility(
+            new BlackHoleAbility(
                     new Identifier(InfinityForge.MOD_ID, "blackhole"),
                     AbilityIcon.next(),
                     "abilities.infinityforge.blackhole",
@@ -200,10 +200,20 @@ public class ModGauntletAbilities {
                     2.0f
             )
     );
+    public static final GauntletAbility TURN_INTO_BUBBLES = GauntletAbilityRegistry.register(
+            new TurnIntoBubblesAbility(
+                    new Identifier(InfinityForge.MOD_ID, "turn_into_bubbles"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.turn_into_bubbles",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
+                    List::of,
+                    100
+            )
+    );
     public static final GauntletAbility SPAWN_REAL_BLOCK = GauntletAbilityRegistry.register(
             new SpawnBlockAbility(
                     new Identifier(InfinityForge.MOD_ID, "spawn_real_block"),
-                    AbilityIcon.next(),
+                    AbilityIcon.empty(),
                     "abilities.infinityforge.spawn_real_block",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     () -> List.of(ModStones.POWER, ModStones.REALITY),
@@ -213,7 +223,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility SPAWN_FAKE_BLOCK = GauntletAbilityRegistry.register(
             new SpawnBlockAbility(
                     new Identifier(InfinityForge.MOD_ID, "spawn_fake_block"),
-                    AbilityIcon.next(),
+                    AbilityIcon.empty(),
                     "abilities.infinityforge.spawn_fake_block",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     List::of,
@@ -223,7 +233,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility SPAWN_REAL_ITEM = GauntletAbilityRegistry.register(
             new SpawnItemAbility(
                     new Identifier(InfinityForge.MOD_ID, "spawn_real_item"),
-                    AbilityIcon.next(),
+                    AbilityIcon.empty(),
                     "abilities.infinityforge.spawn_real_item",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     () -> List.of(ModStones.POWER, ModStones.REALITY),
@@ -233,20 +243,11 @@ public class ModGauntletAbilities {
     public static final GauntletAbility SPAWN_FAKE_ITEM = GauntletAbilityRegistry.register(
             new SpawnItemAbility(
                     new Identifier(InfinityForge.MOD_ID, "spawn_fake_item"),
-                    AbilityIcon.next(),
+                    AbilityIcon.empty(),
                     "abilities.infinityforge.spawn_fake_item",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.realityStone,
                     List::of,
                     100, true
-            )
-    );
-    public static final GauntletAbility KILL = GauntletAbilityRegistry.register(
-            new KillAbility(
-                    new Identifier(InfinityForge.MOD_ID, "kill"),
-                    AbilityIcon.next(),
-                    "abilities.infinityforge.kill",
-                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone,
-                    () -> List.of(ModStones.POWER, ModStones.SOUL), 100
             )
     );
     public static final GauntletAbility HEALTH = GauntletAbilityRegistry.register(
@@ -255,15 +256,7 @@ public class ModGauntletAbilities {
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.health",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone,
-                    Map.of(
-                            EntityAttributes.GENERIC_MAX_HEALTH,
-                            new EntityAttributeModifier(
-                                    UUID.randomUUID(),
-                                    "Health",
-                                    20,
-                                    EntityAttributeModifier.Operation.ADDITION
-                            )
-                    )
+                    20.0f
             )
     );
     public static final GauntletAbility HEALING = GauntletAbilityRegistry.register(
@@ -271,7 +264,8 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "healing"),
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.healing",
-                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone,
+                    0.5f, 10
             )
     );
     public static final GauntletAbility SATURATION = GauntletAbilityRegistry.register(
@@ -288,6 +282,15 @@ public class ModGauntletAbilities {
                     PASSIVE_ICONS.next(),
                     "abilities.infinityforge.water_breathing",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone
+            )
+    );
+    public static final GauntletAbility KILL = GauntletAbilityRegistry.register(
+            new KillAbility(
+                    new Identifier(InfinityForge.MOD_ID, "kill"),
+                    AbilityIcon.next(),
+                    "abilities.infinityforge.kill",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone,
+                    () -> List.of(ModStones.POWER, ModStones.SOUL), 100
             )
     );
     public static final GauntletAbility SNAP = GauntletAbilityRegistry.register(
@@ -356,7 +359,8 @@ public class ModGauntletAbilities {
                     AbilityIcon.next(),
                     "abilities.infinityforge.randomise_time",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
-                    List::of, 100
+                    List::of,
+                    100
             )
     );
 }

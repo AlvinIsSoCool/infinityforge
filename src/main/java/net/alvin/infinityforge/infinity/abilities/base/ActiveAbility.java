@@ -63,7 +63,7 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getARGBColor() { return 0xFF000000 | color.get(); }
+    public int getARGBColor() { return 0xFF000000 | getRGBColor(); }
 
     @Override
     public int getRGBColor() { return color.get(); }

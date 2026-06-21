@@ -25,7 +25,6 @@ public class GauntletHudRenderer {
     private static final int MARGIN_X = 10;
     private static final int MARGIN_Y = 14;
     private static final int SLOT_SIZE = 22;
-    private static final int SLOT_STEP = 22;
 
     public static void render(DrawContext context) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -42,8 +41,7 @@ public class GauntletHudRenderer {
         if (abilities.isEmpty()) return;
 
         int scrollOffset = Math.max(0,
-                Math.min(GauntletClientState.scrollOffset, Math.max(0, abilities.size() - 6))
-        );
+                Math.min(GauntletClientState.scrollOffset, Math.max(0, abilities.size() - 6)));
         int visibleCount = Math.min(6, abilities.size());
 
         int startX = MARGIN_X;
@@ -55,14 +53,14 @@ public class GauntletHudRenderer {
             }
 
             if (scrollOffset < abilities.size() - 6) {
-                context.drawTexture(HUD_TEXTURE, startX + 4, startY + visibleCount * SLOT_STEP + 2, 52, 0, 15, 15, 256, 256);
+                context.drawTexture(HUD_TEXTURE, startX + 4, startY + visibleCount * SLOT_SIZE + 2, 52, 0, 15, 15, 256, 256);
             }
         }
 
         for (int i = 0; i < visibleCount; i++) {
             int abilityIndex = scrollOffset + i;
             GauntletAbility ability = abilities.get(abilityIndex);
-            int slotY = startY + i * SLOT_STEP;
+            int slotY = startY + i * SLOT_SIZE;
             renderAbilitySlot(client, context, ability, startX, slotY, i);
         }
     }

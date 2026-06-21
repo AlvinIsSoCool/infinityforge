@@ -35,7 +35,7 @@ public class BlueprintTableScreenHandler extends ScreenHandler {
 
         this.addSlot(new BlueprintTableInputSlot(inventory, 0, 25, 40));
         this.addSlot(new Slot(inventory, 1, 74, 40));
-        this.addSlot(new BlueprintTableOutputSlot(inventory, 2, 132, 40));
+        this.addSlot(new NoInsertSlot(inventory, 2, 132, 40));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);

@@ -71,7 +71,7 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
     public String getName() { return Text.translatable(key).getString(); }
 
     @Override
-    public int getARGBColor() { return 0xFF000000 | color.get(); }
+    public int getARGBColor() { return 0xFF000000 | getRGBColor(); }
 
     @Override
     public int getRGBColor() { return color.get(); }
@@ -93,7 +93,7 @@ public abstract non-sealed class ToggleAbility implements GauntletAbility {
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
      * @return {@code true} - Allows the ability to toggle on.<br>
-     *         {@code false} - Prevents the ability from toggling off.
+     *         {@code false} - Prevents the ability from toggling on.
      */
     public abstract boolean onEnable(ServerWorld world, ServerPlayerEntity player,
                                      List<InfinityStoneType> activeStones);

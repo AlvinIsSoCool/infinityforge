@@ -30,12 +30,9 @@ public class RewindTimeAbility extends ToggleAbility {
         player.networkHandler.sendPacket(new WorldTimeUpdateS2CPacket(
                 world.getTime(),
                 nextTime,
-                world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)
-        ));
+                world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)));
     }
 
     @Override
-    public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-
-    }
+    public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {}
 }
