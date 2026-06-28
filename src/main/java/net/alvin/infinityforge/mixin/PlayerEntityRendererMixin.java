@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.mixin;
 
 import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
-import net.alvin.infinityforge.client.render.PlayerForcefieldFeatureRenderer;
-import net.alvin.infinityforge.client.render.AlphaMultiplyingVertexConsumer;
+import net.alvin.infinityforge.client.render.player.PlayerForcefieldFeatureRenderer;
+import net.alvin.infinityforge.client.render.player.AlphaMultiplyingVertexConsumer;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;

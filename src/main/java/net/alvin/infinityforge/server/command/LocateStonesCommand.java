@@ -33,10 +33,11 @@ public class LocateStonesCommand {
     }
 
     public static int getAllStoneLocations(CommandContext<ServerCommandSource> context) {
+        int ret = 1;
         for (String stoneName : stoneNames) {
-            getSpecifiedStoneLocation(context, stoneName, true);
+            ret &= getSpecifiedStoneLocation(context, stoneName, true);
         }
-        return 1;
+        return ret;
     }
 
     public static int getNearbyStoneLocation(CommandContext<ServerCommandSource> context) {

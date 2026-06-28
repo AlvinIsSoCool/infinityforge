@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.server.packet;
 
+import net.alvin.infinityforge.entity.PortalEntity;
 import net.alvin.infinityforge.infinity.abilities.base.*;
 import net.alvin.infinityforge.infinity.abilities.impl.reality.SpawnItemAbility;
 import net.alvin.infinityforge.item.InfinityStoneItem;
@@ -20,11 +21,19 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
 import java.util.List;
@@ -42,6 +51,8 @@ public class GauntletPacketHandlers {
                 PickupInfinityItemC2SPacket.TYPE, GauntletPacketHandlers::onPickupInfinityItem);
         ServerPlayNetworking.registerGlobalReceiver(
                 ItemSelectionC2SPacket.TYPE, GauntletPacketHandlers::onItemSelection);
+        ServerPlayNetworking.registerGlobalReceiver(
+                OpenPortalC2SPacket.TYPE, GauntletPacketHandlers::onOpenPortal);
     }
 
     private static void onAbilityPacket(GauntletAbilityC2SPacket packet,
@@ -156,14 +167,54 @@ public class GauntletPacketHandlers {
             ItemStack pickedStack = new ItemStack(pickedItem, packet.shiftClicked() ? pickedItem.getMaxCount() : 1);
 
             Identifier abilityId = handler.getAbilityId();
-            StatefulAbilityState.set(player, abilityId, pickedStack);
+            GauntletAbilityStates.set(player, abilityId, pickedStack);
 
             GauntletAbility ability = GauntletAbilityRegistry.get(abilityId);
             if (ability instanceof SpawnItemAbility spa) {
-                ServerPlayNetworking.send(player, new SyncAbilityDynamicIconS2CPacket(abilityId, spa.getDynamicIconFromState(pickedStack)));
+                ServerPlayNetworking.send(player,
+                        new SyncAbilityDynamicIconS2CPacket(abilityId,
+                                spa.getDynamicIcon(pickedStack)));
             }
 
             player.closeHandledScreen();
         }
+    }
+
+    private static void onOpenPortal(OpenPortalC2SPacket packet,
+                                        ServerPlayerEntity player, PacketSender responseSender) {
+        HitResult hit = player.raycast(3.0, 1.0f, false);
+        Vec3d spawnPos, facing;
+        if (hit.getType() == HitResult.Type.BLOCK) {
+            BlockHitResult blockHit = (BlockHitResult) hit;
+            Vec3d faceNormal = Vec3d.of(blockHit.getSide().getVector());
+            spawnPos = hit.getPos().add(faceNormal.multiply(0.05));
+            facing = faceNormal;
+        } else {
+            Vec3d lookVec = player.getRotationVec(1.0f);
+            spawnPos = player.getEyePos().add(lookVec.multiply(3.0));
+            facing = lookVec.negate();
+        }
+
+        ServerWorld world = player.getServerWorld();
+        ServerWorld destination = world.getServer().getWorld(RegistryKey.of(
+                RegistryKeys.WORLD, packet.dimId()));
+        float portalYaw = (float)Math.toDegrees(Math.atan2(facing.z, facing.x)) - 90.0f;
+        double horiz = Math.sqrt(facing.x * facing.x + facing.z * facing.z);
+        float portalPitch = MathHelper.clamp((float)-Math.toDegrees(Math.atan2(facing.y, horiz)),
+                -70f, 70f);
+        PortalEntity.spawnLinkedPair(world, spawnPos.x, spawnPos.y, spawnPos.z,
+                portalYaw, portalPitch,
+                destination, packet.x(), packet.y(), packet.z(),
+                portalYaw + 180f, portalPitch);
+        Text portalText = Text.literal("Opening Portal to: ")
+                .append(Text.literal(String.valueOf(packet.x())).formatted(Formatting.AQUA))
+                .append(Text.literal(", "))
+                .append(Text.literal(String.valueOf(packet.y())).formatted(Formatting.AQUA))
+                .append(Text.literal(", "))
+                .append(Text.literal(String.valueOf(packet.z())).formatted(Formatting.AQUA))
+                .append(Text.literal(" in "))
+                .append(Text.literal(packet.dimId().getPath().toUpperCase()).formatted(Formatting.GOLD))
+                .append(Text.literal(String.format(" (%s)", packet.dimId())).formatted(Formatting.GRAY));
+        player.sendMessage(portalText, true);
     }
 }

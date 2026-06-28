@@ -6,7 +6,7 @@ import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.snap.SnapFunctions;
 import net.alvin.infinityforge.infinity.snap.SnapFunctionsHelper;
 import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
-import net.alvin.infinityforge.server.state.StatefulAbilityState;
+import net.alvin.infinityforge.server.state.GauntletAbilityStates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -26,7 +26,7 @@ public class SnapAbility extends ActiveAbility {
 
     @Override
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-        SnapFunctions snapFunction = StatefulAbilityState.get(player,
+        SnapFunctions snapFunction = GauntletAbilityStates.get(player,
                 ModGauntletAbilities.CHANGE_SNAP.getId(), SnapFunctions.class);
         if (snapFunction != null) executeSnap(player, snapFunction);
         else player.sendMessage(

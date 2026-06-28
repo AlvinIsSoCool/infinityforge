@@ -57,6 +57,7 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("abilities.infinityforge.forcefield", "Forcefield");
         translationBuilder.add("abilities.infinityforge.portal", "Portal");
         translationBuilder.add("abilities.infinityforge.blackhole", "Black Hole");
+        translationBuilder.add("abilities.infinityforge.phasing", "Phasing");
         translationBuilder.add("abilities.infinityforge.weather", "Set Weather");
         translationBuilder.add("abilities.infinityforge.turn_into_bubbles", "Turn Into Bubbles");
         translationBuilder.add("abilities.infinityforge.spawn_real_block", "Spawn Block");

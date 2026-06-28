@@ -78,14 +78,15 @@ public class GauntletHudRenderer {
         context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22, 256, 256);
 
         // Icons.
-        if (ability instanceof AbilityState<?>) {
-            ItemStack iconStack = AbilityDynamicIconState.get(ability.getId());
-            if (!iconStack.isEmpty()) {
-                context.getMatrices().push();
-                context.getMatrices().translate(x + 3, y + 3, 0);
-                context.drawItem(iconStack, 0, 0);
-                context.getMatrices().pop();
-            }
+        ItemStack iconStack = ItemStack.EMPTY;
+        if (ability instanceof AbilityDynamicIcon<?>)
+            iconStack = AbilityDynamicIconState.get(ability.getId());
+
+        if (!iconStack.isEmpty()) {
+            context.getMatrices().push();
+            context.getMatrices().translate(x + 3, y + 3, 0);
+            context.drawItem(iconStack, 0, 0);
+            context.getMatrices().pop();
         } else {
             Identifier iconLocation = ability.getIcon().getIconLocation();
             int iconIndex = ability.getIcon().getIconIndex();
@@ -94,6 +95,7 @@ public class GauntletHudRenderer {
             context.drawTexture(iconLocation, x + 3, y + 3, u, v, 16, 16, 256, 256);
         }
 
+        // Outline.
         int color = ability.getARGBColor();
         if (color == 0xFF7FFFFF) {
             context.drawTexture(HUD_TEXTURE, x + 1, y + 1, 68, 0, 20, 20, 256, 256);
@@ -104,7 +106,7 @@ public class GauntletHudRenderer {
             context.fill(x + 20, y + 1, x + 21, y + 21, color); // right
         }
 
-        // Active Ability Cooldown.
+        // Ability Cooldown Bar.
         if (ability instanceof ActiveAbility) {
             float progress = GauntletClientState.getCooldownProgress(ability.getId(), currentTick);
 

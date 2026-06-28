@@ -6,12 +6,13 @@ import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
-public record ClearGauntletClientStateS2CPacket() implements FabricPacket {
-    public static final PacketType<ClearGauntletClientStateS2CPacket> TYPE =
-            PacketType.create(new Identifier(InfinityForge.MOD_ID, "clear_gauntlet_client_state"),
-                    ClearGauntletClientStateS2CPacket::new);
+public record OpenPortalScreenS2CPacket() implements FabricPacket {
+    public static final PacketType<OpenPortalScreenS2CPacket> TYPE =
+            PacketType.create(
+                    new Identifier(InfinityForge.MOD_ID, "open_portal_screen"),
+                    OpenPortalScreenS2CPacket::new);
 
-    public ClearGauntletClientStateS2CPacket(PacketByteBuf buf) {
+    public OpenPortalScreenS2CPacket(PacketByteBuf buf) {
         this();
     }
 

@@ -1,6 +1,5 @@
 package net.alvin.infinityforge.server.event;
 
-import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.abilities.impl.space.ForcefieldAbility;
 import net.alvin.infinityforge.infinity.abilities.impl.space.PhasingAbility;
@@ -8,7 +7,9 @@ import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.infinity.ModStones;
+import net.alvin.infinityforge.network.s2c.ClearAllClientStatesS2CPacket;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
@@ -28,12 +29,7 @@ public class InfinityStoneEventHandler {
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(InfinityStoneEventHandler::onAllowDamage);
         ServerLivingEntityEvents.ALLOW_DEATH.register(InfinityStoneEventHandler::onAllowDeath);
-        ServerLivingEntityEvents.AFTER_DEATH.register((entity, damageSource) -> {
-            if (entity instanceof ServerPlayerEntity player) {
-                GauntletConnectionEvents.cleanupPlayerAll(player);
-                GauntletClientConnectionEvents.clearAll();
-            }
-        });
+        ServerLivingEntityEvents.AFTER_DEATH.register(InfinityStoneEventHandler::onAfterDeath);
     }
 
     public static void applyDamageInfinity(LivingEntity entity, DamageSource source, boolean breakArmor) {
@@ -108,5 +104,13 @@ public class InfinityStoneEventHandler {
         }
 
         return true;
+    }
+
+    private static void onAfterDeath(LivingEntity entity, DamageSource damageSource) {
+        if (entity instanceof ServerPlayerEntity player) {
+            GauntletConnectionEvents.cleanupPlayerAll(player);
+            ServerPlayNetworking.send(player, new ClearAllClientStatesS2CPacket());
+            GauntletConnectionEvents.populateAbilityDynamicIcons(player);
+        }
     }
 }

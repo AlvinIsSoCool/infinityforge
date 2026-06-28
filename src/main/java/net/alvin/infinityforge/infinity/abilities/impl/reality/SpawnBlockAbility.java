@@ -1,11 +1,13 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
 import net.alvin.infinityforge.block.entity.FakeBlockEntity;
+import net.alvin.infinityforge.infinity.abilities.base.AbilityDynamicIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.FakeItem;
+import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -15,11 +17,14 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Block> {
+public class SpawnBlockAbility extends ActiveAbility
+        implements AbilityState<Block>, AbilityDynamicIcon<Block> {
     private final boolean spawnFake;
 
     public SpawnBlockAbility(Identifier id, AbilityIcon icon,
@@ -41,7 +46,18 @@ public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Blo
                 // Sneaking and looking away.
                 if (selectedBlock != null) {
                     // Has a selection already.
-                    player.sendMessage(Text.literal("You will get all the blocks!"), true);
+                    BlockPos origin = player.getBlockPos();
+                    World playerWorld = player.getWorld();
+                    int r = 5;
+
+                    for (int x = -r; x <= r; x++) {
+                        for (int z = -r; z <= r; z++) {
+                            if (x*x + z*z > r*r) continue;
+                            BlockPos surface = new BlockPos(origin.getX() + x, origin.getY() - 1, origin.getZ() + z);
+                            if (spawnFake) FakeBlockEntity.place(playerWorld, surface, selectedBlock);
+                            else playerWorld.setBlockState(surface, selectedBlock.getDefaultState());
+                        }
+                    }
                     return true;
                 } else {
                     // Has no selection.
@@ -63,11 +79,8 @@ public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Blo
                 player.sendMessage(Text.literal("No blocks selected! Try sneaking and selecting a block."), true);
                 return false;
             }
-            if (spawnFake) {
-                FakeBlockEntity.place(world, hit.getBlockPos(), selectedBlock);
-            } else {
-                world.setBlockState(hit.getBlockPos(), selectedBlock.getDefaultState());
-            }
+            if (spawnFake) FakeBlockEntity.place(world, hit.getBlockPos(), selectedBlock);
+            else world.setBlockState(hit.getBlockPos(), selectedBlock.getDefaultState());
             return true;
         }
     }
@@ -76,7 +89,8 @@ public class SpawnBlockAbility extends ActiveAbility implements AbilityState<Blo
     public Class<Block> getType() { return Block.class; }
 
     @Override
-    public ItemStack getDynamicIconFromState(Block state) {
-        return spawnFake ? FakeItem.create(state.asItem(), 1) : new ItemStack(state);
+    public ItemStack getDynamicIcon(Block state) {
+        return state == null ? ModItems.REALITY_STONE.getDefaultStack()
+                : spawnFake ? FakeItem.create(state.asItem(), 1) : new ItemStack(state);
     }
 }

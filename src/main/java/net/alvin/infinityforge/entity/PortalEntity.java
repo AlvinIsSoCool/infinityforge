@@ -1,8 +1,9 @@
 package net.alvin.infinityforge.entity;
 
-import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
@@ -18,11 +19,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.ChunkStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -36,7 +37,8 @@ public class PortalEntity extends Entity {
     private static final TrackedData<Float> ANIMATION_PROGRESS =
             DataTracker.registerData(PortalEntity.class, TrackedDataHandlerRegistry.FLOAT);
     private static final float ANIMATION_SPEED = 0.03f;
-    private final Map<UUID, Integer> teleportCooldowns = new HashMap<>();
+    private static final Map<UUID, Long> PORTAL_COOLDOWNS = new HashMap<>();
+    private static final long COOLDOWN_TICKS = 40L;
 
     public PortalEntity(EntityType<?> type, World world) {
         super(type, world);
@@ -86,7 +88,7 @@ public class PortalEntity extends Entity {
         if (this.partnerId == null) return null;
         for (ServerWorld world : server.getWorlds()) {
             Entity e = world.getEntity(this.partnerId);
-            if (e instanceof PortalEntity portal) return portal;
+            if (e instanceof PortalEntity partner) return partner;
         }
         return null;
     }
@@ -116,23 +118,19 @@ public class PortalEntity extends Entity {
             return;
         }
 
-        this.teleportCooldowns.entrySet().removeIf(e -> {
-            e.setValue(e.getValue() - 1);
-            return e.getValue() <= 0;
-        });
-
         ServerWorld serverWorld = (ServerWorld) this.getWorld();
         ServerWorld destination = serverWorld.getServer().getWorld(this.destWorld);
         if (destination == null) return;
 
-        PortalEntity partner = findPartner(serverWorld.getServer());
+        long currentTime = serverWorld.getTime();
         Box box = this.getBoundingBox();
         for (Entity e : serverWorld.getOtherEntities(this, box)) {
             if (!(e instanceof ServerPlayerEntity player)) continue;
-            if (this.teleportCooldowns.containsKey(player.getUuid())) continue;
+            if (player.interactionManager.getGameMode() == GameMode.SPECTATOR) continue;
+            if (PORTAL_COOLDOWNS.getOrDefault(player.getUuid(), 0L) > currentTime) continue;
 
-            this.teleportCooldowns.put(player.getUuid(), 80);
-            if (partner != null) partner.teleportCooldowns.put(player.getUuid(), 80);
+            clearDestinationArea(destination, destX, destY, destZ);
+            PORTAL_COOLDOWNS.put(player.getUuid(), currentTime + COOLDOWN_TICKS);
 
             Vec3d offset = getArrivalOffset(player);
             FabricDimensions.teleport(player, destination, new TeleportTarget(
@@ -147,16 +145,16 @@ public class PortalEntity extends Entity {
     private void tickParticles(float progress) {
         if (progress <= 0f) return;
 
-        float a = progress;
-        float b = 1.5f * progress;
+        float a = (this.getWidth() / 2f) * progress;
+        float b = (this.getHeight() / 2f) * progress;
         float cosYaw   = MathHelper.cos((float)Math.toRadians(-this.getYaw()));
         float sinYaw   = MathHelper.sin((float)Math.toRadians(-this.getYaw()));
         float cosPitch = MathHelper.cos((float)Math.toRadians(this.getPitch()));
         float sinPitch = MathHelper.sin((float)Math.toRadians(this.getPitch()));
         double cx = this.getX();
-        double cy = this.getY() + 1.5;
+        double cy = this.getY() + this.getHeight() / 2f - 0.25f;
         double cz = this.getZ();
-        int count = 30;
+        int count = 25;
 
         for (int i = 0; i < count; i++) {
             double angle = (2 * Math.PI * i / count) + (this.age * 0.03);
@@ -190,7 +188,33 @@ public class PortalEntity extends Entity {
             Vec3d look = player.getRotationVec(1.0f);
             direction = new Vec3d(look.x, 0, look.z).normalize();
         }
-        return direction.multiply(1.5);
+        return direction.multiply(2.0);
+    }
+
+    private void clearDestinationArea(ServerWorld destination, double x, double y, double z) {
+        float hw = this.getWidth() / 2f + 2f;
+        float height = this.getHeight() + 1f;
+
+        int minCX = ChunkSectionPos.getSectionCoord((int)(x - hw));
+        int maxCX = ChunkSectionPos.getSectionCoord((int)(x + hw));
+        int minCZ = ChunkSectionPos.getSectionCoord((int)(z - hw));
+        int maxCZ = ChunkSectionPos.getSectionCoord((int)(z + hw));
+
+        for (int cx = minCX; cx <= maxCX; cx++) {
+            for (int cz = minCZ; cz <= maxCZ; cz++) {
+                destination.getChunk(cx, cz, ChunkStatus.FULL, true);
+            }
+        }
+
+        BlockPos min = BlockPos.ofFloored(x - hw, y, z - hw);
+        BlockPos max = BlockPos.ofFloored(x + hw, y + height, z + hw);
+
+        for (BlockPos pos : BlockPos.iterate(min, max)) {
+            BlockState state = destination.getBlockState(pos);
+            if (state.isAir()) continue;
+            if (state.getHardness(destination, pos) < 0) continue;
+            destination.setBlockState(pos, Blocks.AIR.getDefaultState());
+        }
     }
 
     @Override
@@ -211,7 +235,6 @@ public class PortalEntity extends Entity {
         if (!(attacker instanceof PlayerEntity player)) return false;
         if (InfinityGauntletItem.findGauntlet(player) != null) {
             this.closing = true;
-            InfinityForge.LOGGER.info("Damage called for PortalEntity!");
 
             if (this.getWorld() instanceof ServerWorld sw) {
                 PortalEntity partner = findPartner(sw.getServer());

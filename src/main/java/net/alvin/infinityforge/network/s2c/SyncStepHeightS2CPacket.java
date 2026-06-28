@@ -8,10 +8,8 @@ import net.minecraft.util.Identifier;
 
 public record SyncStepHeightS2CPacket(float stepHeight) implements FabricPacket {
     public static final PacketType<SyncStepHeightS2CPacket> TYPE =
-            PacketType.create(
-                    new Identifier(InfinityForge.MOD_ID, "sync_step_height"),
-                    SyncStepHeightS2CPacket::new
-            );
+            PacketType.create(new Identifier(InfinityForge.MOD_ID, "sync_step_height"),
+                    SyncStepHeightS2CPacket::new);
 
     public SyncStepHeightS2CPacket(PacketByteBuf buf) { this(buf.readFloat()); }
 

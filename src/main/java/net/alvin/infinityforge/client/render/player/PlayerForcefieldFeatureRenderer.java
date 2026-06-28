@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.client.render;
+package net.alvin.infinityforge.client.render.player;
 
 import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.accessor.PlayerEffectsAccess;

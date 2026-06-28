@@ -8,10 +8,8 @@ import net.minecraft.util.Identifier;
 
 public record PickupInfinityItemC2SPacket(int entityId) implements FabricPacket {
     public static final PacketType<PickupInfinityItemC2SPacket> TYPE =
-            PacketType.create(
-                    new Identifier(InfinityForge.MOD_ID, "pickup_stone"),
-                    PickupInfinityItemC2SPacket::new
-            );
+            PacketType.create(new Identifier(InfinityForge.MOD_ID, "pickup_stone"),
+                    PickupInfinityItemC2SPacket::new);
 
     public PickupInfinityItemC2SPacket(PacketByteBuf buf) { this(buf.readInt()); }
 
