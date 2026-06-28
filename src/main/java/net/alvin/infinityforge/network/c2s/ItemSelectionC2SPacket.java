@@ -8,10 +8,8 @@ import net.minecraft.util.Identifier;
 
 public record ItemSelectionC2SPacket(Identifier id, boolean shiftClicked) implements FabricPacket {
     public static final PacketType<ItemSelectionC2SPacket> TYPE =
-            PacketType.create(
-                    new Identifier(InfinityForge.MOD_ID, "item_selection"),
-                    ItemSelectionC2SPacket::new
-            );
+            PacketType.create(new Identifier(InfinityForge.MOD_ID, "item_selection"),
+                    ItemSelectionC2SPacket::new);
 
     public ItemSelectionC2SPacket(PacketByteBuf buf) {
         this(buf.readIdentifier(), buf.readBoolean());

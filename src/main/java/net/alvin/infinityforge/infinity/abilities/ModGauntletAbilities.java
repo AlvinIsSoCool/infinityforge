@@ -290,7 +290,7 @@ public class ModGauntletAbilities {
                     AbilityIcon.next(),
                     "abilities.infinityforge.kill",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.soulStone,
-                    () -> List.of(ModStones.POWER, ModStones.SOUL), 100
+                    () -> List.of(ModStones.POWER, ModStones.SPACE, ModStones.REALITY, ModStones.SOUL), 100
             )
     );
     public static final GauntletAbility SNAP = GauntletAbilityRegistry.register(

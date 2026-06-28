@@ -1,10 +1,12 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
+import net.alvin.infinityforge.infinity.abilities.base.AbilityDynamicIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.item.FakeItem;
+import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.screen.ItemSelectionScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.ItemEntity;
@@ -21,7 +23,8 @@ import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SpawnItemAbility extends ActiveAbility implements AbilityState<ItemStack> {
+public class SpawnItemAbility extends ActiveAbility
+        implements AbilityState<ItemStack>, AbilityDynamicIcon<ItemStack> {
     private final boolean spawnFake;
 
     public SpawnItemAbility(Identifier id, AbilityIcon icon,
@@ -71,7 +74,8 @@ public class SpawnItemAbility extends ActiveAbility implements AbilityState<Item
     public Class<ItemStack> getType() { return ItemStack.class; }
 
     @Override
-    public ItemStack getDynamicIconFromState(ItemStack state) {
-        return spawnFake ? FakeItem.create(state.getItem(), state.getCount()) : state;
+    public ItemStack getDynamicIcon(ItemStack state) {
+        return state == null ? ModItems.REALITY_STONE.getDefaultStack()
+                : spawnFake ? FakeItem.create(state.getItem(), state.getCount()) : state;
     }
 }

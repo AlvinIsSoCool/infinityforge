@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.client.render;
+package net.alvin.infinityforge.client.render.player;
 
 import net.minecraft.client.render.VertexConsumer;
 

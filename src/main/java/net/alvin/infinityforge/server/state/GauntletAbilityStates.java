@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-public class StatefulAbilityState {
+public class GauntletAbilityStates {
     private static final Map<PlayerEntity, Map<Identifier, Object>> STATES
             = new IdentityHashMap<>();
 

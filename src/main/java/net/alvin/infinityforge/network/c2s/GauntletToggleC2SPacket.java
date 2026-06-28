@@ -8,10 +8,8 @@ import net.minecraft.util.Identifier;
 
 public record GauntletToggleC2SPacket(Identifier abilityId) implements FabricPacket {
     public static final PacketType<GauntletToggleC2SPacket> TYPE =
-            PacketType.create(
-                    new Identifier(InfinityForge.MOD_ID, "gauntlet_toggle"),
-                    GauntletToggleC2SPacket::new
-            );
+            PacketType.create(new Identifier(InfinityForge.MOD_ID, "gauntlet_toggle"),
+                    GauntletToggleC2SPacket::new);
 
     public GauntletToggleC2SPacket(PacketByteBuf buf) { this(buf.readIdentifier()); }
 

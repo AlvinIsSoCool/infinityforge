@@ -1,6 +1,5 @@
 package net.alvin.infinityforge.infinity.abilities;
 
-import net.alvin.infinityforge.InfinityForge;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -75,7 +74,6 @@ public class StoneUseAbilities {
         int radius = isEnd ? END_RADIUS : DEFAULT_RADIUS;
 
         for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-            InfinityForge.LOGGER.info("TeleportationHelper: Teleportation Attempt {}", ++attempt);
             int x = RANDOM.nextInt(radius * 2) - radius;
             int z = RANDOM.nextInt(radius * 2) - radius;
 
@@ -84,11 +82,7 @@ public class StoneUseAbilities {
             else if (hasCeiling) candidate = randomYPos(x, z, NETHER_MIN_Y, NETHER_MAX_Y);
             else candidate = randomYPos(x, z, 70, 120);
 
-            if (candidate != null) {
-                InfinityForge.LOGGER.info("TeleportationHelper: Position (X: {}, Y: {}, Z: {}) Found in {} attempts!",
-                        candidate.getX(), candidate.getY(), candidate.getZ(), ++attempt);
-                return candidate;
-            }
+            if (candidate != null) return candidate;
         }
 
         return world.getSpawnPos();

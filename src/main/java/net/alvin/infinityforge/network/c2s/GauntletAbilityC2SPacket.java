@@ -7,10 +7,9 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
 public record GauntletAbilityC2SPacket(Identifier abilityId) implements FabricPacket {
-    public static final PacketType<GauntletAbilityC2SPacket> TYPE = PacketType.create(
-            new Identifier(InfinityForge.MOD_ID, "gauntlet_ability"),
-            GauntletAbilityC2SPacket::new
-    );
+    public static final PacketType<GauntletAbilityC2SPacket> TYPE =
+            PacketType.create(new Identifier(InfinityForge.MOD_ID, "gauntlet_ability"),
+            GauntletAbilityC2SPacket::new);
 
     public GauntletAbilityC2SPacket(PacketByteBuf buf) {
         this(buf.readIdentifier());

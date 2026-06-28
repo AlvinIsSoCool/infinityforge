@@ -45,12 +45,6 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.GOLD_TITANIUM_ALLOY_INGOT, Models.GENERATED);
         itemModelGenerator.register(ModItems.BLUEPRINT, Models.GENERATED);
 
-        /*Models.GENERATED.upload(
-                new Identifier("infinityforge", "item/blueprint"),
-                TextureMap.layer0(new Identifier("minecraft", "item/paper")),
-                itemModelGenerator.writer
-        );*/
-
         Models.GENERATED.upload(
                 new Identifier("infinityforge", "item/infinity_gauntlet_2d"),
                 TextureMap.layer0(new Identifier("infinityforge", "item/infinity_gauntlet_2d")),

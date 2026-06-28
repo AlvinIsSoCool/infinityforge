@@ -1,11 +1,15 @@
 package net.alvin.infinityforge.client.packet;
 
 import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
+import net.alvin.infinityforge.client.screen.PortalScreen;
 import net.alvin.infinityforge.client.state.AbilityDynamicIconState;
+import net.alvin.infinityforge.client.state.ClientKnownDimensionsState;
 import net.alvin.infinityforge.client.state.GauntletClientState;
 import net.alvin.infinityforge.network.s2c.*;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
 public class GauntletClientPacketHandlers {
@@ -24,6 +28,10 @@ public class GauntletClientPacketHandlers {
                 (packet, player, responseSender)
                         -> GauntletClientState.clearAll());
         ClientPlayNetworking.registerGlobalReceiver(
+                ClearAllClientStatesS2CPacket.TYPE,
+                (packet, player, responseSender)
+                        -> GauntletClientConnectionEvents.clearAll());
+        ClientPlayNetworking.registerGlobalReceiver(
                 SyncAbilityDynamicIconS2CPacket.TYPE,
                 (packet, player, responseSender)
                         -> AbilityDynamicIconState.put(packet.abilityId(), packet.iconStack()));
@@ -38,6 +46,15 @@ public class GauntletClientPacketHandlers {
                     ((PlayerEffectsAccess) player).setCustomScale(packet.scale());
                     player.calculateDimensions();
                 });
+        ClientPlayNetworking.registerGlobalReceiver(
+                OpenPortalScreenS2CPacket.TYPE,
+                (packet, player, responseSender)
+                        -> MinecraftClient.getInstance().execute(() ->
+                        MinecraftClient.getInstance().setScreen(new PortalScreen())));
+        ClientPlayNetworking.registerGlobalReceiver(
+                SyncKnownDimensionsS2CPacket.TYPE,
+                (packet, player, responseSender)
+                        -> ClientKnownDimensionsState.set(packet.dimIds()));
     }
 
 
