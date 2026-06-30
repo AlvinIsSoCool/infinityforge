@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.client.render.entity;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.client.render.ModRenderHelper;
 import net.alvin.infinityforge.entity.BlackHoleEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -48,10 +49,10 @@ public class BlackHoleEntityRenderer extends EntityRenderer<BlackHoleEntity> {
                     Vector3f p3 = sphericalToCartesian(theta2, phi2, radius);
                     Vector3f p4 = sphericalToCartesian(theta1, phi2, radius);
 
-                    putVertex(vc, m, n, p1, 0, 0);
-                    putVertex(vc, m, n, p2, 0, 1);
-                    putVertex(vc, m, n, p3, 1, 1);
-                    putVertex(vc, m, n, p4, 1, 0);
+                    ModRenderHelper.putVertex(vc, m, n, p1, 0, 0);
+                    ModRenderHelper.putVertex(vc, m, n, p2, 0, 1);
+                    ModRenderHelper.putVertex(vc, m, n, p3, 1, 1);
+                    ModRenderHelper.putVertex(vc, m, n, p4, 1, 0);
                 }
             }
         matrices.pop();
@@ -62,17 +63,6 @@ public class BlackHoleEntityRenderer extends EntityRenderer<BlackHoleEntity> {
         float y = (float) (radius * Math.cos(theta));
         float z = (float) (radius * Math.sin(theta) * Math.sin(phi));
         return new Vector3f(x, y, z);
-    }
-
-    private void putVertex(VertexConsumer vc, Matrix4f m, Matrix3f n,
-                           Vector3f pos, float u, float v) {
-        vc.vertex(m, pos.x(), pos.y(), pos.z())
-                .color(0f, 0f, 0f, 1f)
-                .texture(u, v)
-                .overlay(OverlayTexture.DEFAULT_UV)
-                .light(LightmapTextureManager.MAX_LIGHT_COORDINATE)
-                .normal(n, pos.x(), pos.y(), pos.z())
-                .next();
     }
 
     @Override

@@ -1,9 +1,7 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.item.InfinityStoneItem;
-import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.network.c2s.PickupInfinityItemC2SPacket;
+import net.alvin.infinityforge.registry.ModTags;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -38,9 +36,7 @@ public class MinecraftClientMixin {
         List<ItemEntity> items = player.getWorld().getEntitiesByClass(
                 ItemEntity.class,
                 box,
-                e -> (e.getStack().getItem() instanceof InfinityStoneItem
-                        || e.getStack().getItem() instanceof InfinityGauntletItem
-                        || e.getStack().getItem() instanceof InfinityTesseractItem)
+                e -> e.getStack().isIn(ModTags.Items.INFINITY_ITEMS)
         );
         if (items.isEmpty()) return;
 

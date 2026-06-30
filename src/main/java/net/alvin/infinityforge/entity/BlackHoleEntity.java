@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.entity;
 
 import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
+import net.alvin.infinityforge.registry.ModTags;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.minecraft.block.BlockState;
@@ -155,12 +156,12 @@ public class BlackHoleEntity extends Entity {
         if (radius <= 0f) return;
 
         World world = this.getWorld();
-        int count = 10;
+        int count = 15;
 
         for (int i = 0; i < count; i++) {
             double theta = this.random.nextDouble() * Math.PI;
             double phi = this.random.nextDouble() * 2 * Math.PI;
-            double spawnRadius = radius * 1.75;
+            double spawnRadius = radius * 1.5;
 
             double lx = spawnRadius * Math.sin(theta) * Math.cos(phi);
             double ly = spawnRadius * Math.cos(theta);
@@ -184,6 +185,7 @@ public class BlackHoleEntity extends Entity {
 
     private void consumeArea() {
         float radius = this.getRadius();
+        float scaledRadius = radius * 1.25f;
         if (radius < 0.25f) return;
 
         Vec3d center = this.getPos().add(0, radius, 0);
@@ -194,6 +196,11 @@ public class BlackHoleEntity extends Entity {
                 center.x + radius, center.y + radius, center.z + radius
         );
         for (Entity e : world.getOtherEntities(this, entityBox)) {
+            if (e instanceof ItemEntity ie && !ie.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) {
+                ie.discard();
+                continue;
+            }
+
             if (!(e instanceof LivingEntity living) || !living.isAlive()) continue;
             if (e.getUuid().equals(this.ownerUuid)) continue;
             if (living.getPos().distanceTo(center) > radius) continue;
@@ -202,12 +209,14 @@ public class BlackHoleEntity extends Entity {
                     true);
         }
 
-        BlockPos min = BlockPos.ofFloored(center.x - radius, center.y - radius, center.z - radius);
-        BlockPos max = BlockPos.ofFloored(center.x + radius, center.y + radius, center.z + radius);
+        BlockPos min = BlockPos.ofFloored(center.x - scaledRadius, center.y - scaledRadius,
+                center.z - scaledRadius);
+        BlockPos max = BlockPos.ofFloored(center.x + scaledRadius, center.y + scaledRadius,
+                center.z + scaledRadius);
         for (BlockPos pos : BlockPos.iterate(min, max)) {
             BlockState state = world.getBlockState(pos);
             if (state.isAir()) continue;
-            if (Vec3d.ofCenter(pos).distanceTo(center) > radius) continue;
+            if (Vec3d.ofCenter(pos).distanceTo(center) > scaledRadius) continue;
             world.breakBlock(pos, false);
         }
     }

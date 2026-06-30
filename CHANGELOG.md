@@ -5,20 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.8.0-beta.1] - 2026-06-30
+
+### Added
 
 - Added REI integration.
-- Added Mod Menu and Cloth Config API integration.
-- New AbilityIcon system.
-- Some new icons.
+- Added Mod Menu and Cloth Config API integrations.
+- Added new AbilityIcon system.
+- Added some new icons.
 - Added some config options.
 - Added Stone World Gen.
 - Added dynamic ability icons.
 - Added more abilities.
 - Added translations.
+
+### Changed
+
 - Internal changes for performance.
+- Project heirarchy changes.
+
+### Fixed
+
 - Fixed and balanced infinity stone damage event handling.
 - Fixed ability cleanup on stone removal.
+- Fixed damage handling for forcefield and phasing abilities.
+
 
 ## [0.6.0-beta.1] - 2026-05-20
 

@@ -30,5 +30,9 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 .add(ModItems.SOUL_TESSERACT)
                 .add(ModItems.TIME_TESSERACT)
                 .add(ModItems.MIND_TESSERACT);
+        getOrCreateTagBuilder(ModTags.Items.INFINITY_ITEMS)
+                .add(ModItems.INFINITY_GAUNTLET)
+                .addTag(ModTags.Items.INFINITY_STONES)
+                .addTag(ModTags.Items.INFINITY_TESSERACTS);
     }
 }

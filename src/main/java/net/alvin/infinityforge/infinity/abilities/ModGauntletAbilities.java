@@ -306,7 +306,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility FLIGHT = GauntletAbilityRegistry.register(
             new FlightAbility(
                     new Identifier(InfinityForge.MOD_ID, "flight"),
-                    AbilityIcon.next(),
+                    AbilityIcon.missingno(),
                     "abilities.infinityforge.flight",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.mindStone,
                     () -> List.of(ModStones.POWER, ModStones.MIND),
@@ -316,7 +316,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility CHANGE_SNAP = GauntletAbilityRegistry.register(
             new ChangeSnapAbility(
                     new Identifier(InfinityForge.MOD_ID, "change_snap"),
-                    AbilityIcon.next(),
+                    AbilityIcon.empty(),
                     "abilities.infinityforge.change_snap",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.mindStone,
                     () -> ModStones.ALL_STONES,
@@ -336,7 +336,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility REWIND_TIME = GauntletAbilityRegistry.register(
             new RewindTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "rewind_time"),
-                    AbilityIcon.next(),
+                    AbilityIcon.missingno(),
                     "abilities.infinityforge.rewind_time",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
                     List::of,
@@ -346,7 +346,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility STOP_TIME = GauntletAbilityRegistry.register(
             new StopTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "stop_time"),
-                    AbilityIcon.next(),
+                    AbilityIcon.missingno(),
                     "abilities.infinityforge.stop_time",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
                     List::of,
@@ -356,7 +356,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility RANDOMISE_TIME = GauntletAbilityRegistry.register(
             new RandomiseTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "randomise_time"),
-                    AbilityIcon.next(),
+                    AbilityIcon.missingno(),
                     "abilities.infinityforge.randomise_time",
                     () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.timeStone,
                     List::of,

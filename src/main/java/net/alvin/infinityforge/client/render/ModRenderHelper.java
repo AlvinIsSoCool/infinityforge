@@ -5,6 +5,7 @@ import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 public class ModRenderHelper {
     public static void renderCube(VertexConsumer vc, Matrix4f pos,
@@ -149,5 +150,10 @@ public class ModRenderHelper {
                 255, 255, 255, 255,
                 x, y, z, u, v,
                 0f, 0f, 1f);
+    }
+
+    public static void putVertex(VertexConsumer vc, Matrix4f pos, Matrix3f norm,
+                                 Vector3f pf, float u, float v) {
+        ModRenderHelper.putVertex(vc, pos, norm, pf.x, pf.y, pf.z, u, v);
     }
 }

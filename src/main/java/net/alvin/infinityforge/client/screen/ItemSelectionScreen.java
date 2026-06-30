@@ -28,7 +28,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ItemSelectionScreen extends HandledScreen<ItemSelectionScreenHandler> {
-    private static final Identifier GUI_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/gui/item_selection.png");
+    private static final Identifier GUI_TEXTURE = new Identifier(InfinityForge.MOD_ID,
+            "textures/gui/item_selection.png");
     private static final int COLS = ItemSelectionScreenHandler.COLS;
     private static final int ROWS = ItemSelectionScreenHandler.ROWS;
     private static final int TRACK_X = 226;
@@ -52,11 +53,9 @@ public class ItemSelectionScreen extends HandledScreen<ItemSelectionScreenHandle
         backgroundWidth = 235;
         Predicate<Item> itemFilter = item -> (
                 item != Items.AIR
-                && item != ModItems.INFINITY_GAUNTLET
                 && item != ModItems.FAKE_ITEM
                 && item != ModBlocks.FAKE_BLOCK.asItem()
-                && !item.getDefaultStack().isIn(ModTags.Items.INFINITY_STONES)
-                && !item.getDefaultStack().isIn(ModTags.Items.INFINITY_TESSERACTS)
+                && !item.getDefaultStack().isIn(ModTags.Items.INFINITY_ITEMS)
         );
         allItems = Registries.ITEM.stream()
                 .filter(itemFilter)
