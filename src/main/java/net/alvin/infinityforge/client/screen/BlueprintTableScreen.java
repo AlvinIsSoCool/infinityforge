@@ -9,7 +9,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class BlueprintTableScreen extends HandledScreen<BlueprintTableScreenHandler> {
-    private static final Identifier GUI_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/gui/blueprint_table.png");
+    private static final Identifier GUI_TEXTURE = new Identifier(InfinityForge.MOD_ID,
+            "textures/gui/blueprint_table.png");
 
     public BlueprintTableScreen(BlueprintTableScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -18,13 +19,7 @@ public class BlueprintTableScreen extends HandledScreen<BlueprintTableScreenHand
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        context.drawTexture(
-                GUI_TEXTURE,
-                x, y,
-                0, 0,
-                backgroundWidth, backgroundHeight
-        );
-
+        context.drawTexture(GUI_TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
         int progress = handler.getScaledProgress();
         int craftingState = handler.getCraftingState();
 

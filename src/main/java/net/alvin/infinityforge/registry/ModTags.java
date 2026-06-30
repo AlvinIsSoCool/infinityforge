@@ -15,5 +15,9 @@ public class ModTags {
                 RegistryKeys.ITEM,
                 new Identifier("infinityforge", "infinity_tesseracts")
         );
+        public static final TagKey<Item> INFINITY_ITEMS = TagKey.of(
+                RegistryKeys.ITEM,
+                new Identifier("infinityforge", "infinity_items")
+        );
     }
 }

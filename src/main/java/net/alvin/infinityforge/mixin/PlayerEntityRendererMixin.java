@@ -43,7 +43,6 @@ public abstract class PlayerEntityRendererMixin {
             ci.cancel();
             return;
         }
-
         isCustomPhasing = access.isCustomPhasing();
     }
 
@@ -69,8 +68,8 @@ public abstract class PlayerEntityRendererMixin {
             index = 4
     )
     private VertexConsumerProvider applyPhasingAlpha(VertexConsumerProvider original) {
-        if (isCustomPhasing)
-            return layer -> new AlphaMultiplyingVertexConsumer(original.getBuffer(layer), 0.25f);
+        if (isCustomPhasing) return layer
+                -> new AlphaMultiplyingVertexConsumer(original.getBuffer(layer), 0.25f);
         return original;
     }
 }

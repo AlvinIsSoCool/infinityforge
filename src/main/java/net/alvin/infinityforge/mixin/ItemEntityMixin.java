@@ -1,13 +1,11 @@
 package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.item.InfinityTesseractItem;
+import net.alvin.infinityforge.registry.ModTags;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,11 +29,7 @@ public class ItemEntityMixin {
     )
     private void noAutoPickup(PlayerEntity player, CallbackInfo ci) {
         ItemEntity self = (ItemEntity)(Object)this;
-        if (self.getStack().getItem() instanceof InfinityStoneItem
-                || self.getStack().getItem() instanceof InfinityGauntletItem
-                || self.getStack().getItem() instanceof InfinityTesseractItem) {
-            ci.cancel();
-        }
+        if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) ci.cancel();
     }
 
     @Inject(
@@ -45,11 +39,7 @@ public class ItemEntityMixin {
     )
     private void cancelDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         ItemEntity self = (ItemEntity)(Object)this;
-        if (self.getStack().getItem() instanceof InfinityStoneItem
-                || self.getStack().getItem() instanceof InfinityGauntletItem
-                || self.getStack().getItem() instanceof InfinityTesseractItem) {
-            cir.setReturnValue(false);
-        }
+        if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) cir.setReturnValue(false);
     }
 
     @ModifyReturnValue(
@@ -67,19 +57,15 @@ public class ItemEntityMixin {
     )
     private void onTick(CallbackInfo ci) {
         ItemEntity self = (ItemEntity)(Object) this;
-        Item item = self.getStack().getItem();
         if (self.getWorld().isClient) return;
-        if (!(item instanceof InfinityStoneItem || item instanceof InfinityGauntletItem
-                || item instanceof InfinityTesseractItem)) return;
+        if (!self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) return;
 
         this.itemAge = 0;
         Box searchBox = self.getBoundingBox().expand(0.25);
         List<ItemEntity> nearbyItems = self.getWorld().getEntitiesByClass(
                 ItemEntity.class,
                 searchBox,
-                e -> e != self && (e.getStack().getItem() instanceof InfinityStoneItem
-                        || e.getStack().getItem() instanceof InfinityGauntletItem
-                        || e.getStack().getItem() instanceof InfinityTesseractItem)
+                e -> e != self && self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)
         );
 
         for (ItemEntity other : nearbyItems) {
@@ -94,9 +80,7 @@ public class ItemEntityMixin {
     )
     private void onWaterBuoyancy(CallbackInfo ci) {
         ItemEntity self = (ItemEntity) (Object) this;
-        if (self.getStack().getItem() instanceof InfinityStoneItem
-                || self.getStack().getItem() instanceof InfinityGauntletItem
-                || self.getStack().getItem() instanceof InfinityTesseractItem) {
+        if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) {
             Vec3d vec3d = self.getVelocity();
             self.setVelocity(vec3d.x * 0.96F, -0.04, vec3d.z * 0.96F);
             ci.cancel();
@@ -110,9 +94,7 @@ public class ItemEntityMixin {
     )
     private void onLavaBuoyancy(CallbackInfo ci) {
         ItemEntity self = (ItemEntity) (Object) this;
-        if (self.getStack().getItem() instanceof InfinityStoneItem
-                || self.getStack().getItem() instanceof InfinityGauntletItem
-                || self.getStack().getItem() instanceof InfinityTesseractItem) {
+        if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) {
             Vec3d vec3d = self.getVelocity();
             self.setVelocity(vec3d.x * 0.93F, -0.035, vec3d.z * 0.93F);
             ci.cancel();

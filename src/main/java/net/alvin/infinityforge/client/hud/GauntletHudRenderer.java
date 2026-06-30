@@ -20,7 +20,8 @@ import java.util.List;
 import static net.alvin.infinityforge.client.input.GauntletKeybinds.SLOT_KEYS;
 
 public class GauntletHudRenderer {
-    private static final Identifier HUD_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/gui/ability_bar.png");
+    private static final Identifier HUD_TEXTURE = new Identifier(InfinityForge.MOD_ID,
+            "textures/gui/ability_bar.png");
 
     private static final int MARGIN_X = 10;
     private static final int MARGIN_Y = 14;
@@ -49,11 +50,11 @@ public class GauntletHudRenderer {
 
         if (abilities.size() > 6) {
             if (scrollOffset > 0)  {
-                context.drawTexture(HUD_TEXTURE, startX + 4, startY - 10, 37, 0, 15, 15, 256, 256);
+                context.drawTexture(HUD_TEXTURE, startX + 4, startY - 10, 37, 0, 15, 15);
             }
 
             if (scrollOffset < abilities.size() - 6) {
-                context.drawTexture(HUD_TEXTURE, startX + 4, startY + visibleCount * SLOT_SIZE + 2, 52, 0, 15, 15, 256, 256);
+                context.drawTexture(HUD_TEXTURE, startX + 4, startY + visibleCount * SLOT_SIZE + 2, 52, 0, 15, 15);
             }
         }
 
@@ -75,7 +76,7 @@ public class GauntletHudRenderer {
         RenderSystem.defaultBlendFunc();
 
         // Ability Bar.
-        context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22, 256, 256);
+        context.drawTexture(HUD_TEXTURE, x, y, 0, 0, 22, 22);
 
         // Icons.
         ItemStack iconStack = ItemStack.EMPTY;
@@ -92,13 +93,13 @@ public class GauntletHudRenderer {
             int iconIndex = ability.getIcon().getIconIndex();
             int u = (iconIndex % 16) * 16;
             int v = (iconIndex / 16) * 16;
-            context.drawTexture(iconLocation, x + 3, y + 3, u, v, 16, 16, 256, 256);
+            context.drawTexture(iconLocation, x + 3, y + 3, u, v, 16, 16);
         }
 
         // Outline.
         int color = ability.getARGBColor();
         if (color == 0xFF7FFFFF) {
-            context.drawTexture(HUD_TEXTURE, x + 1, y + 1, 68, 0, 20, 20, 256, 256);
+            context.drawTexture(HUD_TEXTURE, x + 1, y + 1, 68, 0, 20, 20);
         } else {
             context.fill(x + 1, y + 1, x + 21, y + 2, color); // top
             context.fill(x + 1, y + 20, x + 21, y + 21, color); // bottom
@@ -125,13 +126,13 @@ public class GauntletHudRenderer {
         // Toggle Indicator.
         if (ability instanceof ToggleAbility
                 && GauntletClientState.ACTIVE_TOGGLES.contains(ability.getId())) {
-            context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 23, 0, 7, 7, 256, 256);
+            context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 23, 0, 7, 7);
         }
 
         // Held Indicator.
         if (ability instanceof HeldAbility
                 && GauntletClientState.HELD_ACTIVE.contains(ability.getId())) {
-            context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 30, 0, 7, 7, 256, 256);
+            context.drawTexture(HUD_TEXTURE, x + 15, y + 15, 30, 0, 7, 7);
         }
 
         if (isChatScreen) {

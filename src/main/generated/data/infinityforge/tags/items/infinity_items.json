@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "infinityforge:infinity_gauntlet",
+    "#infinityforge:infinity_stones",
+    "#infinityforge:infinity_tesseracts"
+  ]
+}

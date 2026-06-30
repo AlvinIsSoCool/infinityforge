@@ -3,13 +3,10 @@ package net.alvin.infinityforge.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
-import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.item.InfinityStoneItem;
-import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.item.ModItems;
+import net.alvin.infinityforge.registry.ModTags;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,10 +52,7 @@ public class EntityMixin {
     private boolean makeCollidable(boolean original) {
         if (original) return true;
         if (!((Object) this instanceof ItemEntity itemEntity)) return false;
-        Item item = itemEntity.getStack().getItem();
-        return item instanceof InfinityStoneItem
-                || item instanceof InfinityGauntletItem
-                || item instanceof InfinityTesseractItem;
+        return itemEntity.getStack().isIn(ModTags.Items.INFINITY_ITEMS);
     }
 
     @ModifyReturnValue(
@@ -68,7 +62,7 @@ public class EntityMixin {
     private boolean makeHittable(boolean original) {
         if (original) return true;
         return ((Object)this instanceof ItemEntity itemEntity)
-                && itemEntity.getStack().getItem() instanceof InfinityTesseractItem;
+                && itemEntity.getStack().isIn(ModTags.Items.INFINITY_TESSERACTS);
     }
 
     @ModifyReturnValue(

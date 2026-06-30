@@ -9,7 +9,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class GauntletScreen extends HandledScreen<GauntletScreenHandler> {
-    private static final Identifier GUI_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/gui/gauntlet_gui.png");
+    private static final Identifier GUI_TEXTURE = new Identifier(InfinityForge.MOD_ID,
+            "textures/gui/gauntlet_gui.png");
 
     public GauntletScreen(GauntletScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -22,12 +23,7 @@ public class GauntletScreen extends HandledScreen<GauntletScreenHandler> {
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        context.drawTexture(
-                GUI_TEXTURE,
-                x, y,
-                0, 0,
-                backgroundWidth, backgroundHeight
-        );
+        context.drawTexture(GUI_TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
     }
 
     @Override
