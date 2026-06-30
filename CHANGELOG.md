@@ -103,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - My first official release of the mod.
 
 
+[unreleased]: https://github.com/AlvinIsSoCool/Infinityforge/compare/v0.8.0-beta.1...HEAD
 [0.8.0-beta.1]: https://github.com/AlvinIsSoCool/Infinityforge/compare/v0.6.0-beta.1...0.8.0-beta.1
 [0.6.0-beta.1]: https://github.com/AlvinIsSoCool/Infinityforge/compare/v0.3.0-beta.1...v0.6.0-beta.1
 [0.3.0-beta.1]: https://github.com/AlvinIsSoCool/Infinityforge/compare/v0.1.0-beta.1...v0.3.0-beta.1
