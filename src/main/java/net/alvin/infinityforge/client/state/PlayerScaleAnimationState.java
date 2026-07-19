@@ -21,7 +21,8 @@ public class PlayerScaleAnimationState {
         for (PlayerEntity player : client.world.getPlayers()) {
             PlayerEffectsAccess access = (PlayerEffectsAccess) player;
             float target = access.getCustomScale();
-            PlayerAnimationState state = STATES.computeIfAbsent(player.getUuid(), id -> new PlayerAnimationState(1.0f));
+            PlayerAnimationState state = STATES.computeIfAbsent(player.getUuid(),
+                    id -> new PlayerAnimationState(1.0f));
             state.advance(target, delta, TRANSITION_TIME);
         }
     }

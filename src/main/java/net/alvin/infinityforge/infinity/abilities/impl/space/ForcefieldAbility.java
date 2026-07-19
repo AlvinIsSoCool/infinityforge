@@ -35,9 +35,7 @@ public class ForcefieldAbility extends ToggleAbility {
     }
 
     @Override
-    public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-
-    }
+    public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {}
 
     @Override
     public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {

@@ -6,7 +6,6 @@ import net.alvin.infinityforge.client.render.ModRenderLayers;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.GlUniform;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.Window;
@@ -30,36 +29,38 @@ public class InfinityStoneRenderer {
         int baseColor = stoneType.getBaseColor();
         int glintColor = stoneType.getGlintColor();
 
-        VertexConsumer baseVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(STONE_TEXTURE));
-        ModRenderHelper.renderCube(baseVc, pos, norm, SIZE, baseColor, 255, light, overlay);
+        VertexConsumer baseVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(
+                STONE_TEXTURE));
+        ModRenderHelper.renderCube(baseVc, pos, norm, light, overlay, baseColor, 255, SIZE);
 
         if (FabricLoader.getInstance().isModLoaded("iris")) {
-            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(STONE_TEXTURE));
+            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(
+                    STONE_TEXTURE));
             float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
             int glowAlpha = (int)(80 + 175 * pulse);
-            ModRenderHelper.renderCube(glowVc, pos, norm, SIZE * 1.05f, glintColor, glowAlpha, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay);
+            ModRenderHelper.renderCube(glowVc, pos, norm, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay,
+                    glintColor, glowAlpha, SIZE * 1.05f);
         } else if (vertexConsumers instanceof VertexConsumerProvider.Immediate immediate) {
-            GlUniform colorUniform = ModRenderLayers.stoneGlintShader.getUniform("GlintColor");
-            GlUniform timeUniform = ModRenderLayers.stoneGlintShader.getUniform("GlintTime");
-            GlUniform screenUniform = ModRenderLayers.stoneGlintShader.getUniform("ScreenSize");
-
-            if (colorUniform != null)
-                colorUniform.set(
+            if (ModRenderLayers.glintColorUniform != null)
+                ModRenderLayers.glintColorUniform.set(
                         ((glintColor >> 16) & 0xFF) / 255f,
                         ((glintColor >> 8)  & 0xFF) / 255f,
-                        ( glintColor        & 0xFF) / 255f,
-                        1.0f
+                        (glintColor         & 0xFF) / 255f,
+                        1f
                 );
-            if (timeUniform != null)
-                timeUniform.set((float)((System.currentTimeMillis() % 100000L) / 1000.0));
-            if (screenUniform != null) {
+            if (ModRenderLayers.glintTimeUniform != null)
+                ModRenderLayers.glintTimeUniform.set(
+                        (float)((System.currentTimeMillis() % 100000L) / 1000.0));
+            if (ModRenderLayers.glintScreenSizeUniform != null) {
                 Window window = MinecraftClient.getInstance().getWindow();
-                screenUniform.set((float) window.getFramebufferWidth(), (float) window.getFramebufferHeight());
+                ModRenderLayers.glintScreenSizeUniform.set((float) window.getFramebufferWidth(),
+                        (float) window.getFramebufferHeight());
             }
 
-            VertexConsumer glintVc = immediate.getBuffer(ModRenderLayers.STONE_GLINT);
-            ModRenderHelper.renderCubeGlint(glintVc, pos, SIZE);
-            immediate.draw(ModRenderLayers.STONE_GLINT);
+            VertexConsumer glintVc = immediate.getBuffer(ModRenderLayers.INFINITY_GLINT);
+            ModRenderHelper.renderCube(glintVc, pos, norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,
+                    OverlayTexture.DEFAULT_UV, 0, 0, SIZE);
+            immediate.draw(ModRenderLayers.INFINITY_GLINT);
         }
     }
 
@@ -69,7 +70,6 @@ public class InfinityStoneRenderer {
                        InfinityStoneType stoneType) {
         matrices.push();
             matrices.translate(0.5f, 0.5f, 0.5f);
-
             if (mode == ModelTransformationMode.GUI) {
                 matrices.scale(3.5f, 3.5f, 3.5f);
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30f));
@@ -77,7 +77,6 @@ public class InfinityStoneRenderer {
             } else if (mode == ModelTransformationMode.FIXED) {
                 matrices.scale(3.5f, 3.5f, 3.5f);
             }
-
             renderInternal(stack, mode, matrices, vertexConsumers, light, overlay, stoneType);
         matrices.pop();
     }

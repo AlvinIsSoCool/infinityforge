@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.screen;
+package net.alvin.infinityforge.screen.slot;
 
 import net.alvin.infinityforge.item.BlueprintItem;
 import net.minecraft.inventory.Inventory;

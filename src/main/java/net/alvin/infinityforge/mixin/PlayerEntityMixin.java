@@ -6,6 +6,7 @@ import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
 import net.alvin.infinityforge.infinity.ModStones;
+import net.alvin.infinityforge.registry.ModDamageSources;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
 import net.minecraft.entity.Entity;
@@ -158,7 +159,8 @@ public abstract class PlayerEntityMixin implements PlayerEffectsAccess {
         if (!new HashSet<>(InfinityGauntletItem.getAddedStones(stack))
                 .containsAll(ModStones.ALL_STONES)) return;
 
-        InfinityStoneEventHandler.applyDamageInfinity(self, source, true);
+        InfinityStoneEventHandler.applyDamageInfinity(self,
+                ModDamageSources.powerStone(self.getWorld()), true);
         cir.setReturnValue(true);
     }
 }

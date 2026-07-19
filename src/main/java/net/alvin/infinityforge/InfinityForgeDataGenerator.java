@@ -1,6 +1,7 @@
 package net.alvin.infinityforge;
 
 import net.alvin.infinityforge.datagen.*;
+import net.alvin.infinityforge.registry.ModDamageTypes;
 import net.alvin.infinityforge.world.ModConfiguredFeatures;
 import net.alvin.infinityforge.world.ModPlacedFeatures;
 import net.alvin.infinityforge.world.gen.ModStructures;
@@ -19,7 +20,8 @@ public class InfinityForgeDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModItemTagProvider::new);
 		pack.addProvider(ModBlockTagProvider::new);
 		pack.addProvider(ModLootTableProvider::new);
-		pack.addProvider(ModWorldGenerator::new);
+		pack.addProvider(ModWorldGenProvider::new);
+		pack.addProvider(ModDamageTypeProvider::new);
 	}
 
 	@Override
@@ -30,5 +32,6 @@ public class InfinityForgeDataGenerator implements DataGeneratorEntrypoint {
 		registryBuilder.addRegistry(RegistryKeys.TEMPLATE_POOL, ModStructures::bootstrapPools);
 		registryBuilder.addRegistry(RegistryKeys.STRUCTURE, ModStructures::bootstrapStructure);
 		registryBuilder.addRegistry(RegistryKeys.STRUCTURE_SET, ModStructures::bootstrapStructureSet);
+		registryBuilder.addRegistry(RegistryKeys.DAMAGE_TYPE, ModDamageTypes::bootstrap);
 	}
 }

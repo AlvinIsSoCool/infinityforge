@@ -7,5 +7,7 @@ public class ModEntityRenderers {
     public static void register() {
         EntityRendererRegistry.register(ModEntities.PORTAL_ENTITY, PortalEntityRenderer::new);
         EntityRendererRegistry.register(ModEntities.BLACKHOLE_ENTITY, BlackHoleEntityRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ENERGY_BLAST, EnergyBlastEntityRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ENERGY_BEAM, EnergyBeamEntityRenderer::new);
     }
 }

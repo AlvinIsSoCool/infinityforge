@@ -1,0 +1,6 @@
+{
+  "equip_stone": {
+    "subtitle": "subtitle.infinityforge.equip_stone",
+    "sounds": [{ "name": "infinityforge:equip_stone" }]
+  }
+}

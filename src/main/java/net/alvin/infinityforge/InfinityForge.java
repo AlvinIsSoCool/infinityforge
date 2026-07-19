@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.alvin.infinityforge.block.ModBlocks;
 import net.alvin.infinityforge.block.entity.ModBlockEntities;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
-import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.entity.effect.ModStatusEffects;
 import net.alvin.infinityforge.entity.ModEntities;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.item.ModItemGroups;
@@ -39,6 +39,7 @@ public class InfinityForge implements ModInitializer {
 		ModBlockEntities.initialize();
 		ModEntities.initialise();
 		ModStatusEffects.initialize();
+		ModSounds.initialize();
 		ModItemGroups.register();
 
 		InfinityStoneTypeRegistry.initialize();

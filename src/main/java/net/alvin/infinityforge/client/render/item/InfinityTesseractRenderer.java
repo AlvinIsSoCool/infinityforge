@@ -16,7 +16,8 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class InfinityTesseractRenderer {
-    private static final Identifier TESSERACT_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/stone.png");
+    private static final Identifier TESSERACT_TEXTURE = new Identifier(InfinityForge.MOD_ID,
+            "textures/item/stone.png");
     protected static final float SIZE = 0.125f;
 
     public void render(ItemStack stack, ModelTransformationMode mode,
@@ -45,14 +46,18 @@ public class InfinityTesseractRenderer {
 
             Matrix4f pos = matrices.peek().getPositionMatrix();
             Matrix3f norm = matrices.peek().getNormalMatrix();
+            ModItemRenderers.STONE_RENDERER.renderInternal(stack, mode, matrices, vertexConsumers,
+                    light, overlay, stoneType);
 
-            ModItemRenderers.STONE_RENDERER.renderInternal(stack, mode, matrices, vertexConsumers, light, overlay, stoneType);
+            VertexConsumer outerVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(
+                    TESSERACT_TEXTURE));
+            ModRenderHelper.renderCube(outerVc, pos, norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,
+                    overlay, glowColor, 100, SIZE);
 
-            VertexConsumer outerVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(TESSERACT_TEXTURE));
-            ModRenderHelper.renderCube(outerVc, pos, norm, SIZE, glowColor, 100, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay);
-
-            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(TESSERACT_TEXTURE));
-            ModRenderHelper.renderCube(glowVc, pos, norm, SIZE * 1.05f, glowColor, glowAlpha, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay);
+            VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(
+                    TESSERACT_TEXTURE));
+            ModRenderHelper.renderCube(glowVc, pos, norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,
+                    overlay, glowColor, glowAlpha, SIZE * 1.05f);
         matrices.pop();
     }
 }

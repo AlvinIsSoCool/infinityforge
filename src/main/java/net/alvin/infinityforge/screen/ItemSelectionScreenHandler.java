@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.screen;
 
+import net.alvin.infinityforge.screen.slot.NoInsertSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.SimpleInventory;

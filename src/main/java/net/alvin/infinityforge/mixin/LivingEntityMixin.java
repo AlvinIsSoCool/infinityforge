@@ -7,7 +7,7 @@ import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.item.ModItems;
-import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.entity.effect.ModStatusEffects;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.LivingEntity;

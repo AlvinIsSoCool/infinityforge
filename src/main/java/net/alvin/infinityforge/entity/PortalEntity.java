@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.entity;
 
+import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.block.BlockState;
@@ -12,12 +13,17 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.GameMode;
@@ -152,15 +158,20 @@ public class PortalEntity extends Entity {
         float cosPitch = MathHelper.cos((float)Math.toRadians(this.getPitch()));
         float sinPitch = MathHelper.sin((float)Math.toRadians(this.getPitch()));
         double cx = this.getX();
-        double cy = this.getY() + this.getHeight() / 2f - 0.25f;
+        double cy = this.getY() + this.getHeight() / 2f - 0.1f;
         double cz = this.getZ();
-        int count = 25;
+        int count = 20;
+        ParticleEffect effect = new DustParticleEffect(
+                Vec3d.unpackRgb(InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone)
+                        .toVector3f(),
+                1.25f
+        );
 
         for (int i = 0; i < count; i++) {
             double angle = (2 * Math.PI * i / count) + (this.age * 0.03);
             float lx = (float)(a * Math.cos(angle));
             float ly = (float)(b * Math.sin(angle));
-            float lz = 0.05f;
+            float lz = 0.025f;
             float px = lx;
             float py = ly * cosPitch - lz * sinPitch;
             float pz = ly * sinPitch + lz * cosPitch;
@@ -168,11 +179,12 @@ public class PortalEntity extends Entity {
             float wy = py;
             float wz = -px * sinYaw + pz * cosYaw;
 
-            this.getWorld().addParticle(ParticleTypes.PORTAL,
+            this.getWorld().addParticle(
+                    effect,
                     cx + wx,
                     cy + wy,
                     cz + wz,
-                    wx * 0.01, wy * 0.01, wz * 0.01
+                    wx * 0.03, wy * 0.03, wz * 0.03
             );
         }
     }
@@ -242,6 +254,27 @@ public class PortalEntity extends Entity {
             }
         }
         return true;
+    }
+
+    @Override
+    public ActionResult interact(PlayerEntity player, Hand hand) {
+        if (this.closing) return ActionResult.PASS;
+        if (InfinityGauntletItem.findGauntlet(player) == null) return ActionResult.PASS;
+
+        if (!this.getWorld().isClient()) {
+            Text portalText = Text.literal("This portal leads to: ")
+                    .append(Text.literal(String.valueOf((int) destX)).formatted(Formatting.AQUA))
+                    .append(Text.literal(", "))
+                    .append(Text.literal(String.valueOf((int) destY)).formatted(Formatting.AQUA))
+                    .append(Text.literal(", "))
+                    .append(Text.literal(String.valueOf((int) destZ)).formatted(Formatting.AQUA))
+                    .append(Text.literal(" in "))
+                    .append(Text.literal(destWorld.getValue().getPath().toUpperCase()).formatted(Formatting.GOLD))
+                    .append(Text.literal(String.format(" (%s)", destWorld.getValue())).formatted(Formatting.GRAY));
+            player.sendMessage(portalText, true);
+        }
+
+        return ActionResult.success(this.getWorld().isClient());
     }
 
     @Override

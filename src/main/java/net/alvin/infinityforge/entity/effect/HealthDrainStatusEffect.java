@@ -1,5 +1,7 @@
-package net.alvin.infinityforge.effect;
+package net.alvin.infinityforge.entity.effect;
 
+import net.alvin.infinityforge.registry.ModDamageSources;
+import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -27,7 +29,9 @@ public class HealthDrainStatusEffect extends StatusEffect {
 
         double currentMax = attr.getValue();
         if (currentMax <= 2.0) {
-            entity.kill();
+            InfinityStoneEventHandler.applyDamageInfinity(entity,
+                    ModDamageSources.healthDrain(entity.getWorld()),
+                    false);
             return;
         }
 

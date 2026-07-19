@@ -30,7 +30,7 @@ public class InfinityForgeConfig implements ConfigData {
     public static class StoneBaseColors {
         @Comment("The base color of the power stone.")
         @ConfigEntry.ColorPicker
-        public int powerStone = 0x8700D3;
+        public int powerStone = 0x6F00B8;
 
         @Comment("The base color of the space stone.")
         @ConfigEntry.ColorPicker
@@ -56,7 +56,7 @@ public class InfinityForgeConfig implements ConfigData {
     public static class StoneGlintColors {
         @Comment("The glint color of the power stone. The tesseract uses this color as well.")
         @ConfigEntry.ColorPicker
-        public int powerStone = 0x6F00B8;
+        public int powerStone = 0x8700D3;
 
         @Comment("The glint color of the space stone. The tesseract uses this color as well.")
         @ConfigEntry.ColorPicker

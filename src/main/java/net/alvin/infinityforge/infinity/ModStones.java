@@ -17,6 +17,7 @@ public class ModStones {
                     null,
                     StoneHoldAbilities::onPowerStoneHold,
                     List.of(
+                            ModGauntletAbilities.ENERGY_BLAST, ModGauntletAbilities.ENERGY_BEAM,
                             ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
                             ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT
                     ),

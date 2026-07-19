@@ -1,8 +1,9 @@
 package net.alvin.infinityforge.datagen;
 
 import net.alvin.infinityforge.block.ModBlocks;
+import net.alvin.infinityforge.entity.ModEntities;
 import net.alvin.infinityforge.item.ModItems;
-import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.entity.effect.ModStatusEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -35,8 +36,16 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(ModBlocks.FAKE_BLOCK, "Fake Block");
 
         translationBuilder.add(ModStatusEffects.SNAP_EFFECT, "I don't feel so good...");
+        translationBuilder.add(ModStatusEffects.HEALTH_DRAIN_EFFECT, "Health Drain");
         translationBuilder.add(ModStatusEffects.MOVEMENT_LOCKED_EFFECT, "Movement Locked");
         translationBuilder.add(ModStatusEffects.SCROLL_LOCKED_EFFECT, "Scroll Locked");
+
+        translationBuilder.add(ModEntities.BLACKHOLE_ENTITY, "Black Hole");
+        translationBuilder.add(ModEntities.PORTAL_ENTITY, "Portal");
+
+        translationBuilder.add("death.attack.infinityforge.power_stone", "%1$s was obliterated by the power stone");
+        translationBuilder.add("death.attack.infinityforge.black_hole", "%1$s was spaghettified by a black hole");
+        translationBuilder.add("death.attack.infinityforge.health_drain", "%1$s ran out of hearts!");
 
         translationBuilder.add("gui.infinityforge.blueprint_table", "Blueprint Table");
         translationBuilder.add("itemgroup.infinity", "Infinity Forge");

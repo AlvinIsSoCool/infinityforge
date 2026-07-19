@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.effect;
+package net.alvin.infinityforge.entity.effect;
 
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;

@@ -1,9 +1,9 @@
 package net.alvin.infinityforge.infinity.snap;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.effect.SnapStatusEffect;
+import net.alvin.infinityforge.entity.effect.SnapStatusEffect;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.entity.effect.ModStatusEffects;
 import net.alvin.infinityforge.world.data.SnappedEntitiesState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

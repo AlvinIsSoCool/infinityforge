@@ -8,6 +8,7 @@ import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.network.s2c.ClearAllClientStatesS2CPacket;
+import net.alvin.infinityforge.registry.ModDamageSources;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.*;
@@ -67,6 +68,7 @@ public class InfinityStoneEventHandler {
 
         entity.getDamageTracker().onDamage(source, previousHealth);
         entity.setHealth(0.0f);
+        entity.playSound(entity.getDeathSound(), entity.getSoundVolume(), entity.getSoundPitch());
         entity.onDeath(source);
         ServerLivingEntityEvents.AFTER_DEATH.invoker().afterDeath(entity, source);
     }
@@ -80,8 +82,9 @@ public class InfinityStoneEventHandler {
         if (attacker instanceof ServerPlayerEntity player) {
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack != null && InfinityGauntletItem.getAddedStones(stack).contains(ModStones.POWER)) {
-                InfinityStoneEventHandler.applyDamageInfinity(entity, source, true);
-                return !(entity instanceof ServerPlayerEntity);
+                InfinityStoneEventHandler.applyDamageInfinity(entity,
+                        ModDamageSources.powerStone(entity.getWorld()), true);
+                return false;
             }
         }
 
@@ -99,7 +102,9 @@ public class InfinityStoneEventHandler {
         if (InfinityForgeConfig.get().godMode
                 && new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
             player.setHealth(player.getMaxHealth());
-            world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS, 2.0f, 0.75f);
+            world.playSound(null, player.getBlockPos(),
+                    SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS,
+                    2.0f, 0.75f);
             return false;
         }
 

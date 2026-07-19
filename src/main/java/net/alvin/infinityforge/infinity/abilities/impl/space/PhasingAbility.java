@@ -12,7 +12,6 @@ import net.alvin.infinityforge.server.state.GauntletToggleState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -32,14 +31,11 @@ public class PhasingAbility extends ToggleAbility {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
         access.setCustomPhasing(true);
         player.setNoGravity(true);
-        player.setVelocity(player.getVelocity().x, 0.0, player.getVelocity().z);
-        player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player));
         return true;
     }
 
     @Override
-    public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-    }
+    public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {}
 
     @Override
     public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {

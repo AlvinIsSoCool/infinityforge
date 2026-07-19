@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.entity;
 
 import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
+import net.alvin.infinityforge.registry.ModDamageSources;
 import net.alvin.infinityforge.registry.ModTags;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
@@ -205,8 +206,8 @@ public class BlackHoleEntity extends Entity {
             if (e.getUuid().equals(this.ownerUuid)) continue;
             if (living.getPos().distanceTo(center) > radius) continue;
 
-            InfinityStoneEventHandler.applyDamageInfinity(living, this.getDamageSources().magic(),
-                    true);
+            InfinityStoneEventHandler.applyDamageInfinity(living,
+                    ModDamageSources.blackHole(living.getWorld()), true);
         }
 
         BlockPos min = BlockPos.ofFloored(center.x - scaledRadius, center.y - scaledRadius,

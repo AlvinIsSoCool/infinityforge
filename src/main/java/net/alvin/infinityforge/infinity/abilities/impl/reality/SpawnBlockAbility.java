@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
 import net.alvin.infinityforge.block.entity.FakeBlockEntity;
+import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityDynamicIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
@@ -10,6 +11,8 @@ import net.alvin.infinityforge.item.FakeItem;
 import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -18,6 +21,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -40,6 +44,7 @@ public class SpawnBlockAbility extends ActiveAbility
         Block selectedBlock = getState(player);
         BlockHitResult hit = (BlockHitResult) player.raycast(5.0, 1.0f, false);
         boolean missed = (hit.getType() != HitResult.Type.BLOCK);
+        BlockPos hitPos = hit.getBlockPos();
 
         if (player.isSneaking()) {
             if (missed) {
@@ -49,6 +54,9 @@ public class SpawnBlockAbility extends ActiveAbility
                     BlockPos origin = player.getBlockPos();
                     World playerWorld = player.getWorld();
                     int r = 5;
+                    ParticleEffect effect = new DustParticleEffect(Vec3d.unpackRgb(
+                            InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone).toVector3f(),
+                            1f);
 
                     for (int x = -r; x <= r; x++) {
                         for (int z = -r; z <= r; z++) {
@@ -56,6 +64,13 @@ public class SpawnBlockAbility extends ActiveAbility
                             BlockPos surface = new BlockPos(origin.getX() + x, origin.getY() - 1, origin.getZ() + z);
                             if (spawnFake) FakeBlockEntity.place(playerWorld, surface, selectedBlock);
                             else playerWorld.setBlockState(surface, selectedBlock.getDefaultState());
+
+                            double cx = surface.getX() + 0.5;
+                            double cy = surface.getY() + 0.5;
+                            double cz = surface.getZ() + 0.5;
+
+                            world.spawnParticles(effect, cx, cy, cz, 50, 0.3, 0.4, 0.3, 0.005);
+                            world.spawnParticles(effect, cx, cy, cz, 50, 0.5, 0.6, 0.5, 0.025);
                         }
                     }
                     return true;
@@ -66,7 +81,7 @@ public class SpawnBlockAbility extends ActiveAbility
                 }
             }
 
-            Block block = world.getBlockState(hit.getBlockPos()).getBlock();
+            Block block = world.getBlockState(hitPos).getBlock();
             setState(player, block);
 
             String format = "Selected: %s (%s)";
@@ -79,8 +94,16 @@ public class SpawnBlockAbility extends ActiveAbility
                 player.sendMessage(Text.literal("No blocks selected! Try sneaking and selecting a block."), true);
                 return false;
             }
-            if (spawnFake) FakeBlockEntity.place(world, hit.getBlockPos(), selectedBlock);
-            else world.setBlockState(hit.getBlockPos(), selectedBlock.getDefaultState());
+            if (spawnFake) FakeBlockEntity.place(world, hitPos, selectedBlock);
+            else world.setBlockState(hitPos, selectedBlock.getDefaultState());
+            double cx = hitPos.getX() + 0.5;
+            double cy = hitPos.getY() + 0.5;
+            double cz = hitPos.getZ() + 0.5;
+            ParticleEffect effect = new DustParticleEffect(Vec3d.unpackRgb(
+                    InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone).toVector3f(),
+                    1f);
+            world.spawnParticles(effect, cx, cy, cz, 50, 0.3, 0.4, 0.3, 0.005);
+            world.spawnParticles(effect, cx, cy, cz, 50, 0.5, 0.6, 0.5, 0.025);
             return true;
         }
     }

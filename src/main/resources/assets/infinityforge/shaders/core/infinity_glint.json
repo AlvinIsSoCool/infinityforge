@@ -4,8 +4,8 @@
     "srcrgb": "one",
     "dstrgb": "one"
   },
-  "vertex": "infinityforge:player_glint",
-  "fragment": "infinityforge:player_glint",
+  "vertex": "infinityforge:infinity_glint",
+  "fragment": "infinityforge:infinity_glint",
   "attributes": ["Position", "Color", "UV0", "UV1", "UV2", "Normal"],
   "samplers": [
     { "name": "Sampler0" }

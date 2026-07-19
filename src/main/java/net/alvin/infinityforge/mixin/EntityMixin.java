@@ -12,9 +12,9 @@ import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("ConstantConditions")
 @Mixin(Entity.class)
 public class EntityMixin {
     @Inject(
@@ -22,7 +22,7 @@ public class EntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void setVelocity(Vec3d velocity, CallbackInfo ci) {
+    private void powerStoneCancelVelocity(Vec3d velocity, CallbackInfo ci) {
         if ((Object) this instanceof LivingEntity entity) {
             if (entity.getStackInHand(Hand.MAIN_HAND).isOf(ModItems.POWER_STONE)
                     || entity.getStackInHand(Hand.OFF_HAND).isOf(ModItems.POWER_STONE))
@@ -30,6 +30,21 @@ public class EntityMixin {
         }
     }
 
+    @ModifyVariable(
+            method = "setVelocity(Lnet/minecraft/util/math/Vec3d;)V",
+            at = @At("HEAD"),
+            argsOnly = true
+    )
+    private Vec3d phasingModifyVelocity(Vec3d velocity) {
+        if ((Object) this instanceof PlayerEffectsAccess access) {
+            if (access.isCustomPhasing()) {
+                return new Vec3d(velocity.x, 0.0, velocity.z);
+            }
+        }
+        return velocity;
+    }
+
+    @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "getStandingEyeHeight()F",
             at = @At("RETURN")
@@ -45,6 +60,7 @@ public class EntityMixin {
         return original;
     }
 
+    @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "isPushable()Z",
             at = @At("RETURN")
@@ -55,13 +71,14 @@ public class EntityMixin {
         return itemEntity.getStack().isIn(ModTags.Items.INFINITY_ITEMS);
     }
 
+    @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "canHit()Z",
             at = @At("RETURN")
     )
     private boolean makeHittable(boolean original) {
         if (original) return true;
-        return ((Object)this instanceof ItemEntity itemEntity)
+        return ((Object) this instanceof ItemEntity itemEntity)
                 && itemEntity.getStack().isIn(ModTags.Items.INFINITY_TESSERACTS);
     }
 
@@ -71,8 +88,7 @@ public class EntityMixin {
     )
     private boolean preventProjectileHit(boolean original) {
         if ((Object) this instanceof PlayerEntity player)
-            if (((PlayerEffectsAccess) player).isCustomPhasing())
-                return false;
+            if (((PlayerEffectsAccess) player).isCustomPhasing()) return false;
         return original;
     }
 }

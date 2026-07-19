@@ -26,9 +26,7 @@ public class BlackHoleAbility extends HeldAbility {
     }
 
     @Override
-    public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
-
-    }
+    public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {}
 
     @Override
     public void onStop(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {

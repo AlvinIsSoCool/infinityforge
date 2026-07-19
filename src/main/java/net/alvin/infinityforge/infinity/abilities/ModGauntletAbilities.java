@@ -9,6 +9,8 @@ import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.AttributeModifierAbility;
 import net.alvin.infinityforge.infinity.abilities.base.LifecyclePassiveAbility;
 import net.alvin.infinityforge.infinity.abilities.impl.mind.*;
+import net.alvin.infinityforge.infinity.abilities.impl.power.EnergyBeamAbility;
+import net.alvin.infinityforge.infinity.abilities.impl.power.EnergyBlastAbility;
 import net.alvin.infinityforge.infinity.abilities.impl.reality.*;
 import net.alvin.infinityforge.infinity.abilities.impl.soul.*;
 import net.alvin.infinityforge.infinity.abilities.impl.space.*;
@@ -36,6 +38,25 @@ public class ModGauntletAbilities {
                     new Identifier(InfinityForge.MOD_ID, "textures/gui/passive_ability_icons.png"),
                     0);
 
+    public static final GauntletAbility ENERGY_BLAST = GauntletAbilityRegistry.register(
+            new EnergyBlastAbility(
+                    new Identifier(InfinityForge.MOD_ID, "energy_blast"),
+                    AbilityIcon.missingno(),
+                    "abilities.infinityforge.energy_blast",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
+                    List::of, 100
+            )
+    );
+    public static final GauntletAbility ENERGY_BEAM = GauntletAbilityRegistry.register(
+            new EnergyBeamAbility(
+                    new Identifier(InfinityForge.MOD_ID, "energy_beam"),
+                    AbilityIcon.missingno(),
+                    "abilities.infinityforge.energy_beam",
+                    () -> InfinityForgeConfig.get().colorOptions.abilityOutlineColors.powerStone,
+                    List::of,
+                    400, -4
+            )
+    );
     public static final GauntletAbility KNOCKBACK_RESISTANCE = GauntletAbilityRegistry.register(
             new AttributeModifierAbility(
                     new Identifier(InfinityForge.MOD_ID, "knockback_resistance"),

@@ -20,9 +20,12 @@ import org.joml.Matrix4f;
 import java.util.List;
 
 public class InfinityGauntletRenderer {
-    private static final Identifier GAUNTLET_TEXTURE_3D = new Identifier(InfinityForge.MOD_ID, "textures/item/infinity_gauntlet_3d.png");
-    private static final Identifier SLOT_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/stone.png");
-    public static final ModelIdentifier GAUNTLET_MODEL_2D = new ModelIdentifier(new Identifier(InfinityForge.MOD_ID, "infinity_gauntlet_2d"), "inventory");
+    private static final Identifier GAUNTLET_TEXTURE_3D = new Identifier(InfinityForge.MOD_ID,
+            "textures/item/infinity_gauntlet_3d.png");
+    private static final Identifier SLOT_TEXTURE = new Identifier(InfinityForge.MOD_ID,
+            "textures/item/stone.png");
+    public static final ModelIdentifier GAUNTLET_MODEL_2D = new ModelIdentifier(
+            new Identifier(InfinityForge.MOD_ID, "infinity_gauntlet_2d"), "inventory");
 
     public void render(ItemStack stack, ModelTransformationMode mode,
                        MatrixStack matrices, VertexConsumerProvider vertexConsumers,
@@ -60,7 +63,8 @@ public class InfinityGauntletRenderer {
                                                 // I am working with bad model transforms,
                                                 // and LightmapTextureManager.MAX_LIGHT_COORDINATE
                                                 // doesn't really care about this much.
-                VertexConsumer vc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(GAUNTLET_TEXTURE_3D));
+                VertexConsumer vc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(
+                        GAUNTLET_TEXTURE_3D));
 
                 renderBox(vc,pos,norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay,255,255,255,255,
                         -3f, 20f, -3f,  3f, 24f, 3f,
@@ -83,7 +87,8 @@ public class InfinityGauntletRenderer {
 
                     Matrix4f slotPos = matrices.peek().getPositionMatrix();
                     Matrix3f slotNorm = new Matrix3f();
-                    VertexConsumer slotVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(SLOT_TEXTURE));
+                    VertexConsumer slotVc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(
+                            SLOT_TEXTURE));
 
                     float h = 0.031f;
                     ModRenderHelper.quad(slotVc, slotPos, slotNorm,

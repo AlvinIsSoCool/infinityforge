@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.infinity.abilities;
 
-import net.alvin.infinityforge.effect.HealthDrainStatusEffect;
-import net.alvin.infinityforge.effect.ModStatusEffects;
+import net.alvin.infinityforge.entity.effect.HealthDrainStatusEffect;
+import net.alvin.infinityforge.entity.effect.ModStatusEffects;
 import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

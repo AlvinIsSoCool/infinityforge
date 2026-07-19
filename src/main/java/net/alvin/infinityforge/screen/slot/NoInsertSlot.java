@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.screen;
+package net.alvin.infinityforge.screen.slot;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
