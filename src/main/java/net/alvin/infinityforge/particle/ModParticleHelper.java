@@ -1,6 +1,5 @@
 package net.alvin.infinityforge.particle;
 
-import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.world.ServerWorld;
@@ -41,8 +40,7 @@ public class ModParticleHelper {
             double vz = (pz - centerZ) * 0.025;
             double vy = -0.05 - random.nextDouble() * 0.05;
 
-            ParticleEffect effect = new InfinityDustParticleEffect(Vec3d.unpackRgb(
-                    InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone).toVector3f(),
+            ParticleEffect effect = new InfinityDustParticleEffect(Vec3d.unpackRgb(rgb).toVector3f(),
                     0.3f + random.nextFloat() * 0.4f, true, false);
             world.spawnParticles(effect, px, py, pz, 0, vx, vy, vz, 1.0);
         }

@@ -7,9 +7,9 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class ModSounds {
+    public static final SoundEvent ENERGY_BLAST = register("energy_blast");
     public static final SoundEvent EQUIP_STONE = register("equip_stone");
     public static final SoundEvent USE_GAUNTLET = register("use_gauntlet");
-    public static final SoundEvent ENERGY_BLAST = register("energy_blast");
 
     private static SoundEvent register(String name) {
         Identifier id = new Identifier(InfinityForge.MOD_ID, name);

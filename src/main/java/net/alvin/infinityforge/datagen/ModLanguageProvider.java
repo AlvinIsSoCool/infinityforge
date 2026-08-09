@@ -51,6 +51,10 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("itemgroup.infinity", "Infinity Forge");
         translationBuilder.add("category.infinityforge", "Ability Keybinds");
 
+        translationBuilder.add("subtitle.infinityforge.energy_blast", "Energy Blast");
+        translationBuilder.add("subtitle.infinityforge.equip_stone", "Equipped Stone");
+        translationBuilder.add("subtitle.infinityforge.use_gauntlet", "Gauntlet Activated");
+
         translationBuilder.add("key.infinityforge.slot_1", "Ability 1");
         translationBuilder.add("key.infinityforge.slot_2", "Ability 2");
         translationBuilder.add("key.infinityforge.slot_3", "Ability 3");
@@ -58,6 +62,9 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("key.infinityforge.slot_5", "Ability 5");
         translationBuilder.add("key.infinityforge.slot_6", "Ability 6");
 
+        translationBuilder.add("abilities.infinityforge.energy_blast", "Energy Blast");
+        translationBuilder.add("abilities.infinityforge.energy_beam", "Energy Beam");
+        translationBuilder.add("abilities.infinityforge.explosion", "Explode");
         translationBuilder.add("abilities.infinityforge.knockback_resistance", "Knockback Resistance");
         translationBuilder.add("abilities.infinityforge.speed", "Speed");
         translationBuilder.add("abilities.infinityforge.attack_speed", "Attack Speed");
@@ -82,6 +89,7 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("abilities.infinityforge.saturation", "Self-Sustenance");
         translationBuilder.add("abilities.infinityforge.water_breathing", "Water Breathing");
         translationBuilder.add("abilities.infinityforge.flight", "Flight");
+        translationBuilder.add("abilities.infinityforge.telekinesis", "Telekinesis");
         translationBuilder.add("abilities.infinityforge.snap", "Snap");
         translationBuilder.add("abilities.infinityforge.change_snap", "Change Snap Function");
         translationBuilder.add("abilities.infinityforge.advance_time", "Advance Time");
