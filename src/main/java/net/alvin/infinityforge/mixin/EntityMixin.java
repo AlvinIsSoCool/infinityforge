@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
 import net.alvin.infinityforge.item.ModItems;
 import net.alvin.infinityforge.registry.ModTags;
@@ -22,7 +22,7 @@ public class EntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void powerStoneCancelVelocity(Vec3d velocity, CallbackInfo ci) {
+    private void infinityforge$powerStoneCancelVelocity(Vec3d velocity, CallbackInfo ci) {
         if ((Object) this instanceof LivingEntity entity) {
             if (entity.getStackInHand(Hand.MAIN_HAND).isOf(ModItems.POWER_STONE)
                     || entity.getStackInHand(Hand.OFF_HAND).isOf(ModItems.POWER_STONE))
@@ -35,9 +35,9 @@ public class EntityMixin {
             at = @At("HEAD"),
             argsOnly = true
     )
-    private Vec3d phasingModifyVelocity(Vec3d velocity) {
+    private Vec3d infinityforge$phasingVelocity(Vec3d velocity) {
         if ((Object) this instanceof PlayerEffectsAccess access) {
-            if (access.isCustomPhasing()) {
+            if (access.infinityforge$isPhasing()) {
                 return new Vec3d(velocity.x, 0.0, velocity.z);
             }
         }
@@ -49,7 +49,7 @@ public class EntityMixin {
             method = "getStandingEyeHeight()F",
             at = @At("RETURN")
     )
-    private float applyEyeScaleAnimation(float original) {
+    private float infinityforge$applyEyeScaleAnimation(float original) {
         if ((Object) this instanceof PlayerEntity player && player.getWorld().isClient()) {
             if (player.getPose() == EntityPose.STANDING) {
                 float animatedScale = PlayerScaleAnimationState.getAnimatedScale(player);
@@ -65,7 +65,7 @@ public class EntityMixin {
             method = "isPushable()Z",
             at = @At("RETURN")
     )
-    private boolean makeCollidable(boolean original) {
+    private boolean infinityforge$makeCollidableIE(boolean original) {
         if (original) return true;
         if (!((Object) this instanceof ItemEntity itemEntity)) return false;
         return itemEntity.getStack().isIn(ModTags.Items.INFINITY_ITEMS);
@@ -76,7 +76,7 @@ public class EntityMixin {
             method = "canHit()Z",
             at = @At("RETURN")
     )
-    private boolean makeHittable(boolean original) {
+    private boolean infinityforge$makeHittableIE(boolean original) {
         if (original) return true;
         return ((Object) this instanceof ItemEntity itemEntity)
                 && itemEntity.getStack().isIn(ModTags.Items.INFINITY_TESSERACTS);
@@ -86,9 +86,9 @@ public class EntityMixin {
             method = "canBeHitByProjectile()Z",
             at = @At("RETURN")
     )
-    private boolean preventProjectileHit(boolean original) {
+    private boolean infinityforge$preventProjectileHit(boolean original) {
         if ((Object) this instanceof PlayerEntity player)
-            if (((PlayerEffectsAccess) player).isCustomPhasing()) return false;
+            if (((PlayerEffectsAccess) player).infinityforge$isPhasing()) return false;
         return original;
     }
 }

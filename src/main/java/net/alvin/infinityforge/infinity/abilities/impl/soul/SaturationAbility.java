@@ -12,9 +12,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class SaturationAbility extends PassiveAbility {
-    public SaturationAbility(Identifier id, AbilityIcon icon,
-                             String key, Supplier<Integer> color) {
-        super(id, icon, key, color, List::of);
+    public SaturationAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color) {
+        super(id, icon, color, List::of);
     }
 
     @Override

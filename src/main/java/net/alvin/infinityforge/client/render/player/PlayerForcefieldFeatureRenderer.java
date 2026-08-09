@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.client.render.player;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,7 +16,8 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class PlayerForcefieldFeatureRenderer extends
         FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
-    private static final Identifier PLAIN_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/stone.png");
+    private static final Identifier PLAIN_TEXTURE = new Identifier(InfinityForge.MOD_ID,
+            "textures/misc/white.png");
 
     public PlayerForcefieldFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity,
                                 PlayerEntityModel<AbstractClientPlayerEntity>> context) {
@@ -28,9 +29,9 @@ public class PlayerForcefieldFeatureRenderer extends
                        AbstractClientPlayerEntity player, float limbAngle, float limbDistance,
                        float tickDelta, float animationProgress, float headYaw, float headPitch) {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
-        if (!access.isForcefieldActive()) return;
+        if (!access.infinityforge$isForcefieldActive()) return;
 
-        boolean isForcefieldHit = access.isForcefieldHit();
+        boolean isForcefieldHit = access.infinityforge$isForcefieldHit();
         int color = InfinityForgeConfig.get().colorOptions.stoneBaseColors.spaceStone;
         float r = ((color >> 16) & 0xFF) / 255f;
         float g = ((color >> 8) & 0xFF) / 255f;

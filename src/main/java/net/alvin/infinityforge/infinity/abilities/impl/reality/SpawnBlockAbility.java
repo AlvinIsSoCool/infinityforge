@@ -9,9 +9,9 @@ import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.FakeItem;
 import net.alvin.infinityforge.item.ModItems;
+import net.alvin.infinityforge.particle.InfinityDustParticleEffect;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -32,10 +32,9 @@ public class SpawnBlockAbility extends ActiveAbility
     private final boolean spawnFake;
 
     public SpawnBlockAbility(Identifier id, AbilityIcon icon,
-                             String key, Supplier<Integer> color,
-                             Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks,
-                             boolean spawnFake) {
-        super(id, icon, key, color, requiredStones, cooldownTicks);
+                             Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones,
+                             int cooldownTicks, boolean spawnFake) {
+        super(id, icon, color, requiredStones, cooldownTicks);
         this.spawnFake = spawnFake;
     }
 
@@ -54,9 +53,9 @@ public class SpawnBlockAbility extends ActiveAbility
                     BlockPos origin = player.getBlockPos();
                     World playerWorld = player.getWorld();
                     int r = 5;
-                    ParticleEffect effect = new DustParticleEffect(Vec3d.unpackRgb(
+                    ParticleEffect effect = new InfinityDustParticleEffect(Vec3d.unpackRgb(
                             InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone).toVector3f(),
-                            1f);
+                            1.0f, true, false);
 
                     for (int x = -r; x <= r; x++) {
                         for (int z = -r; z <= r; z++) {
@@ -99,9 +98,9 @@ public class SpawnBlockAbility extends ActiveAbility
             double cx = hitPos.getX() + 0.5;
             double cy = hitPos.getY() + 0.5;
             double cz = hitPos.getZ() + 0.5;
-            ParticleEffect effect = new DustParticleEffect(Vec3d.unpackRgb(
+            ParticleEffect effect = new InfinityDustParticleEffect(Vec3d.unpackRgb(
                     InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone).toVector3f(),
-                    1f);
+                    1.0f, true, false);
             world.spawnParticles(effect, cx, cy, cz, 50, 0.3, 0.4, 0.3, 0.005);
             world.spawnParticles(effect, cx, cy, cz, 50, 0.5, 0.6, 0.5, 0.025);
             return true;

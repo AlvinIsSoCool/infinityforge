@@ -16,8 +16,10 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class TurnIntoBubblesAbility extends ActiveAbility {
-    public TurnIntoBubblesAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
-        super(id, icon, key, color, requiredStones, cooldownTicks);
+    public TurnIntoBubblesAbility(Identifier id, AbilityIcon icon,
+                                  Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones,
+                                  int cooldownTicks) {
+        super(id, icon, color, requiredStones, cooldownTicks);
     }
 
     @Override

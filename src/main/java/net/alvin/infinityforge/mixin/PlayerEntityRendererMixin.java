@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.render.player.PlayerForcefieldFeatureRenderer;
 import net.alvin.infinityforge.client.render.player.AlphaMultiplyingVertexConsumer;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
@@ -19,13 +19,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin {
     @Unique
-    private boolean isCustomPhasing = false;
+    private boolean infinityforge$isPhasing = false;
 
     @Inject(
             method = "<init>(Lnet/minecraft/client/render/entity/EntityRendererFactory$Context;Z)V",
             at = @At("TAIL")
     )
-    private void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
+    private void infinityforge$onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         PlayerEntityRenderer renderer = (PlayerEntityRenderer)(Object) this;
         renderer.addFeature(new PlayerForcefieldFeatureRenderer(renderer));
     }
@@ -35,15 +35,15 @@ public abstract class PlayerEntityRendererMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void onRender(AbstractClientPlayerEntity player, float yaw, float tickDelta,
+    private void infinityforge$onRender(AbstractClientPlayerEntity player, float yaw, float tickDelta,
                           MatrixStack matrices, VertexConsumerProvider provider,
                           int light, CallbackInfo ci) {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
-        if (access.isCustomInvisible()) {
+        if (access.infinityforge$isInvisible()) {
             ci.cancel();
             return;
         }
-        isCustomPhasing = access.isCustomPhasing();
+        infinityforge$isPhasing = access.infinityforge$isPhasing();
     }
 
     @Inject(
@@ -51,7 +51,7 @@ public abstract class PlayerEntityRendererMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void applyCustomScale(AbstractClientPlayerEntity player, MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+    private void infinityforge$applyScale(AbstractClientPlayerEntity player, MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         float animatedScale = PlayerScaleAnimationState.getAnimatedScale(player);
         if (animatedScale != 1.0f) {
             matrices.scale(animatedScale, animatedScale, animatedScale);
@@ -67,8 +67,8 @@ public abstract class PlayerEntityRendererMixin {
             ),
             index = 4
     )
-    private VertexConsumerProvider applyPhasingAlpha(VertexConsumerProvider original) {
-        if (isCustomPhasing) return layer
+    private VertexConsumerProvider infinityforge$applyPhasingAlpha(VertexConsumerProvider original) {
+        if (infinityforge$isPhasing) return layer
                 -> new AlphaMultiplyingVertexConsumer(original.getBuffer(layer), 0.25f);
         return original;
     }

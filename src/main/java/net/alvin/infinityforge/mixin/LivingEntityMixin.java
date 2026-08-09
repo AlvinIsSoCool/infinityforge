@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
@@ -32,14 +32,14 @@ public abstract class LivingEntityMixin {
             method = "getEyeHeight(Lnet/minecraft/entity/EntityPose;Lnet/minecraft/entity/EntityDimensions;)F",
             at = @At("RETURN")
     )
-    private float applyCustomEyeHeight(float original, EntityPose pose) {
+    private float infinityforge$applyEyeHeight(float original, EntityPose pose) {
         if ((Object) this instanceof PlayerEntity player) {
             if (player.getWorld().isClient()) {
                 if (pose == EntityPose.STANDING) return original;
                 float animatedScale = PlayerScaleAnimationState.getAnimatedScale(player);
                 return original * animatedScale;
             } else {
-                float scale = ((PlayerEffectsAccess) player).getCustomScale();
+                float scale = ((PlayerEffectsAccess) player).infinityforge$getScale();
                 if (scale != 1.0f) return original * scale;
             }
         }
@@ -50,11 +50,11 @@ public abstract class LivingEntityMixin {
             method = "canTarget(Lnet/minecraft/entity/LivingEntity;)Z",
             at = @At("RETURN")
     )
-    private boolean noTargetPlayer(boolean original, LivingEntity target) {
+    private boolean infinityforge$canTargetPlayer(boolean original, LivingEntity target) {
         if (target instanceof ServerPlayerEntity player) {
             boolean isHoldingMindStoneMainHand = player.getStackInHand(Hand.MAIN_HAND).isOf(ModItems.MIND_STONE);
             boolean isHoldingMindStoneOffHand = player.getStackInHand(Hand.OFF_HAND).isOf(ModItems.MIND_STONE);
-            boolean isInvisible = ((PlayerEffectsAccess) player).isCustomInvisible();
+            boolean isInvisible = ((PlayerEffectsAccess) player).infinityforge$isInvisible();
 
             if (isHoldingMindStoneMainHand || isHoldingMindStoneOffHand || isInvisible) {
                 return false;
@@ -68,7 +68,7 @@ public abstract class LivingEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void applyMovementLock(CallbackInfo ci) {
+    private void infinityforge$applyMovementLock(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity)(Object) this;
         if (entity.hasStatusEffect(ModStatusEffects.MOVEMENT_LOCKED_EFFECT))
             ci.cancel();
@@ -78,7 +78,7 @@ public abstract class LivingEntityMixin {
             method = "getJumpBoostVelocityModifier()F",
             at = @At("RETURN")
     )
-    private float increaseJumpVelocityModifier(float original) {
+    private float infinityforge$getJumpBoostVelocityModifier(float original) {
         if ((Object) this instanceof PlayerEntity player) {
             ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(player);
             if (gauntletStack == null) return original;
@@ -93,7 +93,7 @@ public abstract class LivingEntityMixin {
             method = "canHaveStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z",
             at = @At("RETURN")
     )
-    private boolean noApplyHarmfulEffects(boolean original, StatusEffectInstance effect) {
+    private boolean infinityforge$canHaveStatusEffect(boolean original, StatusEffectInstance effect) {
         if ((Object) this instanceof PlayerEntity player) {
             ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(player);
             if (gauntletStack == null) return original;
@@ -110,7 +110,7 @@ public abstract class LivingEntityMixin {
             method = "modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F",
             at = @At("RETURN")
     )
-    private float onModifyAppliedDamage(float original, DamageSource source, float amount) {
+    private float infinityforge$onModifyAppliedDamage(float original, DamageSource source, float amount) {
         if ((Object) this instanceof PlayerEntity player) {
             ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(player);
             if (gauntletStack == null) return original;

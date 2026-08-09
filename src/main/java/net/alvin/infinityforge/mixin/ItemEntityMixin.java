@@ -27,7 +27,7 @@ public class ItemEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void noAutoPickup(PlayerEntity player, CallbackInfo ci) {
+    private void infinityforge$noAutoPickupItem(PlayerEntity player, CallbackInfo ci) {
         ItemEntity self = (ItemEntity)(Object)this;
         if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) ci.cancel();
     }
@@ -37,7 +37,7 @@ public class ItemEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void cancelDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void infinityforge$cancelDamageIE(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         ItemEntity self = (ItemEntity)(Object)this;
         if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) cir.setReturnValue(false);
     }
@@ -46,7 +46,7 @@ public class ItemEntityMixin {
             method = "isAttackable()Z",
             at = @At("RETURN")
     )
-    private boolean makeAttackable(boolean original) {
+    private boolean infinityforge$makeAttackableIE(boolean original) {
         if (original) return true;
         return ((ItemEntity)(Object)this).getStack().getItem() instanceof InfinityTesseractItem;
     }
@@ -55,7 +55,7 @@ public class ItemEntityMixin {
             method = "tick()V",
             at = @At("TAIL")
     )
-    private void onTick(CallbackInfo ci) {
+    private void infinityforge$onTickIE(CallbackInfo ci) {
         ItemEntity self = (ItemEntity)(Object) this;
         if (self.getWorld().isClient) return;
         if (!self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) return;
@@ -78,7 +78,7 @@ public class ItemEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void onWaterBuoyancy(CallbackInfo ci) {
+    private void infinityforge$onWaterBuoyancy(CallbackInfo ci) {
         ItemEntity self = (ItemEntity) (Object) this;
         if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) {
             Vec3d vec3d = self.getVelocity();
@@ -92,7 +92,7 @@ public class ItemEntityMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void onLavaBuoyancy(CallbackInfo ci) {
+    private void infinityforge$onLavaBuoyancy(CallbackInfo ci) {
         ItemEntity self = (ItemEntity) (Object) this;
         if (self.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) {
             Vec3d vec3d = self.getVelocity();

@@ -28,10 +28,9 @@ public class SpawnItemAbility extends ActiveAbility
     private final boolean spawnFake;
 
     public SpawnItemAbility(Identifier id, AbilityIcon icon,
-                            String key, Supplier<Integer> color,
-                            Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks,
-                            boolean spawnFake) {
-        super(id, icon, key, color, requiredStones, cooldownTicks);
+                            Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones,
+                            int cooldownTicks, boolean spawnFake) {
+        super(id, icon, color, requiredStones, cooldownTicks);
         this.spawnFake = spawnFake;
     }
 

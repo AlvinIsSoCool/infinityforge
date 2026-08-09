@@ -15,10 +15,10 @@ import java.util.function.Supplier;
 public abstract class AttributeModifierAbility extends LifecyclePassiveAbility {
     private final Map<EntityAttribute, EntityAttributeModifier> modifiers;
 
-    public AttributeModifierAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color,
+    public AttributeModifierAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color,
                                     Supplier<List<InfinityStoneType>> requiredStones,
                                     Map<EntityAttribute, EntityAttributeModifier> modifiers) {
-        super(id, icon, key, color, requiredStones);
+        super(id, icon, color, requiredStones);
         this.modifiers = modifiers;
     }
 

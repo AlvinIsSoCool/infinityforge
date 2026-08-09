@@ -21,7 +21,7 @@ public class MouseScrollMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void onMouseScroll(long window, double horizontal, double vertical, CallbackInfo ci) {
+    private void infinityforge$onMouseScroll(long window, double horizontal, double vertical, CallbackInfo ci) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.currentScreen != null) return;
         if (client.player == null) return;

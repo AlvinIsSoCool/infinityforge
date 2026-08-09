@@ -20,8 +20,8 @@ import java.util.function.Supplier;
 
 public class ChangeSnapAbility extends ActiveAbility
         implements AbilityState<SnapFunctions>, AbilityDynamicIcon<SnapFunctions> {
-    public ChangeSnapAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
-        super(id, icon, key, color, requiredStones, cooldownTicks);
+    public ChangeSnapAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+        super(id, icon, color, requiredStones, cooldownTicks);
     }
 
     @Override

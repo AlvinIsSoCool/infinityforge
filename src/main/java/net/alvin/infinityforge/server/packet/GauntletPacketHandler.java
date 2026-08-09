@@ -7,6 +7,7 @@ import net.alvin.infinityforge.item.InfinityStoneItem;
 import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.network.c2s.*;
 import net.alvin.infinityforge.network.s2c.SyncAbilityDynamicIconS2CPacket;
+import net.alvin.infinityforge.network.s2c.SyncHeldForceStopS2CPacket;
 import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
 import net.alvin.infinityforge.screen.ItemSelectionScreenHandler;
 import net.alvin.infinityforge.server.state.*;
@@ -39,27 +40,26 @@ import net.minecraft.util.math.random.Random;
 import java.util.List;
 import java.util.UUID;
 
-public class GauntletPacketHandlers {
+public class GauntletPacketHandler {
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(
-                GauntletAbilityC2SPacket.TYPE, GauntletPacketHandlers::onAbilityPacket);
+                GauntletAbilityC2SPacket.TYPE, GauntletPacketHandler::onAbilityPacket);
         ServerPlayNetworking.registerGlobalReceiver(
-                GauntletToggleC2SPacket.TYPE, GauntletPacketHandlers::onTogglePacket);
+                GauntletToggleC2SPacket.TYPE, GauntletPacketHandler::onTogglePacket);
         ServerPlayNetworking.registerGlobalReceiver(
-                GauntletHeldC2SPacket.TYPE, GauntletPacketHandlers::onHeldPacket);
+                GauntletHeldC2SPacket.TYPE, GauntletPacketHandler::onHeldPacket);
         ServerPlayNetworking.registerGlobalReceiver(
-                PickupInfinityItemC2SPacket.TYPE, GauntletPacketHandlers::onPickupInfinityItem);
+                PickupInfinityItemC2SPacket.TYPE, GauntletPacketHandler::onPickupInfinityItem);
         ServerPlayNetworking.registerGlobalReceiver(
-                ItemSelectionC2SPacket.TYPE, GauntletPacketHandlers::onItemSelection);
+                ItemSelectionC2SPacket.TYPE, GauntletPacketHandler::onItemSelection);
         ServerPlayNetworking.registerGlobalReceiver(
-                OpenPortalC2SPacket.TYPE, GauntletPacketHandlers::onOpenPortal);
+                OpenPortalC2SPacket.TYPE, GauntletPacketHandler::onOpenPortal);
     }
 
     private static void onAbilityPacket(GauntletAbilityC2SPacket packet,
                                         ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
             if (player.isSpectator()) return;
-
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
@@ -86,14 +86,13 @@ public class GauntletPacketHandlers {
                                        ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
             if (player.isSpectator()) return;
-
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
             ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-
-            ToggleAbility ability = GauntletAbility.findAbility(InfinityGauntletItem.getToggleAbilities(activeStones), packet.abilityId());
+            ToggleAbility ability = GauntletAbility.findAbility(
+                    InfinityGauntletItem.getToggleAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
             boolean nowActive = GauntletToggleState.flip(player, ability.getId());
@@ -115,20 +114,26 @@ public class GauntletPacketHandlers {
                                      ServerPlayerEntity player, PacketSender responseSender) {
         player.server.execute(() -> {
             if (player.isSpectator()) return;
-
             ItemStack stack = InfinityGauntletItem.findGauntlet(player);
             if (stack == null) return;
 
             ServerWorld world = (ServerWorld) player.getWorld();
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-
-            HeldAbility ability = GauntletAbility.findAbility(InfinityGauntletItem.getHeldAbilities(activeStones), packet.abilityId());
+            HeldAbility ability = GauntletAbility.findAbility(
+                    InfinityGauntletItem.getHeldAbilities(activeStones), packet.abilityId());
             if (ability == null) return;
 
-            GauntletHeldState.setHeld(player, ability.getId(), packet.pressing());
-
-            if (packet.pressing()) ability.onStart(world, player, activeStones);
-            else ability.onStop(world, player, activeStones);
+            if (packet.pressing()) {
+                boolean success = ability.onStart(world, player, activeStones);
+                if (!success) {
+                    ServerPlayNetworking.send(player, new SyncHeldForceStopS2CPacket(ability.getId()));
+                    return;
+                }
+                GauntletHeldState.setHeld(player, ability.getId(), true);
+            } else {
+                GauntletHeldState.setHeld(player, ability.getId(), false);
+                ability.onStop(world, player, activeStones);
+            }
         });
     }
 

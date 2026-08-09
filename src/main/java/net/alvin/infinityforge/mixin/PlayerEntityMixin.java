@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.mixin;
 
 import net.alvin.infinityforge.client.state.GauntletClientState;
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
@@ -30,7 +30,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashSet;
 
-@SuppressWarnings({"MixinAddedMembers", "AddedMixinMembersNamePattern"})
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin implements PlayerEffectsAccess {
     @Unique
@@ -63,52 +62,52 @@ public abstract class PlayerEntityMixin implements PlayerEffectsAccess {
     }
 
     @Override
-    public float getCustomScale() {
+    public float infinityforge$getScale() {
         return ((Entity)(Object) this).getDataTracker().get(CUSTOM_SCALE);
     }
 
     @Override
-    public void setCustomScale(float scale) {
+    public void infinityforge$setScale(float scale) {
         ((Entity)(Object) this).getDataTracker().set(CUSTOM_SCALE, scale);
     }
 
     @Override
-    public boolean isCustomInvisible() {
+    public boolean infinityforge$isInvisible() {
         return ((Entity)(Object) this).getDataTracker().get(CUSTOM_INVISIBLE);
     }
 
     @Override
-    public void setCustomInvisible(boolean invisible) {
+    public void infinityforge$setInvisible(boolean invisible) {
         ((Entity)(Object) this).getDataTracker().set(CUSTOM_INVISIBLE, invisible);
     }
 
     @Override
-    public boolean isCustomPhasing() {
+    public boolean infinityforge$isPhasing() {
         return ((Entity)(Object) this).getDataTracker().get(CUSTOM_PHASING);
     }
 
     @Override
-    public void setCustomPhasing(boolean phasing) {
+    public void infinityforge$setPhasing(boolean phasing) {
         ((Entity)(Object) this).getDataTracker().set(CUSTOM_PHASING, phasing);
     }
 
     @Override
-    public boolean isForcefieldActive() {
+    public boolean infinityforge$isForcefieldActive() {
         return ((Entity)(Object) this).getDataTracker().get(CUSTOM_FORCEFIELD_ACTIVE);
     }
 
     @Override
-    public void setForcefieldActive(boolean forcefieldActive) {
+    public void infinityforge$setForcefieldActive(boolean forcefieldActive) {
         ((Entity)(Object) this).getDataTracker().set(CUSTOM_FORCEFIELD_ACTIVE, forcefieldActive);
     }
 
     @Override
-    public boolean isForcefieldHit() {
+    public boolean infinityforge$isForcefieldHit() {
         return ((Entity)(Object) this).getDataTracker().get(CUSTOM_FORCEFIELD_HIT);
     }
 
     @Override
-    public void setForcefieldHit(boolean forcefieldHit) {
+    public void infinityforge$setForcefieldHit(boolean forcefieldHit) {
         ((Entity)(Object) this).getDataTracker().set(CUSTOM_FORCEFIELD_HIT, forcefieldHit);
     }
 
@@ -118,7 +117,7 @@ public abstract class PlayerEntityMixin implements PlayerEffectsAccess {
             cancellable = true
     )
     private void onGetDimensions(EntityPose pose, CallbackInfoReturnable<EntityDimensions> cir) {
-        if (getCustomScale() != 1.0f) cir.setReturnValue(cir.getReturnValue().scaled(getCustomScale()));
+        if (infinityforge$getScale() != 1.0f) cir.setReturnValue(cir.getReturnValue().scaled(infinityforge$getScale()));
     }
 
     @Redirect(

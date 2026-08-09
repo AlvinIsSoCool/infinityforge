@@ -39,7 +39,8 @@ public sealed interface GauntletAbility permits ActiveAbility, HeldAbility, Pass
      * @implNote It seems much faster to just iterate through the GauntletAbilityRegistry with the
      *           ability id for certain situations. This method should only be used when an
      *           abilities list is provided by performant code, instead of manually calling for the
-     *           list and using this method on it.
+     *           list and using this method on it. An exception is where an ability has to be filtered from
+     *           abilities available to the gauntlet.
      */
     @Nullable
     static <T extends GauntletAbility> T findAbility(List<T> abilities, Identifier id) {

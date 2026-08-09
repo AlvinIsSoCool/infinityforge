@@ -1,6 +1,9 @@
 package net.alvin.infinityforge.infinity.abilities.base;
 
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.network.s2c.SyncHeldForceStopS2CPacket;
+import net.alvin.infinityforge.server.state.GauntletHeldState;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -33,9 +36,9 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
     /**
      * Provides the list of stones needed for the ability.
      * Needs to include the stone that registers the ability.
-     * e.g. A space stone ability requiring the power stone would provide
-     * required stones as so: {@code () -> List.of(ModStones.POWER, ModStones.SPACE)}
-     * No requirements as so: {@code List::of}
+     * <p>e.g. A space stone ability requiring the power stone would provide
+     * required stones as so: {@code () -> List.of(ModStones.POWER, ModStones.SPACE)}<br>
+     * No requirements as so: {@code List::of}</p>
      */
     private final Supplier<List<InfinityStoneType>> requiredStones;
     /**
@@ -44,17 +47,17 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
      */
     private final int maxChargeTicks;
     /**
-     * Controls charge refill speed.
-     * Positive: ticks per +1 charge (e.g. 2 = one charge every 2 ticks)
-     * Zero: no refill
-     * Negative: charges per tick (e.g. -4 = four charges per tick)
+     * Controls charge refill speed:
+     * <p>Positive: ticks per +1 charge (e.g. 2 = one charge every 2 ticks)<br>
+     * Zero: no refill<br>
+     * Negative: charges per tick (e.g. -4 = four charges per tick)</p>
      */
     private final int refillRateTicks;
 
-    public HeldAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
+    public HeldAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
         this.id = id;
+        this.key = "abilities." + id.getNamespace() + "." + id.getPath();
         this.icon = icon;
-        this.key = key;
         this.color = color;
         this.requiredStones = requiredStones;
         this.maxChargeTicks = maxChargeTicks;
@@ -88,17 +91,21 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
      * The function that runs on first holding this ability.
      * Dispatched from the server, so all logic contained within should
      * be server-side.
+     *
      * @param world        The world in which the ability was used.
      * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
+     * @return {@code true} - Allows the ability to be held active.<br>
+     *         {@code false} - Prevents the ability from being held active.
      */
-    public abstract void onStart(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
+    public abstract boolean onStart(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
 
     /**
      * The function that runs while this ability is held.
      * Dispatched from the server, so all logic contained within should
      * be server-side.
+     *
      * @param world        The world in which the ability was used.
      * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
@@ -110,10 +117,25 @@ public abstract non-sealed class HeldAbility implements GauntletAbility {
      * The function that runs after the ability is not held.
      * Dispatched from the server, so all logic contained within should
      * be server-side.
+     *
      * @param world        The world in which the ability was used.
      * @param player       The player entity that used the ability.
      * @param activeStones A list of all the infinity stones present in the infinity gauntlet
      *                     of the user of this ability.
      */
     public abstract void onStop(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones);
+
+    /**
+     * Force stops the held ability that runs it.
+     * @param world        The world in which the ability was used.
+     * @param player       The player entity that used the ability.
+     * @param activeStones A list of all the infinity stones present in the infinity gauntlet
+     *                     of the user of this ability.
+     */
+    public final void forceStop(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+        if (!GauntletHeldState.isHeld(player, getId())) return;
+        GauntletHeldState.setHeld(player, getId(), false);
+        onStop(world, player, activeStones);
+        ServerPlayNetworking.send(player, new SyncHeldForceStopS2CPacket(getId()));
+    }
 }

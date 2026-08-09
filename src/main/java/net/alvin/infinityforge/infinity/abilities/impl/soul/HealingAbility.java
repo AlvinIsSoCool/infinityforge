@@ -14,10 +14,9 @@ public class HealingAbility extends PassiveAbility {
     private final float amount;
     private final int frequency;
 
-    public HealingAbility(Identifier id, AbilityIcon icon,
-                          String key, Supplier<Integer> color,
+    public HealingAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color,
                           float amount, int frequency) {
-        super(id, icon, key, color, List::of);
+        super(id, icon, color, List::of);
         this.amount = amount;
         this.frequency = frequency;
     }

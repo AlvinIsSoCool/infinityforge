@@ -52,6 +52,6 @@ void main() {
     vec4 tex2 = blurSample(uv2, 0.02);
 
     // ITU-R BT.601 luminance formula is used for getting maximum brightness from the texture.
-    float brightness = pow(dot(tex1.rgb * 0.6 + tex2.rgb * 0.4, vec3(0.299, 0.587, 0.114)), 1.1);
+    float brightness = pow(dot(tex1.rgb * 0.55 + tex2.rgb * 0.45, vec3(0.299, 0.587, 0.114)), 1.1);
     fragColor = vec4(GlintColor.rgb * brightness * 1.5, GlintColor.a);
 }

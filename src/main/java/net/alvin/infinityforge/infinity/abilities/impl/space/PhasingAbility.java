@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.space;
 
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
@@ -22,14 +22,16 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class PhasingAbility extends ToggleAbility {
-    public PhasingAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
-        super(id, icon, key, color, requiredStones, maxChargeTicks, refillRateTicks);
+    public PhasingAbility(Identifier id, AbilityIcon icon,
+                          Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones,
+                          int maxChargeTicks, int refillRateTicks) {
+        super(id, icon, color, requiredStones, maxChargeTicks, refillRateTicks);
     }
 
     @Override
     public boolean onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
-        access.setCustomPhasing(true);
+        access.infinityforge$setPhasing(true);
         player.setNoGravity(true);
         return true;
     }
@@ -40,7 +42,7 @@ public class PhasingAbility extends ToggleAbility {
     @Override
     public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
-        access.setCustomPhasing(false);
+        access.infinityforge$setPhasing(false);
         player.setNoGravity(false);
     }
 

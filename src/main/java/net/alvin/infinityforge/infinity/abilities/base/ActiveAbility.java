@@ -44,10 +44,10 @@ public abstract non-sealed class ActiveAbility implements GauntletAbility {
      */
     private final int cooldownTicks;
 
-    public ActiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
+    public ActiveAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
         this.id = id;
+        this.key = "abilities." + id.getNamespace() + "." + id.getPath();
         this.icon = icon;
-        this.key = key;
         this.color = color;
         this.requiredStones = requiredStones;
         this.cooldownTicks = cooldownTicks;

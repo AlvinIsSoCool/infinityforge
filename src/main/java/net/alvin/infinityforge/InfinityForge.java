@@ -10,11 +10,12 @@ import net.alvin.infinityforge.entity.ModEntities;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.item.ModItemGroups;
 import net.alvin.infinityforge.item.ModItems;
+import net.alvin.infinityforge.particle.ModParticleEffects;
 import net.alvin.infinityforge.registry.*;
 import net.alvin.infinityforge.screen.ModScreenHandlers;
 import net.alvin.infinityforge.server.event.GauntletConnectionEvents;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
-import net.alvin.infinityforge.server.packet.GauntletPacketHandlers;
+import net.alvin.infinityforge.server.packet.GauntletPacketHandler;
 import net.alvin.infinityforge.server.tick.GauntletServerTick;
 import net.alvin.infinityforge.server.tick.PlayerForcefieldServerTick;
 import net.alvin.infinityforge.world.event.WorldGenEventHandler;
@@ -51,9 +52,10 @@ public class InfinityForge implements ModInitializer {
 		ModCustomTrades.register();
 		ModLootTableModifiers.register();
 
+		ModParticleEffects.register();
 		ModCommands.register();
 		WorldGenEventHandler.register();
-		GauntletPacketHandlers.register();
+		GauntletPacketHandler.register();
 		GauntletServerTick.register();
 		PlayerForcefieldServerTick.register();
 		GauntletConnectionEvents.register();

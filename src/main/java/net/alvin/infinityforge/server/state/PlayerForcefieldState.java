@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.server.state;
 
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -13,7 +13,7 @@ public class PlayerForcefieldState {
     public static final int FORCEFIELD_HIT_DURATION = 8;
 
     public static void markHit(ServerPlayerEntity player) {
-        ((PlayerEffectsAccess) player).setForcefieldHit(true);
+        ((PlayerEffectsAccess) player).infinityforge$setForcefieldHit(true);
         FORCEFIELD_HITS.put(player, player.getServerWorld().getTime());
     }
 
@@ -32,7 +32,7 @@ public class PlayerForcefieldState {
             ServerPlayerEntity player = entry.getKey();
             long hitTick = entry.getValue();
             if (currentTime - hitTick > FORCEFIELD_HIT_DURATION) {
-                ((PlayerEffectsAccess) player).setForcefieldHit(false);
+                ((PlayerEffectsAccess) player).infinityforge$setForcefieldHit(false);
                 iterator.remove();
             }
         }

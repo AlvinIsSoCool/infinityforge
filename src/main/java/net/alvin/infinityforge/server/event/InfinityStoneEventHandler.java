@@ -103,8 +103,7 @@ public class InfinityStoneEventHandler {
                 && new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
             player.setHealth(player.getMaxHealth());
             world.playSound(null, player.getBlockPos(),
-                    SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS,
-                    2.0f, 0.75f);
+                    SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS, 1f, 0.75f);
             return false;
         }
 

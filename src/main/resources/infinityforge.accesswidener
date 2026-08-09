@@ -5,6 +5,7 @@ accessible method net/minecraft/client/render/entity/LivingEntityRenderer addFea
 accessible method net/minecraft/entity/LivingEntity getDeathSound ()Lnet/minecraft/sound/SoundEvent;
 accessible method net/minecraft/entity/LivingEntity getSoundVolume ()F
 accessible method net/minecraft/entity/LivingEntity getSoundPitch ()F
+accessible method net/minecraft/entity/FallingBlockEntity <init> (Lnet/minecraft/world/World;DDDLnet/minecraft/block/BlockState;)V
 
 accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters
 accessible class net/minecraft/client/render/RenderPhase$Texture

@@ -21,7 +21,7 @@ public class ItemEntityRendererMixin {
                     ordinal = 0
             )
     )
-    private void noBob(MatrixStack matrices, float x, float y, float z, ItemEntity entity, float f, float g) {
+    private void infinityforge$noItemBob(MatrixStack matrices, float x, float y, float z, ItemEntity entity, float f, float g) {
         if (entity.getStack().getItem() instanceof InfinityStoneItem
                 || entity.getStack().getItem() instanceof InfinityGauntletItem) {
             matrices.translate(x, 0.1F, z);
@@ -38,7 +38,7 @@ public class ItemEntityRendererMixin {
                     ordinal = 0
             )
     )
-    private void noRot(MatrixStack matrices, Quaternionf q, ItemEntity entity, float f, float g) {
+    private void infinityforge$noItemRotation(MatrixStack matrices, Quaternionf q, ItemEntity entity, float f, float g) {
         if (entity.getStack().isIn(ModTags.Items.INFINITY_ITEMS)) return;
         matrices.multiply(q);
     }

@@ -7,8 +7,7 @@
         "MinecraftClientMixin",
         "MouseScrollMixin",
         "PlayerEntityRendererMixin",
-        "EntityRenderDispatcherMixin",
-        "AbstractDustParticleMixin"
+        "EntityRenderDispatcherMixin"
     ],
     "injectors": {
       "defaultRequire": 1

@@ -13,16 +13,19 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class BlackHoleAbility extends HeldAbility {
-    public BlackHoleAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks) {
-        super(id, icon, key, color, requiredStones, maxChargeTicks, refillRateTicks);
+    public BlackHoleAbility(Identifier id, AbilityIcon icon,
+                            Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones,
+                            int maxChargeTicks, int refillRateTicks) {
+        super(id, icon, color, requiredStones, maxChargeTicks, refillRateTicks);
     }
 
     @Override
-    public void onStart(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
+    public boolean onStart(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         BlackHoleEntity bh = new BlackHoleEntity(ModEntities.BLACKHOLE_ENTITY, world);
         bh.setPosition(player.getEyePos().add(player.getRotationVec(1.0F).multiply(4.0)));
         bh.setOwner(player.getUuid());
         world.spawnEntity(bh);
+        return true;
     }
 
     @Override

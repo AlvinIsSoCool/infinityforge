@@ -2,6 +2,7 @@ package net.alvin.infinityforge.entity;
 
 import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
+import net.alvin.infinityforge.particle.InfinityDustParticleEffect;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -13,7 +14,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -161,10 +161,10 @@ public class PortalEntity extends Entity {
         double cy = this.getY() + this.getHeight() / 2f - 0.1f;
         double cz = this.getZ();
         int count = 20;
-        ParticleEffect effect = new DustParticleEffect(
+        ParticleEffect effect = new InfinityDustParticleEffect(
                 Vec3d.unpackRgb(InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone)
                         .toVector3f(),
-                1.25f
+                1.25f, true, false
         );
 
         for (int i = 0; i < count; i++) {

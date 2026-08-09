@@ -16,10 +16,8 @@ import java.util.function.Supplier;
 
 public class HealthAbility extends AttributeModifierAbility {
 
-    public HealthAbility(Identifier id, AbilityIcon icon,
-                         String key, Supplier<Integer> color,
-                         float amount) {
-        super(id, icon, key, color, List::of, Map.of(
+    public HealthAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color, float amount) {
+        super(id, icon, color, List::of, Map.of(
                 EntityAttributes.GENERIC_MAX_HEALTH,
                 new EntityAttributeModifier(
                         UUID.randomUUID(),

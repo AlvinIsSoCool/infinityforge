@@ -25,9 +25,9 @@ import java.util.function.Supplier;
 
 public class KillAbility extends ActiveAbility implements AbilityDynamicIcon<Void> {
     public KillAbility(Identifier id, AbilityIcon icon,
-                       String key, Supplier<Integer> color,
-                       Supplier<List<InfinityStoneType>> requiredStones, int cooldownTicks) {
-        super(id, icon, key, color, requiredStones, cooldownTicks);
+                       Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones,
+                       int cooldownTicks) {
+        super(id, icon, color, requiredStones, cooldownTicks);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.client.state;
 
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -20,7 +20,7 @@ public class PlayerScaleAnimationState {
         float delta = Math.min(client.getLastFrameDuration(), 0.1f);
         for (PlayerEntity player : client.world.getPlayers()) {
             PlayerEffectsAccess access = (PlayerEffectsAccess) player;
-            float target = access.getCustomScale();
+            float target = access.infinityforge$getScale();
             PlayerAnimationState state = STATES.computeIfAbsent(player.getUuid(),
                     id -> new PlayerAnimationState(1.0f));
             state.advance(target, delta, TRANSITION_TIME);
@@ -29,7 +29,7 @@ public class PlayerScaleAnimationState {
 
     public static float getAnimatedScale(PlayerEntity player) {
         PlayerAnimationState state = STATES.get(player.getUuid());
-        return state != null ? state.currentScale : ((PlayerEffectsAccess) player).getCustomScale();
+        return state != null ? state.currentScale : ((PlayerEffectsAccess) player).infinityforge$getScale();
     }
 
     private static class PlayerAnimationState {

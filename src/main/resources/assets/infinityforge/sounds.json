@@ -2,5 +2,13 @@
   "equip_stone": {
     "subtitle": "subtitle.infinityforge.equip_stone",
     "sounds": [{ "name": "infinityforge:equip_stone" }]
+  },
+  "use_gauntlet": {
+    "subtitle": "subtitle.infinityforge.use_gauntlet",
+    "sounds": [{ "name": "infinityforge:use_gauntlet" }]
+  },
+  "energy_blast": {
+    "subtitle": "subtitle.infinityforge.energy_blast",
+    "sounds": [{ "name": "infinityforge:energy_blast" }]
   }
 }

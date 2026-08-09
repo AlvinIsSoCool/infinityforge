@@ -23,7 +23,7 @@ public class MinecraftClientMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void onItemUse(CallbackInfo ci) {
+    private void infinityforge$onItemUse(CallbackInfo ci) {
         MinecraftClient client = (MinecraftClient)(Object) this;
         if (client.player == null) return;
 

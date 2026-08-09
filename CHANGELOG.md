@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-
+- Added sounds.
+- Added translations.
+- Added new abilities.
+- Major API and internal changes.
+- Replaced particles for a custom one.
 
 ## [0.8.0-beta.1] - 2026-06-30
 

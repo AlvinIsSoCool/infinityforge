@@ -19,7 +19,7 @@ public class ServerItemUseMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void onInteractItem(ServerPlayerEntity player, World world,
+    private void infinityforge$onInteractItem(ServerPlayerEntity player, World world,
                                 ItemStack stack, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if (PendingInfinityItemPickups.isPending(player)) {
             PendingInfinityItemPickups.clear(player);

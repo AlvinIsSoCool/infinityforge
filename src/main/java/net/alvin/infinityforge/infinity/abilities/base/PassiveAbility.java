@@ -39,10 +39,10 @@ public abstract non-sealed class PassiveAbility implements GauntletAbility {
      */
     private final Supplier<List<InfinityStoneType>> requiredStones;
 
-    public PassiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
+    public PassiveAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
         this.id = id;
+        this.key = "abilities." + id.getNamespace() + "." + id.getPath();
         this.icon = icon;
-        this.key = key;
         this.color = color;
         this.requiredStones = requiredStones;
     }

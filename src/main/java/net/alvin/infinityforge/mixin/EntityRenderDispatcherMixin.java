@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.mixin;
 
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,10 +18,10 @@ public class EntityRenderDispatcherMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void onRenderShadow(MatrixStack matrices, VertexConsumerProvider vertexConsumers,
+    private static void infinityforge$onRenderShadow(MatrixStack matrices, VertexConsumerProvider vertexConsumers,
                                        Entity entity, float opacity, float tickDelta,
                                        WorldView world, float radius, CallbackInfo ci) {
-        if (entity instanceof PlayerEffectsAccess access && access.isCustomInvisible())
+        if (entity instanceof PlayerEffectsAccess access && access.infinityforge$isInvisible())
             ci.cancel();
     }
 }

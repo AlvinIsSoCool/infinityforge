@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.client.packet;
 
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.event.GauntletClientConnectionEvents;
 import net.alvin.infinityforge.client.screen.PortalScreen;
 import net.alvin.infinityforge.client.state.AbilityDynamicIconState;
@@ -12,16 +12,16 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 
-public class GauntletClientPacketHandlers {
+public class GauntletClientPacketHandler {
     public static void register() {
         ClientPlayNetworking.registerGlobalReceiver(
-                SyncToggleStateS2CPacket.TYPE, GauntletClientPacketHandlers::onToggleSync);
+                SyncToggleStateS2CPacket.TYPE, GauntletClientPacketHandler::onToggleSync);
         ClientPlayNetworking.registerGlobalReceiver(
-                SyncChargeS2CPacket.TYPE, GauntletClientPacketHandlers::onChargeSync);
+                SyncChargeS2CPacket.TYPE, GauntletClientPacketHandler::onChargeSync);
         ClientPlayNetworking.registerGlobalReceiver(
-                SyncHeldForceStopS2CPacket.TYPE, GauntletClientPacketHandlers::onHeldForceStop);
+                SyncHeldForceStopS2CPacket.TYPE, GauntletClientPacketHandler::onHeldForceStop);
         ClientPlayNetworking.registerGlobalReceiver(
-                SyncCooldownS2CPacket.TYPE, GauntletClientPacketHandlers::onCooldownSync);
+                SyncCooldownS2CPacket.TYPE, GauntletClientPacketHandler::onCooldownSync);
 
         ClientPlayNetworking.registerGlobalReceiver(
                 ClearGauntletClientStateS2CPacket.TYPE,
@@ -43,7 +43,7 @@ public class GauntletClientPacketHandlers {
                 SyncSizeChangeS2CPacket.TYPE,
                 (packet, player, responseSender)
                         -> {
-                    ((PlayerEffectsAccess) player).setCustomScale(packet.scale());
+                    ((PlayerEffectsAccess) player).infinityforge$setScale(packet.scale());
                     player.calculateDimensions();
                 });
         ClientPlayNetworking.registerGlobalReceiver(

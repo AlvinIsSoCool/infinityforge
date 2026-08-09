@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
-import net.alvin.infinityforge.accessor.PlayerEffectsAccess;
+import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
@@ -22,8 +22,10 @@ public class SizeChangeAbility extends ToggleAbility {
     private static final Set<PlayerEntity> SIZE_ACTIVE = Collections.newSetFromMap(new IdentityHashMap<>());
     private final float scale;
 
-    public SizeChangeAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones, int maxChargeTicks, int refillRateTicks, float scale) {
-        super(id, icon, key, color, requiredStones, maxChargeTicks, refillRateTicks);
+    public SizeChangeAbility(Identifier id, AbilityIcon icon,
+                             Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones,
+                             int maxChargeTicks, int refillRateTicks, float scale) {
+        super(id, icon, color, requiredStones, maxChargeTicks, refillRateTicks);
         this.scale = scale;
     }
 
@@ -34,7 +36,7 @@ public class SizeChangeAbility extends ToggleAbility {
         float newScale = activeStones.contains(ModStones.POWER)
                 ? (this.scale > 1.0f ? this.scale * 2 : (this.scale < 1.0f ? this.scale * 0.5f : this.scale))
                 : this.scale;
-        access.setCustomScale(newScale);
+        access.infinityforge$setScale(newScale);
         player.calculateDimensions();
         ServerPlayNetworking.send(player, new SyncSizeChangeS2CPacket(newScale));
         SIZE_ACTIVE.add(player);
@@ -47,7 +49,7 @@ public class SizeChangeAbility extends ToggleAbility {
     @Override
     public void onDisable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
-        access.setCustomScale(1.0f);
+        access.infinityforge$setScale(1.0f);
         player.calculateDimensions();
         ServerPlayNetworking.send(player, new SyncSizeChangeS2CPacket(1.0f));
         SIZE_ACTIVE.remove(player);

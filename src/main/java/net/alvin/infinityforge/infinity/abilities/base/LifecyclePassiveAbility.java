@@ -15,8 +15,8 @@ import java.util.function.Supplier;
 public class LifecyclePassiveAbility extends PassiveAbility {
     private final Set<PlayerEntity> ACTIVE_PASSIVES = Collections.newSetFromMap(new IdentityHashMap<>());
 
-    public LifecyclePassiveAbility(Identifier id, AbilityIcon icon, String key, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
-        super(id, icon, key, color, requiredStones);
+    public LifecyclePassiveAbility(Identifier id, AbilityIcon icon, Supplier<Integer> color, Supplier<List<InfinityStoneType>> requiredStones) {
+        super(id, icon, color, requiredStones);
     }
 
     /**

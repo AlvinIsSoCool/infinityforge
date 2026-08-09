@@ -18,6 +18,7 @@ public class ModStones {
                     StoneHoldAbilities::onPowerStoneHold,
                     List.of(
                             ModGauntletAbilities.ENERGY_BLAST, ModGauntletAbilities.ENERGY_BEAM,
+                            ModGauntletAbilities.EXPLOSION,
                             ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
                             ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT
                     ),
@@ -74,7 +75,10 @@ public class ModStones {
             new InfinityStoneType(
                     null,
                     null,
-                    List.of(ModGauntletAbilities.FLIGHT, ModGauntletAbilities.CHANGE_SNAP),
+                    List.of(
+                            ModGauntletAbilities.FLIGHT, ModGauntletAbilities.TELEKINESIS,
+                            ModGauntletAbilities.CHANGE_SNAP
+                    ),
                     () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.mindStone,
                     () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.mindStone
             )

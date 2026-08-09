@@ -63,13 +63,6 @@ public class FakeBlockEntity extends BlockEntity {
             double cz = pos.getZ() + 0.5;
             serverWorld.spawnParticles(ParticleTypes.BUBBLE_POP, cx, cy, cz, 50, 0.3, 0.4, 0.3, 0.005);
             serverWorld.spawnParticles(ParticleTypes.BUBBLE_POP, cx, cy, cz, 50, 0.5, 0.6, 0.5, 0.025);
-            /*ParticleEffect effect = new DustParticleEffect(new Vector3f(1f, 0f, 0f), 0.5f);
-            serverWorld.spawnParticles(effect, cx, cy, cz,
-                    50, 0.3, 0.4, 0.3, 0.005
-            );
-            serverWorld.spawnParticles(effect, cx, cy, cz,
-                    50, 0.5, 0.6, 0.5, 0.025
-            ); */
             CREATION_TIME_CACHE.remove(be);
         }
     }
