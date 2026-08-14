@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.server.network.ServerPlayerEntity;

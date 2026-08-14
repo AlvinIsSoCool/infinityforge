@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.base;
 
+import net.alvin.infinityforge.infinity.abilities.icon.ModAbilityIcons;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -16,9 +17,9 @@ public interface AbilityDynamicIcon<T> {
      *              the state that is used to retrieve the dynamic icon.
      * @return The {@link ItemStack} that will represent the dynamic icon.
      * @implNote Please note that state types must match when co-implemented with {@link AbilityState}.
-     *           Also, if no dynamic icon is to be provided other than
-     *           the default implementation ({@link ItemStack#EMPTY}), please do not use this interface.
-     *           Use the static icon functions for this like {@link AbilityIcon#empty()}
+     *           Also, if no dynamic icon is to be provided other than the default implementation
+     *           ({@link ItemStack#EMPTY}), please do not use this interface.
+     *           Use the static icon functions for this like {@link ModAbilityIcons#empty()}
      *           If no state is used and dynamic icons are required feel free to use
      *           {@link Void} as the type.
      */

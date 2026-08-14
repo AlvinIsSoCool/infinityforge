@@ -1,10 +1,9 @@
 package net.alvin.infinityforge;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.alvin.infinityforge.block.ModBlocks;
 import net.alvin.infinityforge.block.entity.ModBlockEntities;
-import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
+import net.alvin.infinityforge.config.server.InfinityForgeServerConfig;
 import net.alvin.infinityforge.entity.effect.ModStatusEffects;
 import net.alvin.infinityforge.entity.ModEntities;
 import net.alvin.infinityforge.infinity.ModStones;
@@ -32,7 +31,8 @@ public class InfinityForge implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		AutoConfig.register(InfinityForgeConfig.class, JanksonConfigSerializer::new);
+		InfinityForgeServerConfig.init();
+		InfinityForgeClientConfig.HANDLER.load();
 
 		ModStones.initialize();
 		ModItems.initialize();

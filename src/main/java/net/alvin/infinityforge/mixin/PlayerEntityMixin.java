@@ -1,10 +1,10 @@
 package net.alvin.infinityforge.mixin;
 
 import net.alvin.infinityforge.client.state.GauntletClientState;
+import net.alvin.infinityforge.config.server.InfinityForgeServerConfig;
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
-import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.ModGauntletAbilities;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.registry.ModDamageSources;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;
@@ -148,7 +148,7 @@ public abstract class PlayerEntityMixin implements PlayerEffectsAccess {
         PlayerEntity self = (PlayerEntity)(Object) this;
         if (self.getWorld().isClient()) return;
         if (!self.getAbilities().invulnerable) return;
-        if (!InfinityForgeConfig.get().godMode) return;
+        if (!InfinityForgeServerConfig.INSTANCE.godMode) return;
 
         Entity attacker = source.getAttacker();
         if (!(attacker instanceof ServerPlayerEntity attackerPlayer)) return;

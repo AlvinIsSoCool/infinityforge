@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.time;
 
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;

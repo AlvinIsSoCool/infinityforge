@@ -1,9 +1,9 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
 import net.alvin.infinityforge.block.entity.FakeBlockEntity;
-import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityDynamicIcon;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
@@ -54,7 +54,7 @@ public class SpawnBlockAbility extends ActiveAbility
                     World playerWorld = player.getWorld();
                     int r = 5;
                     ParticleEffect effect = new InfinityDustParticleEffect(Vec3d.unpackRgb(
-                            InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone).toVector3f(),
+                            InfinityForgeClientConfig.get().stoneGlintColors.realityStone).toVector3f(),
                             1.0f, true, false);
 
                     for (int x = -r; x <= r; x++) {
@@ -99,7 +99,7 @@ public class SpawnBlockAbility extends ActiveAbility
             double cy = hitPos.getY() + 0.5;
             double cz = hitPos.getZ() + 0.5;
             ParticleEffect effect = new InfinityDustParticleEffect(Vec3d.unpackRgb(
-                    InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone).toVector3f(),
+                    InfinityForgeClientConfig.get().stoneGlintColors.realityStone).toVector3f(),
                     1.0f, true, false);
             world.spawnParticles(effect, cx, cy, cz, 50, 0.3, 0.4, 0.3, 0.005);
             world.spawnParticles(effect, cx, cy, cz, 50, 0.5, 0.6, 0.5, 0.025);

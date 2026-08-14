@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.client.render.player;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
-import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -32,7 +32,7 @@ public class PlayerForcefieldFeatureRenderer extends
         if (!access.infinityforge$isForcefieldActive()) return;
 
         boolean isForcefieldHit = access.infinityforge$isForcefieldHit();
-        int color = InfinityForgeConfig.get().colorOptions.stoneBaseColors.spaceStone;
+        int color = InfinityForgeClientConfig.get().stoneBaseColors.spaceStone;
         float r = ((color >> 16) & 0xFF) / 255f;
         float g = ((color >> 8) & 0xFF) / 255f;
         float b = (color & 0xFF) / 255f;

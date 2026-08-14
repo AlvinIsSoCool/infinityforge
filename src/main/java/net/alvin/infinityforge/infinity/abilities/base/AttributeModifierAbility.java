@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.infinity.abilities.base;
 
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;

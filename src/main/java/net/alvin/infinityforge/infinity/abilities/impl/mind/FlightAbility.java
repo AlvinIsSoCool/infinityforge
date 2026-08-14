@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.mind;
 
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;

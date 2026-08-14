@@ -1,9 +1,9 @@
 package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.alvin.infinityforge.config.server.InfinityForgeServerConfig;
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
-import net.alvin.infinityforge.config.InfinityForgeConfig;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.item.ModItems;
@@ -118,9 +118,9 @@ public abstract class LivingEntityMixin {
 
             boolean hasPowerStone = activeStones.contains(ModStones.POWER);
             boolean allStonesEquipped = new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES);
-            float newAmount = original; // TODO: Add config resistance values.
+            float newAmount = original; // TODO: Add config resistance values. Use Server Config.
             if (hasPowerStone) newAmount = 1.0f;
-            if (allStonesEquipped) newAmount = (InfinityForgeConfig.get().godMode) ? 0.0f : newAmount;
+            if (allStonesEquipped) newAmount = (InfinityForgeServerConfig.INSTANCE.godMode) ? 0.0f : newAmount;
 
             return newAmount;
         }

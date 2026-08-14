@@ -2,7 +2,7 @@ package net.alvin.infinityforge.infinity.abilities.impl.power;
 
 import net.alvin.infinityforge.entity.projectile.EnergyBlastEntity;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.registry.ModSounds;
 import net.minecraft.server.network.ServerPlayerEntity;

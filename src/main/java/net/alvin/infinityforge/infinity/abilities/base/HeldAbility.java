@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.infinity.abilities.base;
 
 import net.alvin.infinityforge.infinity.InfinityStoneType;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.network.s2c.SyncHeldForceStopS2CPacket;
 import net.alvin.infinityforge.server.state.GauntletHeldState;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

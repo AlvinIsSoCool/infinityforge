@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.server.event;
 
-import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.config.server.InfinityForgeServerConfig;
 import net.alvin.infinityforge.infinity.abilities.impl.space.ForcefieldAbility;
 import net.alvin.infinityforge.infinity.abilities.impl.space.PhasingAbility;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
@@ -99,8 +99,8 @@ public class InfinityStoneEventHandler {
         if (stack == null) return true;
 
         List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-        if (InfinityForgeConfig.get().godMode
-                && new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
+        if (InfinityForgeServerConfig.INSTANCE.godMode &&
+                new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
             player.setHealth(player.getMaxHealth());
             world.playSound(null, player.getBlockPos(),
                     SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS, 1f, 0.75f);

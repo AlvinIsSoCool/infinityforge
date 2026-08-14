@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.infinity.abilities.impl.space;
 
-import net.alvin.infinityforge.config.InfinityForgeConfig;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.ModStones;
@@ -38,14 +38,14 @@ public class TeleportAbility extends ActiveAbility {
                     SoundCategory.PLAYERS, 1.0f, 1.25f
             );
             ModParticleHelper.spawnParticlesPlayer(world, player,
-                    InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone, 90);
+                    InfinityForgeClientConfig.get().stoneGlintColors.spaceStone, 90);
             player.requestTeleport(pos.getX(), pos.getY() + 0.5, pos.getZ());
             player.getWorld().playSound(
                     null, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT,
                     SoundCategory.PLAYERS, 1.0f, 1.25f
             );
             ModParticleHelper.spawnParticlesPlayer(world, player,
-                    InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone, 90);
+                    InfinityForgeClientConfig.get().stoneGlintColors.spaceStone, 90);
             return true;
         }
 

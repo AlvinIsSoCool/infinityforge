@@ -2,7 +2,7 @@ package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.network.s2c.SyncSizeChangeS2CPacket;

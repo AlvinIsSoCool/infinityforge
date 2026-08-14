@@ -1,11 +1,11 @@
 package net.alvin.infinityforge.infinity.abilities.impl.soul;
 
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.snap.SnapFunctions;
 import net.alvin.infinityforge.infinity.snap.SnapFunctionsHelper;
-import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.ModGauntletAbilities;
 import net.alvin.infinityforge.server.state.GauntletAbilityStates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;

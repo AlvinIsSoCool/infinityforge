@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.entity;
 
-import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.ModGauntletAbilities;
 import net.alvin.infinityforge.registry.ModDamageSources;
 import net.alvin.infinityforge.registry.ModTags;
 import net.alvin.infinityforge.server.event.InfinityStoneEventHandler;

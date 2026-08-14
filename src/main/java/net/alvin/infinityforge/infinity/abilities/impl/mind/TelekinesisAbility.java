@@ -1,10 +1,10 @@
 package net.alvin.infinityforge.infinity.abilities.impl.mind;
 
-import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
 import net.alvin.infinityforge.entity.GrabbedBlockEntity;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.abilities.base.ThrowOnAttack;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.AbilityState;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
@@ -163,7 +163,7 @@ public class TelekinesisAbility extends HeldAbility implements AbilityState<Enti
         double distance = start.distanceTo(end);
         int points = Math.max(1, (int) (distance / PARTICLE_SPACING));
         ParticleEffect effect = new InfinityDustParticleEffect(Vec3d.unpackRgb(
-                InfinityForgeConfig.get().colorOptions.stoneGlintColors.mindStone).toVector3f(),
+                InfinityForgeClientConfig.get().stoneGlintColors.mindStone).toVector3f(),
                 0.325f + world.random.nextFloat() * 0.4f, true, false);
 
         for (int i = 0; i <= points; i++) {

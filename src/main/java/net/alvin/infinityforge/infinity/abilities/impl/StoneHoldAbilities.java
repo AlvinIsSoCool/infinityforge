@@ -1,4 +1,4 @@
-package net.alvin.infinityforge.infinity.abilities;
+package net.alvin.infinityforge.infinity.abilities.impl;
 
 import net.alvin.infinityforge.entity.effect.HealthDrainStatusEffect;
 import net.alvin.infinityforge.entity.effect.ModStatusEffects;

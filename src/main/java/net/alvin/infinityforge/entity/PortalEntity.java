@@ -1,6 +1,6 @@
 package net.alvin.infinityforge.entity;
 
-import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.particle.InfinityDustParticleEffect;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
@@ -162,7 +162,7 @@ public class PortalEntity extends Entity {
         double cz = this.getZ();
         int count = 20;
         ParticleEffect effect = new InfinityDustParticleEffect(
-                Vec3d.unpackRgb(InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone)
+                Vec3d.unpackRgb(InfinityForgeClientConfig.get().stoneGlintColors.spaceStone)
                         .toVector3f(),
                 1.25f, true, false
         );

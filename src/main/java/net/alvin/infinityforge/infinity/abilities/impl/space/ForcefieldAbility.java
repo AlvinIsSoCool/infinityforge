@@ -1,12 +1,12 @@
 package net.alvin.infinityforge.infinity.abilities.impl.space;
 
+import net.alvin.infinityforge.config.server.InfinityForgeServerConfig;
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
-import net.alvin.infinityforge.config.InfinityForgeConfig;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
-import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.ModGauntletAbilities;
 import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.server.state.GauntletToggleState;
 import net.alvin.infinityforge.server.state.PlayerForcefieldState;
@@ -55,7 +55,7 @@ public class ForcefieldAbility extends ToggleAbility {
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(gauntletStack);
             boolean allStonesEquipped = new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES);
 
-            if (InfinityForgeConfig.get().godMode && allStonesEquipped) return false;
+            if (InfinityForgeServerConfig.INSTANCE.godMode && allStonesEquipped) return false;
             return source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY);
         }
         return true;

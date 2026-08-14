@@ -1,7 +1,7 @@
 package net.alvin.infinityforge.infinity.abilities.impl.soul;
 
 import net.alvin.infinityforge.infinity.abilities.base.AbilityDynamicIcon;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ActiveAbility;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.item.ModItems;

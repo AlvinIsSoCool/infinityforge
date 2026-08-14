@@ -5,6 +5,7 @@ import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.client.state.AbilityDynamicIconState;
 import net.alvin.infinityforge.infinity.abilities.base.*;
 import net.alvin.infinityforge.client.state.GauntletClientState;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.minecraft.client.MinecraftClient;
@@ -89,10 +90,10 @@ public class GauntletHudRenderer {
             context.drawItem(iconStack, 0, 0);
             context.getMatrices().pop();
         } else {
-            Identifier iconLocation = ability.getIcon().getIconLocation();
-            int iconIndex = ability.getIcon().getIconIndex();
-            int u = (iconIndex % 16) * 16;
-            int v = (iconIndex / 16) * 16;
+            AbilityIcon icon = ability.getIcon();
+            Identifier iconLocation = icon.sheetLocation();
+            int u = icon.getU();
+            int v = icon.getV();
             context.drawTexture(iconLocation, x + 3, y + 3, u, v, 16, 16);
         }
 

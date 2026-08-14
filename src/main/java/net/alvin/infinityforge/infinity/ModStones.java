@@ -1,11 +1,11 @@
 package net.alvin.infinityforge.infinity;
 
 import net.alvin.infinityforge.InfinityForge;
-import net.alvin.infinityforge.config.InfinityForgeConfig;
-import net.alvin.infinityforge.infinity.abilities.StoneHoldAbilities;
-import net.alvin.infinityforge.infinity.abilities.StoneUseAbilities;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
+import net.alvin.infinityforge.infinity.abilities.impl.StoneHoldAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.StoneUseAbilities;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
-import net.alvin.infinityforge.infinity.abilities.ModGauntletAbilities;
+import net.alvin.infinityforge.infinity.abilities.impl.ModGauntletAbilities;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import java.util.List;
@@ -22,8 +22,8 @@ public class ModStones {
                             ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
                             ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT
                     ),
-                    () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.powerStone,
-                    () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.powerStone
+                    () -> InfinityForgeClientConfig.get().stoneBaseColors.powerStone,
+                    () -> InfinityForgeClientConfig.get().stoneGlintColors.powerStone
             )
     );
     public static final InfinityStoneType SPACE = register(
@@ -36,8 +36,8 @@ public class ModStones {
                             ModGauntletAbilities.BLACKHOLE, ModGauntletAbilities.FORCEFIELD,
                             ModGauntletAbilities.PHASING
                     ),
-                    () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.spaceStone,
-                    () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.spaceStone
+                    () -> InfinityForgeClientConfig.get().stoneBaseColors.spaceStone,
+                    () -> InfinityForgeClientConfig.get().stoneGlintColors.spaceStone
             )
     );
     public static final InfinityStoneType REALITY = register(
@@ -52,8 +52,8 @@ public class ModStones {
                             ModGauntletAbilities.SPAWN_FAKE_BLOCK, ModGauntletAbilities.SPAWN_REAL_ITEM,
                             ModGauntletAbilities.SPAWN_FAKE_ITEM
                     ),
-                    () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.realityStone,
-                    () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone
+                    () -> InfinityForgeClientConfig.get().stoneBaseColors.realityStone,
+                    () -> InfinityForgeClientConfig.get().stoneGlintColors.realityStone
             )
     );
     public static final InfinityStoneType SOUL = register(
@@ -66,8 +66,8 @@ public class ModStones {
                             ModGauntletAbilities.SATURATION, ModGauntletAbilities.WATER_BREATHING,
                             ModGauntletAbilities.KILL, ModGauntletAbilities.SNAP
                     ),
-                    () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.soulStone,
-                    () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.soulStone
+                    () -> InfinityForgeClientConfig.get().stoneBaseColors.soulStone,
+                    () -> InfinityForgeClientConfig.get().stoneGlintColors.soulStone
             )
     );
     public static final InfinityStoneType MIND = register(
@@ -79,8 +79,8 @@ public class ModStones {
                             ModGauntletAbilities.FLIGHT, ModGauntletAbilities.TELEKINESIS,
                             ModGauntletAbilities.CHANGE_SNAP
                     ),
-                    () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.mindStone,
-                    () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.mindStone
+                    () -> InfinityForgeClientConfig.get().stoneBaseColors.mindStone,
+                    () -> InfinityForgeClientConfig.get().stoneGlintColors.mindStone
             )
     );
     public static final InfinityStoneType TIME = register(
@@ -92,8 +92,8 @@ public class ModStones {
                             ModGauntletAbilities.ADVANCE_TIME, ModGauntletAbilities.REWIND_TIME,
                             ModGauntletAbilities.STOP_TIME, ModGauntletAbilities.RANDOMISE_TIME
                     ),
-                    () -> InfinityForgeConfig.get().colorOptions.stoneBaseColors.timeStone,
-                    () -> InfinityForgeConfig.get().colorOptions.stoneGlintColors.timeStone
+                    () -> InfinityForgeClientConfig.get().stoneBaseColors.timeStone,
+                    () -> InfinityForgeClientConfig.get().stoneGlintColors.timeStone
             )
     );
 

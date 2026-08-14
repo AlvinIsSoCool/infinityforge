@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
-import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.ToggleAbility;
 import net.alvin.infinityforge.particle.ModParticleHelper;
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
@@ -25,7 +25,7 @@ public class InvisibilityAbility extends ToggleAbility {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
         access.infinityforge$setInvisible(true);
         ModParticleHelper.spawnParticlesPlayer(world, player,
-                InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone, 90);
+                InfinityForgeClientConfig.get().stoneGlintColors.realityStone, 90);
         return true;
     }
 
@@ -37,6 +37,6 @@ public class InvisibilityAbility extends ToggleAbility {
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
         access.infinityforge$setInvisible(false);
         ModParticleHelper.spawnParticlesPlayer(world, player,
-                InfinityForgeConfig.get().colorOptions.stoneGlintColors.realityStone, 90);
+                InfinityForgeClientConfig.get().stoneGlintColors.realityStone, 90);
     }
 }

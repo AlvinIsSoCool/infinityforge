@@ -1,8 +1,8 @@
 package net.alvin.infinityforge.infinity.abilities.impl.power;
 
-import net.alvin.infinityforge.config.InfinityForgeConfig;
+import net.alvin.infinityforge.config.client.InfinityForgeClientConfig;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
-import net.alvin.infinityforge.infinity.abilities.base.AbilityIcon;
+import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.particle.InfinityDustParticleEffect;
@@ -39,7 +39,7 @@ public class ExplosionAbility extends HeldAbility {
     @Override
     public void onTick(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         Vector3f color = Vec3d.unpackRgb(
-                InfinityForgeConfig.get().colorOptions.stoneGlintColors.powerStone).toVector3f();
+                InfinityForgeClientConfig.get().stoneGlintColors.powerStone).toVector3f();
         spawnRadialBurst(world, color, player.getPos(), 10, 5.0);
 
         ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(player);
