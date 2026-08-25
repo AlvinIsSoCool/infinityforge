@@ -12,7 +12,8 @@ public class ModCustomTrades {
                 VillagerProfession.LIBRARIAN, 5,
                 factories -> factories.add(
                         (entity, random) -> new TradeOffer(
-                                new ItemStack(Items.EMERALD, 64), new ItemStack(Items.PAPER), ModBlueprints.INFINITY_GAUNTLET_BLUEPRINT,
+                                new ItemStack(Items.EMERALD, 64), new ItemStack(Items.PAPER),
+                                ModBlueprints.INFINITY_GAUNTLET_BLUEPRINT,
                                 1, 10, 0f
                         )
                 )

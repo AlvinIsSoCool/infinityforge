@@ -7,7 +7,7 @@
 		"ItemEntityMixin",
 		"PlayerEntityMixin",
 		"LivingEntityMixin",
-		"ServerItemUseMixin",
+      "SPInteractionManagerMixin",
 		"ServerPlayNetworkHandlerMixin"
 	],
 	"injectors": {

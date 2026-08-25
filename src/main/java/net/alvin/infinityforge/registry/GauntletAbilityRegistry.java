@@ -22,6 +22,6 @@ public class GauntletAbilityRegistry {
     }
 
     public static void initialize() {
-        InfinityForge.LOGGER.info("Initializing Gauntlet Ability Registry for " + InfinityForge.MOD_ID);
+        InfinityForge.LOGGER.info("Initializing Gauntlet Ability Registry for: {}", InfinityForge.MOD_ID);
     }
 }

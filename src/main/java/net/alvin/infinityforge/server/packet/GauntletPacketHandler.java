@@ -9,6 +9,7 @@ import net.alvin.infinityforge.network.c2s.*;
 import net.alvin.infinityforge.network.s2c.SyncAbilityDynamicIconS2CPacket;
 import net.alvin.infinityforge.network.s2c.SyncHeldForceStopS2CPacket;
 import net.alvin.infinityforge.registry.GauntletAbilityRegistry;
+import net.alvin.infinityforge.registry.ModSounds;
 import net.alvin.infinityforge.screen.ItemSelectionScreenHandler;
 import net.alvin.infinityforge.server.state.*;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
@@ -207,6 +208,8 @@ public class GauntletPacketHandler {
         double horiz = Math.sqrt(facing.x * facing.x + facing.z * facing.z);
         float portalPitch = MathHelper.clamp((float)-Math.toDegrees(Math.atan2(facing.y, horiz)),
                 -70f, 70f);
+        world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                ModSounds.USE_GAUNTLET, SoundCategory.PLAYERS, 1f, 1f);
         PortalEntity.spawnLinkedPair(world, spawnPos.x, spawnPos.y, spawnPos.z,
                 portalYaw, portalPitch,
                 destination, packet.x(), packet.y(), packet.z(),

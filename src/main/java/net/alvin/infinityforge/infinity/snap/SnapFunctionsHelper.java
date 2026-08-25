@@ -32,8 +32,7 @@ import java.util.List;
 import java.util.Random;
 
 public class SnapFunctionsHelper {
-    public static void killHalf(ServerPlayerEntity player) {
-        ServerWorld world = player.getServerWorld();
+    public static void killHalf(ServerWorld world, ServerPlayerEntity player) {
         List<LivingEntity> targets = new ArrayList<>();
         for (Entity entity : world.iterateEntities()) {
             if (entity instanceof LivingEntity living
@@ -43,14 +42,13 @@ public class SnapFunctionsHelper {
 
         List<LivingEntity> halfTargets = getRandomTargetsHalf(targets);
         InfinityForge.LOGGER.info("Found {} entities for KILL_HALF Snap Function.", halfTargets.size());
-        applySnapEffectByDistanceOrder(halfTargets, player);
+        applyEffectByDistance(halfTargets, player);
         sendSnapMessageStyled(player, "snapmessages.infinityforge.kill_half",
                 Style.EMPTY.withColor(0xFA8128));
         applyPostSnapEffects(player);
     }
 
-    public static void killAll(ServerPlayerEntity player) {
-        ServerWorld world = player.getServerWorld();
+    public static void killAll(ServerWorld world, ServerPlayerEntity player) {
         List<LivingEntity> targets = new ArrayList<>();
 
         for (Entity entity : world.iterateEntities()) {
@@ -60,13 +58,12 @@ public class SnapFunctionsHelper {
         }
 
         InfinityForge.LOGGER.info("Found {} entities for KILL_ALL Snap Function.", targets.size());
-        applySnapEffectByDistanceOrder(targets, player);
+        applyEffectByDistance(targets, player);
         sendSnapMessage(player, "snapmessages.infinityforge.kill_all", Formatting.DARK_PURPLE);
         applyPostSnapEffects(player);
     }
 
-    public static void killHostiles(ServerPlayerEntity player) {
-        ServerWorld world = player.getServerWorld();
+    public static void killHostiles(ServerWorld world, ServerPlayerEntity player) {
         List<MobEntity> targets = new ArrayList<>();
 
         for (Entity entity : world.iterateEntities()) {
@@ -75,13 +72,12 @@ public class SnapFunctionsHelper {
         }
 
         InfinityForge.LOGGER.info("Found {} entities for KILL_HOSTILES Snap Function.", targets.size());
-        applySnapEffectByDistanceOrder(targets, player);
+        applyEffectByDistance(targets, player);
         sendSnapMessage(player, "snapmessages.infinityforge.kill_hostiles", Formatting.DARK_RED);
         applyPostSnapEffects(player);
     }
 
-    public static void revertKills(ServerPlayerEntity player) {
-        ServerWorld world = player.getServerWorld();
+    public static void revertKills(ServerWorld world, ServerPlayerEntity player) {
         SnappedEntitiesState state = SnappedEntitiesState.get(world);
         List<SnappedEntitiesState.SnappedEntry> entries = state.popAll();
         MinecraftServer server = world.getServer();
@@ -152,7 +148,7 @@ public class SnapFunctionsHelper {
         return result;
     }
 
-    private static <T extends LivingEntity> void applySnapEffectByDistanceOrder(
+    private static <T extends LivingEntity> void applyEffectByDistance(
             @NotNull List<T> targets,
             PlayerEntity player
     ) {

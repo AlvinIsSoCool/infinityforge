@@ -7,11 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
 - Added sounds.
 - Added translations.
 - Added new abilities.
+- Added ability icons.
+
+### Changed
+
 - Major API and internal changes.
 - Replaced particles for a custom one.
+- Switched to YACL from Cloth Config API.
+
+### Fixed
+
+- Minor bug fixes.
 
 ## [0.8.0-beta.1] - 2026-06-30
 

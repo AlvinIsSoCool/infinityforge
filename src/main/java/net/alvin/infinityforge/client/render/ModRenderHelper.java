@@ -1,8 +1,13 @@
 package net.alvin.infinityforge.client.render;
 
-import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.*;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Box;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -259,5 +264,15 @@ public class ModRenderHelper {
     public static void putVertex(VertexConsumer vc, Matrix4f pos, Matrix3f norm,
                                  Vector3f pf, float u, float v) {
         putVertex(vc, pos, norm, pf.x, pf.y, pf.z, u, v);
+    }
+
+    public static void drawOutlineIfTargeted(MatrixStack matrices, VertexConsumerProvider vertexConsumers,
+                                             ModelTransformationMode mode, ItemStack stack, Box box) {
+        if (mode != ModelTransformationMode.GROUND) return;
+        if (!(MinecraftClient.getInstance().crosshairTarget instanceof EntityHitResult hit)) return;
+        if (!(hit.getEntity() instanceof ItemEntity ie) || ie.getStack() != stack) return;
+
+        VertexConsumer vc = vertexConsumers.getBuffer(RenderLayer.getLines());
+        WorldRenderer.drawBox(matrices, vc, box, 0f, 0f, 0f, 0.4f);
     }
 }

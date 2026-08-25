@@ -16,6 +16,8 @@ public class ModItemRenderers {
     public static final InfinityGauntletRenderer GAUNTLET_RENDERER = new InfinityGauntletRenderer();
     public static final FakeItemRenderer FAKE_ITEM_RENDERER = new FakeItemRenderer();
 
+    public static final String ITEM_RENDERER_REG_MSG = "Registering renderer for Item: {} ({})";
+
     @SuppressWarnings("LoggingSimilarMessage")
     public static void register() {
         for (InfinityStoneType stoneType : InfinityStoneTypeRegistry.REGISTRY) {
@@ -23,7 +25,7 @@ public class ModItemRenderers {
             Identifier stoneId = InfinityStoneTypeRegistry.getStoneIdFromType(stoneType, "_stone");
             Item stoneItem = Registries.ITEM.get(stoneId);
 
-            InfinityForge.LOGGER.info("Registering renderer for Item: {} ({})", stoneName, stoneId.toString());
+            InfinityForge.LOGGER.info(ITEM_RENDERER_REG_MSG, stoneName, stoneId.toString());
             BuiltinItemRendererRegistry.INSTANCE.register(stoneItem,
                     (stack, mode,
                      matrices, vertexConsumers,
@@ -35,7 +37,7 @@ public class ModItemRenderers {
             Identifier tesseractId = InfinityStoneTypeRegistry.getStoneIdFromType(stoneType, "_tesseract");
             Item tesseractItem = Registries.ITEM.get(tesseractId);
 
-            InfinityForge.LOGGER.info("Registering renderer for Item: {} ({})", tesseractName, tesseractId.toString());
+            InfinityForge.LOGGER.info(ITEM_RENDERER_REG_MSG, tesseractName, tesseractId.toString());
             BuiltinItemRendererRegistry.INSTANCE.register(tesseractItem,
                     (stack, mode,
                      matrices, vertexConsumers,

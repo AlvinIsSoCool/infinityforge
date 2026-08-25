@@ -6,11 +6,13 @@ import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
 import net.alvin.infinityforge.infinity.abilities.base.HeldAbility;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.particle.InfinityDustParticleEffect;
+import net.alvin.infinityforge.registry.ModSounds;
 import net.alvin.infinityforge.server.state.GauntletChargeState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -33,7 +35,10 @@ public class ExplosionAbility extends HeldAbility {
         if (gauntletStack == null) return false;
         UUID gauntletId = InfinityGauntletItem.getOrCreateGauntletId(gauntletStack);
         int charge = GauntletChargeState.getCharge(gauntletId, getId(), getMaxChargeTicks());
-        return charge >= getMaxChargeTicks();
+        boolean success = charge >= getMaxChargeTicks();
+        if (success) world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    ModSounds.USE_GAUNTLET, SoundCategory.PLAYERS, 1f, 1f);
+        return success;
     }
 
     @Override

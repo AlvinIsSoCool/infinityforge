@@ -11,8 +11,11 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
@@ -59,19 +62,16 @@ public class InfinityGauntletRenderer {
                 matrices.scale(0.0625f, 0.0625f, 0.0625f);
 
                 Matrix4f pos = matrices.peek().getPositionMatrix();
-                Matrix3f norm = new Matrix3f(); // Normal has to be reset because I am lazy,
-                                                // I am working with bad model transforms,
-                                                // and LightmapTextureManager.MAX_LIGHT_COORDINATE
-                                                // doesn't really care about this much.
+                Matrix3f norm = new Matrix3f();
                 VertexConsumer vc = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(
                         GAUNTLET_TEXTURE_3D));
 
                 renderBox(vc,pos,norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay,255,255,255,255,
-                        -3f, 20f, -3f,  3f, 24f, 3f,
+                        -3f, 20f, -3f, 3f, 24f, 3f,
                         0,0, 6,4,6, 64,16);
 
                 renderBox(vc,pos,norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay,255,255,255,255,
-                        -2.5f, 16f, -2.5f,  2.5f, 20f, 2.5f,
+                        -2.5f, 16f, -2.5f, 2.5f, 20f, 2.5f,
                         24,0, 5,4,5, 64,16);
             matrices.pop();
 
@@ -118,6 +118,9 @@ public class InfinityGauntletRenderer {
                 matrices.pop();
             }
 
+            Box box = new Box(-3 * 0.0625, 16 * 0.0625, -3 * 0.0625,
+                    3 * 0.0625, 24 * 0.0625, 3 * 0.0625);
+            ModRenderHelper.drawOutlineIfTargeted(matrices, vertexConsumers, mode, stack, box);
         matrices.pop();
     }
 
@@ -178,6 +181,18 @@ public class InfinityGauntletRenderer {
                 x1,y0,z0, u+Du+W+Du,  v+Dv+H,
                 x1,y0,z1, u+Du+W,     v+Dv+H,
                 1, 0, 0);
+    }
+
+    private void renderOutline(ItemStack stack, ModelTransformationMode mode,
+                               MatrixStack matrices, VertexConsumerProvider vertexConsumers) {
+        if (mode != ModelTransformationMode.GROUND) return;
+        if (!(MinecraftClient.getInstance().crosshairTarget instanceof EntityHitResult hit)) return;
+        if (!(hit.getEntity() instanceof ItemEntity ie) || ie.getStack() != stack) return;
+
+        Box box = new Box(-3 * 0.0625, 16 * 0.0625, -3 * 0.0625,
+                3 * 0.0625, 24 * 0.0625, 3 * 0.0625);
+        VertexConsumer vc = vertexConsumers.getBuffer(RenderLayer.getLines());
+        WorldRenderer.drawBox(matrices, vc, box, 1f, 1f, 1f, 1f);
     }
 
     private float[] getSlotTransform(InfinityStoneType stoneType) {

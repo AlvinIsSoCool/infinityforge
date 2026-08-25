@@ -17,6 +17,6 @@ public class ModSounds {
     }
 
     public static void initialize() {
-        InfinityForge.LOGGER.info("Registering sounds for: {}", InfinityForge.MOD_ID);
+        InfinityForge.LOGGER.info("Registering Sounds for: {}", InfinityForge.MOD_ID);
     }
 }

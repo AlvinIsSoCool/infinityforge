@@ -12,9 +12,11 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -103,6 +105,17 @@ public class BlueprintTableBlockEntity extends BlockEntity
         progress = nbt.getInt(PROGRESS_KEY);
     }
 
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
+    }
+
+    @Nullable
+    @Override
+    public BlockEntityUpdateS2CPacket toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
     public void tick(World world, BlockPos pos, BlockState state) {
         if (world.isClient()) return;
 
@@ -135,10 +148,7 @@ public class BlueprintTableBlockEntity extends BlockEntity
         }
 
         if (!getStack(2).isEmpty()) return;
-
-        if (progress == 0) {
-            maxProgress = craftingTime;
-        }
+        if (progress == 0) maxProgress = craftingTime;
 
         craftingState = 1;
         progress++;
@@ -149,6 +159,10 @@ public class BlueprintTableBlockEntity extends BlockEntity
             removeStack(1, requiredIngredient.getCount());
             progress = 0;
             maxProgress = 0;
+
+            if (world instanceof ServerWorld serverWorld) {
+                serverWorld.getChunkManager().markForUpdate(pos);
+            }
         }
     }
 

@@ -12,7 +12,7 @@ public class ModParticleEffects {
             FabricParticleTypes.complex(InfinityDustParticleEffect.FACTORY);
 
     public static void register() {
-        InfinityForge.LOGGER.info("Registering particles for: {}", InfinityForge.MOD_ID);
+        InfinityForge.LOGGER.info("Registering Particles for: {}", InfinityForge.MOD_ID);
         Registry.register(Registries.PARTICLE_TYPE,
                 new Identifier(InfinityForge.MOD_ID, "infinity_dust"), INFINITY_DUST);
     }

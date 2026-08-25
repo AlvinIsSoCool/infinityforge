@@ -2,14 +2,20 @@ package net.alvin.infinityforge.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.Arm;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.Map;
@@ -65,9 +71,30 @@ public class FakeItem extends Item {
         }
 
         if (world.getTime() - created >= 200) {
-            if (entity instanceof PlayerEntity player)
+            if (entity instanceof PlayerEntity player) {
                 player.getInventory().removeOne(stack);
+                Vec3d handPos = getHandPos(player, player.getActiveHand());
+                ((ServerWorld) world).spawnParticles(ParticleTypes.BUBBLE_POP, handPos.x, handPos.y, handPos.z,
+                        25, 0.3, 0.4, 0.3, 0.005);
+            }
             CREATION_TIME_CACHE.remove(stack);
         }
+    }
+
+    public static Vec3d getHandPos(LivingEntity entity, Hand hand) {
+        boolean rightSide = (hand == Hand.MAIN_HAND) == (entity.getMainArm() == Arm.RIGHT);
+
+        Vec3d look = entity.getRotationVector();
+        Vec3d up = new Vec3d(0, 1, 0);
+        Vec3d right = look.crossProduct(up).normalize();
+
+        double forward = 0.55;
+        double side = 0.35 * (rightSide ? 1 : -1);
+        double vertical = -0.15;
+
+        return entity.getEyePos()
+                .add(look.multiply(forward))
+                .add(right.multiply(side))
+                .add(0, vertical, 0);
     }
 }

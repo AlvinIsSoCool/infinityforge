@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.registry;
 
+import net.alvin.infinityforge.InfinityForge;
 import net.alvin.infinityforge.item.BlueprintItem;
 import net.alvin.infinityforge.item.ModItems;
 import net.minecraft.item.ItemStack;
@@ -16,4 +17,8 @@ public class ModBlueprints {
     public static final List<ItemStack> ALL_BLUEPRINTS = List.of(
             INFINITY_GAUNTLET_BLUEPRINT
     );
+
+    public static void initialize() {
+        InfinityForge.LOGGER.info("Initializing Blueprints for: {}", InfinityForge.MOD_ID);
+    }
 }

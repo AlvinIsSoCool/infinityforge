@@ -112,6 +112,6 @@ public class ModStones {
     }
 
     public static void initialize() {
-        InfinityForge.LOGGER.info("Initializing Infinity Stone Types for " + InfinityForge.MOD_ID);
+        InfinityForge.LOGGER.info("Initializing Infinity Stone Types for: {}", InfinityForge.MOD_ID);
     }
 }

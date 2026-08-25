@@ -11,6 +11,7 @@ import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
@@ -18,7 +19,8 @@ import org.joml.Matrix4f;
 public class InfinityTesseractRenderer {
     private static final Identifier TESSERACT_TEXTURE = new Identifier(InfinityForge.MOD_ID,
             "textures/item/stone.png");
-    protected static final float SIZE = 0.125f;
+    private static final float SIZE = 0.125f;
+    private static final float r = SIZE * 1.05f;
 
     public void render(ItemStack stack, ModelTransformationMode mode,
                        MatrixStack matrices, VertexConsumerProvider vertexConsumers,
@@ -57,7 +59,10 @@ public class InfinityTesseractRenderer {
             VertexConsumer glowVc = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentEmissive(
                     TESSERACT_TEXTURE));
             ModRenderHelper.renderCube(glowVc, pos, norm, LightmapTextureManager.MAX_LIGHT_COORDINATE,
-                    overlay, glowColor, glowAlpha, SIZE * 1.05f);
+                    overlay, glowColor, glowAlpha, r);
+
+            ModRenderHelper.drawOutlineIfTargeted(matrices, vertexConsumers, mode, stack,
+                    new Box(-r, -r, -r, r, r, r));
         matrices.pop();
     }
 }

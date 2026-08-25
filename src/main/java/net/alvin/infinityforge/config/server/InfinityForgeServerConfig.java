@@ -15,8 +15,6 @@ import java.nio.file.Path;
 /**
  * Server-side config for InfinityForge. Read on both the dedicated server and the
  * integrated server (singleplayer). People can modify the file directly.
- * Comments are a static header block since Gson can't write them, only tolerate them
- * on read (lenient mode).
  */
 public class InfinityForgeServerConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

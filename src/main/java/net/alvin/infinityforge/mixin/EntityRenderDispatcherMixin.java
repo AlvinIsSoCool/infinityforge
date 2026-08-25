@@ -21,7 +21,7 @@ public class EntityRenderDispatcherMixin {
     private static void infinityforge$onRenderShadow(MatrixStack matrices, VertexConsumerProvider vertexConsumers,
                                        Entity entity, float opacity, float tickDelta,
                                        WorldView world, float radius, CallbackInfo ci) {
-        if (entity instanceof PlayerEffectsAccess access && access.infinityforge$isInvisible())
-            ci.cancel();
+        if (entity instanceof PlayerEffectsAccess access
+                && access.infinityforge$isInvisible()) ci.cancel(); // TODO: Flagged for consideration for phasing.
     }
 }

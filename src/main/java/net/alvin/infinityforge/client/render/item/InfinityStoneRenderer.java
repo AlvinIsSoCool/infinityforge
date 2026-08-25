@@ -12,13 +12,34 @@ import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class InfinityStoneRenderer {
     private static final Identifier STONE_TEXTURE = new Identifier(InfinityForge.MOD_ID, "textures/item/stone.png");
-    protected static final float SIZE = 0.0625f;
+    private static final float SIZE = 0.0625f;
+    private static final float r = SIZE * 1.05f;
+
+    public void render(ItemStack stack, ModelTransformationMode mode,
+                       MatrixStack matrices, VertexConsumerProvider vertexConsumers,
+                       int light, int overlay,
+                       InfinityStoneType stoneType) {
+        matrices.push();
+            matrices.translate(0.5f, 0.5f, 0.5f);
+            if (mode == ModelTransformationMode.GUI) {
+                matrices.scale(3.5f, 3.5f, 3.5f);
+                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30f));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45f));
+            } else if (mode == ModelTransformationMode.FIXED) {
+                matrices.scale(3.5f, 3.5f, 3.5f);
+            }
+            renderInternal(stack, mode, matrices, vertexConsumers, light, overlay, stoneType);
+            ModRenderHelper.drawOutlineIfTargeted(matrices, vertexConsumers, mode, stack,
+                    new Box(-r, -r, -r, r, r, r));
+        matrices.pop();
+    }
 
     public void renderInternal(ItemStack stack, ModelTransformationMode mode,
                             MatrixStack matrices, VertexConsumerProvider vertexConsumers,
@@ -39,7 +60,7 @@ public class InfinityStoneRenderer {
             float pulse = (float)(Math.sin(System.currentTimeMillis() / 500.0) * 0.5 + 0.5);
             int glowAlpha = (int)(80 + 175 * pulse);
             ModRenderHelper.renderCube(glowVc, pos, norm, LightmapTextureManager.MAX_LIGHT_COORDINATE, overlay,
-                    glintColor, glowAlpha, SIZE * 1.05f);
+                    glintColor, glowAlpha, r);
         } else if (vertexConsumers instanceof VertexConsumerProvider.Immediate immediate) {
             if (ModRenderLayers.glintColorUniform != null)
                 ModRenderLayers.glintColorUniform.set(
@@ -62,22 +83,5 @@ public class InfinityStoneRenderer {
                     OverlayTexture.DEFAULT_UV, 0, 0, SIZE);
             immediate.draw(ModRenderLayers.INFINITY_GLINT);
         }
-    }
-
-    public void render(ItemStack stack, ModelTransformationMode mode,
-                       MatrixStack matrices, VertexConsumerProvider vertexConsumers,
-                       int light, int overlay,
-                       InfinityStoneType stoneType) {
-        matrices.push();
-            matrices.translate(0.5f, 0.5f, 0.5f);
-            if (mode == ModelTransformationMode.GUI) {
-                matrices.scale(3.5f, 3.5f, 3.5f);
-                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(30f));
-                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(45f));
-            } else if (mode == ModelTransformationMode.FIXED) {
-                matrices.scale(3.5f, 3.5f, 3.5f);
-            }
-            renderInternal(stack, mode, matrices, vertexConsumers, light, overlay, stoneType);
-        matrices.pop();
     }
 }

@@ -1,7 +1,6 @@
 package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.alvin.infinityforge.item.InfinityTesseractItem;
 import net.alvin.infinityforge.registry.ModTags;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -48,7 +47,7 @@ public class ItemEntityMixin {
     )
     private boolean infinityforge$makeAttackableIE(boolean original) {
         if (original) return true;
-        return ((ItemEntity)(Object)this).getStack().getItem() instanceof InfinityTesseractItem;
+        return ((ItemEntity)(Object)this).getStack().isIn(ModTags.Items.INFINITY_TESSERACTS);
     }
 
     @Inject(

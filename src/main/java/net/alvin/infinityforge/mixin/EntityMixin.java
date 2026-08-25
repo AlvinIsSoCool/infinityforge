@@ -60,7 +60,7 @@ public class EntityMixin {
         return original;
     }
 
-    @SuppressWarnings("ConstantValue")
+    @SuppressWarnings("ConstantConditions")
     @ModifyReturnValue(
             method = "isPushable()Z",
             at = @At("RETURN")
@@ -71,7 +71,7 @@ public class EntityMixin {
         return itemEntity.getStack().isIn(ModTags.Items.INFINITY_ITEMS);
     }
 
-    @SuppressWarnings("ConstantValue")
+    @SuppressWarnings("ConstantConditions")
     @ModifyReturnValue(
             method = "canHit()Z",
             at = @At("RETURN")
@@ -79,7 +79,7 @@ public class EntityMixin {
     private boolean infinityforge$makeHittableIE(boolean original) {
         if (original) return true;
         return ((Object) this instanceof ItemEntity itemEntity)
-                && itemEntity.getStack().isIn(ModTags.Items.INFINITY_TESSERACTS);
+                && itemEntity.getStack().isIn(ModTags.Items.INFINITY_ITEMS);
     }
 
     @ModifyReturnValue(

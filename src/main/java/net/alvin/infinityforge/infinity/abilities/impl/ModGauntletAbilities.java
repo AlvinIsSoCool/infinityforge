@@ -33,7 +33,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility ENERGY_BLAST = GauntletAbilityRegistry.register(
             new EnergyBlastAbility(
                     new Identifier(InfinityForge.MOD_ID, "energy_blast"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.ENERGY_BLAST,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.powerStone,
                     List::of, 20
             )
@@ -41,7 +41,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility ENERGY_BEAM = GauntletAbilityRegistry.register(
             new EnergyBeamAbility(
                     new Identifier(InfinityForge.MOD_ID, "energy_beam"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.ENERGY_BEAM,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.powerStone,
                     List::of,
                     400, -2

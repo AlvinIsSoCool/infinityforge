@@ -1,5 +1,6 @@
 package net.alvin.infinityforge.infinity.abilities.impl.reality;
 
+import net.alvin.infinityforge.registry.ModSounds;
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.infinity.abilities.icon.AbilityIcon;
@@ -10,6 +11,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 
 import java.util.Collections;
@@ -32,6 +34,8 @@ public class SizeChangeAbility extends ToggleAbility {
     @Override
     public boolean onEnable(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         if (SIZE_ACTIVE.contains(player)) return false;
+        world.playSound(null, player.getX(), player.getY(), player.getZ(),
+                ModSounds.USE_GAUNTLET, SoundCategory.PLAYERS, 1f, 1f);
         PlayerEffectsAccess access = (PlayerEffectsAccess) player;
         float newScale = activeStones.contains(ModStones.POWER)
                 ? (this.scale > 1.0f ? this.scale * 2 : (this.scale < 1.0f ? this.scale * 0.5f : this.scale))

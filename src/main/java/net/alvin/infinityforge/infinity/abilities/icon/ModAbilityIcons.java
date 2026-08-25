@@ -11,9 +11,9 @@ public final class ModAbilityIcons {
     private static final AbilityIconAllocator ICONS = new AbilityIconAllocator(ICON_SHEET);
     private static final AbilityIconAllocator PASSIVE_ICONS = new AbilityIconAllocator(PASSIVE_ICON_SHEET);
 
-    //public static final AbilityIcon ENERGY_BLAST = ICONS.next();
-    //public static final AbilityIcon ENERGY_BEAM = ICONS.next();
-    //public static final AbilityIcon EXPLOSION = ICONS.next();
+    public static final AbilityIcon ENERGY_BLAST = ICONS.next();
+    public static final AbilityIcon ENERGY_BEAM = ICONS.next();
+    public static final AbilityIcon EXPLOSION = ICONS.next();
     public static final AbilityIcon TELEPORT = ICONS.next();
     public static final AbilityIcon PORTAL = ICONS.next();
     public static final AbilityIcon BLACKHOLE = ICONS.next();
