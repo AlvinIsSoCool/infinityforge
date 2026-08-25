@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "III",
+    "P P",
+    "P P"
+  ],
+  "result": {
+    "item": "infinityforge:blueprint_table"
+  },
+  "show_notification": true
+}
