@@ -13,12 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added translations.
 - Added new abilities.
 - Added ability icons.
+- Added blueprint table recipe.
 
 ### Changed
 
 - Major API and internal changes.
 - Replaced particles for a custom one.
 - Switched to YACL from Cloth Config API.
+- Changed infinity item pickup mechanics.
+- Entity shadow obeys phasing translucency.
 
 ### Fixed
 

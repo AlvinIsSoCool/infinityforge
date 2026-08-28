@@ -24,11 +24,9 @@ public final class ModAbilityIcons {
     public static final AbilityIcon SIZE_CHANGE_SMALL = ICONS.next();
     public static final AbilityIcon SIZE_CHANGE_BIG = ICONS.next();
     public static final AbilityIcon TURN_INTO_BUBBLES = ICONS.next();
-    public static final AbilityIcon KILL = ICONS.next();
     public static final AbilityIcon SNAP = ICONS.next();
-    //public static final AbilityIcon FLIGHT = ICONS.next();
-    //public static final AbilityIcon TELEKINESIS = ICONS.next();
-    //public static final AbilityIcon CHANGE_SNAP = ICONS.next();
+    public static final AbilityIcon FLIGHT = ICONS.next();
+    public static final AbilityIcon TELEKINESIS = ICONS.next();
     //public static final AbilityIcon ADVANCE_TIME = ICONS.next();
     //public static final AbilityIcon REWIND_TIME = ICONS.next();
     //public static final AbilityIcon STOP_TIME = ICONS.next();

@@ -9,6 +9,7 @@ import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityRenderDispatcher.class)
@@ -22,6 +23,17 @@ public class EntityRenderDispatcherMixin {
                                        Entity entity, float opacity, float tickDelta,
                                        WorldView world, float radius, CallbackInfo ci) {
         if (entity instanceof PlayerEffectsAccess access
-                && access.infinityforge$isInvisible()) ci.cancel(); // TODO: Flagged for consideration for phasing.
+                && access.infinityforge$isInvisible()) ci.cancel();
+    }
+
+    @ModifyVariable(
+            method = "renderShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/entity/Entity;FFLnet/minecraft/world/WorldView;F)V",
+            at = @At("HEAD"),
+            argsOnly = true,
+            ordinal = 0
+    )
+    private static float infinityforge$modifyShadowOpacity(float opacity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
+        return (entity instanceof PlayerEffectsAccess access && access.infinityforge$isPhasing()) ?
+                opacity * 0.5f : opacity;
     }
 }

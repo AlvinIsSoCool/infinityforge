@@ -284,7 +284,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility KILL = GauntletAbilityRegistry.register(
             new KillAbility(
                     new Identifier(InfinityForge.MOD_ID, "kill"),
-                    ModAbilityIcons.KILL,
+                    ModAbilityIcons.empty(),
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.soulStone,
                     () -> List.of(ModStones.POWER, ModStones.SPACE, ModStones.REALITY, ModStones.SOUL), 100
             )
@@ -301,7 +301,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility FLIGHT = GauntletAbilityRegistry.register(
             new FlightAbility(
                     new Identifier(InfinityForge.MOD_ID, "flight"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.FLIGHT,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.mindStone,
                     () -> List.of(ModStones.POWER, ModStones.MIND),
                     -1, 0
@@ -310,7 +310,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility TELEKINESIS = GauntletAbilityRegistry.register(
             new TelekinesisAbility(
                     new Identifier(InfinityForge.MOD_ID, "telekinesis"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.TELEKINESIS,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.mindStone,
                     List::of,
                     400, -1

@@ -49,7 +49,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .pattern("III")
                 .pattern("P P")
                 .pattern("P P")
-                .input('I', Items.IRON_INGOT)
+                .input('I', Items.IRON_BLOCK)
                 .input('P', ItemTags.PLANKS)
                 .criterion(hasItem(Items.IRON_BLOCK), conditionsFromItem(Items.IRON_BLOCK))
                 .offerTo(exporter);

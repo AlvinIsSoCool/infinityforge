@@ -121,6 +121,7 @@ public class ModWorldGenProvider extends FabricDynamicRegistryProvider {
                 biomeWrapper.getOrThrow(BiomeKeys.END_BARRENS)
         );
 
+        // TODO: Configure proper spacing and stuff.
         // Overworld
         JigsawStructure overworldStructure = new JigsawStructure(
                 new Structure.Config(
