@@ -44,7 +44,6 @@ public class EntityMixin {
         return velocity;
     }
 
-    @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "getStandingEyeHeight()F",
             at = @At("RETURN")

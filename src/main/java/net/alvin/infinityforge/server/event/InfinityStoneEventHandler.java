@@ -20,7 +20,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 
-import java.util.HashSet;
 import java.util.List;
 
 public class InfinityStoneEventHandler {
@@ -99,8 +98,8 @@ public class InfinityStoneEventHandler {
         if (stack == null) return true;
 
         List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(stack);
-        if (InfinityForgeServerConfig.INSTANCE.godMode &&
-                new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES)) {
+        boolean allStonesEquipped = activeStones.size() == ModStones.ALL_STONES.size();
+        if (InfinityForgeServerConfig.INSTANCE.godMode && allStonesEquipped) {
             player.setHealth(player.getMaxHealth());
             world.playSound(null, player.getBlockPos(),
                     SoundEvents.ITEM_TOTEM_USE, SoundCategory.PLAYERS, 1f, 0.75f);

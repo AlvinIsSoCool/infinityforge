@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.infinity.snap;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.entity.effect.HarmfulEffectsBypass;
 import net.alvin.infinityforge.entity.effect.SnapStatusEffect;
 import net.alvin.infinityforge.item.InfinityGauntletItem;
 import net.alvin.infinityforge.entity.effect.ModStatusEffects;
@@ -42,7 +43,7 @@ public class SnapFunctionsHelper {
 
         List<LivingEntity> halfTargets = getRandomTargetsHalf(targets);
         InfinityForge.LOGGER.info("Found {} entities for KILL_HALF Snap Function.", halfTargets.size());
-        applyEffectByDistance(halfTargets, player);
+        applySnapEffectByDistance(halfTargets, player);
         sendSnapMessageStyled(player, "snapmessages.infinityforge.kill_half",
                 Style.EMPTY.withColor(0xFA8128));
         applyPostSnapEffects(player);
@@ -58,7 +59,7 @@ public class SnapFunctionsHelper {
         }
 
         InfinityForge.LOGGER.info("Found {} entities for KILL_ALL Snap Function.", targets.size());
-        applyEffectByDistance(targets, player);
+        applySnapEffectByDistance(targets, player);
         sendSnapMessage(player, "snapmessages.infinityforge.kill_all", Formatting.DARK_PURPLE);
         applyPostSnapEffects(player);
     }
@@ -72,7 +73,7 @@ public class SnapFunctionsHelper {
         }
 
         InfinityForge.LOGGER.info("Found {} entities for KILL_HOSTILES Snap Function.", targets.size());
-        applyEffectByDistance(targets, player);
+        applySnapEffectByDistance(targets, player);
         sendSnapMessage(player, "snapmessages.infinityforge.kill_hostiles", Formatting.DARK_RED);
         applyPostSnapEffects(player);
     }
@@ -127,8 +128,10 @@ public class SnapFunctionsHelper {
         player.getHungerManager().setFoodLevel(1);
         player.damage(player.getDamageSources().magic(), 1.0f);
         player.setHealth(1.0f);
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 255));
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 200, 255));
+        player.addStatusEffect(HarmfulEffectsBypass.exempt(
+                new StatusEffectInstance(StatusEffects.SLOWNESS, 200, 255)));
+        player.addStatusEffect(HarmfulEffectsBypass.exempt(
+                new StatusEffectInstance(StatusEffects.BLINDNESS, 200, 255)));
     }
 
     private static <T extends LivingEntity> List<T> getRandomTargetsHalf(List<T> targets) {
@@ -148,7 +151,7 @@ public class SnapFunctionsHelper {
         return result;
     }
 
-    private static <T extends LivingEntity> void applyEffectByDistance(
+    private static <T extends LivingEntity> void applySnapEffectByDistance(
             @NotNull List<T> targets,
             PlayerEntity player
     ) {

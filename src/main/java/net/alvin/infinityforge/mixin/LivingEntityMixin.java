@@ -2,6 +2,7 @@ package net.alvin.infinityforge.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.alvin.infinityforge.config.server.InfinityForgeServerConfig;
+import net.alvin.infinityforge.entity.effect.HarmfulEffectsBypass;
 import net.alvin.infinityforge.util.accessor.PlayerEffectsAccess;
 import net.alvin.infinityforge.client.state.PlayerScaleAnimationState;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
@@ -19,11 +20,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Mixin(LivingEntity.class)
@@ -88,20 +89,22 @@ public abstract class LivingEntityMixin {
         return original;
     }
 
-    // TODO: Fix post snap effects with this mixin.
     @ModifyReturnValue(
             method = "canHaveStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)Z",
             at = @At("RETURN")
     )
     private boolean infinityforge$canHaveStatusEffect(boolean original, StatusEffectInstance effect) {
-        if ((Object) this instanceof PlayerEntity player) {
+        LivingEntity entity = (LivingEntity)(Object) this;
+
+        if (entity.getWorld().isClient()) return original;
+        if (entity instanceof PlayerEntity player) {
             ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(player);
             if (gauntletStack == null) return original;
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(gauntletStack);
 
             boolean isHarmful = effect.getEffectType().getCategory().equals(StatusEffectCategory.HARMFUL);
-            boolean allStonesEquipped = new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES);
-            if (allStonesEquipped && isHarmful) return false;
+            boolean allStonesEquipped = activeStones.size() == ModStones.ALL_STONES.size();
+            if (allStonesEquipped && isHarmful) return HarmfulEffectsBypass.isExempt(effect) && original;
         }
         return original;
     }
@@ -110,20 +113,26 @@ public abstract class LivingEntityMixin {
             method = "modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F",
             at = @At("RETURN")
     )
-    private float infinityforge$onModifyAppliedDamage(float original, DamageSource source, float amount) {
+    private float infinityforge$modifyAppliedDamage(float original, DamageSource source, float amount) {
         if ((Object) this instanceof PlayerEntity player) {
             ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(player);
             if (gauntletStack == null) return original;
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(gauntletStack);
-
-            boolean hasPowerStone = activeStones.contains(ModStones.POWER);
-            boolean allStonesEquipped = new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES);
-            float newAmount = original; // TODO: Add config resistance values. Use Server Config.
-            if (hasPowerStone) newAmount = 1.0f;
-            if (allStonesEquipped) newAmount = (InfinityForgeServerConfig.INSTANCE.godMode) ? 0.0f : newAmount;
-
-            return newAmount;
+            return infinityforge$getModifiedDamage(original, activeStones);
         }
+        return original;
+    }
+
+    @Unique
+    private static float infinityforge$getModifiedDamage(float original, List<InfinityStoneType> activeStones) {
+        boolean allStonesEquipped = activeStones.size() == ModStones.ALL_STONES.size();
+        if (allStonesEquipped) {
+            return InfinityForgeServerConfig.INSTANCE.godMode
+                    ? 0f
+                    : original * InfinityForgeServerConfig.INSTANCE.allStonesDamageResistance;
+        }
+        if (activeStones.contains(ModStones.POWER))
+            return original * InfinityForgeServerConfig.INSTANCE.powerStoneDamageResistance;
         return original;
     }
 }

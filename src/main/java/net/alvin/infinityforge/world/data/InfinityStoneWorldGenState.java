@@ -1,6 +1,7 @@
 package net.alvin.infinityforge.world.data;
 
 import net.alvin.infinityforge.InfinityForge;
+import net.alvin.infinityforge.config.server.InfinityForgeServerConfig;
 import net.alvin.infinityforge.infinity.InfinityStoneType;
 import net.alvin.infinityforge.registry.InfinityStoneTypeRegistry;
 import net.minecraft.nbt.NbtCompound;
@@ -98,9 +99,8 @@ public class InfinityStoneWorldGenState extends PersistentState {
         return spawnRecords.stream().anyMatch(r -> r.stoneId().equals(stoneId));
     }
 
-    // TODO: Add config value for number of infinity stone sets to spawn.
     public boolean canSpawn(InfinityStoneType chosenStone) {
-        int maxSets = 1; // -1 for unlimited.
+        int maxSets = InfinityForgeServerConfig.INSTANCE.infinityStoneGenerationSets;
         if (maxSets == -1) return true;
 
         Identifier id = InfinityStoneTypeRegistry.REGISTRY.getId(chosenStone);

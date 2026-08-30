@@ -121,7 +121,6 @@ public class ModWorldGenProvider extends FabricDynamicRegistryProvider {
                 biomeWrapper.getOrThrow(BiomeKeys.END_BARRENS)
         );
 
-        // TODO: Configure proper spacing and stuff.
         // Overworld
         JigsawStructure overworldStructure = new JigsawStructure(
                 new Structure.Config(
@@ -139,7 +138,7 @@ public class ModWorldGenProvider extends FabricDynamicRegistryProvider {
         RegistryEntry<Structure> overworldStructureEntry = entries.add(ModStructures.CRYSTAL_HYPERCUBE_OVERWORLD, overworldStructure);
         entries.add(ModStructures.CRYSTAL_HYPERCUBE_OVERWORLD_SET,
                 new StructureSet(overworldStructureEntry,
-                        new RandomSpreadStructurePlacement(10, 5, SpreadType.LINEAR, 620567084)));
+                        new RandomSpreadStructurePlacement(48, 16, SpreadType.TRIANGULAR, 1168166298)));
 
         // Nether
         JigsawStructure netherStructure = new JigsawStructure(
@@ -158,7 +157,7 @@ public class ModWorldGenProvider extends FabricDynamicRegistryProvider {
         RegistryEntry<Structure> netherStructureEntry = entries.add(ModStructures.CRYSTAL_HYPERCUBE_NETHER, netherStructure);
         entries.add(ModStructures.CRYSTAL_HYPERCUBE_NETHER_SET,
                 new StructureSet(netherStructureEntry,
-                        new RandomSpreadStructurePlacement(10, 5, SpreadType.LINEAR, 368333975)));
+                        new RandomSpreadStructurePlacement(28, 10, SpreadType.TRIANGULAR, 458809730)));
 
         // End
         JigsawStructure endStructure = new JigsawStructure(
@@ -177,7 +176,7 @@ public class ModWorldGenProvider extends FabricDynamicRegistryProvider {
         RegistryEntry<Structure> endStructureEntry = entries.add(ModStructures.CRYSTAL_HYPERCUBE_END, endStructure);
         entries.add(ModStructures.CRYSTAL_HYPERCUBE_END_SET,
                 new StructureSet(endStructureEntry,
-                        new RandomSpreadStructurePlacement(10, 5, SpreadType.LINEAR, 109817750)));
+                        new RandomSpreadStructurePlacement(32, 12, SpreadType.TRIANGULAR, 242253054)));
     }
 
     private static StructurePool getStructurePool(RegistryEntry<StructureProcessorList> processorEntry,

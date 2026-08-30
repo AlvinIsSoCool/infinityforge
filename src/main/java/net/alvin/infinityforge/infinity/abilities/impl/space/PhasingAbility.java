@@ -17,7 +17,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -51,7 +50,7 @@ public class PhasingAbility extends ToggleAbility {
                 && GauntletToggleState.isActive(player, ModGauntletAbilities.PHASING.getId())) {
             ItemStack gauntletStack = InfinityGauntletItem.findGauntlet(player);
             List<InfinityStoneType> activeStones = InfinityGauntletItem.getAddedStones(gauntletStack);
-            boolean allStonesEquipped = new HashSet<>(activeStones).containsAll(ModStones.ALL_STONES);
+            boolean allStonesEquipped = activeStones.size() == ModStones.ALL_STONES.size();
 
             if (InfinityForgeServerConfig.INSTANCE.godMode && allStonesEquipped) return false;
             return source.isIn(DamageTypeTags.BYPASSES_INVULNERABILITY);

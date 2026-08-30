@@ -245,15 +245,18 @@ public class PortalEntity extends Entity {
         if (this.closing) return false;
         Entity attacker = source.getAttacker();
         if (!(attacker instanceof PlayerEntity player)) return false;
-        if (InfinityGauntletItem.findGauntlet(player) != null) {
-            this.closing = true;
-
-            if (this.getWorld() instanceof ServerWorld sw) {
-                PortalEntity partner = findPartner(sw.getServer());
-                if (partner != null) partner.closing = true;
-            }
-        }
+        if (InfinityGauntletItem.findGauntlet(player) != null
+                && player.isSneaking()) closePortal();
         return true;
+    }
+
+    private void closePortal() {
+        this.closing = true;
+
+        if (getWorld() instanceof ServerWorld sw) {
+            PortalEntity partner = findPartner(sw.getServer());
+            if (partner != null) partner.closing = true;
+        }
     }
 
     @Override

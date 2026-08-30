@@ -31,6 +31,7 @@ public class MinecraftClientMixin {
         if (player.getActiveHand() != Hand.MAIN_HAND) return;
 
         HitResult crosshairTarget = client.crosshairTarget;
+        if (crosshairTarget == null) return;
         if (crosshairTarget.getType() != HitResult.Type.ENTITY) return;
 
         EntityHitResult entityHit = (EntityHitResult) crosshairTarget;
