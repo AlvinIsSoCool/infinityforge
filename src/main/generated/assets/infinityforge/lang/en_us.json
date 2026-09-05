@@ -1,6 +1,7 @@
 {
   "abilities.infinityforge.advance_time": "Advance Time",
   "abilities.infinityforge.attack_speed": "Attack Speed",
+  "abilities.infinityforge.attack_strength": "Attack Strength",
   "abilities.infinityforge.blackhole": "Black Hole",
   "abilities.infinityforge.change_snap": "Change Snap Function",
   "abilities.infinityforge.energy_beam": "Energy Beam",
@@ -15,6 +16,7 @@
   "abilities.infinityforge.knockback_resistance": "Knockback Resistance",
   "abilities.infinityforge.phasing": "Phasing",
   "abilities.infinityforge.portal": "Portal",
+  "abilities.infinityforge.potion_resistance": "Harmful Effects Resistance",
   "abilities.infinityforge.randomise_time": "Randomise Time",
   "abilities.infinityforge.rewind_time": "Rewind Time",
   "abilities.infinityforge.saturation": "Self-Sustenance",

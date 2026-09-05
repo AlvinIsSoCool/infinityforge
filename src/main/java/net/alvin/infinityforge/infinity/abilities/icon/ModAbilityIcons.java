@@ -27,11 +27,12 @@ public final class ModAbilityIcons {
     public static final AbilityIcon SNAP = ICONS.next();
     public static final AbilityIcon FLIGHT = ICONS.next();
     public static final AbilityIcon TELEKINESIS = ICONS.next();
-    //public static final AbilityIcon ADVANCE_TIME = ICONS.next();
-    //public static final AbilityIcon REWIND_TIME = ICONS.next();
-    //public static final AbilityIcon STOP_TIME = ICONS.next();
-    //public static final AbilityIcon RANDOMISE_TIME = ICONS.next();
+    public static final AbilityIcon ADVANCE_TIME = ICONS.next();
+    public static final AbilityIcon REWIND_TIME = ICONS.next();
+    public static final AbilityIcon STOP_TIME = ICONS.next();
+    public static final AbilityIcon RANDOMISE_TIME = ICONS.next();
 
+    public static final AbilityIcon ATTACK_STRENGTH = PASSIVE_ICONS.next();
     public static final AbilityIcon KNOCKBACK_RESISTANCE = PASSIVE_ICONS.next();
     public static final AbilityIcon SPEED = PASSIVE_ICONS.next();
     public static final AbilityIcon ATTACK_SPEED = PASSIVE_ICONS.next();
@@ -40,6 +41,7 @@ public final class ModAbilityIcons {
     public static final AbilityIcon HEALING = PASSIVE_ICONS.next();
     public static final AbilityIcon SATURATION = PASSIVE_ICONS.next();
     public static final AbilityIcon WATER_BREATHING = PASSIVE_ICONS.next();
+    public static final AbilityIcon POTION_RESISTANCE = PASSIVE_ICONS.next();
 
     public static AbilityIcon empty() { return ICONS.empty(); }
     public static AbilityIcon missingno() { return ICONS.missingno(); }

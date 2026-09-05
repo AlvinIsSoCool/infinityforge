@@ -65,10 +65,6 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("abilities.infinityforge.energy_blast", "Energy Blast");
         translationBuilder.add("abilities.infinityforge.energy_beam", "Energy Beam");
         translationBuilder.add("abilities.infinityforge.explosion", "Explode");
-        translationBuilder.add("abilities.infinityforge.knockback_resistance", "Knockback Resistance");
-        translationBuilder.add("abilities.infinityforge.speed", "Speed");
-        translationBuilder.add("abilities.infinityforge.attack_speed", "Attack Speed");
-        translationBuilder.add("abilities.infinityforge.step_height", "Step Height");
         translationBuilder.add("abilities.infinityforge.teleport", "Teleportation");
         translationBuilder.add("abilities.infinityforge.forcefield", "Forcefield");
         translationBuilder.add("abilities.infinityforge.portal", "Portal");
@@ -84,18 +80,25 @@ public class ModLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("abilities.infinityforge.size_change_small", "Shrink");
         translationBuilder.add("abilities.infinityforge.size_change_big", "Enlarge");
         translationBuilder.add("abilities.infinityforge.kill", "Kill");
-        translationBuilder.add("abilities.infinityforge.healing", "Healing");
-        translationBuilder.add("abilities.infinityforge.health", "Health");
-        translationBuilder.add("abilities.infinityforge.saturation", "Self-Sustenance");
-        translationBuilder.add("abilities.infinityforge.water_breathing", "Water Breathing");
+        translationBuilder.add("abilities.infinityforge.snap", "Snap");
         translationBuilder.add("abilities.infinityforge.flight", "Flight");
         translationBuilder.add("abilities.infinityforge.telekinesis", "Telekinesis");
-        translationBuilder.add("abilities.infinityforge.snap", "Snap");
         translationBuilder.add("abilities.infinityforge.change_snap", "Change Snap Function");
         translationBuilder.add("abilities.infinityforge.advance_time", "Advance Time");
         translationBuilder.add("abilities.infinityforge.rewind_time", "Rewind Time");
         translationBuilder.add("abilities.infinityforge.stop_time", "Stop Time");
         translationBuilder.add("abilities.infinityforge.randomise_time", "Randomise Time");
+
+        translationBuilder.add("abilities.infinityforge.attack_strength", "Attack Strength");
+        translationBuilder.add("abilities.infinityforge.knockback_resistance", "Knockback Resistance");
+        translationBuilder.add("abilities.infinityforge.speed", "Speed");
+        translationBuilder.add("abilities.infinityforge.attack_speed", "Attack Speed");
+        translationBuilder.add("abilities.infinityforge.step_height", "Step Height");
+        translationBuilder.add("abilities.infinityforge.health", "Health");
+        translationBuilder.add("abilities.infinityforge.healing", "Healing");
+        translationBuilder.add("abilities.infinityforge.saturation", "Self-Sustenance");
+        translationBuilder.add("abilities.infinityforge.water_breathing", "Water Breathing");
+        translationBuilder.add("abilities.infinityforge.potion_resistance", "Harmful Effects Resistance");
 
         translationBuilder.add("snapfunctions.infinityforge.kill_half", "Kill Half");
         translationBuilder.add("snapfunctions.infinityforge.kill_all", "Kill All");

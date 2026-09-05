@@ -44,6 +44,7 @@ public class EntityMixin {
         return velocity;
     }
 
+    @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "getStandingEyeHeight()F",
             at = @At("RETURN")
@@ -59,7 +60,7 @@ public class EntityMixin {
         return original;
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "isPushable()Z",
             at = @At("RETURN")
@@ -70,7 +71,7 @@ public class EntityMixin {
         return itemEntity.getStack().isIn(ModTags.Items.INFINITY_ITEMS);
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("ConstantValue")
     @ModifyReturnValue(
             method = "canHit()Z",
             at = @At("RETURN")

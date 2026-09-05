@@ -17,10 +17,11 @@ public class ModStones {
                     null,
                     StoneHoldAbilities::onPowerStoneHold,
                     List.of(
+                            ModGauntletAbilities.ATTACK_STRENGTH, ModGauntletAbilities.KNOCKBACK_RESISTANCE,
+                            ModGauntletAbilities.SPEED, ModGauntletAbilities.ATTACK_SPEED,
+                            ModGauntletAbilities.STEP_HEIGHT,
                             ModGauntletAbilities.ENERGY_BLAST, ModGauntletAbilities.ENERGY_BEAM,
-                            ModGauntletAbilities.EXPLOSION,
-                            ModGauntletAbilities.KNOCKBACK_RESISTANCE, ModGauntletAbilities.SPEED,
-                            ModGauntletAbilities.ATTACK_SPEED, ModGauntletAbilities.STEP_HEIGHT
+                            ModGauntletAbilities.EXPLOSION
                     ),
                     () -> InfinityForgeClientConfig.get().stoneBaseColors.powerStone,
                     () -> InfinityForgeClientConfig.get().stoneGlintColors.powerStone
@@ -64,6 +65,7 @@ public class ModStones {
                     List.of(
                             ModGauntletAbilities.HEALING, ModGauntletAbilities.HEALTH,
                             ModGauntletAbilities.SATURATION, ModGauntletAbilities.WATER_BREATHING,
+                            ModGauntletAbilities.POTION_RESISTANCE,
                             ModGauntletAbilities.KILL, ModGauntletAbilities.SNAP
                     ),
                     () -> InfinityForgeClientConfig.get().stoneBaseColors.soulStone,

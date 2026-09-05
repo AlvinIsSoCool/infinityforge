@@ -7,6 +7,7 @@ import net.alvin.infinityforge.infinity.ModStones;
 import net.alvin.infinityforge.infinity.abilities.base.GauntletAbility;
 import net.alvin.infinityforge.infinity.abilities.base.AttributeModifierAbility;
 import net.alvin.infinityforge.infinity.abilities.base.LifecyclePassiveAbility;
+import net.alvin.infinityforge.infinity.abilities.base.PassiveAbility;
 import net.alvin.infinityforge.infinity.abilities.icon.ModAbilityIcons;
 import net.alvin.infinityforge.infinity.abilities.impl.mind.*;
 import net.alvin.infinityforge.infinity.abilities.impl.power.EnergyBeamAbility;
@@ -50,10 +51,18 @@ public class ModGauntletAbilities {
     public static final GauntletAbility EXPLOSION = GauntletAbilityRegistry.register(
             new ExplosionAbility(
                     new Identifier(InfinityForge.MOD_ID, "explosion"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.EXPLOSION,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.powerStone,
                     List::of, 40, 4
             )
+    );
+    public static final GauntletAbility ATTACK_STRENGTH = GauntletAbilityRegistry.register(
+            new PassiveAbility(
+                    new Identifier(InfinityForge.MOD_ID, "attack_strength"),
+                    ModAbilityIcons.ATTACK_STRENGTH,
+                    () -> InfinityForgeClientConfig.get().abilityOutlineColors.powerStone,
+                    List::of
+            ) {}
     );
     public static final GauntletAbility KNOCKBACK_RESISTANCE = GauntletAbilityRegistry.register(
             new AttributeModifierAbility(
@@ -281,6 +290,14 @@ public class ModGauntletAbilities {
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.soulStone
             )
     );
+    public static final GauntletAbility POTION_RESISTANCE = GauntletAbilityRegistry.register(
+            new PassiveAbility(
+                    new Identifier(InfinityForge.MOD_ID, "potion_resistance"),
+                    ModAbilityIcons.POTION_RESISTANCE,
+                    () -> 0x7FFFFF,
+                    List::of
+            ) {}
+    );
     public static final GauntletAbility KILL = GauntletAbilityRegistry.register(
             new KillAbility(
                     new Identifier(InfinityForge.MOD_ID, "kill"),
@@ -328,7 +345,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility ADVANCE_TIME = GauntletAbilityRegistry.register(
             new AdvanceTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "advance_time"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.ADVANCE_TIME,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.timeStone,
                     List::of,
                     400, -4
@@ -337,7 +354,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility REWIND_TIME = GauntletAbilityRegistry.register(
             new RewindTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "rewind_time"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.REWIND_TIME,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.timeStone,
                     List::of,
                     400, -4
@@ -346,7 +363,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility STOP_TIME = GauntletAbilityRegistry.register(
             new StopTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "stop_time"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.STOP_TIME,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.timeStone,
                     List::of,
                     400, -4
@@ -355,7 +372,7 @@ public class ModGauntletAbilities {
     public static final GauntletAbility RANDOMISE_TIME = GauntletAbilityRegistry.register(
             new RandomiseTimeAbility(
                     new Identifier(InfinityForge.MOD_ID, "randomise_time"),
-                    ModAbilityIcons.missingno(),
+                    ModAbilityIcons.RANDOMISE_TIME,
                     () -> InfinityForgeClientConfig.get().abilityOutlineColors.timeStone,
                     List::of, 100
             )

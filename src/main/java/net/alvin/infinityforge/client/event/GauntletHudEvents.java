@@ -7,5 +7,7 @@ public class GauntletHudEvents {
     public static void register() {
         HudRenderCallback.EVENT.register((context, tickDelta) ->
                 GauntletHudRenderer.render(context));
+        //HudRenderCallback.EVENT.register((context, tickDelta) ->
+                //TestRendererPassives.render(context));
     }
 }
