@@ -25,7 +25,7 @@ public class EnergyBlastAbility extends ActiveAbility {
     public boolean onActivate(ServerWorld world, ServerPlayerEntity player, List<InfinityStoneType> activeStones) {
         EnergyBlastEntity entity = new EnergyBlastEntity(world, player);
         Vec3d look = player.getRotationVec(1f);
-        entity.setVelocity(look.x, look.y, look.z, 1.5f, 0f);
+        entity.setVelocity(look.x, look.y, look.z, 2f, 0f);
         world.spawnEntity(entity);
         world.playSound(null, player.getBlockPos(),
                 ModSounds.ENERGY_BLAST, SoundCategory.PLAYERS, 1f, 1f);

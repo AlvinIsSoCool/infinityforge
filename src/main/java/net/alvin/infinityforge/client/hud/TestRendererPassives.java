@@ -23,7 +23,7 @@ public class TestRendererPassives {
     private static final Identifier HUD_TEXTURE = new Identifier(InfinityForge.MOD_ID,
             "textures/gui/ability_bar.png");
 
-    private static final int MARGIN_X = 325;
+    private static final int MARGIN_X = 255;
     private static final int MARGIN_Y = 14;
     private static final int SLOT_SIZE = 22;
 
